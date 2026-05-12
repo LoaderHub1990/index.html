@@ -18,14 +18,12 @@
 
   body {
     min-height: 100vh;
-    /* ไล่เฉดสี ชมพู ขาว ฟ้า ละมุนๆ */
     background: linear-gradient(135deg, var(--pink-light) 0%, var(--white) 50%, var(--blue-light) 100%);
     font-family: 'Sarabun', sans-serif;
     color: #555;
     overflow: hidden;
   }
 
-  /* Overlay ก่อนเข้าหน้าเว็บเพื่อให้เพลงเล่นได้ */
   #overlay {
     position: fixed; inset: 0;
     background: white;
@@ -39,9 +37,7 @@
     box-shadow: 0 4px 15px rgba(255,133,162,0.3);
     transition: 0.3s;
   }
-  .start-btn:hover { transform: scale(1.05); }
 
-  /* ปุ่มควบคุมเพลงมุมขวา */
   .music-control {
     position: fixed; top: 20px; right: 20px;
     z-index: 1000;
@@ -50,8 +46,6 @@
     border-radius: 50%; display: flex;
     justify-content: center; align-items: center;
     cursor: pointer; border: 2px solid var(--text-pink);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    font-size: 1.2rem;
   }
 
   .container {
@@ -59,7 +53,6 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 20px;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
   }
 
   .love-card {
@@ -72,43 +65,38 @@
     border: 1px solid rgba(255,255,255,0.8);
   }
 
-  /* จัดการรูปเล็ก 3 รูปในหน้า 2 */
   .photo-grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px; margin-top: 25px;
+    gap: 12px; margin-top: 20px;
   }
   .small-img {
-    width: 100%; aspect-ratio: 1/1.2;
-    border-radius: 15px; object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-    transition: 0.3s;
+    width: 100%; aspect-ratio: 1;
+    border-radius: 12px; object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   }
-  .small-img:hover { transform: scale(1.08); }
 
   .nav-btn {
-    margin-top: 25px; padding: 10px 30px;
+    margin-top: 25px; padding: 8px 25px;
     background: transparent; color: var(--text-pink);
-    border: 2px solid var(--text-pink);
-    border-radius: 25px; cursor: pointer;
-    font-weight: 600; transition: 0.3s;
+    border: 1.5px solid var(--text-pink);
+    border-radius: 20px; cursor: pointer;
+    font-weight: 600;
   }
-  .nav-btn:hover { background: var(--text-pink); color: white; }
 
-  .hidden { display: none; opacity: 0; pointer-events: none; }
+  .hidden { display: none; }
+
+  .main-img {
+    width: 150px; height: 150px; border-radius: 50%;
+    margin-bottom: 15px; border: 5px solid white;
+    object-fit: cover;
+    animation: float 4s ease-in-out infinite;
+  }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-
-  .main-img {
-    width: 160px; height: 160px; border-radius: 50%;
-    margin-bottom: 20px; border: 6px solid white;
-    animation: float 4s ease-in-out infinite;
-    object-fit: cover;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    50% { transform: translateY(-10px); }
   }
 </style>
 </head>
@@ -126,21 +114,21 @@
 
 <div class="container" id="page-1">
   <div class="love-card">
-    <img src="https://media.discordapp.net/attachments/1492359220731969819/1503809539860861019/Screenshot_2026-05-13_001004.png" class="main-img">
-    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px;">Hello, You.</h1>
-    <p style="margin-bottom: 20px; color: #888; font-weight: 300;">วันที่ท้องฟ้าสดใสเหมือนรอยยิ้มของคุณ</p>
-    <button class="nav-btn" onclick="goToPage(2)">ดูรูปภาพของเรา ➔</button>
+    <img src="https://www.img.in.th/images/Screenshot-2026-05-13-001004.png" class="main-img">
+    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif;">Hello, You.</h1>
+    <p style="margin: 10px 0;">วันที่ท้องฟ้าสดใสเหมือนรอยยิ้มของคุณ</p>
+    <button class="nav-btn" onclick="goToPage(2)">ดูรูปถัดไป ➔</button>
   </div>
 </div>
 
 <div class="container hidden" id="page-2">
   <div class="love-card">
-    <h2 style="color:var(--text-blue); margin-bottom: 20px; font-family: 'Playfair Display', serif;">Our Moments</h2>
+    <h2 style="color:var(--text-blue); margin-bottom: 15px;">Our Moments</h2>
     
     <div class="photo-grid-3">
-      <img src="https://cdn.discordapp.com/attachments/1492359220731969819/1503809539860861019/Screenshot_2026-05-13_001004.png" class="small-img">
-      <img src="https://media.discordapp.net/attachments/1492359220731969819/1503809539860861019/Screenshot_2026-05-13_001004.png" class="small-img">
-      <img src="https://media.discordapp.net/attachments/1492359220731969819/1503809540196532306/Screenshot_2026-05-13_001144.png" class="small-img">
+      <img src="https://www.img.in.th/images/Screenshot-2026-05-13-001004.png" class="small-img">
+      <img src="https://www.img.in.th/images/Screenshot-2026-05-13-001144.png" class="small-img">
+      <img src="https://www.img.in.th/images/Screenshot-2026-05-13-002149.png" class="small-img">
     </div>
 
     <button class="nav-btn" onclick="goToPage(1)" style="border-color: #ccc; color: #999;">ย้อนกลับ</button>
@@ -152,9 +140,8 @@ const music = document.getElementById('bgMusic');
 let isPlaying = false;
 
 function init() {
-  const overlay = document.getElementById('overlay');
-  overlay.style.opacity = '0';
-  setTimeout(() => overlay.style.display = 'none', 800);
+  document.getElementById('overlay').style.opacity = '0';
+  setTimeout(() => document.getElementById('overlay').style.display = 'none', 800);
   music.play();
   isPlaying = true;
   document.getElementById('musicBtn').textContent = '⏸️';
@@ -171,8 +158,8 @@ function toggleMusic() {
   isPlaying = !isPlaying;
 }
 
-function goToPage(pageNumber) {
-  if (pageNumber === 2) {
+function goToPage(page) {
+  if (page === 2) {
     document.getElementById('page-1').classList.add('hidden');
     document.getElementById('page-2').classList.remove('hidden');
   } else {
