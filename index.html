@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💕 Our Sweet Memory</title>
+<title>💕 Our Memory Space</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -18,14 +18,13 @@
 
   body {
     min-height: 100vh;
-    /* พื้นหลังโทน ชมพู ขาว ฟ้า ละมุนๆ */
     background: linear-gradient(135deg, var(--pink-light) 0%, var(--white) 50%, var(--blue-light) 100%);
     font-family: 'Sarabun', sans-serif;
     overflow-x: hidden;
     color: #555;
   }
 
-  /* หน้ากากกดเข้าเว็บเพื่อเล่นเพลง */
+  /* หน้ากากกดเข้าเว็บ */
   #overlay {
     position: fixed; inset: 0;
     background: white;
@@ -39,24 +38,17 @@
     box-shadow: 0 4px 15px rgba(255,133,162,0.4);
   }
 
-  /* ตกแต่งรูปภาพ */
-  .profile-container {
-    position: relative; margin-bottom: 20px;
-    opacity: 0; animation: fadeIn 1.2s ease 1s forwards;
-  }
-  .profile-img {
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    border: 6px solid white;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-    object-fit: cover;
-    animation: float 4s ease-in-out infinite;
-  }
-
-  /* อนิเมชั่นรูปลอย */
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+  /* ปุ่มควบคุมเพลงด้านขวา */
+  .music-control {
+    position: fixed; top: 20px; right: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.7);
+    width: 45px; height: 45px;
+    border-radius: 50%; display: flex;
+    justify-content: center; align-items: center;
+    cursor: pointer; border: 2px solid var(--text-pink);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
   }
 
   .container {
@@ -65,106 +57,119 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 40px 20px;
-  }
-
-  .main-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
-    background: linear-gradient(90deg, var(--text-pink), var(--text-blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.05));
+    transition: 0.5s;
   }
 
   .love-card {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 30px;
-    padding: 40px;
+    border-radius: 30px; padding: 40px;
     max-width: 600px; width: 100%;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-    opacity: 0; animation: fadeUp 1.4s ease 0.5s forwards;
+    text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.05);
   }
 
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-  .message { line-height: 1.8; color: #666; margin: 20px 0; }
-  .confession { font-size: 1.8rem; color: var(--text-pink); font-weight: bold; }
-
-  /* Floating Hearts */
-  .heart-particle {
-    position: fixed; pointer-events: none;
-    z-index: 1; animation: floatUp linear forwards;
+  /* การจัดวางรูปภาพเล็กๆ */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px; margin-top: 25px;
+    display: none; /* ซ่อนไว้ก่อน */
   }
-  @keyframes floatUp {
-    from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-    to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  .small-img {
+    width: 100%; aspect-ratio: 1;
+    border-radius: 15px; object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+  }
+  .small-img:hover { transform: scale(1.05); }
+
+  .nav-btn {
+    margin-top: 25px; padding: 10px 25px;
+    background: white; color: var(--text-blue);
+    border: 2px solid var(--text-blue);
+    border-radius: 20px; cursor: pointer;
+    font-weight: 600; transition: 0.3s;
+  }
+  .nav-btn:hover { background: var(--text-blue); color: white; }
+
+  .hidden { display: none; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
 </style>
 </head>
 <body>
 
 <div id="overlay">
-  <button class="start-btn" onclick="init()">เปิดดูความทรงจำ 🌸</button>
+  <button class="start-btn" onclick="init()">ยินดีต้อนรับ ✨</button>
 </div>
+
+<div class="music-control" onclick="toggleMusic()" id="musicBtn">🎵</div>
 
 <audio id="bgMusic" loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
-  <div class="profile-container">
-    <img src="https://cdn.pixabay.com/photo/2017/08/30/12/45/girl-2696947_1280.jpg" alt="You" class="profile-img">
-  </div>
-
+<div class="container" id="content-1">
   <div class="love-card">
-    <h1 class="main-title">To Someone Special</h1>
-    <p class="message">
-      ขอบคุณที่เข้ามาเป็นเรื่องราวดีๆ ในทุกๆ วัน<br>
-      ท้องฟ้าวันนี้ดูสวยขึ้นเมื่อมีเธออยู่ข้างๆ<br>
-      <strong>ขอให้รอยยิ้มของเธอสดใสแบบนี้ตลอดไปนะ</strong>
-    </p>
-    <p class="confession">รักนะ...เจ้าความรัก 💕</p>
+    <img src="https://via.placeholder.com/150/ff85a2/ffffff?text=Main+Photo" style="width:150px; height:150px; border-radius:50%; margin-bottom:20px; border:5px solid white; animation: float 3s ease-in-out infinite;">
+    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif;">Our Happiness</h1>
+    <p style="margin: 15px 0;">นี่คือจุดเริ่มต้นของเรื่องราวเล็กๆ ของเรา</p>
+    <button class="nav-btn" onclick="nextPage()">ดูรูปภาพถัดไป ➔</button>
+  </div>
+</div>
+
+<div class="container hidden" id="content-2">
+  <div class="love-card">
+    <h2 style="color:var(--text-blue); margin-bottom: 20px;">Memories Gallery</h2>
     
-    <div style="margin-top: 20px; color: var(--text-blue); font-size: 0.9rem;">
-      ♫ กำลังเล่นเพลงที่คุณชอบ...
+    <div class="photo-grid" id="gallery" style="display: grid;">
+      <img src="https://via.placeholder.com/100/ffd1dc" class="small-img">
+      <img src="https://via.placeholder.com/100/b3e5fc" class="small-img">
+      <img src="https://via.placeholder.com/100/ffffff" class="small-img">
+      <img src="https://via.placeholder.com/100/ff85a2" class="small-img">
+      <img src="https://via.placeholder.com/100/64b5f6" class="small-img">
+      <img src="https://via.placeholder.com/100/fce4ec" class="small-img">
     </div>
+
+    <button class="nav-btn" onclick="prevPage()" style="border-color: var(--text-pink); color: var(--text-pink); margin-top:30px;">ย้อนกลับ</button>
   </div>
 </div>
 
 <script>
-// ฟังก์ชันเริ่มทำงานเมื่อกดปุ่ม
+const music = document.getElementById('bgMusic');
+let isPlaying = false;
+
 function init() {
-  // ซ่อนหน้ากาก
-  const overlay = document.getElementById('overlay');
-  overlay.style.opacity = '0';
-  setTimeout(() => overlay.style.display = 'none', 800);
-
-  // เริ่มเล่นเพลง
-  const music = document.getElementById('bgMusic');
-  music.play().catch(err => console.log("Autoplay error: ", err));
-
-  // เริ่มสร้างหัวใจ
-  setInterval(createHeart, 500);
+  document.getElementById('overlay').style.opacity = '0';
+  setTimeout(() => document.getElementById('overlay').style.display = 'none', 800);
+  music.play();
+  isPlaying = true;
+  document.getElementById('musicBtn').textContent = '⏸️';
 }
 
-// ฟังก์ชันสร้างหัวใจลอยๆ
-function createHeart() {
-  const heart = document.createElement('div');
-  const emojis = ['🌸', '✨', '💖', '☁️', '❄️'];
-  heart.className = 'heart-particle';
-  heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-  heart.style.duration = (Math.random() * 3 + 4) + 's';
-  heart.style.animation = `floatUp ${heart.style.duration} linear forwards`;
-  
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 5000);
+function toggleMusic() {
+  if (isPlaying) {
+    music.pause();
+    document.getElementById('musicBtn').textContent = '▶️';
+  } else {
+    music.play();
+    document.getElementById('musicBtn').textContent = '⏸️';
+  }
+  isPlaying = !isPlaying;
+}
+
+function nextPage() {
+  document.getElementById('content-1').classList.add('hidden');
+  document.getElementById('content-2').classList.remove('hidden');
+}
+
+function prevPage() {
+  document.getElementById('content-2').classList.add('hidden');
+  document.getElementById('content-1').classList.remove('hidden');
 }
 </script>
 
