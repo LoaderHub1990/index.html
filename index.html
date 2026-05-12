@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💕 Our Memory Space</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+<title>🌸 Sweet Memory</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --pink-light: #ffd1dc;
@@ -20,122 +20,125 @@
     min-height: 100vh;
     background: linear-gradient(135deg, var(--pink-light) 0%, var(--white) 50%, var(--blue-light) 100%);
     font-family: 'Sarabun', sans-serif;
-    overflow-x: hidden;
     color: #555;
+    overflow: hidden;
   }
 
-  /* หน้ากากกดเข้าเว็บ */
+  /* Overlay ก่อนเข้าหน้าเว็บ */
   #overlay {
     position: fixed; inset: 0;
     background: white;
     display: flex; justify-content: center; align-items: center;
-    z-index: 9999; transition: 0.8s;
+    z-index: 9999; transition: 0.8s ease;
   }
   .start-btn {
-    padding: 15px 40px; font-size: 1.2rem;
+    padding: 15px 40px; font-size: 1.1rem;
     background: var(--text-pink); color: white;
     border: none; border-radius: 30px; cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255,133,162,0.4);
+    box-shadow: 0 4px 15px rgba(255,133,162,0.3);
+    transition: 0.3s;
   }
+  .start-btn:hover { transform: scale(1.05); }
 
-  /* ปุ่มควบคุมเพลงด้านขวา */
+  /* ปุ่มควบคุมเพลง */
   .music-control {
     position: fixed; top: 20px; right: 20px;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.7);
-    width: 45px; height: 45px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 40px; height: 40px;
     border-radius: 50%; display: flex;
     justify-content: center; align-items: center;
     cursor: pointer; border: 2px solid var(--text-pink);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    font-size: 1rem;
   }
 
   .container {
-    position: relative; z-index: 10;
-    min-height: 100vh;
+    height: 100vh;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 40px 20px;
-    transition: 0.5s;
+    padding: 20px;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
   }
 
   .love-card {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(15px);
-    border-radius: 30px; padding: 40px;
-    max-width: 600px; width: 100%;
-    text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 25px; padding: 35px;
+    max-width: 500px; width: 100%;
+    text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    border: 1px solid rgba(255,255,255,0.8);
   }
 
-  /* การจัดวางรูปภาพเล็กๆ */
-  .photo-grid {
+  /* จัดการรูปภาพในหน้า 2 (เหลือ 3 รูป) */
+  .photo-grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px; margin-top: 25px;
-    display: none; /* ซ่อนไว้ก่อน */
+    gap: 12px; margin-top: 20px;
   }
   .small-img {
-    width: 100%; aspect-ratio: 1;
-    border-radius: 15px; object-fit: cover;
+    width: 100%; aspect-ratio: 1/1.2; /* ทรงสูงนิดๆ จะดูเก๋กว่า */
+    border-radius: 12px; object-fit: cover;
     border: 3px solid white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   }
-  .small-img:hover { transform: scale(1.05); }
 
   .nav-btn {
-    margin-top: 25px; padding: 10px 25px;
-    background: white; color: var(--text-blue);
-    border: 2px solid var(--text-blue);
+    margin-top: 25px; padding: 8px 25px;
+    background: transparent; color: var(--text-pink);
+    border: 1.5px solid var(--text-pink);
     border-radius: 20px; cursor: pointer;
     font-weight: 600; transition: 0.3s;
   }
-  .nav-btn:hover { background: var(--text-blue); color: white; }
+  .nav-btn:hover { background: var(--text-pink); color: white; }
 
-  .hidden { display: none; }
+  .hidden { display: none; opacity: 0; pointer-events: none; }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .main-img {
+    width: 140px; height: 140px; border-radius: 50%;
+    margin-bottom: 15px; border: 5px solid white;
+    animation: float 4s ease-in-out infinite;
+    object-fit: cover;
   }
 </style>
 </head>
 <body>
 
 <div id="overlay">
-  <button class="start-btn" onclick="init()">ยินดีต้อนรับ ✨</button>
+  <button class="start-btn" onclick="init()">เปิดดูเรื่องราวของเรา 🌸</button>
 </div>
 
 <div class="music-control" onclick="toggleMusic()" id="musicBtn">🎵</div>
 
 <audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://cdn.discordapp.com/attachments/1492359220731969819/1503809175208067072/93d50f82afafdbcc.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container" id="content-1">
+<div class="container" id="page-1">
   <div class="love-card">
-    <img src="https://via.placeholder.com/150/ff85a2/ffffff?text=Main+Photo" style="width:150px; height:150px; border-radius:50%; margin-bottom:20px; border:5px solid white; animation: float 3s ease-in-out infinite;">
-    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif;">Our Happiness</h1>
-    <p style="margin: 15px 0;">นี่คือจุดเริ่มต้นของเรื่องราวเล็กๆ ของเรา</p>
-    <button class="nav-btn" onclick="nextPage()">ดูรูปภาพถัดไป ➔</button>
+    <img src="https://via.placeholder.com/200/ffd1dc" class="main-img">
+    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif; font-size: 2.2rem;">Hello, You.</h1>
+    <p style="margin: 10px 0; color: #888;">วันที่ท้องฟ้าสดใสเหมือนรอยยิ้มของคุณ</p>
+    <button class="nav-btn" onclick="goToPage(2)">ดูรูปภาพ ➔</button>
   </div>
 </div>
 
-<div class="container hidden" id="content-2">
+<div class="container hidden" id="page-2">
   <div class="love-card">
-    <h2 style="color:var(--text-blue); margin-bottom: 20px;">Memories Gallery</h2>
+    <h2 style="color:var(--text-blue); margin-bottom: 15px;">Our Moments</h2>
     
-    <div class="photo-grid" id="gallery" style="display: grid;">
-      <img src="https://via.placeholder.com/100/ffd1dc" class="small-img">
-      <img src="https://via.placeholder.com/100/b3e5fc" class="small-img">
-      <img src="https://via.placeholder.com/100/ffffff" class="small-img">
-      <img src="https://via.placeholder.com/100/ff85a2" class="small-img">
-      <img src="https://via.placeholder.com/100/64b5f6" class="small-img">
-      <img src="https://via.placeholder.com/100/fce4ec" class="small-img">
+    <div class="photo-grid-3">
+      <img src="https://via.placeholder.com/150/ffd1dc" class="small-img" alt="https://cdn.discordapp.com/attachments/1492359220731969819/1503809539860861019/Screenshot_2026-05-13_001004.png">
+      <img src="https://via.placeholder.com/150/ffffff" class="small-img" alt="https://media.discordapp.net/attachments/1492359220731969819/1503809539860861019/Screenshot_2026-05-13_001004.png">
+      <img src="https://via.placeholder.com/150/b3e5fc" class="small-img" alt="https://media.discordapp.net/attachments/1492359220731969819/1503809540196532306/Screenshot_2026-05-13_001144.png">
     </div>
 
-    <button class="nav-btn" onclick="prevPage()" style="border-color: var(--text-pink); color: var(--text-pink); margin-top:30px;">ย้อนกลับ</button>
+    <button class="nav-btn" onclick="goToPage(1)" style="border-color: #ccc; color: #999;">ย้อนกลับ</button>
   </div>
 </div>
 
@@ -144,8 +147,9 @@ const music = document.getElementById('bgMusic');
 let isPlaying = false;
 
 function init() {
-  document.getElementById('overlay').style.opacity = '0';
-  setTimeout(() => document.getElementById('overlay').style.display = 'none', 800);
+  const overlay = document.getElementById('overlay');
+  overlay.style.opacity = '0';
+  setTimeout(() => overlay.style.display = 'none', 800);
   music.play();
   isPlaying = true;
   document.getElementById('musicBtn').textContent = '⏸️';
@@ -162,14 +166,14 @@ function toggleMusic() {
   isPlaying = !isPlaying;
 }
 
-function nextPage() {
-  document.getElementById('content-1').classList.add('hidden');
-  document.getElementById('content-2').classList.remove('hidden');
-}
-
-function prevPage() {
-  document.getElementById('content-2').classList.add('hidden');
-  document.getElementById('content-1').classList.remove('hidden');
+function goToPage(pageNumber) {
+  if (pageNumber === 2) {
+    document.getElementById('page-1').classList.add('hidden');
+    document.getElementById('page-2').classList.remove('hidden');
+  } else {
+    document.getElementById('page-2').classList.add('hidden');
+    document.getElementById('page-1').classList.remove('hidden');
+  }
 }
 </script>
 
