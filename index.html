@@ -24,6 +24,7 @@
     overflow: hidden;
   }
 
+  /* หน้ากากกดเข้า */
   #overlay {
     position: fixed; inset: 0;
     background: white;
@@ -38,6 +39,7 @@
     transition: 0.3s;
   }
 
+  /* ปุ่มควบคุมเพลง */
   .music-control {
     position: fixed; top: 20px; right: 20px;
     z-index: 1000;
@@ -46,6 +48,8 @@
     border-radius: 50%; display: flex;
     justify-content: center; align-items: center;
     cursor: pointer; border: 2px solid var(--text-pink);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    font-size: 1.2rem;
   }
 
   .container {
@@ -53,6 +57,7 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 20px;
+    transition: 0.5s;
   }
 
   .love-card {
@@ -65,6 +70,7 @@
     border: 1px solid rgba(255,255,255,0.8);
   }
 
+  /* จัดเรียงรูป 3 รูป */
   .photo-grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -75,28 +81,32 @@
     border-radius: 12px; object-fit: cover;
     border: 3px solid white;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
   }
+  .small-img:hover { transform: scale(1.05); }
 
   .nav-btn {
-    margin-top: 25px; padding: 8px 25px;
+    margin-top: 25px; padding: 10px 30px;
     background: transparent; color: var(--text-pink);
-    border: 1.5px solid var(--text-pink);
-    border-radius: 20px; cursor: pointer;
-    font-weight: 600;
+    border: 2px solid var(--text-pink);
+    border-radius: 25px; cursor: pointer;
+    font-weight: 600; transition: 0.3s;
   }
+  .nav-btn:hover { background: var(--text-pink); color: white; }
 
   .hidden { display: none; }
 
   .main-img {
     width: 150px; height: 150px; border-radius: 50%;
-    margin-bottom: 15px; border: 5px solid white;
+    margin-bottom: 20px; border: 5px solid white;
     object-fit: cover;
     animation: float 4s ease-in-out infinite;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-12px); }
   }
 </style>
 </head>
@@ -114,21 +124,21 @@
 
 <div class="container" id="page-1">
   <div class="love-card">
-    <img src="https://www.img.in.th/images/Screenshot-2026-05-13-001004.png" class="main-img">
-    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif;">Hello, You.</h1>
-    <p style="margin: 10px 0;">วันที่ท้องฟ้าสดใสเหมือนรอยยิ้มของคุณ</p>
-    <button class="nav-btn" onclick="goToPage(2)">ดูรูปถัดไป ➔</button>
+    <img src="https://img2.pic.in.th/Screenshot-2026-05-13-001004.png" class="main-img">
+    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif; font-size: 2.2rem;">Hello, You.</h1>
+    <p style="margin: 10px 0; color: #888;">ขอบคุณที่เข้ามาเป็นเรื่องราวดีๆ</p>
+    <button class="nav-btn" onclick="goToPage(2)">หน้าถัดไป ➔</button>
   </div>
 </div>
 
 <div class="container hidden" id="page-2">
   <div class="love-card">
-    <h2 style="color:var(--text-blue); margin-bottom: 15px;">Our Moments</h2>
+    <h2 style="color:var(--text-blue); margin-bottom: 20px;">Our Moments</h2>
     
     <div class="photo-grid-3">
-      <img src="https://www.img.in.th/images/Screenshot-2026-05-13-001004.png" class="small-img">
-      <img src="https://www.img.in.th/images/Screenshot-2026-05-13-001144.png" class="small-img">
-      <img src="https://www.img.in.th/images/Screenshot-2026-05-13-002149.png" class="small-img">
+      <img src="https://img2.pic.in.th/Screenshot-2026-05-13-001004.png" class="small-img">
+      <img src="https://img2.pic.in.th/Screenshot-2026-05-13-001004.png" class="small-img">
+      <img src="https://img2.pic.in.th/Screenshot-2026-05-13-001004.png" class="small-img">
     </div>
 
     <button class="nav-btn" onclick="goToPage(1)" style="border-color: #ccc; color: #999;">ย้อนกลับ</button>
