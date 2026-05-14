@@ -3,187 +3,616 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌸 Love ม่อน</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+<title>🌸 ม่อนตอบหน่อยนะ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --pink-light: #ffd1dc;
-    --blue-light: #b3e5fc;
-    --white: #ffffff;
-    --text-pink: #ff85a2;
-    --text-blue: #64b5f6;
+    --rose: #e8a0b4;
+    --rose-deep: #c9627a;
+    --blush: #fce4ec;
+    --sky: #b3d9f5;
+    --sky-deep: #5b9ec9;
+    --cream: #fdf6f0;
+    --gold: #d4a96a;
+    --text-dark: #3a2a35;
+    --text-mid: #7a5a68;
+    --text-light: #b08898;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   body {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--pink-light) 0%, var(--white) 50%, var(--blue-light) 100%);
-    background-attachment: fixed; /* พื้นหลังนิ่งเวลาเลื่อนดูรูป */
+    background: var(--cream);
     font-family: 'Sarabun', sans-serif;
-    color: #555;
+    color: var(--text-dark);
+    overflow-x: hidden;
   }
 
-  /* หน้ากากกดเข้า */
+  /* ---- Canvas ---- */
+  #particles-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ---- Overlay ---- */
   #overlay {
     position: fixed; inset: 0;
-    background: white;
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999; transition: 0.8s ease;
-  }
-  .start-btn {
-    padding: 15px 40px; font-size: 1.1rem;
-    background: var(--text-pink); color: white;
-    border: none; border-radius: 30px; cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255,133,162,0.3);
-  }
-
-  /* ปุ่มควบคุมเพลง */
-  .music-control {
-    position: fixed; top: 20px; right: 20px;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
-    width: 45px; height: 45px;
-    border-radius: 50%; display: flex;
+    background: var(--cream);
+    display: flex; flex-direction: column;
     justify-content: center; align-items: center;
-    cursor: pointer; border: 2px solid var(--text-pink);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    z-index: 9999; transition: opacity 1.2s ease;
+  }
+  #overlay.fade-out { opacity: 0; pointer-events: none; }
+
+  .overlay-icon { font-size: 3rem; animation: pulse-big 2s ease-in-out infinite; }
+  @keyframes pulse-big { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+
+  .overlay-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300;
+    color: var(--text-mid); margin: 16px 0 32px;
+    letter-spacing: 0.05em; text-align: center;
+    padding: 0 20px;
   }
 
-  .container {
-    min-height: 100vh;
+  .start-btn {
+    padding: 14px 48px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 1rem; letter-spacing: 0.1em;
+    background: transparent; color: var(--rose-deep);
+    border: 1.5px solid var(--rose-deep);
+    border-radius: 50px; cursor: pointer;
+    position: relative; overflow: hidden;
+    transition: color 0.4s ease;
+  }
+  .start-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--rose-deep);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease; z-index: -1;
+  }
+  .start-btn:hover::before { transform: scaleX(1); }
+  .start-btn:hover { color: white; }
+
+  /* ---- Music ---- */
+  .music-control {
+    position: fixed; top: 24px; right: 24px; z-index: 1000;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.75); backdrop-filter: blur(10px);
+    border: 1.5px solid var(--rose);
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; font-size: 1rem;
+    box-shadow: 0 4px 20px rgba(200,98,122,0.15);
+    transition: transform 0.3s ease;
+  }
+  .music-control:hover { transform: scale(1.1); }
+
+  /* ---- Main wrapper ---- */
+  #app {
+    min-height: 100vh; position: relative; z-index: 1;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 60px 20px; /* เพิ่ม padding บนล่างให้เลื่อนดูง่าย */
+    padding: 60px 20px;
   }
 
-  .love-card {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(15px);
-    border-radius: 30px; padding: 30px;
-    max-width: 600px; width: 100%;
-    text-align: center; 
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-    border: 1px solid rgba(255,255,255,0.8);
+  /* ---- Progress bar ---- */
+  .progress-bar-wrap {
+    width: 100%; max-width: 520px;
+    margin-bottom: 32px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.78rem; color: var(--text-light);
+    letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .progress-track {
+    height: 4px; background: rgba(232,160,180,0.2);
+    border-radius: 10px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--rose), var(--rose-deep));
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
   }
 
-  /* จัดการรูปภาพขนาดใหญ่แนวนอน */
-  .photo-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 25px;
+  /* ---- Card ---- */
+  .quiz-card {
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 40px 36px;
+    max-width: 520px; width: 100%;
+    border: 1px solid rgba(255,255,255,0.9);
+    box-shadow:
+      0 20px 60px rgba(200,98,122,0.08),
+      0 4px 16px rgba(200,98,122,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    position: relative; overflow: hidden;
+    animation: card-in 0.5s cubic-bezier(.4,0,.2,1) both;
   }
-  .large-img {
+  .quiz-card::before {
+    content: ''; position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(232,160,180,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(179,217,245,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ---- Question ---- */
+  .q-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem; font-style: italic;
+    color: var(--rose); letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem; font-weight: 300;
+    color: var(--text-dark); line-height: 1.3;
+    margin-bottom: 28px;
+  }
+  .q-sub {
+    font-size: 0.85rem; color: var(--text-light);
+    margin-top: -20px; margin-bottom: 24px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- Divider ---- */
+  .divider {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--rose), transparent); }
+  .divider-icon { color: var(--rose); font-size: 0.75rem; }
+
+  /* ---- Options (single / multi) ---- */
+  .options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+
+  .opt-btn {
+    padding: 14px 20px;
+    border-radius: 16px;
+    border: 1.5px solid rgba(232,160,180,0.3);
+    background: rgba(255,255,255,0.5);
+    color: var(--text-mid);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer; text-align: left;
+    transition: all 0.25s ease;
+    position: relative; overflow: hidden;
+    letter-spacing: 0.02em;
+  }
+  .opt-btn::after {
+    content: ''; position: absolute;
+    inset: 0; background: var(--rose);
+    opacity: 0; transition: opacity 0.25s ease;
+    z-index: -1;
+  }
+  .opt-btn:hover {
+    border-color: var(--rose);
+    color: var(--rose-deep);
+    transform: translateX(4px);
+    box-shadow: 0 4px 14px rgba(200,98,122,0.12);
+  }
+  .opt-btn.selected {
+    background: linear-gradient(135deg, rgba(232,160,180,0.25), rgba(179,217,245,0.15));
+    border-color: var(--rose-deep);
+    color: var(--rose-deep);
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(200,98,122,0.18);
+  }
+  .opt-btn.selected::before {
+    content: '✓ ';
+    font-size: 0.8rem;
+  }
+
+  /* ---- Text input ---- */
+  .text-input {
     width: 100%;
-    height: auto;
-    border-radius: 15px;
-    border: 5px solid white;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    transition: 0.3s;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1.5px solid rgba(232,160,180,0.3);
+    background: rgba(255,255,255,0.6);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    resize: vertical;
+    min-height: 80px;
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+  .text-input:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(232,160,180,0.15);
   }
 
-  .nav-btn {
-    margin-top: 25px; padding: 12px 35px;
-    background: white; color: var(--text-pink);
-    border: 2px solid var(--text-pink);
-    border-radius: 30px; cursor: pointer;
-    font-weight: 600; transition: 0.3s;
+  /* ---- Scale (1-5) ---- */
+  .scale-wrap {
+    display: flex; gap: 10px;
+    justify-content: center;
+    margin-bottom: 28px; flex-wrap: wrap;
   }
-  .nav-btn:hover { background: var(--text-pink); color: white; }
-
-  .hidden { display: none; }
-
-  .main-img-circle {
-    width: 180px; height: 180px; border-radius: 50%;
-    margin-bottom: 20px; border: 6px solid white;
-    object-fit: cover;
-    animation: float 4s ease-in-out infinite;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  .scale-btn {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(232,160,180,0.35);
+    background: rgba(255,255,255,0.5);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .scale-btn:hover { border-color: var(--rose); color: var(--rose-deep); transform: scale(1.1); }
+  .scale-btn.selected {
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    border-color: var(--rose-deep);
+    color: white;
+    box-shadow: 0 6px 18px rgba(200,98,122,0.3);
+    transform: scale(1.12);
+  }
+  .scale-labels {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; color: var(--text-light);
+    margin-top: -20px; margin-bottom: 24px;
+    letter-spacing: 0.05em;
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+  /* ---- Nav buttons ---- */
+  .nav-row {
+    display: flex; gap: 12px; justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .btn-back {
+    padding: 12px 28px; border-radius: 50px;
+    border: 1.5px solid rgba(180,180,180,0.4);
+    background: transparent; color: var(--text-light);
+    cursor: pointer; font-family: 'Sarabun', sans-serif;
+    font-size: 0.9rem; letter-spacing: 0.06em;
+    transition: all 0.3s ease;
+  }
+  .btn-back:hover { border-color: var(--rose); color: var(--rose-deep); }
+
+  .btn-next {
+    padding: 12px 32px; border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg, var(--rose-deep), #e87a9a);
+    color: white;
+    cursor: pointer; font-family: 'Sarabun', sans-serif;
+    font-size: 0.9rem; letter-spacing: 0.08em;
+    box-shadow: 0 6px 22px rgba(200,98,122,0.3);
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .btn-next::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes shimmer { to { left: 160%; } }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(200,98,122,0.4); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* ---- Thank you screen ---- */
+  #thank-you {
+    display: none; text-align: center;
+    animation: card-in 0.6s ease both;
+  }
+  #thank-you .ty-icon { font-size: 4rem; margin-bottom: 20px; animation: pulse-big 2s ease-in-out infinite; }
+  #thank-you h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 300;
+    color: var(--rose-deep); margin-bottom: 12px;
+  }
+  #thank-you p { color: var(--text-light); font-size: 1rem; line-height: 1.8; }
+
+  /* ---- Petals ---- */
+  .petal {
+    position: fixed; pointer-events: none; z-index: 0;
+    font-size: 1rem; opacity: 0;
+    animation: petal-fall linear infinite;
+  }
+  @keyframes petal-fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
   }
 </style>
 </head>
 <body>
 
+<canvas id="particles-canvas"></canvas>
+
+<!-- Overlay -->
 <div id="overlay">
-  <button class="start-btn" onclick="init()">กดสิ >< </button>
+  <div class="overlay-icon">💌</div>
+  <p class="overlay-title">มีคนอยากรู้จักม่อนมากขึ้น<br>ตอบให้หน่อยนะคะ 🌸</p>
+  <button class="start-btn" onclick="init()">เริ่มเลยค่ะ</button>
 </div>
 
+<!-- Music -->
 <div class="music-control" onclick="toggleMusic()" id="musicBtn">🎵</div>
-
 <audio id="bgMusic" loop>
   <source src="https://files.catbox.moe/i9or96.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container" id="page-1">
-  <div class="love-card">
-    <img src="https://img2.pic.in.th/Screenshot-2026-05-13-001004.png" class="main-img-circle">
-    <h1 style="color:var(--text-pink); font-family: 'Playfair Display', serif; font-size: 2.5rem;">รักม่อนที่สุดดดด\</h1>
-    <p style="margin: 15px 0; color: #777;">คิดถึงม่อนนนนนนนนนนน</p>
-    <button class="nav-btn" onclick="goToPage(2)">อยากรู้ก็กดสิคะ😆 ➔</button>
-  </div>
-</div>
-
-<div class="container hidden" id="page-2">
-  <div class="love-card">
-    <h2 style="color:var(--text-blue); margin-bottom: 10px; font-family: 'Playfair Display', serif;">ก็ลองดู่วววว</h2>
-    <p style="font-size: 0.9rem; color: #999; margin-bottom: 20px;">(เลื่อนลงเพื่อดูรูปทั้งหมด)</p>
-    
-    <div class="photo-list">
-      <img src="https://img2.pic.in.th/Screenshot-2026-05-13-001004.png" class="large-img">
-      <img src="https://img2.pic.in.th/Screenshot-2026-05-13-001144.png" class="large-img">
-      <img src="https://img1.pic.in.th/images/Screenshot-2026-05-13-002149.png" class="large-img">
+<!-- App -->
+<div id="app">
+  <!-- Progress -->
+  <div class="progress-bar-wrap" id="progress-wrap">
+    <div class="progress-label">
+      <span id="step-label">คำถาม 1 / 5</span>
+      <span id="pct-label">0%</span>
     </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
 
-    <button class="nav-btn" onclick="goToPage(1)" style="border-color: #ccc; color: #999; margin-top: 40px;">ย้อนกลับไปหน้าแรก</button>
+  <!-- Quiz card -->
+  <div class="quiz-card" id="quiz-card">
+    <!-- injected by JS -->
+  </div>
+
+  <!-- Thank you -->
+  <div id="thank-you" class="quiz-card">
+    <div class="ty-icon">💗</div>
+    <h2>ขอบคุณม่อนมากเลยนะ</h2>
+    <div class="divider" style="margin:16px 0">
+      <div class="divider-line"></div>
+      <div class="divider-icon">✦</div>
+      <div class="divider-line"></div>
+    </div>
+    <p>คำตอบของม่อนส่งไปแล้วค่ะ 🌸<br>รักม่อนที่สุดเลย ❤️</p>
   </div>
 </div>
 
 <script>
-const music = document.getElementById('bgMusic');
-let isPlaying = false;
+/* ========== CONFIG ========== */
+const WEBHOOK = 'https://discord.com/api/webhooks/1504486268761931937/haVDg_sexPQvfQNoS6ET5JkpHQaciQyauDOwGJPs67_HeawXuK2rfqkd-WZWa6Vuhvc0';
 
+const QUESTIONS = [
+  {
+    id: 'q1',
+    type: 'single',
+    text: 'ม่อนชอบฉันไหม? 💗',
+    options: ['ชอบมากกก 💕', 'ชอบนิดหน่อย', 'ยังไม่แน่ใจ 🤔', 'เฉย ๆ ค่ะ']
+  },
+  {
+    id: 'q2',
+    type: 'single',
+    text: 'ตอนนี้คิดถึงฉันอยู่ไหม?',
+    options: ['คิดถึงตลอดเลย! 🥺', 'คิดถึงอยู่บ้าง', 'เพิ่งนึกถึงพอดี 😊', 'ไม่ได้คิดถึง...']
+  },
+  {
+    id: 'q3',
+    type: 'scale',
+    text: 'ให้คะแนนความรู้สึกดีที่มีต่อฉันหน่อย?',
+    min: 1, max: 5,
+    minLabel: 'น้อยมาก', maxLabel: 'มากที่สุด 💗'
+  },
+  {
+    id: 'q4',
+    type: 'single',
+    text: 'อยากให้ความสัมพันธ์เราเป็นยังไงต่อไป?',
+    options: ['อยากคบกัน 💑', 'อยากเป็นเพื่อนสนิทก่อน', 'อยู่แบบนี้ก็ดีแล้ว', 'ยังไม่พร้อมค่ะ']
+  },
+  {
+    id: 'q5',
+    type: 'text',
+    text: 'อยากบอกอะไรฉันบ้างมั้ย? 🌸',
+    placeholder: 'พิมพ์ได้เลยนะคะ...'
+  }
+];
+
+/* ========== STATE ========== */
+let currentStep = 0;
+const answers = {};
+let music, isPlaying = false;
+
+/* ========== INIT ========== */
 function init() {
-  document.getElementById('overlay').style.opacity = '0';
-  setTimeout(() => document.getElementById('overlay').style.display = 'none', 800);
-  music.play();
+  const ov = document.getElementById('overlay');
+  ov.classList.add('fade-out');
+  setTimeout(() => ov.style.display = 'none', 1200);
+  music = document.getElementById('bgMusic');
+  music.play().catch(()=>{});
   isPlaying = true;
   document.getElementById('musicBtn').textContent = '⏸️';
+  spawnPetals();
+  renderStep();
 }
 
 function toggleMusic() {
-  if (isPlaying) {
-    music.pause();
-    document.getElementById('musicBtn').textContent = '▶️';
-  } else {
-    music.play();
-    document.getElementById('musicBtn').textContent = '⏸️';
-  }
+  if (isPlaying) { music.pause(); document.getElementById('musicBtn').textContent = '▶️'; }
+  else { music.play(); document.getElementById('musicBtn').textContent = '⏸️'; }
   isPlaying = !isPlaying;
 }
 
-function goToPage(page) {
-  // เลื่อนหน้าจอขึ้นไปด้านบนสุดก่อนเปลี่ยนหน้า
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  
-  if (page === 2) {
-    document.getElementById('page-1').classList.add('hidden');
-    document.getElementById('page-2').classList.remove('hidden');
-    // ปรับให้ body เลื่อนหน้าจอได้ในหน้า 2
-    document.body.style.overflowY = 'auto';
-  } else {
-    document.getElementById('page-2').classList.add('hidden');
-    document.getElementById('page-1').classList.remove('hidden');
-    // หน้าแรกให้ล็อคไว้ไม่ให้เลื่อนเกินจำเป็น
-    document.body.style.overflowY = 'hidden';
+/* ========== RENDER ========== */
+function renderStep() {
+  if (currentStep >= QUESTIONS.length) { showThankYou(); return; }
+
+  const q = QUESTIONS[currentStep];
+  const total = QUESTIONS.length;
+  const pct = Math.round((currentStep / total) * 100);
+
+  document.getElementById('step-label').textContent = `คำถาม ${currentStep + 1} / ${total}`;
+  document.getElementById('pct-label').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  const card = document.getElementById('quiz-card');
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = '';
+
+  let html = `
+    <div class="q-num">✦ ข้อที่ ${currentStep + 1}</div>
+    <h2 class="q-text">${q.text}</h2>
+    <div class="divider"><div class="divider-line"></div><div class="divider-icon">❀</div><div class="divider-line"></div></div>
+  `;
+
+  if (q.type === 'single') {
+    html += `<div class="options">`;
+    q.options.forEach((opt, i) => {
+      const sel = answers[q.id] === opt ? 'selected' : '';
+      html += `<button class="opt-btn ${sel}" onclick="selectSingle('${q.id}', this, ${i})">${opt}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  if (q.type === 'scale') {
+    html += `<div class="scale-wrap">`;
+    for (let v = q.min; v <= q.max; v++) {
+      const sel = answers[q.id] == v ? 'selected' : '';
+      html += `<button class="scale-btn ${sel}" onclick="selectScale('${q.id}', ${v})">${v}</button>`;
+    }
+    html += `</div>`;
+    html += `<div class="scale-labels"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div>`;
+  }
+
+  if (q.type === 'text') {
+    const val = answers[q.id] || '';
+    html += `<textarea class="text-input" id="text-ans" placeholder="${q.placeholder}" oninput="answers['${q.id}'] = this.value">${val}</textarea>`;
+  }
+
+  html += `<div class="nav-row">`;
+  if (currentStep > 0) html += `<button class="btn-back" onclick="prevStep()">← ย้อนกลับ</button>`;
+  html += `<button class="btn-next" id="btn-next" onclick="nextStep()">`;
+  html += currentStep === QUESTIONS.length - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →';
+  html += `</button></div>`;
+
+  card.innerHTML = html;
+}
+
+function selectSingle(id, el, idx) {
+  answers[id] = QUESTIONS[currentStep].options[idx];
+  document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectScale(id, val) {
+  answers[id] = val;
+  document.querySelectorAll('.scale-btn').forEach(b => {
+    b.classList.toggle('selected', parseInt(b.textContent) === val);
+  });
+}
+
+function nextStep() {
+  const q = QUESTIONS[currentStep];
+  if (q.type === 'text') answers[q.id] = document.getElementById('text-ans')?.value || '';
+  if (!answers[q.id] && q.type !== 'text') {
+    const btn = document.getElementById('btn-next');
+    btn.textContent = 'เลือกก่อนนะคะ 🥺';
+    setTimeout(() => {
+      btn.textContent = currentStep === QUESTIONS.length - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →';
+    }, 1500);
+    return;
+  }
+  currentStep++;
+  renderStep();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevStep() {
+  currentStep--;
+  renderStep();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ========== SUBMIT ========== */
+async function showThankYou() {
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('quiz-card').style.display = 'none';
+  document.getElementById('thank-you').style.display = 'block';
+
+  // Build Discord embed
+  const fields = QUESTIONS.map(q => ({
+    name: q.text,
+    value: String(answers[q.id] || '—'),
+    inline: false
+  }));
+
+  const payload = {
+    username: '💌 ม่อนตอบแล้ว!',
+    avatar_url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png',
+    embeds: [{
+      title: '🌸 คำตอบจากม่อน',
+      color: 0xe8a0b4,
+      fields,
+      footer: { text: `ส่งเมื่อ ${new Date().toLocaleString('th-TH')}` },
+      thumbnail: { url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png' }
+    }]
+  };
+
+  try {
+    await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { console.error('webhook error', e); }
+}
+
+/* ========== PARTICLES ========== */
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = 1 + Math.random() * 2.5;
+    this.alpha = 0.1 + Math.random() * 0.25;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = -0.2 - Math.random() * 0.3;
+    this.color = Math.random() > 0.5
+      ? `rgba(232,160,180,${this.alpha})`
+      : `rgba(179,217,245,${this.alpha})`;
+  }
+  update() { this.x += this.vx; this.y += this.vy; if (this.y < -10) this.reset(); }
+  draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); }
+}
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+(function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+})();
+
+/* ========== PETALS ========== */
+const PETALS = ['🌸','💗','✿','🌷','❀'];
+function spawnPetals() {
+  for (let i = 0; i < 12; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = PETALS[Math.floor(Math.random() * PETALS.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.fontSize = (0.7 + Math.random() * 0.8) + 'rem';
+    p.style.animationDuration = (7 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    document.body.appendChild(p);
   }
 }
 </script>
-
 </body>
 </html>
