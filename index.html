@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🌸 ม่อนตอบหน่อยนะ</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --rose: #f0a3b9;
-    --rose-deep: #d65a7f;
-    --rose-glow: rgba(240, 163, 185, 0.4);
-    --blush: #fff0f5;
-    --sky: #c4e1f7;
-    --cream: #fbf7f4;
-    --text-dark: #2d1f27;
-    --text-mid: #6b4e5b;
-    --text-light: #a38593;
-    --card-bg: rgba(255, 255, 255, 0.45);
-    --card-border: rgba(255, 255, 255, 0.7);
+    --rose: #ffafcc;
+    --rose-deep: #ff5c8a;
+    --rose-glow: rgba(255, 175, 204, 0.3);
+    --sky: #a2d2ff;
+    --sky-deep: #4ea8de;
+    --cream: #fff9f9;
+    --text-dark: #2b1c22;
+    --text-mid: #5e434f;
+    --text-light: #9c7c8c;
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.7);
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,324 +25,165 @@
 
   body {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--cream) 0%, #f7e6eb 50%, #e6f0fa 100%);
+    background: linear-gradient(135deg, #fff5f7 0%, #ffeef2 40%, #e8f4fd 100%);
     font-family: 'Sarabun', sans-serif;
     color: var(--text-dark);
     overflow-x: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Ambient Blur Background for Depth */
-  body::before {
-    content: ''; position: fixed; width: 300px; height: 300px;
-    background: var(--rose-glow); filter: blur(120px);
-    top: 10%; left: 10%; border-radius: 50%; z-index: -1;
+  /* Ambient Aurora Blurred Lights */
+  .aurora {
+    position: fixed; width: 500px; height: 500px; border-radius: 50%;
+    filter: blur(120px); z-index: -1; opacity: 0.6; pointer-events: none;
+    animation: aurora-float 12s ease-in-out infinite alternate;
   }
-  body::after {
-    content: ''; position: fixed; width: 400px; height: 400px;
-    background: rgba(196, 225, 247, 0.4); filter: blur(150px);
-    bottom: 10%; right: 10%; border-radius: 50%; z-index: -1;
-  }
+  .aurora-1 { background: var(--rose); top: -10%; left: -10%; }
+  .aurora-2 { background: var(--sky); bottom: -10%; right: -10%; animation-delay: -4s; }
+  @keyframes aurora-float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 30px) scale(1.2); } }
 
-  /* ---- Canvas ---- */
-  #particles-canvas {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none; z-index: 0;
-  }
+  #particles-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 
   /* ---- Overlay ---- */
   #overlay {
-    position: fixed; inset: 0;
-    background: var(--cream);
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    z-index: 9999; 
-    transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    position: fixed; inset: 0; background: var(--cream);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    z-index: 9999; transition: all 1s cubic-bezier(0.86, 0, 0.07, 1);
   }
-  #overlay.fade-out { 
-    opacity: 0; 
-    transform: scale(1.05);
-    pointer-events: none; 
-  }
-
-  .overlay-icon { font-size: 3.5rem; animation: pulse-big 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
-  @keyframes pulse-big { 0%,100%{transform:scale(1) rotate(0deg)} 50%{transform:scale(1.12) rotate(3deg)} }
-
+  #overlay.fade-out { opacity: 0; transform: translateY(-50px) scale(1.05); pointer-events: none; }
+  .overlay-icon { font-size: 4rem; animation: pulse-bounce 2.5s cubic-bezier(0.25, 1, 0.5, 1) infinite; }
+  @keyframes pulse-bounce { 0%, 100% { transform: scale(1) translateY(0); } 50% { transform: scale(1.1) translateY(-10px); } }
+  
   .overlay-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem; font-weight: 400;
-    color: var(--text-mid); margin: 20px 0 36px;
-    letter-spacing: 0.05em; text-align: center;
-    line-height: 1.5;
-    padding: 0 20px;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.7.5rem; font-weight: 500;
+    color: var(--text-mid); margin: 24px 0 40px; text-align: center; line-height: 1.6; letter-spacing: 0.05em;
   }
 
   .start-btn {
-    padding: 16px 52px;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 1rem; font-weight: 600; letter-spacing: 0.1em;
-    background: transparent; color: var(--rose-deep);
-    border: 2px solid var(--rose-deep);
-    border-radius: 50px; cursor: pointer;
-    position: relative; overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(214, 90, 127, 0.15);
+    padding: 16px 56px; font-family: 'Sarabun', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--rose-deep), #ff758f); color: white; border: none;
+    border-radius: 50px; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(255, 92, 138, 0.3);
   }
-  .start-btn::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, var(--rose-deep), #e57395);
-    transform: scaleX(0); transform-origin: right;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: -1;
-  }
-  .start-btn:hover::before { transform: scaleX(1); transform-origin: left; }
-  .start-btn:hover { color: white; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(214, 90, 127, 0.3); }
+  .start-btn:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 15px 40px rgba(255, 92, 138, 0.45); }
 
-  /* ---- Music ---- */
+  /* ---- Music Control ---- */
   .music-control {
-    position: fixed; top: 24px; right: 24px; z-index: 1000;
-    width: 48px; height: 48px; border-radius: 50%;
-    background: rgba(255,255,255,0.6); backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.8);
-    display: flex; justify-content: center; align-items: center;
-    cursor: pointer; font-size: 1.1rem;
-    box-shadow: 0 8px 32px rgba(214,90,127,0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed; top: 24px; right: 24px; z-index: 1000; width: 48px; height: 48px; border-radius: 50%;
+    background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border); display: flex; justify-content: center; align-items: center;
+    cursor: pointer; font-size: 1.2rem; box-shadow: 0 8px 32px rgba(0,0,0,0.04); transition: all 0.3s;
   }
   .music-control:hover { transform: scale(1.1) rotate(15deg); background: rgba(255,255,255,0.8); }
 
-  /* ---- Main wrapper ---- */
-  #app {
-    min-height: 100vh; position: relative; z-index: 1;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 40px 20px;
-  }
+  /* ---- Main Wrapper & 3D Container ---- */
+  #app { width: 100%; max-width: 540px; padding: 40px 20px; z-index: 1; }
+  
+  .progress-bar-wrap { margin-bottom: 28px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-light); font-weight: 600; margin-bottom: 10px; }
+  .progress-track { height: 6px; background: rgba(255, 175, 204, 0.2); border-radius: 20px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(to right, var(--rose), var(--rose-deep)); border-radius: 20px; transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
 
-  /* ---- Progress bar ---- */
-  .progress-bar-wrap {
-    width: 100%; max-width: 540px;
-    margin-bottom: 24px;
-    padding: 0 8px;
-  }
-  .progress-label {
-    display: flex; justify-content: space-between;
-    font-size: 0.8rem; color: var(--text-light);
-    letter-spacing: 0.06em; margin-bottom: 10px;
-    font-weight: 600;
-  }
-  .progress-track {
-    height: 6px; background: rgba(240,163,185,0.15);
-    border-radius: 20px; overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(to right, var(--rose), var(--rose-deep));
-    border-radius: 20px;
-    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  /* ---- Card & Animation Container ---- */
-  .card-container {
-    width: 100%; max-width: 540px;
-    position: relative;
-    perspective: 1000px;
-  }
-
+  /* ---- 3D Card Stage ---- */
+  .stage-3d { perspective: 1500px; width: 100%; }
+  
   .quiz-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border-radius: 32px;
-    padding: 44px 40px;
-    width: 100%;
-    border: 1px solid var(--card-border);
-    box-shadow:
-      0 30px 70px rgba(214,90,127,0.08),
-      0 10px 30px rgba(0,0,0,0.02),
-      inset 0 1px 1px rgba(255,255,255,0.6);
-    position: relative; overflow: hidden;
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+    background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+    border-radius: 32px; padding: 44px 38px; width: 100%; border: 1px solid var(--glass-border);
+    box-shadow: 0 30px 70px rgba(214,90,127,0.06), inset 0 1px 2px rgba(255,255,255,0.5);
+    transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+    opacity: 1; transform: rotateX(0deg) translateZ(0);
   }
 
-  /* สไลด์เปลี่ยนคำถามแบบเนียนๆ */
-  .slide-out-left { transform: translateX(-30px) scale(0.95); opacity: 0; }
-  .slide-in-right { transform: translateX(30px) scale(0.95); opacity: 0; }
-  .slide-active { transform: translateX(0) scale(1); opacity: 1; }
+  /* Smooth 3D Flip Transitions */
+  .flip-out-left { transform: rotateY(-30deg) translateX(-50px) scale(0.9); opacity: 0; pointer-events: none; }
+  .flip-out-right { transform: rotateY(30deg) translateX(50px) scale(0.9); opacity: 0; pointer-events: none; }
+  .flip-in-left { transform: rotateY(-30deg) translateX(-50px) scale(0.9); opacity: 0; }
+  .flip-in-right { transform: rotateY(30deg) translateX(50px) scale(0.9); opacity: 0; }
 
-  @media (max-width: 480px) {
-    .quiz-card { padding: 32px 24px; border-radius: 24px; }
-  }
+  .q-num { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-style: italic; font-weight: 600; color: var(--rose-deep); margin-bottom: 12px; letter-spacing: 0.05em; }
+  .q-text { font-size: 1.65rem; font-weight: 600; color: var(--text-dark); line-height: 1.45; margin-bottom: 32px; }
 
-  /* ---- Question ---- */
-  .q-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.95rem; font-style: italic; font-weight: 600;
-    color: var(--rose-deep); letter-spacing: 0.08em;
-    margin-bottom: 12px;
-  }
-  .q-text {
-    font-size: 1.6rem; font-weight: 600;
-    color: var(--text-dark); line-height: 1.4;
-    margin-bottom: 32px;
-  }
-
-  /* ---- Divider ---- */
-  .divider {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 28px;
-  }
-  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(214,90,127,0.3), transparent); }
-  .divider-icon { color: var(--rose-deep); font-size: 0.8rem; opacity: 0.7; }
-
-  /* ---- Options ---- */
+  /* ---- Options with Holographic Sheen ---- */
   .options { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
-
+  
   .opt-btn {
-    padding: 16px 24px;
-    border-radius: 20px;
-    border: 1.5px solid rgba(240,163,185,0.4);
-    background: rgba(255,255,255,0.4);
-    color: var(--text-mid);
-    font-family: 'Sarabun', sans-serif;
-    font-size: 0.98rem; font-weight: 400;
-    cursor: pointer; text-align: left;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative; z-index: 1;
+    padding: 16px 24px; border-radius: 20px; border: 1.5px solid rgba(255,175,204,0.4);
+    background: rgba(255,255,255,0.45); color: var(--text-mid); font-family: 'Sarabun', sans-serif;
+    font-size: 1rem; cursor: pointer; text-align: left; position: relative; overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
-  .opt-btn:hover {
-    border-color: var(--rose-deep);
-    color: var(--rose-deep);
-    background: rgba(255, 255, 255, 0.75);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(214,90,127,0.1);
+  /* Holographic Glow Light Effect */
+  .opt-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.5) 45%, rgba(255,175,204,0.2) 50%, transparent 65%);
+    transform: translateX(-100%); transition: none; pointer-events: none;
   }
-  .opt-btn:active { transform: translateY(0px) scale(0.98); }
+  .opt-btn:hover::before { transform: translateX(100%); transition: transform 0.7s ease; }
+  .opt-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); background: rgba(255,255,255,0.8); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,92,138,0.08); }
+  .opt-btn:active { transform: scale(0.98); }
 
   .opt-btn.selected {
-    background: linear-gradient(135deg, rgba(240,163,185,0.3) 0%, rgba(196,225,247,0.2) 100%);
-    border-color: var(--rose-deep);
-    color: var(--rose-deep);
-    font-weight: 600;
-    box-shadow: 0 8px 25px rgba(214,90,127,0.15), inset 0 1px 2px rgba(255,255,255,0.5);
-    padding-left: 36px;
+    background: linear-gradient(135deg, rgba(255,175,204,0.3) 0%, rgba(162,210,255,0.2) 100%);
+    border-color: var(--rose-deep); color: var(--rose-deep); font-weight: 600;
+    box-shadow: 0 8px 25px rgba(255,92,138,0.15); padding-left: 38px;
   }
-  .opt-btn.selected::before {
-    content: '✦'; position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
-    font-size: 0.8rem; color: var(--rose-deep);
-  }
+  .opt-btn.selected::after { content: '✦'; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; }
 
-  /* ---- Text input ---- */
+  /* ---- Modern Form Controls ---- */
   .text-input {
-    width: 100%;
-    padding: 16px 20px;
-    border-radius: 20px;
-    border: 1.5px solid rgba(240,163,185,0.4);
-    background: rgba(255,255,255,0.5);
-    font-family: 'Sarabun', sans-serif;
-    font-size: 0.98rem; color: var(--text-dark);
-    outline: none; transition: all 0.3s ease;
-    resize: none; min-height: 110px;
-    margin-bottom: 32px; line-height: 1.6;
+    width: 100%; padding: 18px; border-radius: 20px; border: 1.5px solid rgba(255,175,204,0.4);
+    background: rgba(255,255,255,0.5); font-family: 'Sarabun', sans-serif; font-size: 1rem;
+    color: var(--text-dark); outline: none; transition: all 0.3s; resize: none; min-height: 120px; margin-bottom: 32px;
   }
-  .text-input:focus {
-    border-color: var(--rose-deep);
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 8px 25px rgba(214,163,185,0.15);
-  }
+  .text-input:focus { border-color: var(--rose-deep); background: rgba(255,255,255,0.9); box-shadow: 0 10px 30px rgba(255,175,204,0.2); }
 
-  /* ---- Scale (1-5) ---- */
-  .scale-wrap {
-    display: flex; gap: 12px;
-    justify-content: center;
-    margin-bottom: 24px; margin-top: 10px;
-  }
+  .scale-wrap { display: flex; gap: 12px; justify-content: center; margin: 16px 0 24px; }
   .scale-btn {
-    width: 56px; height: 56px; border-radius: 50%;
-    border: 1.5px solid rgba(240,163,185,0.4);
-    background: rgba(255,255,255,0.4);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem; font-weight: 600; color: var(--text-mid);
-    cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid rgba(255,175,204,0.4);
+    background: rgba(255,255,255,0.45); font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+    font-weight: 600; color: var(--text-mid); cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .scale-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); transform: scale(1.12) translateY(-2px); background: rgba(255,255,255,0.7); }
-  .scale-btn:active { transform: scale(0.95); }
-  .scale-btn.selected {
-    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
-    border-color: var(--rose-deep); color: white;
-    box-shadow: 0 8px 25px rgba(214,90,127,0.3);
-    transform: scale(1.15);
-  }
-  .scale-labels {
-    display: flex; justify-content: space-between;
-    font-size: 0.8rem; color: var(--text-light);
-    margin-bottom: 32px; padding: 0 6px; font-weight: 600;
-  }
+  .scale-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); transform: scale(1.12) translateY(-2px); }
+  .scale-btn.selected { background: linear-gradient(135deg, var(--rose), var(--rose-deep)); border-color: var(--rose-deep); color: white; box-shadow: 0 8px 25px rgba(255,92,138,0.3); transform: scale(1.15); }
+  .scale-labels { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-light); margin-bottom: 32px; font-weight: 600; padding: 0 4px; }
 
-  /* ---- Nav buttons ---- */
+  /* ---- Buttons Navigation ---- */
   .nav-row { display: flex; gap: 14px; justify-content: flex-end; }
-  
-  .btn-back {
-    padding: 14px 32px; border-radius: 50px;
-    border: 1.5px solid rgba(163,133,147,0.3);
-    background: transparent; color: var(--text-light);
-    cursor: pointer; font-family: 'Sarabun', sans-serif;
-    font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease;
-  }
+  .btn-back { padding: 14px 32px; border-radius: 50px; border: 1.5px solid rgba(156,124,140,0.3); background: transparent; color: var(--text-light); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s; }
   .btn-back:hover { border-color: var(--rose-deep); color: var(--rose-deep); background: rgba(255,255,255,0.3); }
-
-  .btn-next {
-    padding: 14px 36px; border-radius: 50px; border: none;
-    background: linear-gradient(135deg, var(--rose-deep), #e87a9a);
-    color: white; cursor: pointer; font-family: 'Sarabun', sans-serif;
-    font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em;
-    box-shadow: 0 8px 25px rgba(214,90,127,0.25);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative; overflow: hidden;
-  }
-  .btn-next::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-    animation: shimmer 3s infinite;
-  }
-  @keyframes shimmer { to { left: 160%; } }
-  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(214,90,127,0.35); }
-  .btn-next:active { transform: translateY(0); }
-
-  /* ---- Thank you screen ---- */
-  #thank-you {
-    display: none; text-align: center; opacity: 0;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  #thank-you.show { display: block; opacity: 1; animation: card-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-  @keyframes card-pop { from { transform: scale(0.9) translateY(20px); } to { transform: scale(1) translateY(0); } }
   
-  #thank-you .ty-icon { font-size: 4.5rem; margin-bottom: 24px; animation: pulse-big 2.5s ease-in-out infinite; }
-  #thank-you h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem; font-weight: 400;
-    color: var(--rose-deep); margin-bottom: 16px;
+  .btn-next {
+    padding: 14px 36px; border-radius: 50px; border: none; background: linear-gradient(135deg, var(--rose-deep), #ff758f);
+    color: white; cursor: pointer; font-size: 0.9rem; font-weight: 600; box-shadow: 0 8px 25px rgba(255,92,138,0.25); transition: all 0.3s;
   }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,92,138,0.4); }
+
+  /* ---- Thank You Card ---- */
+  #thank-you { display: none; text-align: center; }
+  #thank-you.active { display: block; animation: final-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  @keyframes final-pop { from { transform: scale(0.85) translateY(30px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+  .ty-icon { font-size: 4.5rem; margin-bottom: 20px; animation: pulse-bounce 2.5s infinite; }
+  #thank-you h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.3rem; font-weight: 500; color: var(--rose-deep); margin-bottom: 16px; }
   #thank-you p { color: var(--text-mid); font-size: 1.05rem; line-height: 1.8; }
 
-  /* ---- Petals ---- */
-  .petal {
-    position: fixed; pointer-events: none; z-index: 0;
-    font-size: 1.2rem; opacity: 0;
-    animation: petal-fall linear infinite;
-  }
-  @keyframes petal-fall {
-    0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.8; }
+  /* ---- Falling Elements (Mixed Blur Depth) ---- */
+  .petal { position: fixed; pointer-events: none; z-index: 0; opacity: 0; animation: fall linear forwards; }
+  @keyframes fall {
+    0% { transform: translateY(-50px) translateX(0) rotate(0deg); opacity: 0; }
+    15% { opacity: 0.8; }
     90% { opacity: 0.4; }
-    100% { transform: translateY(105vh) translateX(80px) rotate(450deg); opacity: 0; }
+    100% { transform: translateY(105vh) translateX(100px) rotate(360deg); opacity: 0; }
   }
 </style>
 </head>
 <body>
 
+<div class="aurora aurora-1"></div>
+<div class="aurora aurora-2"></div>
 <canvas id="particles-canvas"></canvas>
 
 <div id="overlay">
@@ -357,7 +198,7 @@
 </audio>
 
 <div id="app">
-  <div class="progress-bar-wrap" id="progress-wrap" style="display: none;">
+  <div class="progress-bar-wrap" id="progress-wrap" style="display: none; opacity: 0; transition: opacity 0.5s;">
     <div class="progress-label">
       <span id="step-label">คำถาม 1 / 5</span>
       <span id="pct-label">0%</span>
@@ -367,89 +208,59 @@
     </div>
   </div>
 
-  <div class="card-container">
-    <div class="quiz-card slide-active" id="quiz-card" style="display: none;">
+  <div class="stage-3d">
+    <div class="quiz-card" id="quiz-card" style="display: none;">
       </div>
 
     <div id="thank-you" class="quiz-card">
       <div class="ty-icon">💗</div>
       <h2>ขอบคุณม่อนมากเลยนะ</h2>
-      <div class="divider" style="margin:20px 0">
-        <div class="divider-line"></div>
-        <div class="divider-icon">✦</div>
-        <div class="divider-line"></div>
-      </div>
       <p>คำตอบของม่อนส่งไปแล้วค่ะ 🌸<br>รักม่อนที่สุดเลย ❤️</p>
     </div>
   </div>
 </div>
 
 <script>
-/* ========== CONFIG ========== */
+/* ========== DATA CONFIG ========== */
 const WEBHOOK = 'https://discord.com/api/webhooks/1504486268761931937/haVDg_sexPQvfQNoS6ET5JkpHQaciQyauDOwGJPs67_HeawXuK2rfqkd-WZWa6Vuhvc0';
 
 const QUESTIONS = [
-  {
-    id: 'q1',
-    type: 'single',
-    text: 'ม่อนชอบฉันไหม? 💗',
-    options: ['ชอบมากกก 💕', 'ชอบนิดหน่อย', 'ยังไม่แน่ใจ 🤔', 'เฉย ๆ ค่ะ']
-  },
-  {
-    id: 'q2',
-    type: 'single',
-    text: 'ตอนนี้คิดถึงฉันอยู่ไหม?',
-    options: ['คิดถึงตลอดเลย! 🥺', 'คิดถึงอยู่บ้าง', 'เพิ่งนึกถึงพอดี 😊', 'ไม่ได้คิดถึง...']
-  },
-  {
-    id: 'q3',
-    type: 'scale',
-    text: 'ให้คะแนนความรู้สึกดีที่มีต่อฉันหน่อย?',
-    min: 1, max: 5,
-    minLabel: 'น้อยมาก', maxLabel: 'มากที่สุด 💗'
-  },
-  {
-    id: 'q4',
-    type: 'single',
-    text: 'อยากให้ความสัมพันธ์เราเป็นยังไงต่อไป?',
-    options: ['อยากคบกัน 💑', 'อยากเป็นเพื่อนสนิทก่อน', 'อยู่แบบนี้ก็ดีแล้ว', 'ยังไม่พร้อมค่ะ']
-  },
-  {
-    id: 'q5',
-    type: 'text',
-    text: 'อยากบอกอะไรฉันบ้างมั้ย? 🌸',
-    placeholder: 'พิมพ์ได้เลยนะคะ...'
-  }
+  { id: 'q1', type: 'single', text: 'ม่อนชอบฉันไหม? 💗', options: ['ชอบมากกก 💕', 'ชอบนิดหน่อย', 'ยังไม่แน่ใจ 🤔', 'เฉย ๆ ค่ะ'] },
+  { id: 'q2', type: 'single', text: 'ตอนนี้คิดถึงฉันอยู่ไหม?', options: ['คิดถึงตลอดเลย! 🥺', 'คิดถึงอยู่บ้าง', 'เพิ่งนึกถึงพอดี 😊', 'ไม่ได้คิดถึง...'] },
+  { id: 'q3', type: 'scale', text: 'ให้คะแนนความรู้สึกดีที่มีต่อฉันหน่อย?', min: 1, max: 5, minLabel: 'น้อยมาก', maxLabel: 'มากที่สุด 💗' },
+  { id: 'q4', type: 'single', text: 'อยากให้ความสัมพันธ์เราเป็นยังไงต่อไป?', options: ['อยากคบกัน 💑', 'อยากเป็นเพื่อนสนิทก่อน', 'อยู่แบบนี้ก็ดีแล้ว', 'ยังไม่พร้อมค่ะ'] },
+  { id: 'q5', type: 'text', text: 'อยากบอกอะไรฉันบ้างมั้ย? 🌸', placeholder: 'พิมพ์ได้เลยนะคะ...' }
 ];
 
-/* ========== STATE ========== */
 let currentStep = 0;
 const answers = {};
 let music, isPlaying = false;
 
-/* ========== INTERACTIVE PARTICLES MOUSE STATE ========== */
-const mouse = { x: null, y: null, radius: 100 };
+/* ========== MOUSE CAPTURE FOR DYNAMIC PARTICLES ========== */
+const mouse = { x: null, y: null, radius: 120 };
 window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
 window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 window.addEventListener('touchmove', (e) => { if(e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } });
 window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
 
-/* ========== INIT ========== */
+/* ========== INITIALIZE ========== */
 function init() {
-  const ov = document.getElementById('overlay');
-  ov.classList.add('fade-out');
+  document.getElementById('overlay').classList.add('fade-out');
   setTimeout(() => {
-    ov.style.display = 'none';
-    document.getElementById('progress-wrap').style.display = 'block';
+    document.getElementById('overlay').style.display = 'none';
+    const pWrap = document.getElementById('progress-wrap');
+    pWrap.style.display = 'block';
+    setTimeout(() => pWrap.style.opacity = '1', 50);
     document.getElementById('quiz-card').style.display = 'block';
-  }, 800);
+  }, 1000);
   
   music = document.getElementById('bgMusic');
   music.play().catch(()=>{});
   isPlaying = true;
   document.getElementById('musicBtn').textContent = '⏸️';
-  spawnPetals();
-  renderStep(true);
+  
+  startPetalRain();
+  renderCard(true);
 }
 
 function toggleMusic() {
@@ -458,9 +269,9 @@ function toggleMusic() {
   isPlaying = !isPlaying;
 }
 
-/* ========== RENDER WITH SMOOTH ANIMATION ========== */
-function renderStep(isInitial = false, direction = 'next') {
-  if (currentStep >= QUESTIONS.length) { showThankYou(); return; }
+/* ========== ULTRA SMOOTH 3D RENDERING ========== */
+function renderCard(isFirstTime = false, direction = 'next') {
+  if (currentStep >= QUESTIONS.length) { triggerSubmit(); return; }
 
   const q = QUESTIONS[currentStep];
   const total = QUESTIONS.length;
@@ -471,19 +282,17 @@ function renderStep(isInitial = false, direction = 'next') {
   document.getElementById('progress-fill').style.width = pct + '%';
 
   const card = document.getElementById('quiz-card');
-  
-  // สร้างเนื้อหา HTML รอไว้
+
   let html = `
     <div class="q-num">✦ ข้อที่ ${currentStep + 1}</div>
     <h2 class="q-text">${q.text}</h2>
-    <div class="divider"><div class="divider-line"></div><div class="divider-icon">❀</div><div class="divider-line"></div></div>
   `;
 
   if (q.type === 'single') {
     html += `<div class="options">`;
     q.options.forEach((opt, i) => {
       const sel = answers[q.id] === opt ? 'selected' : '';
-      html += `<button class="opt-btn ${sel}" onclick="selectSingle('${q.id}', this, ${i})">${opt}</button>`;
+      html += `<button class="opt-btn ${sel}" onclick="handleSingleSelect('${q.id}', this, ${i})">${opt}</button>`;
     });
     html += `</div>`;
   }
@@ -492,205 +301,156 @@ function renderStep(isInitial = false, direction = 'next') {
     html += `<div class="scale-wrap">`;
     for (let v = q.min; v <= q.max; v++) {
       const sel = answers[q.id] == v ? 'selected' : '';
-      html += `<button class="scale-btn ${sel}" onclick="selectScale('${q.id}', ${v})">${v}</button>`;
+      html += `<button class="scale-btn ${sel}" onclick="handleScaleSelect('${q.id}', ${v})">${v}</button>`;
     }
-    html += `</div>`;
-    html += `<div class="scale-labels"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div>`;
+    html += `</div><div class="scale-labels"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div>`;
   }
 
   if (q.type === 'text') {
-    const val = answers[q.id] || '';
-    html += `<textarea class="text-input" id="text-ans" placeholder="${q.placeholder}" oninput="answers['${q.id}'] = this.value">${val}</textarea>`;
+    html += `<textarea class="text-input" id="text-ans" placeholder="${q.placeholder}" oninput="answers['${q.id}'] = this.value">${answers[q.id] || ''}</textarea>`;
   }
 
   html += `<div class="nav-row">`;
-  if (currentStep > 0) html += `<button class="btn-back" onclick="prevStep()">← ย้อนกลับ</button>`;
-  html += `<button class="btn-next" id="btn-next" onclick="nextStep()">`;
-  html += currentStep === QUESTIONS.length - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →';
-  html += `</button></div>`;
+  if (currentStep > 0) html += `<button class="btn-back" onclick="navigateStep('prev')">← ย้อนกลับ</button>`;
+  html += `<button class="btn-next" id="btn-next" onclick="navigateStep('next')">${currentStep === total - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →'}</button></div>`;
 
-  if (isInitial) {
+  if (isFirstTime) {
     card.innerHTML = html;
     return;
   }
 
-  // เล่นอนิเมชันตอนเปลี่ยนหน้าลื่นๆ (Slide out -> Change content -> Slide in)
-  card.classList.remove('slide-active');
-  card.classList.add(direction === 'next' ? 'slide-out-left' : 'slide-in-right');
+  // 3D Matrix Flip Logic
+  card.classList.add(direction === 'next' ? 'flip-out-left' : 'flip-out-right');
   
   setTimeout(() => {
     card.innerHTML = html;
-    card.classList.remove('slide-out-left', 'slide-in-right');
-    card.classList.add(direction === 'next' ? 'slide-in-right' : 'slide-out-left');
+    card.classList.remove('flip-out-left', 'flip-out-right');
+    card.classList.add(direction === 'next' ? 'flip-in-right' : 'flip-in-left');
     
     requestAnimationFrame(() => {
-      card.classList.add('slide-active');
+      setTimeout(() => {
+        card.classList.remove('flip-in-right', 'flip-in-left');
+      }, 50);
     });
-  }, 250);
+  }, 300);
 }
 
-function selectSingle(id, el, idx) {
+function handleSingleSelect(id, el, idx) {
   answers[id] = QUESTIONS[currentStep].options[idx];
   document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
   el.classList.add('selected');
-  
-  // หน่วงเวลานิดนึงหลังกด เพื่อให้ผู้ใช้เห็น Feedback แล้วสไลด์ไปข้อถัดไปอัตโนมัติเพื่อความทันสมัย
-  setTimeout(() => {
-    if (currentStep < QUESTIONS.length - 1 && answers[id]) {
-      nextStep();
-    }
-  }, 400);
+  setTimeout(() => { if (currentStep < QUESTIONS.length - 1) navigateStep('next'); }, 350);
 }
 
-function selectScale(id, val) {
+function handleScaleSelect(id, val) {
   answers[id] = val;
-  document.querySelectorAll('.scale-btn').forEach(b => {
-    b.classList.toggle('selected', parseInt(b.textContent) === val);
-  });
+  document.querySelectorAll('.scale-btn').forEach(b => b.classList.toggle('selected', parseInt(b.textContent) === val));
 }
 
-function nextStep() {
+function navigateStep(dir) {
   const q = QUESTIONS[currentStep];
-  if (q.type === 'text') answers[q.id] = document.getElementById('text-ans')?.value || '';
-  if (!answers[q.id] && q.type !== 'text') {
-    const btn = document.getElementById('btn-next');
-    btn.textContent = 'เลือกก่อนนะคะ 🥺';
-    setTimeout(() => {
-      btn.textContent = currentStep === QUESTIONS.length - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →';
-    }, 1500);
-    return;
+  if (dir === 'next') {
+    if (q.type === 'text') answers[q.id] = document.getElementById('text-ans')?.value || '';
+    if (!answers[q.id] && q.type !== 'text') {
+      const btn = document.getElementById('btn-next');
+      btn.textContent = 'เลือกก่อนนะคะ 🥺';
+      setTimeout(() => { btn.textContent = currentStep === QUESTIONS.length - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →'; }, 1200);
+      return;
+    }
+    currentStep++;
+    renderCard(false, 'next');
+  } else {
+    currentStep--;
+    renderCard(false, 'prev');
   }
-  currentStep++;
-  renderStep(false, 'next');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function prevStep() {
-  currentStep--;
-  renderStep(false, 'prev');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-/* ========== SUBMIT ========== */
-async function showThankYou() {
+/* ========== WEBHOOK SUBMISSION ========== */
+async function triggerSubmit() {
   document.getElementById('progress-wrap').style.opacity = '0';
-  setTimeout(() => document.getElementById('progress-wrap').style.display = 'none', 300);
-  
   const card = document.getElementById('quiz-card');
-  card.classList.remove('slide-active');
-  card.classList.add('slide-out-left');
+  card.classList.add('flip-out-left');
   
   setTimeout(() => {
     card.style.display = 'none';
-    const ty = document.getElementById('thank-you');
-    ty.classList.add('show');
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('thank-you').classList.add('active');
   }, 400);
 
-  // Build Discord embed
-  const fields = QUESTIONS.map(q => ({
-    name: q.text,
-    value: String(answers[q.id] || '—'),
-    inline: false
-  }));
-
+  const fields = QUESTIONS.map(q => ({ name: q.text, value: String(answers[q.id] || '—'), inline: false }));
   const payload = {
     username: '💌 ม่อนตอบแล้ว!',
     avatar_url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png',
     embeds: [{
-      title: '🌸 คำตอบจากม่อน',
-      color: 0xe8a0b4,
-      fields,
+      title: '🌸 คำตอบจากม่อน', color: 0xff5c8a, fields,
       footer: { text: `ส่งเมื่อ ${new Date().toLocaleString('th-TH')}` },
       thumbnail: { url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png' }
     }]
   };
 
   try {
-    await fetch(WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-  } catch(e) { console.error('webhook error', e); }
+    await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  } catch(e) { console.error(e); }
 }
 
-/* ========== INTERACTIVE PARTICLES SYSTEM ========== */
+/* ========== FLUID INTERACTIVE PARTICLES ========== */
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 
-function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
 
-class Particle {
+class FluidParticle {
   constructor() { this.reset(); }
   reset() {
     this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height + canvas.height; // เกิดจากด้านล่าง
-    this.r = 1.2 + Math.random() * 2.5;
-    this.baseAlpha = 0.15 + Math.random() * 0.25;
-    this.alpha = this.baseAlpha;
-    this.vx = (Math.random() - 0.5) * 0.4;
-    this.vy = -0.4 - Math.random() * 0.5;
-    this.colorType = Math.random() > 0.5;
+    this.y = Math.random() * canvas.height + canvas.height;
+    this.r = 1 + Math.random() * 2.5;
+    this.alpha = 0.15 + Math.random() * 0.3;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = -0.3 - Math.random() * 0.4;
+    this.color = Math.random() > 0.5 ? `rgba(255,175,204,${this.alpha})` : `rgba(162,210,255,${this.alpha})`;
   }
   update() {
-    this.x += this.vx;
-    this.y += this.vy;
-
-    // ระบบขยับหนีเมาส์ (Mouse Interaction) เพิ่มมิติความล้ำ
+    this.x += this.vx; this.y += this.vy;
     if (mouse.x !== null && mouse.y !== null) {
-      let dx = this.x - mouse.x;
-      let dy = this.y - mouse.y;
-      let distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance < mouse.radius) {
-        let force = (mouse.radius - distance) / mouse.radius;
-        this.x += (dx / distance) * force * 3;
-        this.y += (dy / distance) * force * 3;
+      let dx = this.x - mouse.x; let dy = this.y - mouse.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < mouse.radius) {
+        let force = (mouse.radius - dist) / mouse.radius;
+        this.x += (dx / dist) * force * 2.5;
+        this.y += (dy / dist) * force * 2.5;
       }
     }
-
     if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) this.reset();
   }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.fillStyle = this.colorType 
-      ? `rgba(240,163,185,${this.alpha})`
-      : `rgba(196,225,247,${this.alpha})`;
-    ctx.fill();
-  }
+  draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2); ctx.fillStyle = this.color; ctx.fill(); }
 }
 
-for (let i = 0; i < 50; i++) {
-  let p = new Particle();
-  p.y = Math.random() * canvas.height; // กระจายตัวในตอนแรก
-  particles.push(p);
-}
+for(let i=0; i<60; i++) { let p = new FluidParticle(); p.y = Math.random()*canvas.height; particles.push(p); }
+(function loop() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(loop); })();
 
-(function animateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animateParticles);
-})();
-
-/* ========== BETTER PETALS DROPPING ========== */
-const PETALS = ['🌸','💗','✨','🌷'];
-function spawnPetals() {
+/* ========== CINEMATIC PETAL RAIN ========== */
+const ITEMS = ['🌸','💗','✨','🌷'];
+function startPetalRain() {
   setInterval(() => {
-    if(document.querySelectorAll('.petal').length > 25) return; // จำกัดจำนวนไม่ให้ล้นจอ
+    if (document.querySelectorAll('.petal').length > 24) return;
     const p = document.createElement('div');
     p.className = 'petal';
-    p.textContent = PETALS[Math.floor(Math.random() * PETALS.length)];
+    p.textContent = ITEMS[Math.floor(Math.random() * ITEMS.length)];
     p.style.left = Math.random() * 100 + 'vw';
-    p.style.fontSize = (0.8 + Math.random() * 1) + 'rem';
-    p.style.animationDuration = (6 + Math.random() * 8) + 's';
     
-    // ลบ Element ทิ้งเมื่อร่วงหล่นเสร็จแล้วเพื่อประหยัด Memory
+    // Depth of field effect (หน้าชัดหลังเบลอ)
+    const size = 0.7 + Math.random() * 1.2;
+    p.style.fontSize = size + 'rem';
+    if(size < 1) p.style.filter = 'blur(1.5px)'; // ชิ้นเล็กอยู่ฉากหลังจะเบลอ
+    else if(size > 1.6) p.style.filter = 'blur(1px)'; // ชิ้นใหญ่อยู่หน้าสุดจะเบลอจางๆ
+    
+    p.style.animationDuration = (6 + Math.random() * 7) + 's';
     p.addEventListener('animationend', () => p.remove());
     document.body.appendChild(p);
-  }, 600);
+  }, 500);
 }
 </script>
 </body>
