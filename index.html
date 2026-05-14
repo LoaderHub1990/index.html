@@ -3,477 +3,781 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>✨ Mon's Infinite Universe</title>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+<title>💌 ม่อนตอบหน่อยนะ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,400&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #ff758f;
-    --primary-glow: rgba(255, 117, 143, 0.4);
-    --secondary: #8ec5fc;
-    --secondary-glow: rgba(142, 197, 252, 0.4);
-    --bg-dark: #0f0c1b;
-    --card-bg: rgba(255, 255, 255, 0.06);
-    --card-border: rgba(255, 255, 255, 0.15);
-    --text-pure: #ffffff;
-    --text-mutated: #b0a8be;
-  }
+:root {
+  --rose: #e8a0b4;
+  --rose-deep: #c9627a;
+  --rose-light: #fce4ec;
+  --blush: #fff0f5;
+  --sky: #b3d9f5;
+  --sky-deep: #5b9ec9;
+  --cream: #fdf8f5;
+  --gold: #d4a96a;
+  --lilac: #d8c2f0;
+  --lilac-deep: #9b6fcf;
+  --mint: #a8e6cf;
+  --text-dark: #2d1f28;
+  --text-mid: #7a5a68;
+  --text-light: #b9909a;
+  --glass: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.85);
+  --shadow-rose: rgba(201,98,122,0.12);
+}
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
-  
-  body {
-    min-height: 100vh;
-    background: var(--bg-dark);
-    font-family: 'Sarabun', sans-serif;
-    color: var(--text-pure);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 2000px;
-  }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-  /* ---- Cosmic Parallax Background ---- */
-  #universe-container {
-    position: fixed; inset: -50px; z-index: -1; pointer-events: none;
-    background: radial-gradient(circle at 50% 50%, #1a1235 0%, #0a0714 100%);
-    transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
-  }
+body {
+  min-height: 100vh;
+  background: var(--cream);
+  font-family: 'Sarabun', sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
 
-  .nebula {
-    position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.4;
-    mix-blend-mode: screen; transition: transform 0.3s ease-out;
-  }
-  .nebula-pink { width: 600px; height: 600px; background: var(--primary); top: 10%; left: 15%; }
-  .nebula-blue { width: 700px; height: 700px; background: var(--secondary); bottom: 10%; right: 10%; }
+/* ── BG AURORA ── */
+.aurora-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(232,160,180,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(216,194,240,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 50% 80%, rgba(179,217,245,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 90% 40% at 10% 90%, rgba(168,230,207,0.10) 0%, transparent 50%),
+    linear-gradient(160deg, #fdf8f5 0%, #fef0f6 40%, #f5f0ff 70%, #f0f8ff 100%);
+  animation: aurora-shift 20s ease-in-out infinite alternate;
+}
+@keyframes aurora-shift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(15deg); }
+}
 
-  canvas #starfield { position: absolute; inset: 0; }
+/* ── PARTICLES ── */
+#particles-canvas {
+  position: fixed; inset: 0; z-index: 1;
+  pointer-events: none;
+}
 
-  /* ---- Cinematic Welcome Overlay ---- */
-  #gatekeeper {
-    position: fixed; inset: 0; background: rgba(10, 7, 20, 0.95);
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    z-index: 9999; backdrop-filter: blur(30px); transition: all 1.2s cubic-bezier(0.88, 0, 0.12, 1);
-  }
-  #gatekeeper.shatter { opacity: 0; transform: scale(1.2); pointer-events: none; }
-  
-  .cosmic-pulse {
-    font-size: 5rem; margin-bottom: 30px;
-    filter: drop-shadow(0 0 20px var(--primary-glow));
-    animation: floating 4s ease-in-out infinite;
-  }
-  @keyframes floating { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.05); } }
+/* ── OVERLAY ── */
+#overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  background: linear-gradient(160deg, #fdf8f5 0%, #fef0f6 45%, #f5f0ff 80%, #f0f8ff 100%);
+  transition: opacity 1.4s cubic-bezier(.4,0,.2,1);
+}
+#overlay.fade-out { opacity: 0; pointer-events: none; }
 
-  .gate-title {
-    font-family: 'Comfortaa', cursive; font-size: 2.2rem; font-weight: 700;
-    background: linear-gradient(135deg, #fff, #ffccd5, #8ec5fc);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 50px; text-align: center; line-height: 1.6;
-  }
+.ov-ring {
+  width: 130px; height: 130px; border-radius: 50%;
+  border: 1.5px solid rgba(232,160,180,0.4);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; margin-bottom: 32px;
+  animation: ring-pulse 3s ease-in-out infinite;
+}
+.ov-ring::before, .ov-ring::after {
+  content: ''; position: absolute; border-radius: 50%; border: 1px solid rgba(216,194,240,0.3);
+}
+.ov-ring::before { inset: -14px; animation: ring-pulse 3s ease-in-out infinite 0.5s; }
+.ov-ring::after { inset: -28px; animation: ring-pulse 3s ease-in-out infinite 1s; }
+@keyframes ring-pulse {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
 
-  .quantum-btn {
-    padding: 20px 60px; font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
-    color: white; background: transparent; border: 2px solid rgba(255,255,255,0.4); border-radius: 100px;
-    cursor: pointer; position: relative; overflow: hidden; transition: all 0.4s;
-    box-shadow: 0 0 30px rgba(255,255,255,0.05);
-  }
-  .quantum-btn::before {
-    content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--primary), var(--secondary));
-    opacity: 0; transition: opacity 0.4s; z-index: -1;
-  }
-  .quantum-btn:hover { border-color: transparent; box-shadow: 0 0 40px var(--primary-glow); transform: translateY(-3px); }
-  .quantum-btn:hover::before { opacity: 1; }
+.ov-icon {
+  font-size: 3.8rem;
+  filter: drop-shadow(0 8px 24px rgba(200,98,122,0.25));
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
 
-  /* ---- Media Controller ---- */
-  .sonic-anchor {
-    position: fixed; top: 30px; right: 30px; z-index: 1000; width: 56px; height: 56px; border-radius: 50%;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-    display: flex; justify-content: center; align-items: center; cursor: pointer; color: white;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3); backdrop-filter: blur(10px); transition: all 0.3s;
-  }
-  .sonic-anchor:hover { background: rgba(255,255,255,0.15); transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+.ov-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 300; font-style: italic;
+  color: var(--text-light); letter-spacing: 0.06em;
+  margin-bottom: 6px; text-align: center;
+}
+.ov-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.65rem; font-weight: 300;
+  color: var(--text-mid); letter-spacing: 0.04em;
+  text-align: center; line-height: 1.5;
+  padding: 0 24px; margin-bottom: 40px;
+}
+.ov-title strong { font-weight: 500; color: var(--rose-deep); }
 
-  /* ---- Core Core Stage & Progress ---- */
-  #matrix-core { width: 100%; max-width: 580px; padding: 20px; z-index: 10; }
-  
-  .hud-timeline { margin-bottom: 35px; opacity: 0; transform: translateY(-20px); transition: all 0.8s 0.5s ease; }
-  .hud-labels { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-mutated); font-family: 'Comfortaa', cursive; margin-bottom: 12px; }
-  .hud-track { height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
-  .hud-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); width: 0%; transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.start-btn {
+  position: relative; overflow: hidden;
+  padding: 15px 52px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 0.95rem; font-weight: 500;
+  letter-spacing: 0.12em; color: white;
+  border: none; border-radius: 60px; cursor: pointer;
+  background: linear-gradient(135deg, #d4607a 0%, #c0507a 40%, #9b6fcf 100%);
+  box-shadow: 0 8px 32px rgba(200,80,122,0.35), 0 2px 8px rgba(155,111,207,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.start-btn::before {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 70%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.22), transparent);
+  animation: shimmer 2.8s ease-in-out infinite;
+}
+@keyframes shimmer { to { left: 160%; } }
+.start-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(200,80,122,0.42), 0 4px 12px rgba(155,111,207,0.25); }
+.start-btn:active { transform: translateY(-1px); }
 
-  /* ---- Cybernetic Glass 3D Card ---- */
-  .mainframe-card {
-    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 40px;
-    padding: 55px 45px; width: 100%; backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-    box-shadow: 0 40px 100px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-    transform-style: preserve-3d; transition: transform 0.1s ease-out, opacity 0.4s;
-    opacity: 0; transform: scale(0.9) translateY(30px);
-  }
-  .mainframe-card.awake { opacity: 1; transform: scale(1) translateY(0); }
+/* ── MUSIC ── */
+.music-control {
+  position: fixed; top: 20px; right: 20px; z-index: 1000;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(232,160,180,0.35);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1.1rem;
+  box-shadow: 0 4px 20px rgba(200,98,122,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.music-control:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(200,98,122,0.22); }
 
-  /* Animation States */
-  .implode { animation: implodeEffect 0.5s cubic-bezier(0.36, 0, 0.66, -0.56) both; }
-  .explode { animation: explodeEffect 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-  @keyframes implodeEffect { to { transform: scale(0.7) translateZ(-300px); opacity: 0; } }
-  @keyframes explodeEffect { from { transform: scale(1.2) translateZ(200px); opacity: 0; } to { transform: scale(1) translateZ(0); opacity: 1; } }
+/* ── MAIN APP ── */
+#app {
+  position: relative; z-index: 2;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 20px;
+}
 
-  /* Dynamic Specular Shimmer Layer */
-  .specular-layer {
-    position: absolute; inset: 0; border-radius: 40px; pointer-events: none; z-index: 5;
-    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.12) 0%, transparent 60%);
-  }
+/* ── PROGRESS ── */
+.progress-wrap {
+  width: 100%; max-width: 560px;
+  margin-bottom: 28px;
+}
+.progress-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.progress-step {
+  font-size: 0.78rem; font-weight: 500;
+  color: var(--rose-deep); letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.progress-pct {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem; color: var(--text-light);
+}
+.progress-track {
+  position: relative; height: 3px;
+  background: rgba(232,160,180,0.15);
+  border-radius: 10px; overflow: visible;
+}
+.progress-fill {
+  height: 100%; border-radius: 10px;
+  background: linear-gradient(to right, #e8a0b4, #c9627a, #9b6fcf);
+  transition: width 0.7s cubic-bezier(.4,0,.2,1);
+  position: relative;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute; right: -4px; top: 50%;
+  transform: translateY(-50%);
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--rose-deep);
+  box-shadow: 0 0 0 3px rgba(201,98,122,0.2);
+}
 
-  .card-node { transform: translateZ(40px); }
-  .q-meta { font-family: 'Comfortaa', cursive; font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 16px; letter-spacing: 0.1em; }
-  .q-header { font-size: 1.85rem; font-weight: 600; line-height: 1.4; margin-bottom: 40px; letter-spacing: -0.02em; }
+/* ── CARD ── */
+.quiz-card {
+  position: relative; overflow: hidden;
+  width: 100%; max-width: 560px;
+  background: rgba(255,255,255,0.62);
+  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+  border-radius: 32px;
+  padding: 44px 40px;
+  border: 1px solid rgba(255,255,255,0.88);
+  box-shadow:
+    0 32px 80px rgba(201,98,122,0.09),
+    0 8px 24px rgba(201,98,122,0.06),
+    0 1px 0 rgba(255,255,255,0.95) inset;
+  animation: card-enter 0.55s cubic-bezier(.22,1,.36,1) both;
+}
 
-  /* ---- Neon Options Matrix ---- */
-  .matrix-options { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
-  
-  .matrix-cell {
-    padding: 20px 28px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.02); color: var(--text-mutated); font-size: 1.05rem;
-    cursor: pointer; text-align: left; position: relative; overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); transform-style: preserve-3d;
-  }
-  .matrix-cell::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,117,143,0.1), rgba(142,197,252,0.1));
-    opacity: 0; transition: opacity 0.3s;
-  }
-  .matrix-cell:hover {
-    border-color: rgba(255,255,255,0.3); color: var(--text-pure);
-    transform: translateZ(15px) scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
-  .matrix-cell:hover::before { opacity: 1; }
-  
-  .matrix-cell.targeted {
-    background: rgba(255, 255, 255, 0.08); border-color: var(--primary);
-    color: var(--text-pure); font-weight: 600; padding-left: 44px;
-    box-shadow: 0 0 30px var(--primary-glow);
-  }
-  .matrix-cell.targeted::after {
-    content: '✦'; position: absolute; left: 24px; top: 50%; transform: translateY(-50%);
-    color: var(--primary); animation: pulseGlow 1.5s infinite;
-  }
-  @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(30px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-  /* ---- Quantum Input & Scale ---- */
-  .quantum-area {
-    width: 100%; padding: 22px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(0,0,0,0.2); font-family: 'Sarabun', sans-serif; font-size: 1.05rem;
-    color: var(--text-pure); outline: none; transition: all 0.3s; resize: none; min-height: 140px; margin-bottom: 40px;
-  }
-  .quantum-area:focus { border-color: var(--secondary); box-shadow: 0 0 30px var(--secondary-glow); background: rgba(0,0,0,0.4); }
+.card-glow {
+  position: absolute; pointer-events: none;
+  top: -60%; left: -30%;
+  width: 160%; height: 160%;
+  background: radial-gradient(ellipse at 30% 30%, rgba(216,194,240,0.14) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 70%, rgba(179,217,245,0.10) 0%, transparent 60%);
+}
 
-  .tensor-row { display: flex; gap: 14px; justify-content: center; margin: 20px 0 30px; }
-  .tensor-node {
-    width: 60px; height: 60px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.03); font-family: 'Comfortaa', cursive; font-size: 1.3rem;
-    color: var(--text-mutated); cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  .tensor-node:hover { transform: translateY(-5px) scale(1.1); border-color: var(--secondary); color: var(--secondary); }
-  .tensor-node.active { background: var(--text-pure); border-color: var(--text-pure); color: var(--bg-dark); font-weight: 700; box-shadow: 0 0 35px rgba(255,255,255,0.4); }
+/* ── QUESTION HEADER ── */
+.q-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.q-num-badge {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--rose-deep);
+  background: rgba(232,160,180,0.12);
+  border: 1px solid rgba(201,98,122,0.2);
+  border-radius: 20px;
+  padding: 3px 12px;
+}
+.q-dot-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(232,160,180,0.3), transparent);
+}
 
-  /* ---- Fluid Control Deck ---- */
-  .deck-row { display: flex; gap: 16px; justify-content: flex-end; }
-  .deck-prev { padding: 16px 36px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: var(--text-mutated); cursor: pointer; font-size: 0.95rem; transition: all 0.3s; }
-  .deck-prev:hover { border-color: var(--text-pure); color: var(--text-pure); }
-  
-  .deck-next {
-    padding: 16px 40px; border-radius: 100px; border: none; background: var(--text-pure);
-    color: var(--bg-dark); cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.3s;
-    box-shadow: 0 10px 30px rgba(255,255,255,0.15);
-  }
-  .deck-next:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(255,255,255,0.3); }
+.q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem; font-weight: 300;
+  line-height: 1.28; letter-spacing: -0.01em;
+  color: var(--text-dark);
+  margin-bottom: 30px;
+}
+.q-text em { font-style: italic; color: var(--rose-deep); font-weight: 300; }
 
-  /* ---- Absolute Singularity (End State) ---- */
-  #singularity { display: none; text-align: center; }
-  #singularity.collapsed { display: block; animation: explodeEffect 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-  .singularity-pulse { font-size: 5.5rem; margin-bottom: 25px; animation: anchorFloat 3s ease-in-out infinite alternate; }
-  @keyframes anchorFloat { from { transform: scale(1); filter: drop-shadow(0 0 10px var(--primary-glow)); } to { transform: scale(1.08); filter: drop-shadow(0 0 35px var(--primary)); } }
-  #singularity h2 { font-family: 'Comfortaa', cursive; font-size: 2.5rem; margin-bottom: 20px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  #singularity p { color: var(--text-mutated); font-size: 1.1rem; line-height: 1.8; }
+/* ── DIVIDER ── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 22px;
+}
+.d-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(232,160,180,0.35), transparent); }
+.d-gem {
+  width: 6px; height: 6px;
+  background: var(--rose);
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
 
-  /* ---- Particle Burst Effect ---- */
-  .shockwave {
-    position: fixed; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none;
-    transform: translate(-50%, -50%) scale(0); opacity: 1; z-index: 9998;
-    animation: shockwaveCollapse 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-  }
-  @keyframes shockwaveCollapse { to { transform: translate(-50%, -50%) scale(1.5); opacity: 0; } }
+/* ── SINGLE CHOICE ── */
+.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+.opt-btn {
+  position: relative; overflow: hidden;
+  padding: 15px 20px 15px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(232,160,180,0.22);
+  background: rgba(255,255,255,0.45);
+  color: var(--text-mid);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 0.95rem; font-weight: 400;
+  cursor: pointer; text-align: left;
+  transition: all 0.28s cubic-bezier(.4,0,.2,1);
+  display: flex; align-items: center; gap: 12px;
+}
+
+.opt-icon {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(232,160,180,0.1);
+  border: 1px solid rgba(232,160,180,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  transition: all 0.28s ease;
+}
+
+.opt-text { flex: 1; }
+.opt-arr {
+  font-size: 0.8rem; color: var(--text-light);
+  opacity: 0; transition: opacity 0.2s, transform 0.2s;
+  transform: translateX(-4px);
+}
+
+.opt-btn:hover {
+  border-color: rgba(201,98,122,0.4);
+  background: rgba(255,255,255,0.7);
+  transform: translateX(5px);
+  box-shadow: 0 6px 20px rgba(201,98,122,0.1);
+  color: var(--rose-deep);
+}
+.opt-btn:hover .opt-icon {
+  background: rgba(201,98,122,0.12);
+  border-color: rgba(201,98,122,0.3);
+}
+.opt-btn:hover .opt-arr { opacity: 1; transform: translateX(0); }
+
+.opt-btn.selected {
+  background: linear-gradient(135deg, rgba(232,160,180,0.22) 0%, rgba(216,194,240,0.15) 100%);
+  border-color: rgba(201,98,122,0.45);
+  color: var(--rose-deep);
+  font-weight: 500;
+  box-shadow: 0 8px 28px rgba(201,98,122,0.15);
+  transform: translateX(5px);
+}
+.opt-btn.selected .opt-icon {
+  background: linear-gradient(135deg, var(--rose-deep), var(--lilac-deep));
+  border-color: transparent;
+  color: white; font-size: 0.85rem;
+}
+.opt-btn.selected .opt-arr { opacity: 0; }
+
+/* ── SCALE ── */
+.scale-row {
+  display: flex; gap: 8px; justify-content: center;
+  margin-bottom: 12px;
+}
+.scale-btn {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid rgba(232,160,180,0.3);
+  background: rgba(255,255,255,0.5);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; font-weight: 300;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  position: relative;
+}
+.scale-btn:hover {
+  border-color: var(--rose);
+  color: var(--rose-deep);
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 0 8px 20px rgba(201,98,122,0.18);
+}
+.scale-btn.selected {
+  background: linear-gradient(135deg, var(--rose-deep) 0%, var(--lilac-deep) 100%);
+  border-color: transparent;
+  color: white;
+  transform: scale(1.15) translateY(-4px);
+  box-shadow: 0 10px 30px rgba(201,98,122,0.32);
+  font-weight: 500;
+}
+.scale-labels {
+  display: flex; justify-content: space-between;
+  font-size: 0.73rem; color: var(--text-light);
+  letter-spacing: 0.05em; margin-bottom: 28px;
+  padding: 0 4px;
+}
+
+/* ── TEXTAREA ── */
+.text-input {
+  width: 100%; padding: 16px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(232,160,180,0.28);
+  background: rgba(255,255,255,0.55);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 0.95rem; color: var(--text-dark);
+  line-height: 1.7;
+  resize: vertical; min-height: 100px;
+  outline: none; margin-bottom: 28px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.text-input::placeholder { color: var(--text-light); }
+.text-input:focus {
+  border-color: rgba(201,98,122,0.5);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 0 0 4px rgba(232,160,180,0.12);
+}
+
+/* ── NAV ── */
+.nav-row {
+  display: flex; gap: 10px; justify-content: flex-end; align-items: center;
+}
+.btn-back {
+  padding: 12px 26px; border-radius: 50px;
+  border: 1px solid rgba(180,160,170,0.3);
+  background: transparent; color: var(--text-light);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 0.88rem; letter-spacing: 0.06em;
+  cursor: pointer; transition: all 0.28s ease;
+}
+.btn-back:hover { border-color: var(--rose); color: var(--rose-deep); }
+
+.btn-next {
+  position: relative; overflow: hidden;
+  padding: 13px 34px; border-radius: 50px; border: none;
+  background: linear-gradient(135deg, #d4607a 0%, #c0507a 45%, #9b6fcf 100%);
+  color: white;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 0.9rem; font-weight: 500; letter-spacing: 0.09em;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(200,80,122,0.3);
+  transition: all 0.3s ease;
+}
+.btn-next::after {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+.btn-next:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(200,80,122,0.4); }
+.btn-next:active { transform: translateY(0); }
+.btn-next:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* ── THANK YOU ── */
+#thank-you {
+  display: none; text-align: center;
+  animation: card-enter 0.6s cubic-bezier(.22,1,.36,1) both;
+}
+.ty-heart {
+  font-size: 5rem; margin-bottom: 12px;
+  animation: float 3s ease-in-out infinite;
+  display: block;
+}
+.ty-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 300;
+  background: linear-gradient(135deg, var(--rose-deep), var(--lilac-deep));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.ty-sub {
+  font-size: 1rem; color: var(--text-light);
+  line-height: 2; margin-top: 12px;
+}
+.ty-confetti {
+  font-size: 1.5rem; letter-spacing: 0.5rem;
+  margin: 20px 0 0;
+  animation: sparkle 2s ease-in-out infinite alternate;
+}
+@keyframes sparkle {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+/* ── PETALS ── */
+.petal {
+  position: fixed; pointer-events: none; z-index: 1;
+  opacity: 0; animation: petal-fall linear infinite;
+}
+@keyframes petal-fall {
+  0% { transform: translateY(-30px) rotate(0deg) scale(1); opacity: 0; }
+  10% { opacity: 0.65; }
+  90% { opacity: 0.35; }
+  100% { transform: translateY(105vh) rotate(540deg) scale(0.7); opacity: 0; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .quiz-card { padding: 32px 24px; border-radius: 24px; }
+  .q-text { font-size: 1.7rem; }
+  .scale-btn { width: 48px; height: 48px; font-size: 1.1rem; }
+}
 </style>
 </head>
 <body>
 
-<div id="universe-container">
-  <div class="nebula nebula-pink"></div>
-  <div class="nebula nebula-blue"></div>
-  <canvas id="starfield"></canvas>
+<div class="aurora-bg"></div>
+<canvas id="particles-canvas"></canvas>
+
+<!-- OVERLAY -->
+<div id="overlay">
+  <div class="ov-ring">
+    <span class="ov-icon">💌</span>
+  </div>
+  <p class="ov-tagline">for mon only ✦</p>
+  <p class="ov-title">มีคนอยากรู้จักม่อนมากขึ้น<br><strong>ตอบให้หน่อยนะคะ</strong> 🌸</p>
+  <button class="start-btn" onclick="init()">เริ่มเลยค่ะ &nbsp;✦</button>
 </div>
 
-<div id="gatekeeper">
-  <div class="cosmic-pulse">🛸</div>
-  <h1 class="gate-title">Entering Mon's Dimensional<br>Feedback Portal</h1>
-  <button class="quantum-btn" onclick="engageSubsystems()">Activate Terminal</button>
-</div>
-
-<div class="sonic-anchor" onclick="toggleAudio()" id="audioSwitch">🔊</div>
-<audio id="coreStream" loop>
+<!-- MUSIC -->
+<div class="music-control" onclick="toggleMusic()" id="musicBtn" title="เปิด/ปิดเพลง">🎵</div>
+<audio id="bgMusic" loop>
   <source src="https://files.catbox.moe/i9or96.mp3" type="audio/mpeg">
 </audio>
 
-<div id="matrix-core">
-  <div class="hud-timeline" id="hud">
-    <div class="hud-labels">
-      <span id="hud-step">SYSTEM: SYNCHRONIZING</span>
-      <span id="hud-pct">0%</span>
+<!-- APP -->
+<div id="app">
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-meta">
+      <span class="progress-step" id="step-label">ข้อที่ 1 / 5</span>
+      <span class="progress-pct" id="pct-label">0%</span>
     </div>
-    <div class="hud-track">
-      <div class="hud-fill" id="hud-fill"></div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
     </div>
   </div>
 
-  <div class="mainframe-card" id="card">
-    <div class="specular-layer" id="specular"></div>
-    <div id="dynamic-node" class="card-node">
-      </div>
-  </div>
+  <div class="quiz-card" id="quiz-card"></div>
 
-  <div id="singularity" class="mainframe-card">
-    <div class="singularity-pulse">✨</div>
-    <h2>Data Stream Secured</h2>
-    <p>ขอบคุณมากค่ะม่อน ระบบได้รับข้อมูลเรียบร้อยแล้ว<br>ห้วงอวกาศนี้จะโอบกอดคำตอบของม่อนไว้ตลอดไปนะ 💖</p>
+  <div id="thank-you" class="quiz-card">
+    <span class="ty-heart">💗</span>
+    <h2 class="ty-h">ขอบคุณม่อนมากเลยนะ</h2>
+    <div class="divider" style="margin:20px 0"><div class="d-line"></div><div class="d-gem"></div><div class="d-line"></div></div>
+    <p class="ty-sub">คำตอบของม่อนส่งไปแล้วค่ะ 🌸<br>รักม่อนที่สุดเลย ❤️</p>
+    <p class="ty-confetti">🌸 💗 ✨ 💌 🌷</p>
   </div>
 </div>
 
 <script>
-const SYSTEM_HOOK = 'https://discord.com/api/webhooks/1504486268761931937/haVDg_sexPQvfQNoS6ET5JkpHQaciQyauDOwGJPs67_HeawXuK2rfqkd-WZWa6Vuhvc0';
+/* ─── CONFIG ─── */
+const WEBHOOK = 'https://discord.com/api/webhooks/1504486268761931937/haVDg_sexPQvfQNoS6ET5JkpHQaciQyauDOwGJPs67_HeawXuK2rfqkd-WZWa6Vuhvc0';
 
-const MATRIX_DATA = [
-  { id: 'm1', type: 'single', label: 'METRIC 01', text: 'ม่อนชอบฉันไหม? 💗', branches: ['ชอบมากกก 💕', 'ชอบนิดหน่อย', 'ยังไม่แน่ใจ 🤔', 'เฉย ๆ ค่ะ'] },
-  { id: 'm2', type: 'single', label: 'METRIC 02', text: 'ตอนนี้คิดถึงฉันอยู่ไหม?', branches: ['คิดถึงตลอดเลย! 🥺', 'คิดถึงอยู่บ้าง', 'เพิ่งนึกถึงพอดี 😊', 'ไม่ได้คิดถึง...'] },
-  { id: 'm3', type: 'tensor', label: 'METRIC 03', text: 'ให้คะแนนความรู้สึกดีที่มีต่อฉันหน่อย?', low: 1, high: 5, lowCap: 'ปกติทั่วไป', highCap: 'พิเศษที่สุด 💖' },
-  { id: 'm4', type: 'single', label: 'METRIC 04', text: 'อยากให้ความสัมพันธ์เราเป็นยังไงต่อไป?', branches: ['อยากคบกัน 💑', 'อยากเป็นเพื่อนสนิทก่อน', 'อยู่แบบนี้ก็ดีแล้ว', 'ยังไม่พร้อมค่ะ'] },
-  { id: 'm5', type: 'text', label: 'METRIC 05', text: 'อยากบอกอะไรฉันบ้างมั้ย? 🌸', holder: 'พิมพ์สิ่งที่ม่อนคิดอยู่ในใจลงตรงนี้ได้เลย...' }
+const OPT_ICONS = {
+  'ชอบมากกก 💕': '💕', 'ชอบนิดหน่อย': '🌸', 'ยังไม่แน่ใจ 🤔': '🤔', 'เฉย ๆ ค่ะ': '😶',
+  'คิดถึงตลอดเลย! 🥺': '🥺', 'คิดถึงอยู่บ้าง': '💭', 'เพิ่งนึกถึงพอดี 😊': '😊', 'ไม่ได้คิดถึง...': '🌙',
+  'อยากคบกัน 💑': '💑', 'อยากเป็นเพื่อนสนิทก่อน': '🤝', 'อยู่แบบนี้ก็ดีแล้ว': '🕊️', 'ยังไม่พร้อมค่ะ': '🌱'
+};
+
+const QUESTIONS = [
+  {
+    id: 'q1', type: 'single',
+    text: 'ม่อนชอบฉันไหม?',
+    options: ['ชอบมากกก 💕', 'ชอบนิดหน่อย', 'ยังไม่แน่ใจ 🤔', 'เฉย ๆ ค่ะ']
+  },
+  {
+    id: 'q2', type: 'single',
+    text: 'ตอนนี้คิดถึงฉันอยู่ไหม?',
+    options: ['คิดถึงตลอดเลย! 🥺', 'คิดถึงอยู่บ้าง', 'เพิ่งนึกถึงพอดี 😊', 'ไม่ได้คิดถึง...']
+  },
+  {
+    id: 'q3', type: 'scale',
+    text: 'ให้คะแนนความรู้สึกดีที่มีต่อฉันหน่อย?',
+    min: 1, max: 5,
+    minLabel: 'น้อยมาก 🌱', maxLabel: 'มากที่สุด 💗'
+  },
+  {
+    id: 'q4', type: 'single',
+    text: 'อยากให้เราเป็นยังไงต่อไป?',
+    options: ['อยากคบกัน 💑', 'อยากเป็นเพื่อนสนิทก่อน', 'อยู่แบบนี้ก็ดีแล้ว', 'ยังไม่พร้อมค่ะ']
+  },
+  {
+    id: 'q5', type: 'text',
+    text: 'อยากบอกอะไรฟิวบ้างมั้ย?',
+    placeholder: 'พิมพ์ได้ ... 🌸'
+  }
 ];
 
-let pointer = 0;
-const storage = {};
-let stream, streamActive = false;
+/* ─── STATE ─── */
+let currentStep = 0;
+const answers = {};
+let music, isPlaying = false;
 
-/* ========== 3D PARALLAX & SPECULAR ENGINE ========== */
-const cardElement = document.getElementById('card');
-const specElement = document.getElementById('specular');
-const universe = document.getElementById('universe-container');
-
-window.addEventListener('mousemove', (e) => {
-  if(!cardElement.classList.contains('awake')) return;
-  
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-  const dx = e.clientX - cx;
-  const dy = e.clientY - cy;
-  
-  // Parallax Background Space movement
-  universe.style.transform = `translateX(${dx * -0.03}px) translateY(${dy * -0.03}px)`;
-
-  // Advanced 3D Card Rotation Mechanics
-  const rx = (cy - e.clientY) / 25;
-  const ry = (e.clientX - cx) / 25;
-  cardElement.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-
-  // Map specular highlight point
-  const rect = cardElement.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  specElement.style.setProperty('--mx', `${mx}px`);
-  specElement.style.setProperty('--my', `${my}px`);
-});
-
-// Reset Card Orientation on mouse leave
-window.addEventListener('mouseleave', () => {
-  cardElement.style.transform = `rotateX(0deg) rotateY(0deg)`;
-});
-
-/* ========== INITIALIZATION ENGINE ========== */
-function engageSubsystems() {
-  document.getElementById('gatekeeper').classList.add('shatter');
-  stream = document.getElementById('coreStream');
-  stream.play().catch(()=>{});
-  streamActive = true;
-  document.getElementById('audioSwitch').textContent = '🔊';
-
-  setTimeout(() => {
-    document.getElementById('gatekeeper').style.display = 'none';
-    const hud = document.getElementById('hud');
-    hud.style.opacity = '1';
-    hud.style.transform = 'translateY(0)';
-    cardElement.classList.add('awake');
-    renderNode('first');
-  }, 1200);
-
-  generateStarfield();
+/* ─── INIT ─── */
+function init() {
+  document.getElementById('overlay').classList.add('fade-out');
+  setTimeout(() => { document.getElementById('overlay').style.display = 'none'; }, 1400);
+  music = document.getElementById('bgMusic');
+  music.volume = 0.5;
+  music.play().catch(() => {});
+  isPlaying = true;
+  document.getElementById('musicBtn').textContent = '⏸️';
+  spawnPetals();
+  initParticles();
+  renderStep();
 }
 
-function toggleAudio() {
-  if (streamActive) { stream.pause(); document.getElementById('audioSwitch').textContent = '🔇'; }
-  else { stream.play(); document.getElementById('audioSwitch').textContent = '🔊'; }
-  streamActive = !streamActive;
+function toggleMusic() {
+  if (isPlaying) { music.pause(); document.getElementById('musicBtn').textContent = '🎵'; }
+  else { music.play(); document.getElementById('musicBtn').textContent = '⏸️'; }
+  isPlaying = !isPlaying;
 }
 
-/* ========== REAL-TIME RENDER LOGIC ========== */
-function renderNode(transitionType = 'next') {
-  if (pointer >= MATRIX_DATA.length) { deployPayload(); return; }
+/* ─── RENDER ─── */
+function renderStep() {
+  if (currentStep >= QUESTIONS.length) { showThankYou(); return; }
 
-  const node = MATRIX_DATA[pointer];
-  const total = MATRIX_DATA.length;
-  const ratio = Math.round((pointer / total) * 100);
+  const q = QUESTIONS[currentStep];
+  const total = QUESTIONS.length;
+  const pct = Math.round((currentStep / total) * 100);
 
-  document.getElementById('hud-step').textContent = `${node.label} // QUANTUM INDEX`;
-  document.getElementById('hud-pct').textContent = ratio + '%';
-  document.getElementById('hud-fill').style.width = ratio + '%';
+  document.getElementById('step-label').textContent = `ข้อที่ ${currentStep + 1} / ${total}`;
+  document.getElementById('pct-label').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
 
-  const container = document.getElementById('dynamic-node');
+  const card = document.getElementById('quiz-card');
+  card.style.animation = 'none';
+  void card.offsetHeight;
+  card.style.animation = '';
 
-  let innerStructure = `
-    <div class="q-meta">${node.label}</div>
-    <h2 class="q-header">${node.text}</h2>
-  `;
+  let html = `<div class="card-glow"></div>`;
+  html += `<div class="q-eyebrow"><span class="q-num-badge">ข้อ ${currentStep + 1}</span><div class="q-dot-line"></div></div>`;
+  html += `<h2 class="q-text">${q.text}</h2>`;
+  html += `<div class="divider"><div class="d-line"></div><div class="d-gem"></div><div class="d-line"></div></div>`;
 
-  if (node.type === 'single') {
-    innerStructure += `<div class="matrix-options">`;
-    node.branches.forEach((branch, index) => {
-      const activeState = storage[node.id] === branch ? 'targeted' : '';
-      innerStructure += `<button class="matrix-cell ${activeState}" onclick="captureBranch('${node.id}', this, ${index}, event)">${branch}</button>`;
+  if (q.type === 'single') {
+    html += `<div class="options">`;
+    q.options.forEach((opt, i) => {
+      const sel = answers[q.id] === opt ? 'selected' : '';
+      const icon = OPT_ICONS[opt] || '🌸';
+      const checkIcon = sel ? '✓' : icon;
+      html += `<button class="opt-btn ${sel}" onclick="selectSingle('${q.id}', this, ${i})">
+        <span class="opt-icon">${checkIcon}</span>
+        <span class="opt-text">${opt}</span>
+        <span class="opt-arr">→</span>
+      </button>`;
     });
-    innerStructure += `</div>`;
+    html += `</div>`;
   }
 
-  if (node.type === 'tensor') {
-    innerStructure += `<div class="tensor-row">`;
-    for (let i = node.low; i <= node.high; i++) {
-      const activeState = storage[node.id] == i ? 'active' : '';
-      innerStructure += `<button class="tensor-node ${activeState}" onclick="captureTensor('${node.id}', ${i})">${i}</button>`;
+  if (q.type === 'scale') {
+    html += `<div class="scale-row">`;
+    for (let v = q.min; v <= q.max; v++) {
+      const sel = answers[q.id] == v ? 'selected' : '';
+      html += `<button class="scale-btn ${sel}" onclick="selectScale('${q.id}', ${v})">${v}</button>`;
     }
-    innerStructure += `</div><div class="scale-labels" style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--text-mutated);padding:0 10px;"><span>${node.lowCap}</span><span>${node.highCap}</span></div><br>`;
+    html += `</div>`;
+    html += `<div class="scale-labels"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div>`;
   }
 
-  if (node.type === 'text') {
-    innerStructure += `<textarea class="quantum-area" id="terminal-stream" placeholder="${node.holder}" oninput="storage['${node.id}'] = this.value">${storage[node.id] || ''}</textarea>`;
+  if (q.type === 'text') {
+    const val = answers[q.id] || '';
+    html += `<textarea class="text-input" id="text-ans" placeholder="${q.placeholder}" oninput="answers['${q.id}'] = this.value">${val}</textarea>`;
   }
 
-  innerStructure += `<div class="deck-row">`;
-  if (pointer > 0) innerStructure += `<button class="deck-prev" onclick="shiftTimeline('prev')">Backtrack</button>`;
-  innerStructure += `<button class="deck-next" id="deck-next" onclick="shiftTimeline('next')">${pointer === total - 1 ? 'Transmit 🔗' : 'Proceed'}</button></div>`;
+  html += `<div class="nav-row">`;
+  if (currentStep > 0) html += `<button class="btn-back" onclick="prevStep()">← ย้อนกลับ</button>`;
+  html += `<button class="btn-next" id="btn-next" onclick="nextStep()">`;
+  html += currentStep === QUESTIONS.length - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →';
+  html += `</button></div>`;
 
-  if (transitionType === 'first') {
-    container.innerHTML = innerStructure;
+  card.innerHTML = html;
+}
+
+function selectSingle(id, el, idx) {
+  answers[id] = QUESTIONS[currentStep].options[idx];
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    b.classList.remove('selected');
+    const icon = b.querySelector('.opt-icon');
+    if (icon) icon.textContent = OPT_ICONS[QUESTIONS[currentStep].options[Array.from(document.querySelectorAll('.opt-btn')).indexOf(b)]] || '🌸';
+  });
+  el.classList.add('selected');
+  const icon = el.querySelector('.opt-icon');
+  if (icon) icon.textContent = '✓';
+}
+
+function selectScale(id, val) {
+  answers[id] = val;
+  document.querySelectorAll('.scale-btn').forEach(b => {
+    b.classList.toggle('selected', parseInt(b.textContent) === val);
+  });
+}
+
+function nextStep() {
+  const q = QUESTIONS[currentStep];
+  if (q.type === 'text') answers[q.id] = document.getElementById('text-ans')?.value || '';
+  if (!answers[q.id] && q.type !== 'text') {
+    const btn = document.getElementById('btn-next');
+    const orig = btn.textContent;
+    btn.textContent = 'เลือกก่อนนะคะ 🥺';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1600);
     return;
   }
-
-  // Handle Morph Transformations
-  cardElement.classList.remove('explode', 'awake');
-  cardElement.classList.add('implode');
-  
-  setTimeout(() => {
-    container.innerHTML = innerStructure;
-    cardElement.classList.remove('implode');
-    cardElement.classList.add('explode');
-  }, 400);
+  currentStep++;
+  renderStep();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function captureBranch(id, targetElement, index, event) {
-  triggerShockwave(event);
-  storage[id] = MATRIX_DATA[pointer].branches[index];
-  document.querySelectorAll('.matrix-cell').forEach(c => c.classList.remove('targeted'));
-  targetElement.classList.add('targeted');
-  setTimeout(() => { if (pointer < MATRIX_DATA.length - 1) shiftTimeline('next'); }, 400);
+function prevStep() {
+  currentStep--;
+  renderStep();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function captureTensor(id, scalarValue) {
-  storage[id] = scalarValue;
-  document.querySelectorAll('.tensor-node').forEach(node => node.classList.toggle('active', parseInt(node.textContent) === scalarValue));
-}
+/* ─── SUBMIT ─── */
+async function showThankYou() {
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('quiz-card').style.display = 'none';
+  document.getElementById('thank-you').style.display = 'block';
 
-function shiftTimeline(vector) {
-  const node = MATRIX_DATA[pointer];
-  if (vector === 'next') {
-    if (node.type === 'text') storage[node.id] = document.getElementById('terminal-stream')?.value || '';
-    if (!storage[node.id] && node.type !== 'text') {
-      const btn = document.getElementById('deck-next');
-      btn.textContent = '🔒 Awaiting Input';
-      setTimeout(() => { btn.textContent = pointer === MATRIX_DATA.length - 1 ? 'Transmit 🔗' : 'Proceed'; }, 1200);
-      return;
-    }
-    pointer++;
-    renderNode('next');
-  } else {
-    pointer--;
-    renderNode('prev');
-  }
-}
+  const scaleEmoji = (v) => ['','💧','🌱','🌸','💗','💖'][v] || v;
 
-/* ========== TRANSMISSION COMPLETION ========== */
-async function deployPayload() {
-  document.getElementById('hud').style.opacity = '0';
-  cardElement.classList.remove('explode');
-  cardElement.classList.add('implode');
-  
-  setTimeout(() => {
-    cardElement.style.display = 'none';
-    document.getElementById('hud').style.display = 'none';
-    document.getElementById('singularity').classList.add('collapsed');
-  }, 500);
+  const fields = QUESTIONS.map(q => {
+    let value = String(answers[q.id] || '—');
+    if (q.type === 'scale') value = `${scaleEmoji(answers[q.id])} ${value} / ${q.max}`;
+    return { name: q.text, value, inline: false };
+  });
 
-  const fields = MATRIX_DATA.map(m => ({ name: `📡 ${m.text}`, value: `\`\`\`\n${storage[m.id] || 'Empty Data Stream'}\n\`\`\``, inline: false }));
-  const dataPayload = {
-    username: 'COSMIC CORE',
+  const payload = {
+    username: '💌 ม่อนตอบแล้ว!',
     avatar_url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png',
     embeds: [{
-      title: '🌌 Quantum Singularity Response Data', color: 0x8ec5fc, fields,
-      footer: { text: `Stardate Epoch // Real-time Synchronization` }
+      title: '🌸 คำตอบจากม่อน',
+      color: 0xe8a0b4,
+      fields,
+      footer: { text: `ส่งเมื่อ ${new Date().toLocaleString('th-TH')}` },
+      thumbnail: { url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png' }
     }]
   };
 
   try {
-    await fetch(SYSTEM_HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dataPayload) });
-  } catch(err) { console.error("Signal Lost In Transit: ", err); }
+    await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { console.error('webhook error', e); }
 }
 
-/* ========== STARFIELD GENERATOR ========== */
-function generateStarfield() {
-  const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
-  function sizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  sizeCanvas(); window.addEventListener('resize', sizeCanvas);
+/* ─── PARTICLES ─── */
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let W, H;
 
-  let stars = Array.from({length: 80}, () => ({
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    size: Math.random() * 1.5,
-    sparkle: Math.random() * 0.02
-  }));
+function resizeCanvas() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-  (function animationLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      s.size += s.sparkle;
-      if(s.size > 2 || s.size < 0.2) s.sparkle = -s.sparkle;
-      ctx.fillStyle = `rgba(255,255,255,${0.3 + Math.abs(s.size)})`;
-      ctx.beginPath(); ctx.arc(s.x, s.y, Math.abs(s.size), 0, Math.PI * 2); ctx.fill();
-    });
-    requestAnimationFrame(animationLoop);
+class Particle {
+  constructor() { this.reset(true); }
+  reset(rand = false) {
+    this.x = Math.random() * W;
+    this.y = rand ? Math.random() * H : H + 10;
+    this.r = 0.8 + Math.random() * 2;
+    this.alpha = 0.06 + Math.random() * 0.18;
+    this.vx = (Math.random() - 0.5) * 0.25;
+    this.vy = -0.15 - Math.random() * 0.35;
+    this.hue = Math.random() > 0.5 ? 340 : 220;
+    this.sat = 60 + Math.random() * 30;
+    this.lit = 70 + Math.random() * 15;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.y < -10) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${this.hue},${this.sat}%,${this.lit}%,${this.alpha})`;
+    ctx.fill();
+  }
+}
+
+function initParticles() {
+  particles = [];
+  for (let i = 0; i < 70; i++) particles.push(new Particle());
+  (function loop() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(loop);
   })();
 }
 
-/* ========== PHYSICAL REACTION EFFECT ========== */
-function triggerShockwave(e) {
-  const wave = document.createElement('div');
-  wave.className = 'shockwave';
-  wave.style.left = `${e.clientX}px`;
-  wave.style.top = `${e.clientY}px`;
-  document.body.appendChild(wave);
-  wave.addEventListener('animationend', () => wave.remove());
+/* ─── PETALS ─── */
+const PETALS = ['🌸', '💗', '🌷', '✿', '❀', '💫'];
+function spawnPetals() {
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = PETALS[Math.floor(Math.random() * PETALS.length)];
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.fontSize = (0.6 + Math.random() * 0.9) + 'rem';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = (Math.random() * 14) + 's';
+    document.body.appendChild(p);
+  }
 }
 </script>
 </body>
