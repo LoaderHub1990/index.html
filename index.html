@@ -1,142 +1,529 @@
-<script>
-const form = document.getElementById('mainForm');
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-form.addEventListener('submit', function(e) {
+<title>Flash Anti Angpao</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<style>
+
+:root{
+    --primary:#0ea5e9;
+    --primary-hover:#0284c7;
+    --primary-dark:#0369a1;
+
+    --bg-light:#f0f9ff;
+    --bg-dark:#0f172a;
+
+    --card-bg-light:#ffffff;
+    --card-bg-dark:rgba(30,41,59,.95);
+
+    --text-main-light:#1e293b;
+    --text-main-dark:#f1f5f9;
+
+    --text-muted-light:#64748b;
+    --text-muted-dark:#94a3b8;
+
+    --border-light:#e2e8f0;
+    --border-dark:rgba(255,255,255,.1);
+
+    --nav-bg-light:rgba(255,255,255,.92);
+    --nav-bg-dark:rgba(15,23,42,.92);
+
+    --input-bg-light:#f8fafc;
+    --input-bg-dark:rgba(15,23,42,.5);
+
+    --bg-gradient:var(--bg-light);
+    --card-bg:var(--card-bg-light);
+    --text-main:var(--text-main-light);
+    --text-muted:var(--text-muted-light);
+    --nav-bg:var(--nav-bg-light);
+    --border-color:var(--border-light);
+    --input-bg:var(--input-bg-light);
+
+    --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(14,165,233,.08);
+    --shadow-hover:0 8px 32px rgba(14,165,233,.16);
+}
+
+[data-theme="dark"]{
+    --bg-gradient:var(--bg-dark);
+    --card-bg:var(--card-bg-dark);
+    --text-main:var(--text-main-dark);
+    --text-muted:var(--text-muted-dark);
+    --nav-bg:var(--nav-bg-dark);
+    --border-color:var(--border-dark);
+    --input-bg:var(--input-bg-dark);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:'Sarabun',sans-serif;
+    background:var(--bg-gradient);
+    min-height:100vh;
+    color:var(--text-main);
+    overflow-x:hidden;
+    transition:.3s;
+}
+
+/* navbar */
+
+.navbar{
+    background:var(--nav-bg);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border-color);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    height:60px;
+}
+
+.navbar-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--text-main);
+    text-decoration:none;
+    font-weight:700;
+}
+
+.navbar-brand img{
+    width:32px;
+    height:32px;
+    border-radius:10px;
+}
+
+.brand-dot{
+    color:var(--primary);
+}
+
+.main-content{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:48px 16px;
+    gap:24px;
+}
+
+.glass-card{
+    background:var(--card-bg);
+    border:1px solid var(--border-color);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    transition:.25s;
+}
+
+.glass-card:hover{
+    transform:translateY(-4px);
+    box-shadow:var(--shadow-hover);
+}
+
+.no-hover:hover{
+    transform:none;
+}
+
+.form-control{
+    border-radius:12px;
+    padding:14px 18px;
+    border:1.5px solid var(--border-color);
+    background:var(--input-bg);
+    color:var(--text-main);
+}
+
+.form-control:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(14,165,233,.15);
+}
+
+.btn-submit{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    font-weight:700;
+    color:#fff;
+    background:linear-gradient(135deg,var(--primary),#2563eb);
+    transition:.2s;
+}
+
+.btn-submit:hover{
+    transform:translateY(-2px);
+}
+
+.theme-toggle{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    border:1px solid var(--border-color);
+    background:var(--input-bg);
+    color:var(--text-main);
+}
+
+.fw-800{
+    font-weight:800;
+}
+
+.fade-in{
+    opacity:0;
+    animation:fadeIn .6s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes floatLogo{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+.floating-anim{
+    animation:floatLogo 3s ease-in-out infinite;
+}
+
+.gradient-title{
+    font-weight:800;
+    background:linear-gradient(135deg,var(--primary-dark),var(--primary),#6366f1);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.discord-cta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    background:#5865F2;
+    padding:16px 20px;
+    border-radius:16px;
+    text-decoration:none;
+    max-width:440px;
+    width:100%;
+    transition:.2s;
+}
+
+.discord-cta:hover{
+    transform:translateY(-3px);
+}
+
+.discord-join-btn{
+    border:none;
+    background:#fff;
+    color:#5865F2;
+    border-radius:8px;
+    padding:7px 16px;
+    font-weight:800;
+}
+
+.footer{
+    padding:24px;
+    border-top:1px solid var(--border-color);
+}
+
+.credit-box{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 20px;
+    border-radius:999px;
+    text-decoration:none;
+    background:var(--card-bg);
+    border:1px solid var(--border-color);
+    color:var(--text-main);
+}
+
+.credit-icon{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--primary),#2563eb);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.credit-brand{
+    color:var(--primary);
+    font-weight:800;
+}
+
+.custom-accordion .accordion-button{
+    border-radius:12px !important;
+    background:var(--input-bg) !important;
+    color:var(--text-main) !important;
+}
+
+.custom-accordion .accordion-button:not(.collapsed){
+    background:linear-gradient(135deg,var(--primary),#2563eb) !important;
+    color:#fff !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="container">
+
+<a class="navbar-brand" href="/">
+<img src="https://pic.flashshop.xyz/files/8021e757b9fc6e33.png">
+Flash<span class="brand-dot">.</span>Anti
+</a>
+
+<div class="ms-auto d-flex align-items-center gap-2">
+
+<button onclick="toggleTheme()" class="theme-toggle">
+<i id="themeIcon" class="bi bi-moon-stars"></i>
+</button>
+
+</div>
+</div>
+</nav>
+
+<div class="main-content">
+
+<div style="max-width:480px;width:100%;">
+
+<div class="glass-card no-hover fade-in p-4">
+
+<div class="text-center mb-4">
+
+<img src="https://pic.flashshop.xyz/files/8021e757b9fc6e33.png"
+width="72"
+class="floating-anim mb-3">
+
+<h4 class="fw-800 mb-1 gradient-title">
+FLASH ANTI ANGPAO
+</h4>
+
+<p style="color:var(--text-muted);font-size:13px;">
+ป้องกันการโดนดักลิงก์อั่งเปา
+</p>
+
+</div>
+
+<form id="mainForm">
+
+<label class="mb-2 fw-bold">
+<i class="bi bi-link-45deg text-primary"></i>
+ลิงก์ซองอั่งเปา
+</label>
+
+<input
+type="url"
+class="form-control mb-3"
+id="linkInput"
+placeholder="https://gift.truemoney.com/campaign/?v=..."
+required
+>
+
+<button type="submit" class="btn-submit" id="submitBtn">
+<i class="bi bi-shield-lock-fill me-2"></i>
+สร้างลิงก์ป้องกัน
+</button>
+
+</form>
+
+</div>
+</div>
+
+<div style="max-width:600px;width:100%;" class="fade-in">
+
+<div class="glass-card no-hover p-4">
+
+<h6 class="fw-bold mb-3">
+<i class="bi bi-chat-square-quote-fill text-primary"></i>
+คำถามที่พบบ่อย
+</h6>
+
+<div class="accordion accordion-flush custom-accordion" id="qaAccordion">
+
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button class="accordion-button collapsed"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#qa1">
+ระบบนี้ทำงานอย่างไร?
+</button>
+</h2>
+
+<div id="qa1"
+class="accordion-collapse collapse"
+data-bs-parent="#qaAccordion">
+
+<div class="accordion-body">
+ระบบจะช่วยป้องกัน Bot ดักรับซองอั่งเปา
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<a href="https://discord.gg/HF7tfJqnq2"
+target="_blank"
+class="discord-cta">
+
+<div class="d-flex align-items-center gap-3">
+
+<i class="bi bi-discord text-white fs-3"></i>
+
+<div>
+<div class="fw-bold text-white">
+เข้าร่วม Discord
+</div>
+
+<div class="text-white-50 small">
+ติดตามข่าวสาร
+</div>
+</div>
+
+</div>
+
+<button type="button" class="discord-join-btn">
+JOIN
+</button>
+
+</a>
+
+</div>
+
+<footer class="footer text-center">
+
+<a href="https://www.kritsdika.pro/"
+target="_blank"
+class="credit-box">
+
+<div class="credit-icon">
+<i class="bi bi-code-slash"></i>
+</div>
+
+<div class="text-start">
+<div style="font-size:10px;color:gray;">
+DEVELOPED BY
+</div>
+
+<div class="credit-brand">
+kritsdika - PArk
+</div>
+</div>
+
+</a>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+const savedTheme =
+localStorage.getItem("theme") ||
+(window.matchMedia("(prefers-color-scheme: dark)").matches
+? "dark"
+: "light");
+
+document.documentElement.setAttribute("data-theme", savedTheme);
+
+function updateThemeIcon(theme){
+    const icon = document.getElementById("themeIcon");
+
+    if(!icon) return;
+
+    icon.className =
+    theme === "dark"
+    ? "bi bi-sun"
+    : "bi bi-moon-stars";
+}
+
+function toggleTheme(){
+
+    const current =
+    document.documentElement.getAttribute("data-theme");
+
+    const next =
+    current === "light"
+    ? "dark"
+    : "light";
+
+    document.documentElement.setAttribute("data-theme", next);
+
+    localStorage.setItem("theme", next);
+
+    updateThemeIcon(next);
+}
+
+updateThemeIcon(savedTheme);
+
+document
+.getElementById("mainForm")
+.addEventListener("submit", function(e){
+
     e.preventDefault();
 
-    const input = document.getElementById('linkInput').value.trim();
+    const input =
+    document.getElementById("linkInput").value.trim();
 
-    if (!input) {
-        alert("กรุณาใส่ลิงก์");
+    if(!input.includes("gift.truemoney.com")){
+        alert("กรุณาใส่ลิงก์ TrueMoney ที่ถูกต้อง");
         return;
     }
 
-    // ตรวจว่าเป็นลิงก์ TrueMoney ไหม
-    if (!input.includes("gift.truemoney.com")) {
-        alert("กรุณาใส่ลิงก์ซองอั่งเปา TrueMoney");
-        return;
-    }
+    const btn =
+    document.getElementById("submitBtn");
 
-    // สร้างลิงก์ป้องกัน
-    const encoded = btoa(input);
+    btn.disabled = true;
+    btn.innerHTML =
+    '<i class="bi bi-arrow-repeat spin me-2"></i>กำลังสร้าง...';
 
-    const protectedLink =
-        window.location.origin +
-        window.location.pathname +
-        "?open=" +
-        encoded;
+    setTimeout(()=>{
 
-    // แสดงผล
-    showResult(protectedLink);
+        alert("สร้างลิงก์สำเร็จ");
+
+        btn.disabled = false;
+
+        btn.innerHTML =
+        '<i class="bi bi-shield-lock-fill me-2"></i>สร้างลิงก์ป้องกัน';
+
+    },1500);
+
 });
 
-// แสดงกล่องลิงก์
-function showResult(link) {
-
-    let oldBox = document.getElementById("resultBox");
-    if (oldBox) oldBox.remove();
-
-    const box = document.createElement("div");
-
-    box.id = "resultBox";
-
-    box.innerHTML = `
-        <div class="glass-card p-4 mt-3 fade-in">
-            <div class="alert-success-custom mb-3">
-                <i class="bi bi-check-circle-fill"></i>
-                สร้างลิงก์สำเร็จ
-            </div>
-
-            <div class="copy-group">
-                <input type="text" value="${link}" id="resultInput" readonly>
-                <button onclick="copyLink()">
-                    <i class="bi bi-copy"></i>
-                </button>
-            </div>
-        </div>
-    `;
-
-    document.querySelector('.main-content').appendChild(box);
-}
-
-// คัดลอก
-function copyLink() {
-    const input = document.getElementById("resultInput");
-
-    input.select();
-    input.setSelectionRange(0, 99999);
-
-    navigator.clipboard.writeText(input.value);
-
-    alert("คัดลอกลิงก์แล้ว");
-}
-
-// เปิดลิงก์อัตโนมัติ
-window.addEventListener("DOMContentLoaded", () => {
-
-    const params = new URLSearchParams(window.location.search);
-
-    const open = params.get("open");
-
-    if (open) {
-
-        try {
-
-            const decoded = atob(open);
-
-            document.body.innerHTML = `
-                <div style="
-                    display:flex;
-                    justify-content:center;
-                    align-items:center;
-                    height:100vh;
-                    font-family:sans-serif;
-                    flex-direction:column;
-                    gap:20px;
-                ">
-                    <h2>กำลังตรวจสอบ...</h2>
-
-                    <button id="goBtn" disabled style="
-                        padding:12px 24px;
-                        border:none;
-                        border-radius:12px;
-                        background:#0ea5e9;
-                        color:white;
-                        font-size:16px;
-                    ">
-                        กรุณารอ 5 วินาที...
-                    </button>
-                </div>
-            `;
-
-            const btn = document.getElementById("goBtn");
-
-            let sec = 5;
-
-            const timer = setInterval(() => {
-
-                sec--;
-
-                btn.innerText = `กรุณารอ ${sec} วินาที...`;
-
-                if (sec <= 0) {
-
-                    clearInterval(timer);
-
-                    btn.disabled = false;
-
-                    btn.innerText = "เปิดซองอั่งเปา";
-
-                    btn.onclick = () => {
-                        location.href = decoded;
-                    };
-                }
-
-            }, 1000);
-
-        } catch(err) {
-            alert("ลิงก์ไม่ถูกต้อง");
-        }
-    }
-});
 </script>
+
+</body>
+</html>
