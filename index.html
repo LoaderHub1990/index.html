@@ -3,66 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex,nofollow">
 <title>Flash Anti Link</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--p:#0ea5e9;--pd:#0284c7;--s:#10b981;--d:#ef4444;--w:#f59e0b;--bg:#f0f9ff;--card:#fff;--t:#1e293b;--tm:#64748b;--b:#e2e8f0;--ib:#f8fafc;--sh:0 20px 60px rgba(14,165,233,.12)}
 [data-theme=dark]{--bg:#060d1a;--card:#0f1e33;--t:#e2f0ff;--tm:#7aa3c8;--b:rgba(14,165,233,.15);--ib:#0a1628;--sh:0 20px 60px rgba(0,0,0,.4)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;user-select:none;-webkit-user-select:none}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);background-size:40px 40px;opacity:.4;pointer-events:none;z-index:0}
 body::after{content:'';position:fixed;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(14,165,233,.15) 0%,transparent 70%);pointer-events:none;z-index:0;animation:orb 8s ease-in-out infinite}
 @keyframes orb{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,60px)}}
 
-/* ── DEVTOOLS OVERLAY ── */
-#dt-wall{display:none;position:fixed;inset:0;z-index:99999;background:#060d1a;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;text-align:center}
-#dt-wall.on{display:flex}
-#dt-wall .ico{font-size:64px;animation:shake .4s infinite alternate}
-@keyframes shake{0%{transform:rotate(-6deg) scale(1)}100%{transform:rotate(6deg) scale(1.05)}}
-#dt-wall h2{color:#ef4444;font-size:22px;font-weight:800;font-family:'Space Mono',monospace}
-#dt-wall p{color:#7aa3c8;font-size:14px;line-height:1.7;max-width:280px}
-#dt-wall button{padding:12px 28px;background:#ef4444;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Sarabun',sans-serif;margin-top:4px}
-
 nav{position:sticky;top:0;z-index:100;height:62px;display:flex;align-items:center;border-bottom:1px solid var(--b);background:rgba(255,255,255,.72);backdrop-filter:blur(16px);transition:background .3s}
 [data-theme=dark] nav{background:rgba(6,13,26,.78)}
-.ni{max-width:560px;margin:0 auto;width:100%;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.ni{max-width:600px;margin:0 auto;width:100%;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
 .brand{font-family:'Space Mono',monospace;font-weight:700;font-size:17px;letter-spacing:-.5px}
 .brand span{color:var(--p)}
 .tbtn{width:36px;height:36px;border:1px solid var(--b);border-radius:10px;background:var(--card);color:var(--t);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.tbtn:hover{border-color:var(--p);color:var(--p)}
+.tbtn:hover{border-color:var(--p)}
 
-main{position:relative;z-index:1;padding:48px 20px 60px;display:flex;flex-direction:column;align-items:center}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);border-radius:99px;font-size:12px;font-weight:600;color:var(--p);margin-bottom:20px;letter-spacing:.5px}
+main{position:relative;z-index:1;padding:40px 20px 60px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);border-radius:99px;font-size:12px;font-weight:600;color:var(--p);letter-spacing:.5px}
 .chip::before{content:'';width:7px;height:7px;background:var(--p);border-radius:50%;box-shadow:0 0 6px var(--p);animation:pd 2s infinite}
 @keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
 
-.card{width:100%;max-width:520px;background:var(--card);border:1px solid var(--b);border-radius:24px;padding:36px 32px;box-shadow:var(--sh);transition:background .3s,border .3s}
-.lw{display:flex;align-items:center;justify-content:center;width:72px;height:72px;margin:0 auto 18px;background:linear-gradient(135deg,#0ea5e9,#2563eb);border-radius:20px;box-shadow:0 8px 24px rgba(14,165,233,.4);animation:fl 3s ease-in-out infinite}
-@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.lw svg{width:38px;height:38px;fill:#fff}
-.ttl{text-align:center;font-size:27px;font-weight:800;background:linear-gradient(135deg,#0284c7,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
-.sub{text-align:center;color:var(--tm);font-size:14px;margin-bottom:28px}
+.card{width:100%;max-width:600px;background:var(--card);border:1px solid var(--b);border-radius:24px;padding:32px 28px;box-shadow:var(--sh);transition:background .3s,border .3s}
 
-.sr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px}
-.si{background:var(--ib);border:1px solid var(--b);border-radius:14px;padding:12px 8px;text-align:center}
-.sn{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--p)}
-.sl{font-size:11px;color:var(--tm);margin-top:2px}
+.lw{display:flex;align-items:center;justify-content:center;width:68px;height:68px;margin:0 auto 16px;background:linear-gradient(135deg,#0ea5e9,#2563eb);border-radius:18px;box-shadow:0 8px 24px rgba(14,165,233,.4);animation:fl 3s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.lw svg{width:36px;height:36px;fill:#fff}
+.ttl{text-align:center;font-size:26px;font-weight:800;background:linear-gradient(135deg,#0284c7,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
+.sub{text-align:center;color:var(--tm);font-size:13px;margin-bottom:24px}
 
+.sr{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
+.si{background:var(--ib);border:1px solid var(--b);border-radius:12px;padding:10px 6px;text-align:center}
+.sn{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--p)}
+.sl{font-size:10px;color:var(--tm);margin-top:2px}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--ib);padding:4px;border-radius:14px;border:1px solid var(--b)}
+.tab{flex:1;padding:9px;border:none;border-radius:10px;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--tm);transition:all .2s}
+.tab.on{background:var(--p);color:#fff;box-shadow:0 2px 8px rgba(14,165,233,.4)}
+
+.panel{display:none}
+.panel.on{display:block}
+
+/* URL panel */
 .ig{position:relative;margin-bottom:12px}
-.ig .ico{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--tm);font-size:18px;pointer-events:none}
-.ui{width:100%;padding:15px 15px 15px 48px;border:1.5px solid var(--b);border-radius:14px;background:var(--ib);color:var(--t);font-family:'Sarabun',sans-serif;font-size:15px;outline:none;transition:border .2s,box-shadow .2s;user-select:text;-webkit-user-select:text}
+.ig .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tm);font-size:17px;pointer-events:none}
+.ui{width:100%;padding:14px 14px 14px 44px;border:1.5px solid var(--b);border-radius:13px;background:var(--ib);color:var(--t);font-family:'Sarabun',sans-serif;font-size:15px;outline:none;transition:border .2s,box-shadow .2s}
 .ui:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(14,165,233,.15)}
 .ui::placeholder{color:var(--tm)}
 
-.secrow{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-.st{flex:1;min-width:100px;display:flex;align-items:center;gap:7px;padding:9px 11px;border:1.5px solid var(--b);border-radius:12px;background:var(--ib);cursor:pointer;font-size:12px;font-weight:600;color:var(--tm);transition:all .2s;user-select:none}
+/* File drop */
+.drop-zone{border:2px dashed var(--b);border-radius:16px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--ib);margin-bottom:12px}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--p);background:rgba(14,165,233,.05)}
+.drop-zone .dico{font-size:40px;margin-bottom:10px}
+.drop-zone .dtxt{font-size:15px;font-weight:700;color:var(--t);margin-bottom:4px}
+.drop-zone .dsub{font-size:12px;color:var(--tm)}
+.drop-zone input{display:none}
+
+/* Scan options row */
+.secrow{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+.st{flex:1;min-width:90px;display:flex;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid var(--b);border-radius:11px;background:var(--ib);cursor:pointer;font-size:11px;font-weight:600;color:var(--tm);transition:all .2s;user-select:none}
 .st.on{border-color:var(--p);color:var(--p);background:rgba(14,165,233,.08)}
 .st input{display:none}
-.dot{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.st.on .dot::after{content:'';width:6px;height:6px;background:var(--p);border-radius:50%}
+.dot{width:13px;height:13px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st.on .dot::after{content:'';width:5px;height:5px;background:var(--p);border-radius:50%}
 
-.bm{width:100%;padding:15px;border:none;border-radius:14px;font-family:'Sarabun',sans-serif;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(135deg,#0ea5e9,#2563eb);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.bm{width:100%;padding:14px;border:none;border-radius:13px;font-family:'Sarabun',sans-serif;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(135deg,#0ea5e9,#2563eb);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
 .bm::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#38bdf8,#3b82f6);opacity:0;transition:opacity .2s}
 .bm:hover::after{opacity:1}
 .bm:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(14,165,233,.4)}
@@ -70,64 +79,101 @@ main{position:relative;z-index:1;padding:48px 20px 60px;display:flex;flex-direct
 .bm:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
 .bm span{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px}
 
-#ss{display:none;margin-top:16px;padding:14px 16px;border-radius:14px;font-size:14px;font-weight:600;gap:10px;align-items:flex-start}
-#ss.scanning{display:flex;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);color:var(--p)}
-#ss.safe{display:flex;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:#10b981}
-#ss.danger{display:flex;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444}
-#ss.warn{display:flex;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#f59e0b}
-.sico{font-size:20px;flex-shrink:0}
-.stxt{flex:1}
-.stit{font-size:14px;font-weight:700}
-.sdet{font-size:12px;font-weight:400;margin-top:3px;opacity:.85}
-.pb{height:3px;background:var(--b);border-radius:2px;overflow:hidden;margin-top:8px}
-.pf{height:100%;background:linear-gradient(90deg,#0ea5e9,#2563eb);border-radius:2px;transition:width .25s}
-.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;margin-top:8px}
-.ci{font-size:11px;display:flex;align-items:center;gap:4px}
-.rm{margin-top:8px}
-.rl{font-size:11px;opacity:.7;margin-bottom:3px}
-.rt{height:6px;background:var(--b);border-radius:3px;overflow:hidden}
-.rb{height:100%;border-radius:3px;transition:width .6s ease}
-.tl{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:3px}
-.tl li{font-size:11px;display:flex;align-items:flex-start;gap:4px}
-.tl li::before{content:'▸';flex-shrink:0}
+/* ── SCAN RESULT ── */
+.scan-box{display:none;margin-top:14px;border-radius:16px;overflow:hidden;border:1px solid var(--b)}
+.scan-header{padding:14px 16px;display:flex;align-items:center;gap:10px}
+.scan-header.scanning{background:rgba(14,165,233,.1);border-bottom:1px solid rgba(14,165,233,.2)}
+.scan-header.safe{background:rgba(16,185,129,.1);border-bottom:1px solid rgba(16,185,129,.2)}
+.scan-header.danger{background:rgba(239,68,68,.1);border-bottom:1px solid rgba(239,68,68,.2)}
+.scan-header.warn{background:rgba(245,158,11,.1);border-bottom:1px solid rgba(245,158,11,.2)}
+.sh-ico{font-size:22px;flex-shrink:0}
+.sh-txt{flex:1}
+.sh-title{font-size:14px;font-weight:700}
+.scan-header.scanning .sh-title{color:var(--p)}
+.scan-header.safe .sh-title{color:#10b981}
+.scan-header.danger .sh-title{color:#ef4444}
+.scan-header.warn .sh-title{color:#f59e0b}
+.sh-det{font-size:12px;color:var(--tm);margin-top:2px}
+.sh-badge{padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700;flex-shrink:0}
+.scan-header.safe .sh-badge{background:rgba(16,185,129,.15);color:#10b981}
+.scan-header.danger .sh-badge{background:rgba(239,68,68,.15);color:#ef4444}
+.scan-header.warn .sh-badge{background:rgba(245,158,11,.15);color:#f59e0b}
+.scan-header.scanning .sh-badge{background:rgba(14,165,233,.15);color:var(--p)}
 
-.rb2{display:none;margin-top:20px;padding:18px;background:var(--ib);border:1px solid var(--b);border-radius:16px}
-.rl2{font-size:12px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.rl2::before{content:'';width:8px;height:8px;background:var(--s);border-radius:50%;box-shadow:0 0 6px var(--s)}
-.cr{display:flex;gap:8px}
-.ri{flex:1;padding:11px 14px;border:1.5px solid var(--b);border-radius:11px;background:var(--card);color:var(--p);font-family:'Space Mono',monospace;font-size:13px;outline:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;user-select:text;-webkit-user-select:text}
-.cb{padding:11px 20px;border:none;border-radius:11px;background:var(--p);color:#fff;font-family:'Sarabun',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;white-space:nowrap}
-.cb:hover{background:var(--pd);transform:translateY(-1px)}
-.sbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.sb{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:8px;font-size:11px;font-weight:600;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#10b981}
+.pb{height:3px;background:var(--b);overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,#0ea5e9,#2563eb);transition:width .2s}
 
-hr.dv{border:none;border-top:1px solid var(--b);margin:24px 0}
-.htit{font-size:12px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:10px}
-.hl{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto}
-.hi{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--ib);border:1px solid var(--b);border-radius:12px;cursor:pointer;transition:border-color .2s;text-align:left;width:100%}
+.scan-body{padding:14px 16px;background:var(--card)}
+
+/* Risk meter */
+.risk-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.risk-label{font-size:12px;color:var(--tm);white-space:nowrap}
+.risk-track{flex:1;height:8px;background:var(--ib);border-radius:4px;overflow:hidden;border:1px solid var(--b)}
+.risk-bar{height:100%;border-radius:4px;transition:width .7s ease}
+.risk-score{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;white-space:nowrap}
+
+/* Check categories */
+.cat-title{font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:8px;margin-top:12px;display:flex;align-items:center;gap:6px}
+.cat-title:first-child{margin-top:0}
+.cat-title::after{content:'';flex:1;height:1px;background:var(--b)}
+.checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin-bottom:4px}
+.ck{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 0}
+.ck .ci{font-size:12px;flex-shrink:0}
+.ck-name{color:var(--t)}
+.ck.fail .ck-name{color:var(--d);font-weight:600}
+
+/* Threat list */
+.threats-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--b);display:none}
+.threats-title{font-size:11px;font-weight:700;color:#ef4444;margin-bottom:6px;letter-spacing:.5px}
+.tl{list-style:none;display:flex;flex-direction:column;gap:4px}
+.tl li{font-size:12px;padding:7px 10px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:8px;display:flex;align-items:flex-start;gap:6px;color:var(--t)}
+.tl li .ti{flex-shrink:0}
+
+/* File info box */
+.file-info{padding:10px 12px;background:var(--ib);border:1px solid var(--b);border-radius:10px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.fi-icon{font-size:26px;flex-shrink:0}
+.fi-txt{flex:1;overflow:hidden}
+.fi-name{font-size:13px;font-weight:700;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fi-meta{font-size:11px;color:var(--tm);margin-top:2px}
+.fi-ext{padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0}
+
+/* Result */
+.rb2{display:none;margin-top:14px;padding:16px;background:var(--ib);border:1px solid var(--b);border-radius:14px}
+.rl2{font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.rl2::before{content:'';width:7px;height:7px;background:var(--s);border-radius:50%;box-shadow:0 0 6px var(--s)}
+.cr{display:flex;gap:7px}
+.ri{flex:1;padding:10px 12px;border:1.5px solid var(--b);border-radius:10px;background:var(--card);color:var(--p);font-family:'Space Mono',monospace;font-size:12px;outline:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb{padding:10px 18px;border:none;border-radius:10px;background:var(--p);color:#fff;font-family:'Sarabun',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s}
+.cb:hover{background:var(--pd)}
+.sbs{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.sb{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:7px;font-size:11px;font-weight:600;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#10b981}
+
+hr.dv{border:none;border-top:1px solid var(--b);margin:20px 0}
+.htit{font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:8px}
+.hl{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto}
+.hi{display:flex;align-items:center;gap:8px;padding:9px 11px;background:var(--ib);border:1px solid var(--b);border-radius:11px;cursor:pointer;transition:border-color .2s;text-align:left;width:100%}
 .hi:hover{border-color:var(--p)}
 .htxt{flex:1;overflow:hidden}
-.hs{font-family:'Space Mono',monospace;font-size:12px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ho{font-size:11px;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-.hb{font-size:10px;padding:3px 7px;border-radius:5px;font-weight:700;flex-shrink:0}
+.hs{font-family:'Space Mono',monospace;font-size:11px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ho{font-size:10px;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.hb{font-size:10px;padding:2px 6px;border-radius:5px;font-weight:700;flex-shrink:0}
 .bs{background:rgba(16,185,129,.15);color:#10b981}
 .bd{background:rgba(239,68,68,.15);color:#ef4444}
+.bw{background:rgba(245,158,11,.15);color:#f59e0b}
 
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:9999;transition:transform .3s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:11px 20px;border-radius:11px;font-size:13px;font-weight:600;z-index:9999;transition:transform .3s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .toast.on{transform:translateX(-50%) translateY(0)}
 footer{text-align:center;padding:20px;color:var(--tm);font-size:12px;position:relative;z-index:1}
 .spin{animation:sp 1s linear infinite;display:inline-block}
 @keyframes sp{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+@media(max-width:500px){
+  .sr{grid-template-columns:1fr 1fr}
+  .checks-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
-
-<div id="dt-wall">
-  <div class="ico">🔒</div>
-  <h2>⛔ Developer Tools Detected</h2>
-  <p>ตรวจพบการเปิด Developer Tools<br>ระบบรักษาความปลอดภัยได้บล็อกการเข้าถึงโค้ด<br><br>กรุณาปิด DevTools แล้วรีเฟรช</p>
-  <button onclick="location.reload()">🔄 รีเฟรชหน้าใหม่</button>
-</div>
 
 <nav>
   <div class="ni">
@@ -137,50 +183,87 @@ footer{text-align:center;padding:20px;color:var(--tm);font-size:12px;position:re
 </nav>
 
 <main>
-  <div class="chip">🛡️ PROTECTED URL SHORTENER v2</div>
+  <div class="chip">🛡️ URL &amp; FILE SECURITY SCANNER</div>
+
   <div class="card">
     <div class="lw">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/></svg>
     </div>
     <div class="ttl">FLASH ANTI LINK</div>
-    <div class="sub">ย่อลิงก์ + สแกน 20 ชั้น • Anti-DevTools • Anti-Phishing</div>
+    <div class="sub">สแกน URL + ตรวจสอบไฟล์อันตราย 200+ นามสกุล</div>
 
     <div class="sr">
-      <div class="si"><div class="sn" id="sL">0</div><div class="sl">ลิงก์ที่สร้าง</div></div>
+      <div class="si"><div class="sn" id="sL">0</div><div class="sl">สแกนทั้งหมด</div></div>
       <div class="si"><div class="sn" id="sS">0</div><div class="sl">ปลอดภัย</div></div>
-      <div class="si"><div class="sn" id="sB">0</div><div class="sl">บล็อค</div></div>
+      <div class="si"><div class="sn" id="sW">0</div><div class="sl">เสี่ยง</div></div>
+      <div class="si"><div class="sn" id="sB">0</div><div class="sl">อันตราย</div></div>
     </div>
 
-    <div class="ig">
-      <span class="ico">🔗</span>
-      <input type="url" id="urlInput" class="ui" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('url')">🔗 สแกน URL</button>
+      <button class="tab" onclick="switchTab('file')">📁 สแกนไฟล์/ลิงก์ไฟล์</button>
     </div>
 
-    <div class="secrow">
-      <label class="st on" id="tg-scan"><input type="checkbox" id="op-scan" checked><div class="dot"></div>🔍 สแกน 20 ชั้น</label>
-      <label class="st on" id="tg-prev"><input type="checkbox" id="op-prev" checked><div class="dot"></div>👁️ Preview</label>
-      <label class="st on" id="tg-warn"><input type="checkbox" id="op-warn" checked><div class="dot"></div>⚠️ บล็อคอันตราย</label>
+    <!-- URL Panel -->
+    <div class="panel on" id="panel-url">
+      <div class="ig">
+        <span class="ico">🔗</span>
+        <input type="url" id="urlInput" class="ui" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="secrow">
+        <label class="st on" id="tg-scan"><input type="checkbox" id="op-scan" checked><div class="dot"></div>🔍 สแกน URL</label>
+        <label class="st on" id="tg-file"><input type="checkbox" id="op-file" checked><div class="dot"></div>📁 ตรวจไฟล์</label>
+        <label class="st on" id="tg-warn"><input type="checkbox" id="op-warn" checked><div class="dot"></div>⛔ บล็อคอันตราย</label>
+        <label class="st on" id="tg-short"><input type="checkbox" id="op-short" checked><div class="dot"></div>✂️ ย่อลิงก์</label>
+      </div>
+      <button class="bm" id="sbtn-url" onclick="goUrl()">
+        <span><span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span></span>
+      </button>
     </div>
 
-    <button class="bm" id="sbtn" onclick="go()">
-      <span><span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span></span>
-    </button>
+    <!-- File Panel -->
+    <div class="panel" id="panel-file">
+      <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+        <div class="dico">📂</div>
+        <div class="dtxt">คลิกหรือลากไฟล์มาวาง</div>
+        <div class="dsub">รองรับทุกนามสกุล • ตรวจสอบ 200+ ประเภทไฟล์อันตราย</div>
+        <input type="file" id="fileInput" onchange="handleFile(this.files[0])">
+      </div>
+      <button class="bm" id="sbtn-file" onclick="goFile()" disabled>
+        <span><span>🔍</span><span>สแกนไฟล์</span></span>
+      </button>
+    </div>
 
-    <div id="ss">
-      <div class="sico" id="si2">⏳</div>
-      <div class="stxt">
-        <div class="stit" id="stit">กำลังสแกน...</div>
-        <div class="sdet" id="sdet">กรุณารอสักครู่</div>
-        <div class="pb" id="pb" style="display:none"><div class="pf" id="pf" style="width:0%"></div></div>
-        <div class="cgrid" id="cg" style="display:none"></div>
-        <div class="rm" id="rmt" style="display:none">
-          <div class="rl">ระดับความเสี่ยง</div>
-          <div class="rt"><div class="rb" id="rb" style="width:0%"></div></div>
+    <!-- Scan Result Box -->
+    <div class="scan-box" id="scanBox">
+      <div class="scan-header scanning" id="scanHeader">
+        <div class="sh-ico" id="shIco">⏳</div>
+        <div class="sh-txt">
+          <div class="sh-title" id="shTitle">กำลังสแกน...</div>
+          <div class="sh-det" id="shDet">กรุณารอสักครู่</div>
         </div>
-        <ul class="tl" id="tl" style="display:none"></ul>
+        <div class="sh-badge" id="shBadge">--</div>
+      </div>
+      <div class="pb" id="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+      <div class="scan-body" id="scanBody" style="display:none">
+        <!-- Risk meter -->
+        <div class="risk-row">
+          <div class="risk-label">ความเสี่ยง</div>
+          <div class="risk-track"><div class="risk-bar" id="riskBar" style="width:0%"></div></div>
+          <div class="risk-score" id="riskScore">0/100</div>
+        </div>
+        <!-- Categories rendered here -->
+        <div id="checkCats"></div>
+        <!-- Threats -->
+        <div class="threats-section" id="threatsSection">
+          <div class="threats-title">🚨 ภัยคุกคามที่ตรวจพบ</div>
+          <ul class="tl" id="threatsList"></ul>
+        </div>
       </div>
     </div>
 
+    <!-- Short link result -->
     <div class="rb2" id="rb2">
       <div class="rl2">ลิงก์ที่สร้างแล้ว</div>
       <div class="cr">
@@ -190,149 +273,306 @@ footer{text-align:center;padding:20px;color:var(--tm);font-size:12px;position:re
       <div class="sbs" id="sbs"></div>
     </div>
 
-    <div id="hs" style="display:none">
+    <!-- History -->
+    <div id="histSec" style="display:none">
       <hr class="dv">
       <div class="htit">📋 ประวัติล่าสุด</div>
-      <div class="hl" id="hl"></div>
+      <div class="hl" id="histList"></div>
     </div>
   </div>
 </main>
 
-<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; 🔒 Anti-DevTools Active &nbsp;•&nbsp; 🛡️ 20-Layer Scanner</footer>
+<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; 🛡️ URL + File Scanner &nbsp;•&nbsp; 200+ File Types</footer>
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════
-//  ANTI-DEVTOOLS / ANTI-VIEW-SOURCE / ANTI-INSPECT
-// ══════════════════════════════════════════════════════════
-(function(){
-  'use strict';
+/* ══════════════════════════════════════════════
+   FILE EXTENSION DATABASE — 200+ types, 8 categories
+══════════════════════════════════════════════ */
+var FILE_DB = {
 
-  function lock(){ document.getElementById('dt-wall').classList.add('on'); }
-  function unlock(){ document.getElementById('dt-wall').classList.remove('on'); }
+  // ── CRITICAL — บล็อกทันที ──────────────────
+  critical: {
+    label: '🚨 อันตรายสูงสุด (Malware/Exploit)',
+    color: '#ef4444',
+    score: 100,
+    exts: [
+      // Windows Executables
+      'exe','com','bat','cmd','scr','pif','vbs','vbe','wsf','wsh','ps1','ps2',
+      'psm1','psd1','ps1xml','psc1','psc2','msh','msh1','msh2',
+      // Compiled
+      'dll','sys','drv','ocx','cpl','msi','msp','mst','cab',
+      // Scripts
+      'js','jse','vb','vba','bas','frm',
+      // Java
+      'jar','jnlp','class',
+      // Shell
+      'sh','bash','zsh','fish','ksh','csh','run',
+      // Python
+      'py','pyw','pyc','pyo','pyd',
+      // Ruby
+      'rb','rbw',
+      // Perl
+      'pl','pm',
+      // PHP
+      'php','php3','php4','php5','php7','phtml','phar',
+      // ASP
+      'asp','aspx','ashx','asmx','axd',
+      // Exploit / Shellcode
+      'hta','hlp','chm','inf','reg','vxd','386',
+      // Misc executable
+      'app','ipa','apk','dex','so','dylib',
+      'elf','bin','o','a',
+    ]
+  },
 
-  // 1. Keyboard shortcut blocking
-  document.addEventListener('keydown', function(e){
-    var c=e.ctrlKey||e.metaKey, s=e.shiftKey, k=e.key;
-    // F12
-    if(k==='F12'){ e.preventDefault(); e.stopImmediatePropagation(); lock(); return false; }
-    // Ctrl+Shift+I / J / C / K
-    if(c&&s&&['i','I','j','J','c','C','k','K'].indexOf(k)>-1){ e.preventDefault(); lock(); return false; }
-    // Ctrl+U (view-source)
-    if(c&&(k==='u'||k==='U')){ e.preventDefault(); return false; }
-    // Ctrl+S (save)
-    if(c&&(k==='s'||k==='S')){ e.preventDefault(); return false; }
-    // Ctrl+P (print — can reveal source)
-    if(c&&(k==='p'||k==='P')){ e.preventDefault(); return false; }
-    // Ctrl+A outside inputs
-    if(c&&(k==='a'||k==='A')&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){
-      e.preventDefault(); return false;
-    }
-  }, true);
+  // ── HIGH — อันตรายสูง ──────────────────────
+  high: {
+    label: '🔴 อันตรายสูง (Script/Macro)',
+    color: '#f97316',
+    score: 80,
+    exts: [
+      // Macro-enabled Office
+      'docm','xlsm','pptm','xlam','xla','xlt','xltm','dotm','potm','ppsm',
+      // Old Office (can contain macros)
+      'doc','xls','ppt','dot','xlt','pot',
+      // Flash (exploitable)
+      'swf','fla',
+      // Silverlight
+      'xap',
+      // PowerShell data
+      'pssc','cdxml',
+      // Shortcut (can run anything)
+      'lnk','url','desktop',
+      // Node.js
+      'mjs','cjs',
+      // TypeScript (runnable)
+      'ts','tsx',
+      // Go
+      'go',
+      // Rust
+      'rs',
+      // C/C++
+      'c','cpp','cc','cxx','h','hpp',
+      // Assembly
+      'asm','s',
+      // LLVM
+      'bc','ll',
+      // Makefile / build
+      'makefile','cmake',
+      // Docker
+      'dockerfile',
+      // Vagrant
+      'vagrantfile',
+    ]
+  },
 
-  // 2. Block right-click
-  document.addEventListener('contextmenu', function(e){
-    e.preventDefault();
-    _toast('🔒 คลิกขวาถูกปิดใช้งาน');
-    return false;
-  }, true);
+  // ── MEDIUM HIGH — ระวัง ──────────────────────
+  medium_high: {
+    label: '🟠 ระวัง (Executable/Installer)',
+    color: '#f59e0b',
+    score: 60,
+    exts: [
+      // Installers / packages
+      'deb','rpm','pkg','dmg','run','appimage','snap','flatpak',
+      // Archive (can contain malware)
+      'iso','img','vhd','vhdx','vmdk','ova','ovf',
+      // Java
+      'war','ear',
+      // .NET
+      'nupkg','vsix',
+      // Python packages
+      'whl','egg',
+      // Ruby gems
+      'gem',
+      // Perl archive
+      'par',
+      // Tcl
+      'tcl',
+      // Lua
+      'lua',
+      // R
+      'r','rdata','rds',
+      // MATLAB
+      'm','mat','mlx',
+      // Julia
+      'jl',
+      // Kotlin
+      'kt','kts',
+      // Swift
+      'swift',
+      // Groovy
+      'groovy','gvy','gy','gsh',
+      // Scala
+      'scala',
+      // Clojure
+      'clj','cljs','cljc',
+      // Haskell
+      'hs','lhs',
+      // Erlang
+      'erl','beam',
+      // Elixir
+      'ex','exs',
+    ]
+  },
 
-  // 3. Block drag/select on body
-  document.addEventListener('dragstart', function(e){ e.preventDefault(); }, true);
-  document.addEventListener('selectstart', function(e){
-    if(!['INPUT','TEXTAREA'].includes(e.target.tagName)) e.preventDefault();
-  });
+  // ── MEDIUM — น่าสังเกต ──────────────────────
+  medium: {
+    label: '🟡 น่าสังเกต (Config/Data)',
+    color: '#eab308',
+    score: 40,
+    exts: [
+      // Config files
+      'env','cfg','conf','config','ini','properties','toml','yaml','yml',
+      // Database
+      'sql','sqlite','sqlite3','db','mdb','accdb','dbf',
+      // Credential files
+      'pem','key','ppk','p12','pfx','crt','cer','csr','der','jks','keystore',
+      // SSH
+      'pub',
+      // Infrastructure
+      'tf','tfstate','tfvars',
+      // Kubernetes / Helm
+      'helmfile',
+      // Ansible
+      // Cloud
+      'credentials',
+      // Git
+      'gitconfig',
+      // NPM
+      'npmrc',
+      // PIP
+      'pypirc',
+      // AWS
+      'awsconfig',
+      // Nginx / Apache
+      'htaccess','htpasswd',
+      // Cron
+      'crontab',
+      // Systemd
+      'service','timer','socket',
+    ]
+  },
 
-  // 4. Window size heuristic (DevTools docked)
-  var THRESH = 170;
-  function sizeCheck(){
-    if((window.outerWidth-window.innerWidth)>THRESH || (window.outerHeight-window.innerHeight)>THRESH){
-      lock();
-    } else {
-      unlock();
-    }
+  // ── COMPRESSED — อาจซ่อนมัลแวร์ ──────────
+  compressed: {
+    label: '📦 ไฟล์บีบอัด (อาจซ่อนมัลแวร์)',
+    color: '#8b5cf6',
+    score: 30,
+    exts: [
+      'zip','rar','7z','tar','gz','bz2','xz','lz','lzma','lzh','lha',
+      'zst','br','z','tgz','tbz','tbz2','txz','tlz','tzst',
+      'ace','arj','arc','cab','cpio','dz','rz','lrz',
+      'war','ear','jar','aar',
+    ]
+  },
+
+  // ── DOCUMENT — ระวัง macro ──────────────────
+  document: {
+    label: '📄 เอกสาร (ระวัง Macro/Embed)',
+    color: '#06b6d4',
+    score: 15,
+    exts: [
+      // Modern Office (no macro)
+      'docx','xlsx','pptx','odt','ods','odp','odg','odf',
+      // PDF (can have JS)
+      'pdf',
+      // RTF (exploit history)
+      'rtf',
+      // ebook
+      'epub','mobi','azw','azw3',
+      // Text
+      'txt','csv','tsv','log',
+      // Markup
+      'html','htm','xhtml','xml','svg','mhtml','mht',
+      // Markdown
+      'md','markdown','rst','adoc',
+      // LaTeX
+      'tex','bib',
+    ]
+  },
+
+  // ── MEDIA — ปกติปลอดภัย แต่ตรวจ steganography ──
+  media: {
+    label: '🖼️ มีเดีย (ปกติปลอดภัย)',
+    color: '#10b981',
+    score: 5,
+    exts: [
+      'jpg','jpeg','png','gif','bmp','tiff','tif','webp','heic','heif',
+      'ico','cur','svg','raw','cr2','nef','arw','dng','orf','rw2',
+      'mp4','mkv','avi','mov','wmv','flv','webm','m4v','3gp','ogv',
+      'mp3','wav','flac','aac','ogg','wma','m4a','opus','ape','mka',
+      'psd','ai','eps','indd','sketch','fig','xd',
+      'stl','obj','fbx','gltf','glb',
+    ]
+  },
+
+  // ── SAFE — ปลอดภัย ──────────────────────────
+  safe: {
+    label: '✅ ปลอดภัย',
+    color: '#10b981',
+    score: 0,
+    exts: [
+      'json','geojson','ndjson',
+      'woff','woff2','ttf','otf','eot',
+      'aiff','au',
+      'vcard','vcf','ics',
+      'gpx','kml','kmz',
+      'torrent',
+      'nfo',
+    ]
   }
-  window.addEventListener('resize', sizeCheck);
-  setInterval(sizeCheck, 800);
+};
 
-  // 5. Debugger-based detection (slows execution when DevTools open)
-  var _last = Date.now();
-  setInterval(function(){
-    var now = Date.now();
-    if(now - _last > 200){ lock(); }
-    _last = now;
-    (function(){ debugger; })();
-  }, 100);
-
-  // 6. toString trick (logs to console only when DevTools open)
-  var _probe = /./;
-  _probe.toString = function(){ lock(); return ''; };
-  setInterval(function(){
-    if(typeof window.console!=='undefined') console.log('%c',_probe);
-  }, 3000);
-
-  function _toast(m){
-    var t=document.getElementById('toast');
-    if(!t)return;
-    t.textContent=m; t.classList.add('on');
-    setTimeout(function(){ t.classList.remove('on'); }, 2500);
-  }
-})();
-
-// ══════════════════════════════════════════════════════════
-//  THEME
-// ══════════════════════════════════════════════════════════
-var th=localStorage.getItem('fal-th')||'light';
-document.documentElement.setAttribute('data-theme',th);
-document.getElementById('ti').textContent=th==='dark'?'☀️':'🌙';
-function toggleTheme(){
-  var c=document.documentElement.getAttribute('data-theme');
-  var n=c==='light'?'dark':'light';
-  document.documentElement.setAttribute('data-theme',n);
-  localStorage.setItem('fal-th',n);
-  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
-}
-
-// Toggles
-['scan','prev','warn'].forEach(function(k){
-  document.getElementById('tg-'+k).addEventListener('click',function(){
-    this.classList.toggle('on');
-    document.getElementById('op-'+k).checked=this.classList.contains('on');
+// Flatten for quick lookup
+var EXT_MAP = {};
+Object.keys(FILE_DB).forEach(function(cat){
+  FILE_DB[cat].exts.forEach(function(e){
+    EXT_MAP[e] = cat;
   });
 });
 
-// ══════════════════════════════════════════════════════════
-//  STATS & HISTORY
-// ══════════════════════════════════════════════════════════
-function gs(){ return JSON.parse(localStorage.getItem('fal-st')||'{"l":0,"s":0,"b":0}'); }
-function ss2(s){
-  localStorage.setItem('fal-st',JSON.stringify(s));
-  document.getElementById('sL').textContent=s.l;
-  document.getElementById('sS').textContent=s.s;
-  document.getElementById('sB').textContent=s.b;
-}
-ss2(gs());
+// Extra file-specific threat context
+var EXT_NOTES = {
+  'exe':  'Windows Executable — สามารถรันโค้ดได้โดยตรง',
+  'dll':  'Dynamic Link Library — อาจฝัง malware payload',
+  'bat':  'Batch Script — รันคำสั่ง Windows อัตโนมัติ',
+  'cmd':  'Command Script — รันคำสั่ง Windows',
+  'ps1':  'PowerShell Script — ใช้ใน cyberattack บ่อยมาก',
+  'vbs':  'VBScript — ใช้ใน ransomware และ worm',
+  'js':   'JavaScript file — อาจรันโค้ดอันตรายผ่าน Node.js',
+  'jar':  'Java Archive — สามารถรันโค้ดได้ทุก platform',
+  'py':   'Python Script — รันโค้ดได้โดยตรง',
+  'sh':   'Shell Script — รันคำสั่ง Unix/Linux',
+  'php':  'PHP Script — อาจเป็น webshell',
+  'hta':  'HTML Application — bypass browser sandbox ได้',
+  'scr':  'Screen Saver — มักใช้ซ่อน malware',
+  'lnk':  'Windows Shortcut — สามารถรันโค้ดได้',
+  'chm':  'Compiled HTML Help — exploit เก่าแต่ยังอันตราย',
+  'docm': 'Word + Macro — macro อาจรันโค้ดอันตราย',
+  'xlsm': 'Excel + Macro — macro อาจรันโค้ดอันตราย',
+  'apk':  'Android Package — ควรตรวจสอบแหล่งที่มา',
+  'ipa':  'iOS Package — ควรตรวจสอบแหล่งที่มา',
+  'dmg':  'macOS Disk Image — ตรวจสอบ signature ก่อนเปิด',
+  'iso':  'Disk Image — อาจมีไฟล์ autorun อันตราย',
+  'rar':  'RAR Archive — อาจซ่อน executable ไว้ข้างใน',
+  'zip':  'ZIP Archive — อาจซ่อน malware ไว้ข้างใน',
+  '7z':   '7-Zip Archive — อาจมี password-protected malware',
+  'pdf':  'PDF — อาจมี embedded JavaScript หรือ exploit',
+  'swf':  'Flash — ไม่รองรับแล้ว มีช่องโหว่ร้ายแรง',
+  'pem':  'Private Key — ไฟล์ sensitive credential',
+  'key':  'Key File — ข้อมูล encryption key สำคัญมาก',
+  'ppk':  'PuTTY Private Key — credential ของ SSH',
+  'env':  '.env file — มักมี API keys, passwords',
+  'sql':  'SQL Dump — อาจมีข้อมูล sensitive',
+  'rb':   'Ruby Script — รันโค้ดได้โดยตรง',
+  'go':   'Go Source — compile แล้วรันได้',
+  'rs':   'Rust Source — compile แล้วรันได้',
+};
 
-function gh(){ return JSON.parse(localStorage.getItem('fal-h')||'[]'); }
-function ah(e){ var h=gh(); h.unshift(e); localStorage.setItem('fal-h',JSON.stringify(h.slice(0,10))); rh(); }
-function rh(){
-  var h=gh(), sec=document.getElementById('hs'), list=document.getElementById('hl');
-  if(!h.length){ sec.style.display='none'; return; }
-  sec.style.display='block';
-  list.innerHTML=h.map(function(e){
-    return '<button class="hi" onclick="useH(\''+e.short.replace(/'/g,"\\'")+'\')">'
-      +'<span>'+(e.safe?'✅':'⛔')+'</span>'
-      +'<div class="htxt"><div class="hs">'+e.short+'</div><div class="ho">'+e.orig+'</div></div>'
-      +'<span class="hb '+(e.safe?'bs':'bd')+'">'+(e.safe?'SAFE':'BLOCKED')+'</span>'
-      +'</button>';
-  }).join('');
-}
-function useH(u){ document.getElementById('urlInput').value=u; toast('📋 ใส่ลิงก์แล้ว'); }
-rh();
-
-// ══════════════════════════════════════════════════════════
-//  DEEP SCANNER — 20 CHECKS
-// ══════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════
+   URL SCANNER — 20 checks
+══════════════════════════════════════════════ */
 var PP=[
   /paypal.*log[i1]n/i,/bank.*secur/i,/account.*ver[i1]fy/i,
   /s[i1]gn[- _]?[i1]n.*update/i,/conf[i1]rm.*pass/i,/secur[i1]ty.*alert/i,
@@ -345,14 +585,9 @@ var PP=[
   /bonus.*claim/i,/prize.*winner/i,/lucky.*draw/i,
   /urgent.*action.*required/i,/account.*suspended/i,/password.*expired/i,
 ];
-var RTLD=['.tk','.ml','.ga','.cf','.gq','.xyz','.top','.click','.club',
-  '.online','.site','.space','.fun','.uno','.icu','.live','.work','.vip','.link'];
-var BW=['free-iphone','you-won','prize-claim','earn-money-fast',
-  'no-survey','legit-hack','cheat-code-generator',
-  'virus-download','malware','ransomware','keylogger',
-  'phish','scam','fraud'];
-var BPATH=[/\/wp-admin/i,/\/phpmyadmin/i,/\/cgi-bin/i,/\/xmlrpc/i,
-  /\/shell\.php/i,/\/eval\(/i,/\/passwd/i,/\/etc\//i,/\/cmd\.exe/i];
+var RTLD=['.tk','.ml','.ga','.cf','.gq','.xyz','.top','.click','.club','.online','.site','.space','.fun','.uno','.icu','.live','.work','.vip','.link'];
+var BW=['free-iphone','you-won','prize-claim','earn-money-fast','no-survey','legit-hack','virus-download','malware','ransomware','keylogger','phish','scam','fraud'];
+var BPATH=[/\/wp-admin/i,/\/phpmyadmin/i,/\/cgi-bin/i,/\/xmlrpc/i,/\/shell\.php/i,/\/eval\(/i,/\/passwd/i,/\/etc\//i,/\/cmd\.exe/i];
 var BRANDS=[
   {b:'paypal',ok:['paypal.com','paypal.me']},
   {b:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl']},
@@ -376,10 +611,24 @@ function entropy(s){
   return -Object.values(f).reduce(function(a,v){ var p=v/len; return a+p*Math.log2(p); },0);
 }
 
-async function scan(raw){
-  var R={safe:true,score:0,threats:[],checks:[]};
-  function add(name,ok,msg,pts){
-    R.checks.push({name:name,ok:ok});
+function getExtFromUrl(url){
+  try{
+    var u=new URL(url);
+    var parts=u.pathname.split('/');
+    var last=parts[parts.length-1];
+    if(last.includes('.')){
+      var ext=last.split('.').pop().toLowerCase().split('?')[0];
+      return ext;
+    }
+  }catch(e){}
+  return null;
+}
+
+async function scanUrl(raw){
+  var R={safe:true,score:0,threats:[],cats:{}};
+  function add(cat,name,ok,msg,pts){
+    if(!R.cats[cat]) R.cats[cat]=[];
+    R.cats[cat].push({name:name,ok:ok});
     if(!ok&&msg){ R.threats.push(msg); R.score+=(pts||1); }
   }
 
@@ -392,78 +641,304 @@ async function scan(raw){
   var params=u.search.toLowerCase();
   var full=raw.toLowerCase();
 
-  // 1. HTTPS
-  add('HTTPS Protocol', u.protocol==='https:','⚠️ HTTP ไม่มี SSL/TLS encryption',2);
-  // 2. XSS URI
+  // ── Protocol ─────────────────────────────
+  add('🔐 Protocol & Structure','HTTPS',u.protocol==='https:','⚠️ HTTP — ไม่มี SSL/TLS',2);
   var xss=/^(javascript:|data:|vbscript:|about:)/i.test(raw);
-  add('No XSS URI',!xss,xss?'🚨 XSS/Injection URI ตรวจพบ':'',10);
-  if(xss){ R.safe=false; }
-  // 3. IP address
+  add('🔐 Protocol & Structure','No XSS URI',!xss,xss?'🚨 XSS Injection URI':'',10);
+  if(xss) R.safe=false;
+  var uc=(full.match(/https?:\/\//g)||[]).length;
+  add('🔐 Protocol & Structure','No Nested URL',uc<=1,'🔄 Double Redirect ซ้อน URL',3);
+  var qCount=(raw.match(/\?/g)||[]).length;
+  add('🔐 Protocol & Structure','Single Query',qCount<=1,'⚠️ หลาย Query string ('+qCount+')',1);
+
+  // ── Host ─────────────────────────────────
   var isIP=/^\d{1,3}(\.\d{1,3}){3}$/.test(host)||host.startsWith('[');
-  add('No IP Address',!isIP,isIP?'🚨 ใช้ IP Address แทนโดเมน':'',5);
-  // 4. Non-standard port
-  var port=u.port?parseInt(u.port):null;
-  add('Standard Port',[80,443,8080,8443,null].includes(port),port?'⚠️ Port '+port+' ผิดปกติ':'',2);
-  // 5. Risky TLD
+  add('🌐 Domain','No IP Address',!isIP,isIP?'🚨 IP Address แทนโดเมน':'',5);
+  var sub=host.split('.').length-2;
+  add('🌐 Domain','Subdomain Depth',sub<=2,'⚠️ Subdomain ลึก '+sub+' ชั้น',2);
+  add('🌐 Domain','No IDN',!/xn--/.test(host),'⚠️ Unicode Homograph Attack',3);
+  var dc=(host.match(/\d{5,}/g)||[]).length;
+  add('🌐 Domain','No Digit Cluster',dc<1,'⚠️ Random digit domain',1);
+  var ent=entropy(host);
+  add('🌐 Domain','Low Entropy',ent<4.2,'⚠️ Domain Entropy สูง='+ent.toFixed(2),2);
   var rt=RTLD.find(function(t){ return host.endsWith(t); });
-  add('Safe TLD',!rt,rt?'⚠️ TLD ความเสี่ยง: "'+rt+'"':'',2);
-  // 6. Phishing patterns
+  add('🌐 Domain','Safe TLD',!rt,rt?'⚠️ TLD เสี่ยง: "'+rt+'"':'',2);
+  var port=u.port?parseInt(u.port):null;
+  add('🌐 Domain','Normal Port',[80,443,8080,8443,null].includes(port),port?'⚠️ Port '+port+' ผิดปกติ':'',2);
+
+  // ── Phishing ─────────────────────────────
   var ph=PP.filter(function(p){ return p.test(full); });
-  add('No Phishing Pattern',ph.length===0,ph.length?'🎣 รูปแบบ Phishing '+ph.length+' จุด':'',ph.length*2);
-  // 7. Brand impersonation
+  add('🎣 Phishing','No Phishing Pattern',ph.length===0,ph.length?'🎣 Phishing pattern '+ph.length+' จุด':'',ph.length*2);
   var imp=null;
   for(var br of BRANDS){
     if(host.includes(br.b)&&!br.ok.some(function(l){ return host===l||host.endsWith('.'+l); })){
       imp=br.b.toUpperCase(); break;
     }
   }
-  add('No Brand Spoof',!imp,imp?'🚨 ปลอมแปลงแบรนด์ '+imp:'',6);
-  // 8. URL length
-  add('URL Length OK',raw.length<=150,'⚠️ URL ยาวผิดปกติ ('+raw.length+' chars)',1);
-  // 9. Shannon entropy
-  var ent=entropy(host);
-  add('Low Domain Entropy',ent<4.2,'⚠️ Entropy สูง='+ent.toFixed(2)+' (อาจ obfuscate)',2);
-  // 10. Subdomain depth
-  var sub=host.split('.').length-2;
-  add('Subdomain Depth',sub<=2,'⚠️ Subdomain ลึก '+sub+' ชั้น',2);
-  // 11. IDN Homograph
-  add('No IDN',!/xn--/.test(host),'⚠️ Unicode Homograph Attack',3);
-  // 12. Suspicious path
-  var bp=BPATH.find(function(p){ return p.test(path); });
-  add('Clean Path',!bp,bp?'🚨 Path น่าสงสัย: "'+path+'"':'',4);
-  // 13. Double redirect
-  var uc=(full.match(/https?:\/\//g)||[]).length;
-  add('No Nested URL',uc<=1,'🔄 URL ซ้อน URL (Double Redirect)',3);
-  // 14. Base64 payload
-  var b64=/[A-Za-z0-9+/]{40,}={0,2}/.test(params);
-  add('No Base64 Payload',!b64,'⚠️ Base64 payload ใน parameter',3);
-  // 15. Digit clusters
-  var dc=(host.match(/\d{5,}/g)||[]).length;
-  add('No Digit Cluster',dc<1,'⚠️ Random digit domain ('+dc+' clusters)',1);
-  // 16. Bad keywords
+  add('🎣 Phishing','No Brand Spoof',!imp,imp?'🚨 ปลอมแปลง '+imp:'',6);
   var bk=BW.find(function(k){ return full.includes(k); });
-  add('No Bad Keywords',!bk,bk?'🚨 คำต้องสงสัย: "'+bk+'"':'',4);
-  // 17. Open redirect param
-  var rp=['url=','redirect=','goto=','target=','link=','next=','return=','redir='];
-  var hasR=rp.some(function(p){ return params.includes(p); });
-  add('No Open Redirect',!hasR,'🔄 Open Redirect parameter',2);
-  // 18. Crypto drainer
-  var cd=/\b(connect.*wallet|approve.*token|sign.*transaction|drain|drainer)\b/i.test(full);
-  add('No Crypto Drainer',!cd,'🚨 Crypto Wallet Drainer pattern',8);
-  // 19. Hex-encoded chars abuse
-  var hexAbuse=(params.match(/%[0-9a-f]{2}/gi)||[]).length>8;
-  add('No Hex Abuse',!hexAbuse,'⚠️ Hex-encoded chars ผิดปกติ ('+((params.match(/%[0-9a-f]{2}/gi)||[]).length)+' ตัว)',2);
-  // 20. Multiple ? in URL
-  var qCount=(raw.match(/\?/g)||[]).length;
-  add('Single Query',qCount<=1,'⚠️ หลาย Query string ('+qCount+' จุด)',1);
+  add('🎣 Phishing','No Bad Keywords',!bk,bk?'🚨 คำต้องสงสัย: "'+bk+'"':'',4);
+  var cd=/\b(connect.*wallet|approve.*token|drain|drainer|seed.*phrase)\b/i.test(full);
+  add('🎣 Phishing','No Crypto Drainer',!cd,'🚨 Crypto Drainer pattern',8);
+
+  // ── Content ──────────────────────────────
+  var bp=BPATH.find(function(p){ return p.test(path); });
+  add('📂 Path & Content','Clean Path',!bp,bp?'🚨 Path น่าสงสัย: "'+path+'"':'',4);
+  add('📂 Path & Content','URL Length',raw.length<=150,'⚠️ URL ยาวผิดปกติ ('+raw.length+')',1);
+  var b64=/[A-Za-z0-9+/]{40,}={0,2}/.test(params);
+  add('📂 Path & Content','No Base64',!b64,'⚠️ Base64 payload ใน parameter',3);
+  var hexA=(params.match(/%[0-9a-f]{2}/gi)||[]).length>8;
+  add('📂 Path & Content','No Hex Abuse',!hexA,'⚠️ Hex-encoded ผิดปกติ',2);
+  var hasR=['url=','redirect=','goto=','target=','next=','return=','redir='].some(function(p){ return params.includes(p); });
+  add('📂 Path & Content','No Open Redirect',!hasR,'🔄 Open Redirect parameter',2);
+
+  // ── File in URL ───────────────────────────
+  var urlExt=getExtFromUrl(raw);
+  if(urlExt && EXT_MAP[urlExt]){
+    var cat=EXT_MAP[urlExt];
+    var db=FILE_DB[cat];
+    var isSafe=(cat==='safe'||cat==='media'||cat==='document');
+    var extScore=db.score;
+    add('📁 ไฟล์ใน URL','File Extension Safe',isSafe,
+      db.label.replace(/[🚨🔴🟠🟡📦]/,'')+'นามสกุล .'+urlExt+(EXT_NOTES[urlExt]?' — '+EXT_NOTES[urlExt]:''),
+      Math.round(extScore/20));
+    if(extScore>=80) R.score+=3;
+    if(extScore>=60) R.score+=1;
+  } else if(urlExt) {
+    add('📁 ไฟล์ใน URL','File Extension','unknown','',0);
+  }
 
   if(R.score>=4) R.safe=false;
   return R;
 }
 
-// ══════════════════════════════════════════════════════════
-//  SHORTEN
-// ══════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════
+   FILE SCANNER
+══════════════════════════════════════════════ */
+var _currentFile = null;
+
+function getFileRisk(file){
+  var name = file.name;
+  var size = file.size;
+  var nameLower = name.toLowerCase();
+
+  // Extract ALL extensions (double extension attack)
+  var parts = nameLower.split('.');
+  var exts = parts.slice(1); // all after first dot
+  var primaryExt = exts[exts.length-1] || '';
+  var secondaryExt = exts.length > 1 ? exts[exts.length-2] : null;
+
+  var R = {safe:true, score:0, threats:[], cats:{}, ext:primaryExt, name:name, size:size};
+  function add(cat,chkName,ok,msg,pts){
+    if(!R.cats[cat]) R.cats[cat]=[];
+    R.cats[cat].push({name:chkName,ok:ok});
+    if(!ok&&msg){ R.threats.push(msg); R.score+=(pts||1); }
+  }
+
+  // ── 1. Extension check ───────────────────
+  var catKey = EXT_MAP[primaryExt];
+  var catData = catKey ? FILE_DB[catKey] : null;
+  var extScore = catData ? catData.score : 10;
+
+  add('📁 นามสกุลไฟล์','Extension Known', !!catKey, '⚠️ นามสกุลไม่รู้จัก (.'+primaryExt+')', 1);
+  if(catKey){
+    var isExtSafe = (catKey==='safe'||catKey==='media');
+    add('📁 นามสกุลไฟล์','Extension Safe', isExtSafe,
+      (catData.label)+' (.'+primaryExt+')'+(EXT_NOTES[primaryExt]?' — '+EXT_NOTES[primaryExt]:''),
+      Math.round(extScore/10));
+  }
+
+  // ── 2. Double extension (photo.jpg.exe) ──
+  if(secondaryExt && EXT_MAP[secondaryExt]){
+    var secCat = EXT_MAP[secondaryExt];
+    var isSecDanger = (secCat==='critical'||secCat==='high');
+    add('🎭 Double Extension','No Double Ext', !isSecDanger,
+      '🚨 Double Extension: .'+secondaryExt+'.'+primaryExt+' — เทคนิคซ่อน malware คลาสสิค', 8);
+  }
+  if(exts.length > 2){
+    add('🎭 Double Extension','Not Multi Ext', false,
+      '⚠️ มีหลายนามสกุล ('+exts.join('.')+')', 3);
+  }
+
+  // ── 3. Filename suspicious patterns ─────
+  var suspNames = [
+    {p:/invoice/i, m:'ชื่อไฟล์ "invoice" — มักใช้ใน phishing email'},
+    {p:/receipt/i, m:'ชื่อไฟล์ "receipt" — มักใช้ใน phishing email'},
+    {p:/payment/i, m:'ชื่อไฟล์ "payment" — มักใช้หลอกให้คลิก'},
+    {p:/urgent/i,  m:'ชื่อไฟล์ "urgent" — social engineering'},
+    {p:/refund/i,  m:'ชื่อไฟล์ "refund" — มักใช้หลอกโอนเงิน'},
+    {p:/salary/i,  m:'ชื่อไฟล์ "salary" — เหยื่อมักหลงคลิก'},
+    {p:/crack/i,   m:'"crack" — มักเป็น malware แอบซ่อน'},
+    {p:/keygen/i,  m:'"keygen" — แหล่งรวม malware'},
+    {p:/patch/i,   m:'"patch" — อาจซ่อน backdoor'},
+    {p:/loader/i,  m:'"loader" — มักเป็น dropper/loader malware'},
+    {p:/setup/i,   m:'"setup" — ตรวจสอบ publisher ให้ดี'},
+    {p:/install/i, m:'"install" — ตรวจสอบแหล่งที่มาก่อน'},
+    {p:/free.*hack/i, m:'free+hack — red flag ชัดเจน'},
+    {p:/\.exe\.jpg$/i, m:'ชื่อปลอมเป็นรูปภาพ (.exe.jpg)'},
+  ];
+  var suspHits = suspNames.filter(function(s){ return s.p.test(name); });
+  add('🔤 ชื่อไฟล์','No Suspicious Name', suspHits.length===0,
+    suspHits.length?'⚠️ ชื่อไฟล์น่าสงสัย: '+suspHits.map(function(s){return s.m;}).join(' | '):'', suspHits.length*2);
+
+  // Unicode/RTL in filename
+  var hasRTL = /[\u202e\u200f\u200e\u202a\u202b\u202c\u202d]/.test(name);
+  add('🔤 ชื่อไฟล์','No RTL Override', !hasRTL,
+    hasRTL?'🚨 RTL Override ใน filename — ซ่อนนามสกุลจริง':'', 9);
+
+  // Long filename (padding attack)
+  add('🔤 ชื่อไฟล์','Normal Length', name.length<=100,
+    name.length>100?'⚠️ ชื่อไฟล์ยาวผิดปกติ ('+name.length+' chars) — อาจซ่อนนามสกุล':'', 2);
+
+  // ── 4. File size checks ──────────────────
+  var mb = size / (1024*1024);
+  // Very small executable is suspicious
+  if(catKey==='critical' || catKey==='high'){
+    add('📏 ขนาดไฟล์','Reasonable Size', !(mb < 0.01 && size > 0),
+      size > 0 && mb < 0.01 ? '⚠️ ไฟล์ executable เล็กผิดปกติ ('+size+' bytes) — อาจเป็น dropper':'', 2);
+  }
+  // Zero byte
+  add('📏 ขนาดไฟล์','Not Empty', size > 0, size===0?'⚠️ ไฟล์ขนาด 0 bytes':'', 1);
+  // Extremely large
+  add('📏 ขนาดไฟล์','Normal Size', mb < 500, mb>=500?'⚠️ ไฟล์ขนาดใหญ่มาก ('+mb.toFixed(0)+' MB)':'', 1);
+
+  // ── 5. MIME type mismatch (if we have it) ─
+  if(file.type){
+    var mime = file.type.toLowerCase();
+    var imageMimes = ['image/jpeg','image/png','image/gif','image/webp','image/bmp'];
+    var docMimes   = ['application/pdf','text/plain','text/csv'];
+    var isImageExt = ['jpg','jpeg','png','gif','webp','bmp','tiff'].includes(primaryExt);
+    var isPdfExt   = primaryExt==='pdf';
+    var mimeOk = true;
+    if(isImageExt && !imageMimes.includes(mime) && mime!=='') mimeOk=false;
+    if(isPdfExt && mime!=='application/pdf' && mime!=='') mimeOk=false;
+    add('🧬 MIME Type','MIME Match', mimeOk,
+      !mimeOk?'⚠️ MIME type ไม่ตรงกับนามสกุล ('+mime+')':'', 3);
+  }
+
+  // ── 6. Category-specific checks ──────────
+  if(catKey==='compressed'){
+    add('🔒 Security','Archive Warning', false, '📦 ไฟล์บีบอัด — แนะนำ scan ด้วย antivirus ก่อนแตกไฟล์', 1);
+  }
+  if(catKey==='medium' && ['pem','key','ppk','p12','pfx','env'].includes(primaryExt)){
+    add('🔒 Security','Sensitive File', false, '🔑 ไฟล์ credential/key — ห้ามส่งผ่านลิงก์สาธารณะเด็ดขาด', 6);
+    R.safe=false;
+  }
+  if(['pdf','doc','xls','ppt','rtf'].includes(primaryExt)){
+    add('🔒 Security','Macro Risk', false, '⚠️ เอกสารอาจมี embedded macro หรือ JavaScript', 1);
+  }
+
+  // Final
+  if(R.score>=4) R.safe=false;
+  if(catKey==='critical') R.safe=false;
+  return R;
+}
+
+/* ══════════════════════════════════════════════
+   UI HELPERS
+══════════════════════════════════════════════ */
+function getExtIcon(ext){
+  var icons={
+    exe:'⚙️',dll:'⚙️',bat:'💻',cmd:'💻',ps1:'💻',vbs:'📜',js:'📜',py:'🐍',
+    sh:'🐚',php:'🌐',jar:'☕',apk:'📱',ipa:'📱',
+    zip:'📦',rar:'📦','7z':'📦',tar:'📦',gz:'📦',
+    pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',ppt:'📊',pptx:'📊',
+    jpg:'🖼️',jpeg:'🖼️',png:'🖼️',gif:'🖼️',mp4:'🎬',mp3:'🎵',
+    pem:'🔑',key:'🔑',ppk:'🔑',env:'⚙️',sql:'🗄️',
+  };
+  return icons[ext]||'📄';
+}
+
+function riskColor(score){
+  if(score<=0) return '#10b981';
+  if(score<20) return '#10b981';
+  if(score<40) return '#84cc16';
+  if(score<60) return '#f59e0b';
+  if(score<80) return '#f97316';
+  return '#ef4444';
+}
+function riskLabel(score){
+  if(score<=0) return 'ปลอดภัย';
+  if(score<20) return 'ต่ำมาก';
+  if(score<40) return 'ต่ำ';
+  if(score<60) return 'ปานกลาง';
+  if(score<80) return 'สูง';
+  return 'อันตราย';
+}
+
+function renderScanResult(R, title, subtitle){
+  var pct = Math.min(R.score*8, 100);
+  var rc = riskColor(R.score);
+  var level = riskLabel(R.score);
+
+  var hType = R.safe ? (R.threats.length?'warn':'safe') : 'danger';
+  var hIco  = R.safe ? (R.threats.length?'⚠️':'✅') : '🚨';
+  var badge = R.safe ? (R.threats.length?'⚠️ เสี่ยงต่ำ':'✅ SAFE') : '🚨 DANGER';
+
+  document.getElementById('scanHeader').className='scan-header '+hType;
+  document.getElementById('shIco').textContent=hIco;
+  document.getElementById('shTitle').textContent=title;
+  document.getElementById('shDet').textContent=subtitle;
+  document.getElementById('shBadge').textContent=badge;
+  document.getElementById('pb').style.display='none';
+
+  var body=document.getElementById('scanBody');
+  body.style.display='block';
+
+  // Risk meter
+  document.getElementById('riskBar').style.background=rc;
+  document.getElementById('riskBar').style.width='0%';
+  document.getElementById('riskScore').textContent='Score: '+R.score+' / '+level;
+  document.getElementById('riskScore').style.color=rc;
+  setTimeout(function(){ document.getElementById('riskBar').style.width=pct+'%'; },80);
+
+  // Categories
+  var html='';
+  Object.keys(R.cats).forEach(function(cat){
+    var checks=R.cats[cat];
+    html+='<div class="cat-title">'+cat+'</div><div class="checks-grid">';
+    checks.forEach(function(c){
+      html+='<div class="ck '+(c.ok?'':'fail')+'"><span class="ci">'+(c.ok?'✅':'❌')+'</span><span class="ck-name">'+c.name+'</span></div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('checkCats').innerHTML=html;
+
+  // Threats
+  var ts=document.getElementById('threatsSection');
+  if(R.threats.length){
+    ts.style.display='block';
+    document.getElementById('threatsList').innerHTML=R.threats.map(function(t){
+      return '<li><span class="ti">▸</span>'+t+'</li>';
+    }).join('');
+  } else {
+    ts.style.display='none';
+  }
+
+  document.getElementById('scanBox').style.display='block';
+}
+
+function startScan(label){
+  document.getElementById('scanBox').style.display='block';
+  document.getElementById('scanBody').style.display='none';
+  document.getElementById('threatsSection').style.display='none';
+  document.getElementById('scanHeader').className='scan-header scanning';
+  document.getElementById('shIco').textContent='⏳';
+  document.getElementById('shTitle').textContent='กำลังสแกน...';
+  document.getElementById('shDet').textContent=label;
+  document.getElementById('shBadge').textContent='SCANNING';
+  document.getElementById('pb').style.display='block';
+  document.getElementById('pf').style.width='0%';
+  document.getElementById('rb2').style.display='none';
+  // animate progress
+  var p=0;
+  var iv=setInterval(function(){ p=Math.min(p+5,88); document.getElementById('pf').style.width=p+'%'; },60);
+  return iv;
+}
+
+/* ══════════════════════════════════════════════
+   SHORTEN
+══════════════════════════════════════════════ */
 async function shorten(url){
   try{
     var r=await fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(url),{signal:AbortSignal.timeout(8000)});
@@ -482,114 +957,195 @@ async function shorten(url){
   }
 }
 
-// ══════════════════════════════════════════════════════════
-//  MAIN
-// ══════════════════════════════════════════════════════════
-async function go(){
+/* ══════════════════════════════════════════════
+   STATS & HISTORY
+══════════════════════════════════════════════ */
+function gs(){ return JSON.parse(localStorage.getItem('fal-st')||'{"l":0,"s":0,"w":0,"b":0}'); }
+function sv(s){
+  localStorage.setItem('fal-st',JSON.stringify(s));
+  document.getElementById('sL').textContent=s.l;
+  document.getElementById('sS').textContent=s.s;
+  document.getElementById('sW').textContent=s.w||0;
+  document.getElementById('sB').textContent=s.b;
+}
+sv(gs());
+
+function gh(){ return JSON.parse(localStorage.getItem('fal-h')||'[]'); }
+function ah(e){ var h=gh(); h.unshift(e); localStorage.setItem('fal-h',JSON.stringify(h.slice(0,15))); rh(); }
+function rh(){
+  var h=gh(), sec=document.getElementById('histSec'), list=document.getElementById('histList');
+  if(!h.length){ sec.style.display='none'; return; }
+  sec.style.display='block';
+  list.innerHTML=h.map(function(e){
+    var cls=e.status==='safe'?'bs':e.status==='warn'?'bw':'bd';
+    var lbl=e.status==='safe'?'SAFE':e.status==='warn'?'WARN':'BLOCKED';
+    var ico=e.type==='file'?'📁':'🔗';
+    return '<button class="hi" onclick="useH(\''+e.short.replace(/'/g,"\\'")+'\')">'
+      +'<span>'+ico+'</span>'
+      +'<div class="htxt"><div class="hs">'+e.short+'</div><div class="ho">'+e.orig+'</div></div>'
+      +'<span class="hb '+cls+'">'+lbl+'</span>'
+      +'</button>';
+  }).join('');
+}
+function useH(u){ document.getElementById('urlInput').value=u; switchTab('url'); toast('📋 ใส่ลิงก์แล้ว'); }
+rh();
+
+/* ══════════════════════════════════════════════
+   MAIN ACTIONS
+══════════════════════════════════════════════ */
+async function goUrl(){
   var inp=document.getElementById('urlInput').value.trim();
   if(!inp){ toast('⚠️ กรุณาใส่ URL'); return; }
   try{ new URL(inp); }catch{ toast('❌ URL ไม่ถูกต้อง'); return; }
 
   var doScan=document.getElementById('op-scan').checked;
   var doWarn=document.getElementById('op-warn').checked;
-  var doPrev=document.getElementById('op-prev').checked;
+  var doShort=document.getElementById('op-short').checked;
+  var doFile=document.getElementById('op-file').checked;
 
-  var btn=document.getElementById('sbtn');
+  var btn=document.getElementById('sbtn-url');
   btn.disabled=true;
-  btn.querySelector('span').innerHTML='<span class="spin">⏳</span><span>กำลังประมวลผล...</span>';
-  document.getElementById('rb2').style.display='none';
+  btn.querySelector('span').innerHTML='<span class="spin">⏳</span><span>กำลังสแกน...</span>';
+
+  var st=gs();
 
   if(doScan){
-    setStatus('scanning','⏳','กำลังสแกน 20 ชั้น...','ตรวจสอบ URL ด้วย AI Security Engine',true);
-    var prog=0;
-    var pi=setInterval(function(){ prog=Math.min(prog+4,88); document.getElementById('pf').style.width=prog+'%'; },60);
-    await new Promise(function(r){ setTimeout(r,200); });
-    var result=await scan(inp);
-    clearInterval(pi);
+    var iv=startScan('ตรวจสอบ URL + นามสกุลไฟล์...');
+    await new Promise(function(r){ setTimeout(r,150); });
+    var result=await scanUrl(inp);
+    clearInterval(iv);
     document.getElementById('pf').style.width='100%';
-    await new Promise(function(r){ setTimeout(r,120); });
+    await new Promise(function(r){ setTimeout(r,100); });
 
-    var rp=Math.min(result.score*10,100);
-    var rc=rp<20?'#10b981':rp<50?'#f59e0b':'#ef4444';
+    var status=result.safe?(result.threats.length?'warn':'safe'):'danger';
+    var titleMap={safe:'✅ ผ่านการตรวจสอบทั้งหมด',warn:'⚠️ ตรวจพบความเสี่ยงบางส่วน',danger:'🚨 ตรวจพบภัยคุกคาม!'};
+    var detMap={
+      safe:'URL ปลอดภัย — ไม่พบภัยคุกคาม',
+      warn:'พบความเสี่ยงต่ำ (Score: '+result.score+') ดำเนินการต่อได้',
+      danger:'Score: '+result.score+' — พบ '+result.threats.length+' ภัยคุกคาม'
+    };
+    renderScanResult(result, titleMap[status], detMap[status]);
 
-    // Checklist
-    var cg=document.getElementById('cg');
-    cg.style.display='grid';
-    cg.innerHTML=result.checks.slice(0,12).map(function(c){
-      return '<div class="ci"><span>'+(c.ok?'✅':'❌')+'</span>'+c.name+'</div>';
-    }).join('');
-
-    // Risk meter
-    var rmt=document.getElementById('rmt');
-    rmt.style.display='block';
-    var rb=document.getElementById('rb');
-    rb.style.background=rc;
-    setTimeout(function(){ rb.style.width=rp+'%'; },80);
-
-    if(!result.safe&&doWarn){
-      setStatus('danger','🚨','ตรวจพบภัยคุกคาม! Score: '+result.score+'/'+result.checks.length,
-        result.threats.length+' ภัยคุกคามพบในลิงก์นี้',false,result.threats);
-      redrawExtras(result,rc,rp);
-      var st=gs(); st.l++; st.b++; ss2(st);
-      ah({short:inp,orig:inp,safe:false});
+    if(!result.safe && doWarn){
+      st.l++; st.b++; sv(st);
+      ah({short:inp,orig:inp,safe:false,status:'danger',type:'url'});
       btn.disabled=false;
       btn.querySelector('span').innerHTML='<span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span>';
       return;
     }
-    var msg=result.score===0?'ไม่พบภัยคุกคาม — URL ปลอดภัย 100%':'ความเสี่ยงต่ำ (Score: '+result.score+') — ดำเนินการต่อ';
-    setStatus('safe','✅','ผ่านการตรวจสอบทั้ง 20 ชั้น',msg,false,result.threats.length?result.threats:null);
-    redrawExtras(result,rc,rp);
+    if(result.threats.length){ st.w=(st.w||0)+1; }
   }
 
-  try{
-    var short=await shorten(inp);
-    document.getElementById('ri').value=short;
-    document.getElementById('rb2').style.display='block';
-    var bdg=['🔍 สแกน 20 ชั้น'];
-    if(doPrev) bdg.push('👁️ Preview ON');
-    if(doWarn) bdg.push('🔒 Anti-Threat ON');
-    document.getElementById('sbs').innerHTML=bdg.map(function(b){ return '<span class="sb">'+b+'</span>'; }).join('');
-    var st=gs(); st.l++; st.s++; ss2(st);
-    ah({short:short,orig:inp,safe:true});
-    toast('✅ สร้างลิงก์สำเร็จ!');
-  }catch(e){
-    toast('❌ สร้างลิงก์ไม่สำเร็จ');
+  if(doShort){
+    try{
+      var short=await shorten(inp);
+      document.getElementById('ri').value=short;
+      document.getElementById('rb2').style.display='block';
+      var bdg=['🔗 Short URL'];
+      if(doScan) bdg.push('🔍 Scanned');
+      if(doFile) bdg.push('📁 File Check');
+      document.getElementById('sbs').innerHTML=bdg.map(function(b){ return '<span class="sb">'+b+'</span>'; }).join('');
+      st.l++; st.s++; sv(st);
+      ah({short:short,orig:inp,safe:true,status:result&&result.threats.length?'warn':'safe',type:'url'});
+      toast('✅ สร้างลิงก์สำเร็จ!');
+    }catch(e){
+      toast('❌ สร้างลิงก์ไม่สำเร็จ');
+    }
+  } else {
+    st.l++; st.s++; sv(st);
+    toast('✅ สแกนเสร็จสิ้น');
   }
 
+  sv(st);
   btn.disabled=false;
   btn.querySelector('span').innerHTML='<span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span>';
 }
 
-function redrawExtras(result,rc,rp){
-  var cg=document.getElementById('cg');
-  cg.style.display='grid';
-  cg.innerHTML=result.checks.slice(0,12).map(function(c){
-    return '<div class="ci"><span>'+(c.ok?'✅':'❌')+'</span>'+c.name+'</div>';
-  }).join('');
-  document.getElementById('rmt').style.display='block';
-  var rb=document.getElementById('rb');
-  rb.style.background=rc;
-  setTimeout(function(){ rb.style.width=rp+'%'; },80);
+function goFile(){
+  if(!_currentFile){ toast('⚠️ กรุณาเลือกไฟล์ก่อน'); return; }
+  var btn=document.getElementById('sbtn-file');
+  btn.disabled=true;
+  btn.querySelector('span').innerHTML='<span class="spin">⏳</span><span>กำลังสแกน...</span>';
+
+  var iv=startScan('ตรวจสอบนามสกุล, ชื่อไฟล์, MIME type...');
+  setTimeout(function(){
+    var result=getFileRisk(_currentFile);
+    clearInterval(iv);
+    document.getElementById('pf').style.width='100%';
+
+    var status=result.safe?(result.threats.length?'warn':'safe'):'danger';
+    var ext=result.ext;
+    var catKey=EXT_MAP[ext];
+    var catLabel=catKey?FILE_DB[catKey].label:'ไม่รู้จักนามสกุล';
+    var title={safe:'✅ ไฟล์ปลอดภัย',warn:'⚠️ ตรวจพบความเสี่ยง',danger:'🚨 ไฟล์อันตราย!'}[status];
+    var det='Score: '+result.score+' • .'+ext+' • '+catLabel;
+    renderScanResult(result, title, det);
+
+    var st=gs();
+    st.l++;
+    if(status==='safe') st.s++;
+    else if(status==='warn') st.w=(st.w||0)+1;
+    else st.b++;
+    sv(st);
+    ah({short:_currentFile.name,orig:_currentFile.name,safe:result.safe,status:status,type:'file'});
+
+    btn.disabled=false;
+    btn.querySelector('span').innerHTML='<span>🔍</span><span>สแกนไฟล์</span>';
+  },600);
 }
 
-function setStatus(type,ico,title,det,showPb,threats){
-  var el=document.getElementById('ss');
-  el.className=type;
-  document.getElementById('si2').textContent=ico;
-  document.getElementById('stit').textContent=title;
-  document.getElementById('sdet').textContent=det;
-  document.getElementById('pb').style.display=showPb?'block':'none';
-  if(showPb) document.getElementById('pf').style.width='0%';
-  document.getElementById('cg').style.display='none';
-  document.getElementById('rmt').style.display='none';
-  var tl=document.getElementById('tl');
-  if(threats&&threats.length){
-    tl.style.display='flex';
-    tl.innerHTML=threats.map(function(t){ return '<li>'+t+'</li>'; }).join('');
-  }else{
-    tl.style.display='none';
-    tl.innerHTML='';
-  }
+/* ══════════════════════════════════════════════
+   FILE DROP / SELECT
+══════════════════════════════════════════════ */
+function handleFile(f){
+  if(!f) return;
+  _currentFile=f;
+  var ext=(f.name.split('.').pop()||'').toLowerCase();
+  var catKey=EXT_MAP[ext];
+  var catData=catKey?FILE_DB[catKey]:null;
+  var mb=(f.size/(1024*1024)).toFixed(2);
+  var sz=f.size>1048576?mb+' MB':(f.size/1024).toFixed(1)+' KB';
+
+  // Show file info
+  var extColor=catData?catData.color:'#64748b';
+  var extLabel=catData?catData.label.replace(/[^\w\s()\-\/\.]/g,'').trim():'ไม่รู้จัก';
+
+  var dz=document.getElementById('dropZone');
+  dz.innerHTML='<div class="file-info">'
+    +'<div class="fi-icon">'+getExtIcon(ext)+'</div>'
+    +'<div class="fi-txt"><div class="fi-name">'+f.name+'</div>'
+    +'<div class="fi-meta">'+sz+' • '+f.type+'</div></div>'
+    +'<div class="fi-ext" style="background:'+extColor+'20;color:'+extColor+';border:1px solid '+extColor+'40">.'+ext+'</div>'
+    +'</div>'
+    +'<div style="font-size:12px;color:var(--tm);margin-top:4px">'+extLabel+'</div>';
+
+  document.getElementById('sbtn-file').disabled=false;
+  toast('📁 เลือกไฟล์: '+f.name);
+}
+
+function dragOver(e){
+  e.preventDefault();
+  document.getElementById('dropZone').classList.add('drag');
+}
+function dragLeave(e){
+  document.getElementById('dropZone').classList.remove('drag');
+}
+function dropFile(e){
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag');
+  var f=e.dataTransfer.files[0];
+  if(f) handleFile(f);
+}
+
+/* ══════════════════════════════════════════════
+   MISC
+══════════════════════════════════════════════ */
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(function(b,i){ b.classList.toggle('on',(['url','file'][i])===t); });
+  document.getElementById('panel-url').classList.toggle('on',t==='url');
+  document.getElementById('panel-file').classList.toggle('on',t==='file');
+  document.getElementById('scanBox').style.display='none';
+  document.getElementById('rb2').style.display='none';
 }
 
 function cp(){
@@ -604,7 +1160,26 @@ function toast(m){
   setTimeout(function(){ t.classList.remove('on'); },2600);
 }
 
-document.getElementById('urlInput').addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+var th=localStorage.getItem('fal-th')||'light';
+document.documentElement.setAttribute('data-theme',th);
+document.getElementById('ti').textContent=th==='dark'?'☀️':'🌙';
+function toggleTheme(){
+  var c=document.documentElement.getAttribute('data-theme');
+  var n=c==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',n);
+  localStorage.setItem('fal-th',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+}
+
+['scan','file','warn','short'].forEach(function(k){
+  var el=document.getElementById('tg-'+k);
+  if(el) el.addEventListener('click',function(){
+    this.classList.toggle('on');
+    document.getElementById('op-'+k).checked=this.classList.contains('on');
+  });
+});
+
+document.getElementById('urlInput').addEventListener('keydown',function(e){ if(e.key==='Enter') goUrl(); });
 document.getElementById('urlInput').addEventListener('focus',async function(){
   if(this.value) return;
   try{
