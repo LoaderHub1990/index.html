@@ -21,7 +21,7 @@
 :root{
     --primary:#0ea5e9;
     --bg:#f0f9ff;
-    --card:#fff;
+    --card:#ffffff;
     --text:#1e293b;
     --border:#e2e8f0;
 }
@@ -197,7 +197,7 @@ FLASH ANTI LINK
 </div>
 
 <div class="desc mb-4">
-รองรับทุกลิงก์ ไม่มี 404
+สร้างลิงก์สั้นฟรี รองรับทุกลิงก์
 </div>
 
 <form id="mainForm">
@@ -206,7 +206,7 @@ FLASH ANTI LINK
 type="url"
 id="linkInput"
 class="form-control mb-3"
-placeholder="https://example.com/..."
+placeholder="https://google.com"
 required
 >
 
@@ -292,7 +292,7 @@ function updateThemeIcon(theme){
 
 document
 .getElementById("mainForm")
-.addEventListener("submit", function(e){
+.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
@@ -316,25 +316,41 @@ document
     btn.innerHTML =
     '<i class="bi bi-arrow-repeat me-2"></i>กำลังสร้าง...';
 
-    setTimeout(()=>{
+    try{
 
-        const fakeLink =
-        window.location.origin +
-        "/?url=" +
+        const api =
+        "https://is.gd/create.php?format=simple&url=" +
         encodeURIComponent(input);
 
+        const response =
+        await fetch(api);
+
+        const shortLink =
+        await response.text();
+
+        if(
+            shortLink.includes("Error") ||
+            !shortLink.startsWith("https://")
+        ){
+            throw new Error();
+        }
+
         document.getElementById("resultInput").value =
-        fakeLink;
+        shortLink;
 
         document.getElementById("resultBox").style.display =
         "block";
 
-        btn.disabled = false;
+    }catch{
 
-        btn.innerHTML =
-        '<i class="bi bi-shield-lock-fill me-2"></i>สร้างลิงก์';
+        alert("สร้างลิงก์ไม่สำเร็จ");
 
-    },1000);
+    }
+
+    btn.disabled = false;
+
+    btn.innerHTML =
+    '<i class="bi bi-shield-lock-fill me-2"></i>สร้างลิงก์';
 
 });
 
@@ -342,8 +358,6 @@ function copyLink(){
 
     const input =
     document.getElementById("resultInput");
-
-    input.select();
 
     navigator.clipboard.writeText(input.value);
 
