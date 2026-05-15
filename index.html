@@ -163,12 +163,26 @@ body{
     font-size:13px;
 }
 
+.loading{
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
 </style>
 </head>
 
 <body>
 
 <nav class="navbar">
+
 <div class="container d-flex justify-content-between align-items-center">
 
 <div class="fw-bold">
@@ -180,6 +194,7 @@ Flash<span style="color:#0ea5e9;">.</span>Anti
 </button>
 
 </div>
+
 </nav>
 
 <div class="main">
@@ -225,7 +240,11 @@ required
 
 <div class="copy-box">
 
-<input type="text" id="resultInput" readonly>
+<input
+type="text"
+id="resultInput"
+readonly
+>
 
 <button
 type="button"
@@ -274,7 +293,10 @@ function toggleTheme(){
     next
     );
 
-    localStorage.setItem("theme", next);
+    localStorage.setItem(
+    "theme",
+    next
+    );
 
     updateThemeIcon(next);
 }
@@ -297,7 +319,8 @@ document
     e.preventDefault();
 
     const input =
-    document.getElementById("linkInput")
+    document
+    .getElementById("linkInput")
     .value
     .trim();
 
@@ -314,26 +337,25 @@ document
     btn.disabled = true;
 
     btn.innerHTML =
-    '<i class="bi bi-arrow-repeat me-2"></i>กำลังสร้าง...';
+    '<i class="bi bi-arrow-repeat loading me-2"></i>กำลังสร้าง...';
 
     try{
 
-        const api =
-        "https://is.gd/create.php?format=simple&url=" +
-        encodeURIComponent(input);
-
         const response =
-        await fetch(api);
+        await fetch(
+            "https://api.shrtco.de/v2/shorten?url=" +
+            encodeURIComponent(input)
+        );
 
-        const shortLink =
-        await response.text();
+        const data =
+        await response.json();
 
-        if(
-            shortLink.includes("Error") ||
-            !shortLink.startsWith("https://")
-        ){
+        if(!data.ok){
             throw new Error();
         }
+
+        const shortLink =
+        data.result.full_short_link;
 
         document.getElementById("resultInput").value =
         shortLink;
@@ -341,7 +363,9 @@ document
         document.getElementById("resultBox").style.display =
         "block";
 
-    }catch{
+    }catch(err){
+
+        console.log(err);
 
         alert("สร้างลิงก์ไม่สำเร็จ");
 
@@ -359,7 +383,9 @@ function copyLink(){
     const input =
     document.getElementById("resultInput");
 
-    navigator.clipboard.writeText(input.value);
+    navigator.clipboard.writeText(
+    input.value
+    );
 
     alert("คัดลอกลิงก์แล้ว");
 
