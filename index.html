@@ -1,784 +1,714 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💌 ฟิวรักม่อนที่สุด</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,400&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --rose: #e8a0b4;
-  --rose-deep: #c9627a;
-  --rose-light: #fce4ec;
-  --blush: #fff0f5;
-  --sky: #b3d9f5;
-  --sky-deep: #5b9ec9;
-  --cream: #fdf8f5;
-  --gold: #d4a96a;
-  --lilac: #d8c2f0;
-  --lilac-deep: #9b6fcf;
-  --mint: #a8e6cf;
-  --text-dark: #2d1f28;
-  --text-mid: #7a5a68;
-  --text-light: #b9909a;
-  --glass: rgba(255,255,255,0.55);
-  --glass-border: rgba(255,255,255,0.85);
-  --shadow-rose: rgba(201,98,122,0.12);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash  Anti Angpao</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>:root {
+    --primary: #0ea5e9;
+    --primary-hover: #0284c7;
+    --primary-dark: #0369a1;
+    --bg-light: #f0f9ff;
+    --bg-dark: #0f172a;
+    --card-bg-light: #ffffff;
+    --card-bg-dark: rgba(30, 41, 59, 0.95);
+    --text-main-light: #1e293b;
+    --text-main-dark: #f1f5f9;
+    --text-muted-light: #64748b;
+    --text-muted-dark: #94a3b8;
+    --border-light: #e2e8f0;
+    --border-dark: rgba(255,255,255,0.1);
+    --nav-bg-light: rgba(255,255,255,0.92);
+    --nav-bg-dark: rgba(15,23,42,0.92);
+    --input-bg-light: #f8fafc;
+    --input-bg-dark: rgba(15,23,42,0.5);
+
+    --bg-gradient: var(--bg-light);
+    --card-bg: var(--card-bg-light);
+    --text-main: var(--text-main-light);
+    --text-muted: var(--text-muted-light);
+    --nav-bg: var(--nav-bg-light);
+    --border-color: var(--border-light);
+    --input-bg: var(--input-bg-light);
+    --glow-color: rgba(14, 165, 233, 0.12);
+    --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(14,165,233,.08);
+    --shadow-hover: 0 8px 32px rgba(14,165,233,.16);
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+[data-theme="dark"] {
+    --bg-gradient: var(--bg-dark);
+    --card-bg: var(--card-bg-dark);
+    --text-main: var(--text-main-dark);
+    --text-muted: var(--text-muted-dark);
+    --nav-bg: var(--nav-bg-dark);
+    --border-color: var(--border-dark);
+    --input-bg: var(--input-bg-dark);
+    --glow-color: rgba(14, 165, 233, 0.06);
+    --shadow: 0 1px 3px rgba(0,0,0,.25), 0 4px 16px rgba(0,0,0,.2);
+    --shadow-hover: 0 8px 32px rgba(14,165,233,.2);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
 html { scroll-behavior: smooth; }
 
 body {
-  min-height: 100vh;
-  background: var(--cream);
-  font-family: 'Sarabun', sans-serif;
-  color: var(--text-dark);
-  overflow-x: hidden;
+    font-family: 'Sarabun', system-ui, -apple-system, sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-main);
+    overflow-x: hidden;
+    transition: background 0.4s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* ── BG AURORA ── */
-.aurora-bg {
-  position: fixed; inset: 0; z-index: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(232,160,180,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(216,194,240,0.15) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 70% at 50% 80%, rgba(179,217,245,0.13) 0%, transparent 60%),
-    radial-gradient(ellipse 90% 40% at 10% 90%, rgba(168,230,207,0.10) 0%, transparent 50%),
-    linear-gradient(160deg, #fdf8f5 0%, #fef0f6 40%, #f5f0ff 70%, #f0f8ff 100%);
-  animation: aurora-shift 20s ease-in-out infinite alternate;
-}
-@keyframes aurora-shift {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(15deg); }
-}
-
-/* ── PARTICLES ── */
-#particles-canvas {
-  position: fixed; inset: 0; z-index: 1;
-  pointer-events: none;
+/* ===== Navbar ===== */
+.navbar {
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ── OVERLAY ── */
-#overlay {
-  position: fixed; inset: 0; z-index: 9999;
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  background: linear-gradient(160deg, #fdf8f5 0%, #fef0f6 45%, #f5f0ff 80%, #f0f8ff 100%);
-  transition: opacity 1.4s cubic-bezier(.4,0,.2,1);
-}
-#overlay.fade-out { opacity: 0; pointer-events: none; }
-
-.ov-ring {
-  width: 130px; height: 130px; border-radius: 50%;
-  border: 1.5px solid rgba(232,160,180,0.4);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; margin-bottom: 32px;
-  animation: ring-pulse 3s ease-in-out infinite;
-}
-.ov-ring::before, .ov-ring::after {
-  content: ''; position: absolute; border-radius: 50%; border: 1px solid rgba(216,194,240,0.3);
-}
-.ov-ring::before { inset: -14px; animation: ring-pulse 3s ease-in-out infinite 0.5s; }
-.ov-ring::after { inset: -28px; animation: ring-pulse 3s ease-in-out infinite 1s; }
-@keyframes ring-pulse {
-  0%,100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.04); opacity: 1; }
+.navbar.scrolled {
+    box-shadow: 0 2px 16px rgba(14,165,233,.1);
 }
 
-.ov-icon {
-  font-size: 3.8rem;
-  filter: drop-shadow(0 8px 24px rgba(200,98,122,0.25));
-  animation: float 4s ease-in-out infinite;
-}
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.ov-tagline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem; font-weight: 300; font-style: italic;
-  color: var(--text-light); letter-spacing: 0.06em;
-  margin-bottom: 6px; text-align: center;
-}
-.ov-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.65rem; font-weight: 300;
-  color: var(--text-mid); letter-spacing: 0.04em;
-  text-align: center; line-height: 1.5;
-  padding: 0 24px; margin-bottom: 40px;
-}
-.ov-title strong { font-weight: 500; color: var(--rose-deep); }
-
-.start-btn {
-  position: relative; overflow: hidden;
-  padding: 15px 52px;
-  font-family: 'Sarabun', sans-serif;
-  font-size: 0.95rem; font-weight: 500;
-  letter-spacing: 0.12em; color: white;
-  border: none; border-radius: 60px; cursor: pointer;
-  background: linear-gradient(135deg, #d4607a 0%, #c0507a 40%, #9b6fcf 100%);
-  box-shadow: 0 8px 32px rgba(200,80,122,0.35), 0 2px 8px rgba(155,111,207,0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.start-btn::before {
-  content: '';
-  position: absolute; top: 0; left: -100%;
-  width: 70%; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.22), transparent);
-  animation: shimmer 2.8s ease-in-out infinite;
-}
-@keyframes shimmer { to { left: 160%; } }
-.start-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(200,80,122,0.42), 0 4px 12px rgba(155,111,207,0.25); }
-.start-btn:active { transform: translateY(-1px); }
-
-/* ── MUSIC ── */
-.music-control {
-  position: fixed; top: 20px; right: 20px; z-index: 1000;
-  width: 46px; height: 46px; border-radius: 50%;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(232,160,180,0.35);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 1.1rem;
-  box-shadow: 0 4px 20px rgba(200,98,122,0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.music-control:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(200,98,122,0.22); }
-
-/* ── MAIN APP ── */
-#app {
-  position: relative; z-index: 2;
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 60px 20px;
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -0.2px;
 }
 
-/* ── PROGRESS ── */
-.progress-wrap {
-  width: 100%; max-width: 560px;
-  margin-bottom: 28px;
-}
-.progress-meta {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 10px;
-}
-.progress-step {
-  font-size: 0.78rem; font-weight: 500;
-  color: var(--rose-deep); letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.progress-pct {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem; color: var(--text-light);
-}
-.progress-track {
-  position: relative; height: 3px;
-  background: rgba(232,160,180,0.15);
-  border-radius: 10px; overflow: visible;
-}
-.progress-fill {
-  height: 100%; border-radius: 10px;
-  background: linear-gradient(to right, #e8a0b4, #c9627a, #9b6fcf);
-  transition: width 0.7s cubic-bezier(.4,0,.2,1);
-  position: relative;
-}
-.progress-fill::after {
-  content: '';
-  position: absolute; right: -4px; top: 50%;
-  transform: translateY(-50%);
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--rose-deep);
-  box-shadow: 0 0 0 3px rgba(201,98,122,0.2);
+.navbar-brand img {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
 }
 
-/* ── CARD ── */
-.quiz-card {
-  position: relative; overflow: hidden;
-  width: 100%; max-width: 560px;
-  background: rgba(255,255,255,0.62);
-  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
-  border-radius: 32px;
-  padding: 44px 40px;
-  border: 1px solid rgba(255,255,255,0.88);
-  box-shadow:
-    0 32px 80px rgba(201,98,122,0.09),
-    0 8px 24px rgba(201,98,122,0.06),
-    0 1px 0 rgba(255,255,255,0.95) inset;
-  animation: card-enter 0.55s cubic-bezier(.22,1,.36,1) both;
+.brand-dot {
+    color: var(--primary);
 }
 
-@keyframes card-enter {
-  from { opacity: 0; transform: translateY(30px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+/* ===== Main Content ===== */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 16px;
+    gap: 24px;
 }
 
-.card-glow {
-  position: absolute; pointer-events: none;
-  top: -60%; left: -30%;
-  width: 160%; height: 160%;
-  background: radial-gradient(ellipse at 30% 30%, rgba(216,194,240,0.14) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 70%, rgba(179,217,245,0.10) 0%, transparent 60%);
+/* ===== Card ===== */
+.card, .glass-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-/* ── QUESTION HEADER ── */
-.q-eyebrow {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 12px;
-}
-.q-num-badge {
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--rose-deep);
-  background: rgba(232,160,180,0.12);
-  border: 1px solid rgba(201,98,122,0.2);
-  border-radius: 20px;
-  padding: 3px 12px;
-}
-.q-dot-line {
-  flex: 1; height: 1px;
-  background: linear-gradient(to right, rgba(232,160,180,0.3), transparent);
+.card.fade-in, .glass-card.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
 }
 
-.q-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.1rem; font-weight: 300;
-  line-height: 1.28; letter-spacing: -0.01em;
-  color: var(--text-dark);
-  margin-bottom: 30px;
-}
-.q-text em { font-style: italic; color: var(--rose-deep); font-weight: 300; }
-
-/* ── DIVIDER ── */
-.divider {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 22px;
-}
-.d-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(232,160,180,0.35), transparent); }
-.d-gem {
-  width: 6px; height: 6px;
-  background: var(--rose);
-  transform: rotate(45deg);
-  border-radius: 1px;
+/* Remove hover lift on inner cards used for layout */
+.glass-card:not(.no-hover):hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(14,165,233,0.3);
 }
 
-/* ── SINGLE CHOICE ── */
-.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-
-.opt-btn {
-  position: relative; overflow: hidden;
-  padding: 15px 20px 15px 20px;
-  border-radius: 18px;
-  border: 1px solid rgba(232,160,180,0.22);
-  background: rgba(255,255,255,0.45);
-  color: var(--text-mid);
-  font-family: 'Sarabun', sans-serif;
-  font-size: 0.95rem; font-weight: 400;
-  cursor: pointer; text-align: left;
-  transition: all 0.28s cubic-bezier(.4,0,.2,1);
-  display: flex; align-items: center; gap: 12px;
+/* ===== Form ===== */
+.form-control {
+    border-radius: 12px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--border-color);
+    background: var(--input-bg);
+    color: var(--text-main);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.opt-icon {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: rgba(232,160,180,0.1);
-  border: 1px solid rgba(232,160,180,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; flex-shrink: 0;
-  transition: all 0.28s ease;
+.form-control::placeholder {
+    color: var(--text-muted);
+    font-size: 13px;
 }
 
-.opt-text { flex: 1; }
-.opt-arr {
-  font-size: 0.8rem; color: var(--text-light);
-  opacity: 0; transition: opacity 0.2s, transform 0.2s;
-  transform: translateX(-4px);
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+    background: var(--card-bg);
+    color: var(--text-main);
 }
 
-.opt-btn:hover {
-  border-color: rgba(201,98,122,0.4);
-  background: rgba(255,255,255,0.7);
-  transform: translateX(5px);
-  box-shadow: 0 6px 20px rgba(201,98,122,0.1);
-  color: var(--rose-deep);
-}
-.opt-btn:hover .opt-icon {
-  background: rgba(201,98,122,0.12);
-  border-color: rgba(201,98,122,0.3);
-}
-.opt-btn:hover .opt-arr { opacity: 1; transform: translateX(0); }
-
-.opt-btn.selected {
-  background: linear-gradient(135deg, rgba(232,160,180,0.22) 0%, rgba(216,194,240,0.15) 100%);
-  border-color: rgba(201,98,122,0.45);
-  color: var(--rose-deep);
-  font-weight: 500;
-  box-shadow: 0 8px 28px rgba(201,98,122,0.15);
-  transform: translateX(5px);
-}
-.opt-btn.selected .opt-icon {
-  background: linear-gradient(135deg, var(--rose-deep), var(--lilac-deep));
-  border-color: transparent;
-  color: white; font-size: 0.85rem;
-}
-.opt-btn.selected .opt-arr { opacity: 0; }
-
-/* ── SCALE ── */
-.scale-row {
-  display: flex; gap: 8px; justify-content: center;
-  margin-bottom: 12px;
-}
-.scale-btn {
-  width: 56px; height: 56px; border-radius: 50%;
-  border: 1px solid rgba(232,160,180,0.3);
-  background: rgba(255,255,255,0.5);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.25rem; font-weight: 300;
-  color: var(--text-mid);
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(.4,0,.2,1);
-  position: relative;
-}
-.scale-btn:hover {
-  border-color: var(--rose);
-  color: var(--rose-deep);
-  transform: scale(1.1) translateY(-3px);
-  box-shadow: 0 8px 20px rgba(201,98,122,0.18);
-}
-.scale-btn.selected {
-  background: linear-gradient(135deg, var(--rose-deep) 0%, var(--lilac-deep) 100%);
-  border-color: transparent;
-  color: white;
-  transform: scale(1.15) translateY(-4px);
-  box-shadow: 0 10px 30px rgba(201,98,122,0.32);
-  font-weight: 500;
-}
-.scale-labels {
-  display: flex; justify-content: space-between;
-  font-size: 0.73rem; color: var(--text-light);
-  letter-spacing: 0.05em; margin-bottom: 28px;
-  padding: 0 4px;
+/* ===== Buttons ===== */
+.btn-submit {
+    background: linear-gradient(135deg, var(--primary) 0%, #2563eb 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    letter-spacing: 0.2px;
 }
 
-/* ── TEXTAREA ── */
-.text-input {
-  width: 100%; padding: 16px 20px;
-  border-radius: 18px;
-  border: 1px solid rgba(232,160,180,0.28);
-  background: rgba(255,255,255,0.55);
-  font-family: 'Sarabun', sans-serif;
-  font-size: 0.95rem; color: var(--text-dark);
-  line-height: 1.7;
-  resize: vertical; min-height: 100px;
-  outline: none; margin-bottom: 28px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-.text-input::placeholder { color: var(--text-light); }
-.text-input:focus {
-  border-color: rgba(201,98,122,0.5);
-  background: rgba(255,255,255,0.75);
-  box-shadow: 0 0 0 4px rgba(232,160,180,0.12);
+.btn-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(14, 165, 233, 0.45);
 }
 
-/* ── NAV ── */
-.nav-row {
-  display: flex; gap: 10px; justify-content: flex-end; align-items: center;
-}
-.btn-back {
-  padding: 12px 26px; border-radius: 50px;
-  border: 1px solid rgba(180,160,170,0.3);
-  background: transparent; color: var(--text-light);
-  font-family: 'Sarabun', sans-serif;
-  font-size: 0.88rem; letter-spacing: 0.06em;
-  cursor: pointer; transition: all 0.28s ease;
-}
-.btn-back:hover { border-color: var(--rose); color: var(--rose-deep); }
-
-.btn-next {
-  position: relative; overflow: hidden;
-  padding: 13px 34px; border-radius: 50px; border: none;
-  background: linear-gradient(135deg, #d4607a 0%, #c0507a 45%, #9b6fcf 100%);
-  color: white;
-  font-family: 'Sarabun', sans-serif;
-  font-size: 0.9rem; font-weight: 500; letter-spacing: 0.09em;
-  cursor: pointer;
-  box-shadow: 0 6px 24px rgba(200,80,122,0.3);
-  transition: all 0.3s ease;
-}
-.btn-next::after {
-  content: '';
-  position: absolute; top: 0; left: -100%;
-  width: 60%; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
-  animation: shimmer 2.5s ease-in-out infinite;
-}
-.btn-next:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(200,80,122,0.4); }
-.btn-next:active { transform: translateY(0); }
-.btn-next:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-
-/* ── THANK YOU ── */
-#thank-you {
-  display: none; text-align: center;
-  animation: card-enter 0.6s cubic-bezier(.22,1,.36,1) both;
-}
-.ty-heart {
-  font-size: 5rem; margin-bottom: 12px;
-  animation: float 3s ease-in-out infinite;
-  display: block;
-}
-.ty-h {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.4rem; font-weight: 300;
-  background: linear-gradient(135deg, var(--rose-deep), var(--lilac-deep));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 8px;
-}
-.ty-sub {
-  font-size: 1rem; color: var(--text-light);
-  line-height: 2; margin-top: 12px;
-}
-.ty-confetti {
-  font-size: 1.5rem; letter-spacing: 0.5rem;
-  margin: 20px 0 0;
-  animation: sparkle 2s ease-in-out infinite alternate;
-}
-@keyframes sparkle {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.08); }
+.btn-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
 }
 
-/* ── PETALS ── */
-.petal {
-  position: fixed; pointer-events: none; z-index: 1;
-  opacity: 0; animation: petal-fall linear infinite;
-}
-@keyframes petal-fall {
-  0% { transform: translateY(-30px) rotate(0deg) scale(1); opacity: 0; }
-  10% { opacity: 0.65; }
-  90% { opacity: 0.35; }
-  100% { transform: translateY(105vh) rotate(540deg) scale(0.7); opacity: 0; }
+/* ===== Theme Toggle ===== */
+.theme-toggle {
+    cursor: pointer;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 16px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 600px) {
-  .quiz-card { padding: 32px 24px; border-radius: 24px; }
-  .q-text { font-size: 1.7rem; }
-  .scale-btn { width: 48px; height: 48px; font-size: 1.1rem; }
+.theme-toggle:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+.floating-anim {
+    animation: floatLogo 3s ease-in-out infinite;
+    border-radius: 16px;
+}
+
+/* ===== Status Box ===== */
+.status-box {
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ===== Circular Spinner ===== */
+.spinner-wrap {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px;
+}
+
+.spinner-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    animation: spinRing 1.8s linear infinite;
+}
+
+.spinner-track {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 7;
+}
+
+.spinner-arc {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 251.3;
+    stroke-dashoffset: 251.3;
+    transition: stroke-dashoffset 0.12s linear;
+}
+
+.spinner-pct {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+    line-height: 1;
+}
+
+@keyframes spinRing {
+    from { transform: rotate(-90deg); }
+    to   { transform: rotate(270deg); }
+}
+
+/* ===== Footer ===== */
+.footer {
+    padding: 28px 0;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+}
+
+.credit-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 13.5px;
+}
+
+.credit-box:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.2);
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+.credit-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #2563eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+}
+
+.credit-brand {
+    color: var(--primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 13px;
+    line-height: 1;
+}
+
+.credit-text {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    line-height: 1;
+}
+
+/* ===== Accordion (Q&A) ===== */
+.custom-accordion .accordion-item {
+    border: none;
+    margin-bottom: 8px;
+}
+
+.custom-accordion .accordion-button {
+    border-radius: 12px !important;
+    border: 1px solid var(--border-color) !important;
+    background: var(--input-bg) !important;
+    color: var(--text-main) !important;
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 14px 18px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.custom-accordion .accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, var(--primary), #2563eb) !important;
+    color: white !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.25) !important;
+}
+
+.custom-accordion .accordion-button::after {
+    filter: var(--accordion-icon-filter, none);
+}
+
+.custom-accordion .accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1);
+}
+
+.custom-accordion .accordion-body {
+    padding: 14px 18px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+[data-theme="dark"] { --accordion-icon-filter: invert(1); }
+[data-theme="light"] { --accordion-icon-filter: none; }
+
+/* ===== Section Label ===== */
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: rgba(14,165,233,0.1);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+}
+
+/* ===== Success Alert ===== */
+.alert-success-custom {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    border-radius: 12px;
+    color: #16a34a;
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===== Discord Section ===== */
+.discord-widget-container {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.discord-widget-container:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.discord-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: #5865F2;
+    border-radius: 16px;
+    text-decoration: none;
+    max-width: 440px;
+    width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 18px rgba(88, 101, 242, 0.35);
+}
+
+.discord-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(88, 101, 242, 0.45);
+}
+
+.discord-join-btn {
+    background: white;
+    color: #5865F2;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s ease;
+}
+
+.discord-join-btn:hover { opacity: 0.9; }
+
+/* ===== Copy Input Group ===== */
+.copy-group {
+    display: flex;
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.copy-group:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
+}
+
+.copy-group input {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    background: var(--input-bg);
+    color: var(--text-main);
+    font-size: 13.5px;
+    font-family: inherit;
+    outline: none;
+    min-width: 0;
+}
+
+.copy-group button {
+    padding: 12px 18px;
+    background: var(--primary);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.copy-group button:hover { background: var(--primary-hover); }
+
+/* ===== Gradient Title ===== */
+.gradient-title {
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary), #6366f1);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 5s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    .main-content { padding: 32px 12px; }
+    .spinner-wrap { width: 96px; height: 96px; }
+    .spinner-pct { font-size: 17px; }
 }
 </style>
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+
+        function toggleTheme() {
+            const cur = document.documentElement.getAttribute('data-theme');
+            const next = cur === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+        }
+
+        function updateThemeIcon(t) {
+            const icon = document.getElementById('themeIcon');
+            if (icon) icon.className = t === 'light' ? 'bi bi-moon-stars' : 'bi bi-sun';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcon(document.documentElement.getAttribute('data-theme'));
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 10);
+            });
+        });
+    </script>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="https://pic.flashshop.xyz/files/8021e757b9fc6e33.png" alt="Flash">
+                Flash<span class="brand-dot">.</span>Anti
+            </a>
+            <div class="ms-auto d-flex align-items-center gap-2">
+                <span class="d-none d-sm-inline-flex align-items-center gap-1 px-3 py-1 rounded-pill" style="background:rgba(14,165,233,0.1);color:var(--primary);font-size:13px;font-weight:700;border:1px solid rgba(14,165,233,0.2);">
+                    <i class="bi bi-shield-check-fill"></i> ปลอดภัย
+                </span>
+                <button onclick="toggleTheme()" class="theme-toggle" id="themeToggle">
+                    <i id="themeIcon" class="bi bi-moon-stars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-<div class="aurora-bg"></div>
-<canvas id="particles-canvas"></canvas>
+    <div class="main-content">
 
-<!-- OVERLAY -->
-<div id="overlay">
-  <div class="ov-ring">
-    <span class="ov-icon">💌</span>
-  </div>
-  <p class="ov-tagline">for mon only ✦</p>
-  <p class="ov-title">รักเน้อ<br><strong>ตั้งใจทำเพื่อเธอที่สุดเลยน้าา</strong> 💐</p>
-  <button class="start-btn" onclick="init()">เริ่มเลย &nbsp;✦</button>
-</div>
+        <!-- Main Card -->
+        <div style="max-width:480px;width:100%;">
+            <div class="glass-card no-hover fade-in p-4">
+                <div class="text-center mb-4">
+                    <img src="https://pic.flashshop.xyz/files/8021e757b9fc6e33.png" width="72" class="floating-anim mb-3" alt="Logo">
+                    <h4 class="fw-800 mb-1 gradient-title" style="font-size:22px;">FLASH ANTI ANGPAO</h4>
+                    <p class="mb-0" style="color:var(--text-muted);font-size:13.5px;">ป้องกันการโดนดักลิ้งค์ซองอั่งเปา โดยทีมงาน FLASH SHOP</p>
+                </div>
 
-<!-- MUSIC -->
-<div class="music-control" onclick="toggleMusic()" id="musicBtn" title="เปิด/ปิดเพลง">🎵</div>
-<audio id="bgMusic" loop>
-  <source src="https://files.catbox.moe/ylhkty.m4a" type="audio/mpeg">
-</audio>
+                <form action="/verify" method="GET" id="mainForm">
+                    <label class="d-flex align-items-center justify-content-between mb-2" style="font-size:13.5px;font-weight:700;color:var(--text-main);">
+                        <span><i class="bi bi-link-45deg text-primary me-1"></i>ลิ้งค์ซองอั่งเปาของคุณ</span>
+                        <span style="color:var(--primary);font-size:12px;"><i class="bi bi-patch-check-fill me-1"></i>ปลอดภัย 100%</span>
+                    </label>
+                    <input type="url" name="link" id="linkInput" class="form-control mb-3"
+                        placeholder="https://gift.truemoney.com/campaign/?v=..." required>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="bi bi-shield-lock-fill me-2"></i>สร้างลิงก์ป้องกัน
+                    </button>
+                </form>
+            </div>
+        </div>
 
-<!-- APP -->
-<div id="app">
-  <div class="progress-wrap" id="progress-wrap">
-    <div class="progress-meta">
-      <span class="progress-step" id="step-label">ข้อที่ 1 / 5</span>
-      <span class="progress-pct" id="pct-label">0%</span>
+        <!-- How it works strip -->
+        <div style="max-width:480px;width:100%;" class="fade-in" style="animation-delay:.1s;">
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background:var(--card-bg);border:1px solid var(--border-color);font-size:13px;color:var(--text-muted);">
+                    <i class="bi bi-1-circle-fill text-primary fs-5"></i>
+                    <span>วางลิงก์อั่งเปา</span>
+                </div>
+                <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background:var(--card-bg);border:1px solid var(--border-color);font-size:13px;color:var(--text-muted);">
+                    <i class="bi bi-2-circle-fill text-primary fs-5"></i>
+                    <span>รับลิงก์ที่ป้องกันแล้ว</span>
+                </div>
+                <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background:var(--card-bg);border:1px solid var(--border-color);font-size:13px;color:var(--text-muted);">
+                    <i class="bi bi-3-circle-fill text-primary fs-5"></i>
+                    <span>แชร์ให้เพื่อนได้เลย</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q&A -->
+        <div style="max-width:600px;width:100%;" class="fade-in" style="animation-delay:.2s;">
+            <div class="glass-card no-hover p-4">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <i class="bi bi-chat-square-quote-fill text-primary"></i>
+                    <h6 class="fw-bold mb-0" style="font-size:15px;">คำถามที่พบบ่อย</h6>
+                </div>
+                <div class="accordion accordion-flush custom-accordion" id="qaAccordion">
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qa1">
+                                <i class="bi bi-gear-fill me-2"></i>ระบบนี้ทำงานอย่างไร?
+                            </button>
+                        </h2>
+                        <div id="qa1" class="accordion-collapse collapse" data-bs-parent="#qaAccordion">
+                            <div class="accordion-body">
+                                ระบบจะทำการครอบลิงก์ซองอั่งเปาของคุณด้วยหน้ายืนยันตัวตน เพื่อป้องกันไม่ให้โปรแกรมอัตโนมัติหรือ Bot เข้ามาดักรับซองของคุณได้
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qa2">
+                                <i class="bi bi-shield-check-fill me-2"></i>ปลอดภัยหรือไม่?
+                            </button>
+                        </h2>
+                        <div id="qa2" class="accordion-collapse collapse" data-bs-parent="#qaAccordion">
+                            <div class="accordion-body">
+                                ปลอดภัย 100% ระบบของเราเป็นเพียงตัวกลางในการคัดกรองคนเข้าถึงลิงก์เท่านั้น ไม่มีการเก็บข้อมูลส่วนตัวใดๆ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qa3">
+                                <i class="bi bi-question-circle-fill me-2"></i>ต้องใช้งานอย่างไร?
+                            </button>
+                        </h2>
+                        <div id="qa3" class="accordion-collapse collapse" data-bs-parent="#qaAccordion">
+                            <div class="accordion-body">
+                                เพียงนำลิงก์อั่งเปาจาก TrueMoney มาวางในช่องด้านบน กด "สร้างลิงก์ป้องกัน" แล้วนำลิงก์ที่ได้ไปแชร์ให้เพื่อนๆ แทนลิงก์เดิม
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Discord -->
+        <div class="d-flex flex-column align-items-center gap-3 fade-in pb-2" style="animation-delay:.3s;width:100%;">
+           <!-- <div class="discord-widget-container">
+                <iframe src="https://discord.com/widget?id=1407377670664224888&theme=dark" width="340" height="380" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            </div>-->
+            <a href="https://discord.gg/HF7tfJqnq2" target="_blank" class="discord-cta">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-discord text-white" style="font-size:28px;"></i>
+                    <div>
+                        <div class="fw-bold text-white" style="font-size:15px;">เข้าร่วม Discord ของเรา</div>
+                        <div class="text-white-50" style="font-size:12.5px;">ติดตามข่าวสารและแจ้งปัญหาการใช้งาน</div>
+                    </div>
+                </div>
+                <button class="discord-join-btn">JOIN</button>
+            </a>
+        </div>
+
     </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-    </div>
-  </div>
 
-  <div class="quiz-card" id="quiz-card"></div>
+    <footer class="footer">
+        <div class="container text-center">
+            <a href="https://www.kritsdika.pro/" target="_blank" class="credit-box">
+                <div class="credit-icon"><i class="bi bi-code-slash"></i></div>
+                <div class="text-start">
+                    <div class="credit-text">DEVELOPED BY</div>
+                    <div class="credit-brand">kritsdika - PArk</div>
+                </div>
+            </a>
+        </div>
+    </footer>
 
-  <div id="thank-you" class="quiz-card">
-    <span class="ty-heart">💗</span>
-    <h2 class="ty-h">ขอบคุณม่อนมากเลยนะ</h2>
-    <div class="divider" style="margin:20px 0"><div class="d-line"></div><div class="d-gem"></div><div class="d-line"></div></div>
-    <p class="ty-sub">คำตอบของม่อนส่งไปแล้วค่ะ 🌸<br>รักม่อนที่สุดเลย ❤️</p>
-    <p class="ty-confetti">🌸 💗 ✨ 💌 🌷</p>
-  </div>
-</div>
-
-<script>
-/* ─── CONFIG ─── */
-const WEBHOOK = 'https://discord.com/api/webhooks/1504486268761931937/haVDg_sexPQvfQNoS6ET5JkpHQaciQyauDOwGJPs67_HeawXuK2rfqkd-WZWa6Vuhvc0';
-
-const OPT_ICONS = {
-  'ชอบมากกก 💕': '💕', 'ชอบนิดหน่อย': '🌸', 'ยังไม่แน่ใจ 🤔': '🤔', 'เฉย ๆ ค่ะ': '😶',
-  'คิดถึงตลอดเลย! 🥺': '🥺', 'คิดถึงอยู่บ้าง': '💭', 'เพิ่งนึกถึงพอดี 😊': '😊', 'ไม่ได้คิดถึง...': '🌙',
-  'อยากคบกัน 💑': '💑', 'อยากเป็นเพื่อนสนิทก่อน': '🤝', 'อยู่แบบนี้ก็ดีแล้ว': '🕊️', 'ยังไม่พร้อมค่ะ': '🌱'
-};
-
-const QUESTIONS = [
-  {
-    id: 'q1', type: 'single',
-    text: 'ม่อนรักเค้ามั้ย?',
-    options: ['รักมาก 💕', 'รักนิดหน่อย', 'ยังไม่แน่ใจ 🤔', 'เฉย ๆ ค่ะ']
-  },
-  {
-    id: 'q2', type: 'single',
-    text: 'ตอนนี้คิดถึงเค้ามั้ย?',
-    options: ['คิดถึงตลอดเลย! 🥺', 'คิดถึงอยู่บ้าง', 'เพิ่งนึกถึงพอดี 😊', 'ไม่ได้คิดถึง...']
-  },
-  {
-    id: 'q3', type: 'scale',
-    text: 'ให้คะแนนความรู้สึกดีที่มีต่อเค้าหน่อยจิ?',
-    min: 1, max: 5,
-    minLabel: 'น้อยมาก 🌱', maxLabel: 'มากที่สุด 💗'
-  },
-  {
-    id: 'q4', type: 'single',
-    text: 'อยากให้เราเป็นยังไงต่อไป?',
-    options: ['อยากคบกัน 💑', 'อยากเป็นเพื่อนสนิทก่อน', 'อยู่แบบนี้ก็ดีแล้ว', 'ยังไม่พร้อมค่ะ']
-  },
-  {
-    id: 'q5', type: 'text',
-    text: 'อยากบอกอะไรฟิวบ้างมั้ย?',
-    placeholder: 'พิมพ์ได้ ... 🌸'
-  }
-];
-
-/* ─── STATE ─── */
-let currentStep = 0;
-const answers = {};
-let music, isPlaying = false;
-
-/* ─── INIT ─── */
-function init() {
-  document.getElementById('overlay').classList.add('fade-out');
-  setTimeout(() => { document.getElementById('overlay').style.display = 'none'; }, 1400);
-  music = document.getElementById('bgMusic');
-  music.volume = 0.5;
-  music.play().catch(() => {});
-  isPlaying = true;
-  document.getElementById('musicBtn').textContent = '⏸️';
-  spawnPetals();
-  initParticles();
-  renderStep();
-}
-
-function toggleMusic() {
-  if (isPlaying) { music.pause(); document.getElementById('musicBtn').textContent = '🎵'; }
-  else { music.play(); document.getElementById('musicBtn').textContent = '⏸️'; }
-  isPlaying = !isPlaying;
-}
-
-/* ─── RENDER ─── */
-function renderStep() {
-  if (currentStep >= QUESTIONS.length) { showThankYou(); return; }
-
-  const q = QUESTIONS[currentStep];
-  const total = QUESTIONS.length;
-  const pct = Math.round((currentStep / total) * 100);
-
-  document.getElementById('step-label').textContent = `ข้อที่ ${currentStep + 1} / ${total}`;
-  document.getElementById('pct-label').textContent = pct + '%';
-  document.getElementById('progress-fill').style.width = pct + '%';
-
-  const card = document.getElementById('quiz-card');
-  card.style.animation = 'none';
-  void card.offsetHeight;
-  card.style.animation = '';
-
-  let html = `<div class="card-glow"></div>`;
-  html += `<div class="q-eyebrow"><span class="q-num-badge">ข้อ ${currentStep + 1}</span><div class="q-dot-line"></div></div>`;
-  html += `<h2 class="q-text">${q.text}</h2>`;
-  html += `<div class="divider"><div class="d-line"></div><div class="d-gem"></div><div class="d-line"></div></div>`;
-
-  if (q.type === 'single') {
-    html += `<div class="options">`;
-    q.options.forEach((opt, i) => {
-      const sel = answers[q.id] === opt ? 'selected' : '';
-      const icon = OPT_ICONS[opt] || '🌸';
-      const checkIcon = sel ? '✓' : icon;
-      html += `<button class="opt-btn ${sel}" onclick="selectSingle('${q.id}', this, ${i})">
-        <span class="opt-icon">${checkIcon}</span>
-        <span class="opt-text">${opt}</span>
-        <span class="opt-arr">→</span>
-      </button>`;
-    });
-    html += `</div>`;
-  }
-
-  if (q.type === 'scale') {
-    html += `<div class="scale-row">`;
-    for (let v = q.min; v <= q.max; v++) {
-      const sel = answers[q.id] == v ? 'selected' : '';
-      html += `<button class="scale-btn ${sel}" onclick="selectScale('${q.id}', ${v})">${v}</button>`;
-    }
-    html += `</div>`;
-    html += `<div class="scale-labels"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div>`;
-  }
-
-  if (q.type === 'text') {
-    const val = answers[q.id] || '';
-    html += `<textarea class="text-input" id="text-ans" placeholder="${q.placeholder}" oninput="answers['${q.id}'] = this.value">${val}</textarea>`;
-  }
-
-  html += `<div class="nav-row">`;
-  if (currentStep > 0) html += `<button class="btn-back" onclick="prevStep()">← ย้อนกลับ</button>`;
-  html += `<button class="btn-next" id="btn-next" onclick="nextStep()">`;
-  html += currentStep === QUESTIONS.length - 1 ? 'ส่งคำตอบ 💗' : 'ถัดไป →';
-  html += `</button></div>`;
-
-  card.innerHTML = html;
-}
-
-function selectSingle(id, el, idx) {
-  answers[id] = QUESTIONS[currentStep].options[idx];
-  document.querySelectorAll('.opt-btn').forEach(b => {
-    b.classList.remove('selected');
-    const icon = b.querySelector('.opt-icon');
-    if (icon) icon.textContent = OPT_ICONS[QUESTIONS[currentStep].options[Array.from(document.querySelectorAll('.opt-btn')).indexOf(b)]] || '🌸';
-  });
-  el.classList.add('selected');
-  const icon = el.querySelector('.opt-icon');
-  if (icon) icon.textContent = '✓';
-}
-
-function selectScale(id, val) {
-  answers[id] = val;
-  document.querySelectorAll('.scale-btn').forEach(b => {
-    b.classList.toggle('selected', parseInt(b.textContent) === val);
-  });
-}
-
-function nextStep() {
-  const q = QUESTIONS[currentStep];
-  if (q.type === 'text') answers[q.id] = document.getElementById('text-ans')?.value || '';
-  if (!answers[q.id] && q.type !== 'text') {
-    const btn = document.getElementById('btn-next');
-    const orig = btn.textContent;
-    btn.textContent = 'เลือกก่อนนะคะ 🥺';
-    btn.disabled = true;
-    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1600);
-    return;
-  }
-  currentStep++;
-  renderStep();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function prevStep() {
-  currentStep--;
-  renderStep();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-/* ─── SUBMIT ─── */
-async function showThankYou() {
-  document.getElementById('progress-wrap').style.display = 'none';
-  document.getElementById('quiz-card').style.display = 'none';
-  document.getElementById('thank-you').style.display = 'block';
-
-  const scaleEmoji = (v) => ['','💧','🌱','🌸','💗','💖'][v] || v;
-
-  const fields = QUESTIONS.map(q => {
-    let value = String(answers[q.id] || '—');
-    if (q.type === 'scale') value = `${scaleEmoji(answers[q.id])} ${value} / ${q.max}`;
-    return { name: q.text, value, inline: false };
-  });
-
-  const payload = {
-    username: '💌 ม่อนตอบแล้ว!',
-    avatar_url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png',
-    embeds: [{
-      title: '🌸 คำตอบจากม่อน',
-      color: 0xe8a0b4,
-      fields,
-      footer: { text: `ส่งเมื่อ ${new Date().toLocaleString('th-TH')}` },
-      thumbnail: { url: 'https://img2.pic.in.th/Screenshot-2026-05-13-001004.png' }
-    }]
-  };
-
-  try {
-    await fetch(WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-  } catch(e) { console.error('webhook error', e); }
-}
-
-/* ─── PARTICLES ─── */
-const canvas = document.getElementById('particles-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let W, H;
-
-function resizeCanvas() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {
-  constructor() { this.reset(true); }
-  reset(rand = false) {
-    this.x = Math.random() * W;
-    this.y = rand ? Math.random() * H : H + 10;
-    this.r = 0.8 + Math.random() * 2;
-    this.alpha = 0.06 + Math.random() * 0.18;
-    this.vx = (Math.random() - 0.5) * 0.25;
-    this.vy = -0.15 - Math.random() * 0.35;
-    this.hue = Math.random() > 0.5 ? 340 : 220;
-    this.sat = 60 + Math.random() * 30;
-    this.lit = 70 + Math.random() * 15;
-  }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    if (this.y < -10) this.reset();
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.fillStyle = `hsla(${this.hue},${this.sat}%,${this.lit}%,${this.alpha})`;
-    ctx.fill();
-  }
-}
-
-function initParticles() {
-  particles = [];
-  for (let i = 0; i < 70; i++) particles.push(new Particle());
-  (function loop() {
-    ctx.clearRect(0, 0, W, H);
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(loop);
-  })();
-}
-
-/* ─── PETALS ─── */
-const PETALS = ['🌸', '💗', '🌷', '✿', '❀', '💫'];
-function spawnPetals() {
-  for (let i = 0; i < 16; i++) {
-    const p = document.createElement('div');
-    p.className = 'petal';
-    p.textContent = PETALS[Math.floor(Math.random() * PETALS.length)];
-    p.style.left = (Math.random() * 100) + 'vw';
-    p.style.fontSize = (0.6 + Math.random() * 0.9) + 'rem';
-    p.style.animationDuration = (8 + Math.random() * 12) + 's';
-    p.style.animationDelay = (Math.random() * 14) + 's';
-    document.body.appendChild(p);
-  }
-}
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"411bbf8a50234cd8a2adc869fb06f582","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
