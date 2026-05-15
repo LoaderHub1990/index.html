@@ -1,397 +1,617 @@
 <!DOCTYPE html>
 <html lang="th" data-theme="light">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="robots" content="noindex,nofollow">
 <title>Flash Anti Link</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+:root{--p:#0ea5e9;--pd:#0284c7;--s:#10b981;--d:#ef4444;--w:#f59e0b;--bg:#f0f9ff;--card:#fff;--t:#1e293b;--tm:#64748b;--b:#e2e8f0;--ib:#f8fafc;--sh:0 20px 60px rgba(14,165,233,.12)}
+[data-theme=dark]{--bg:#060d1a;--card:#0f1e33;--t:#e2f0ff;--tm:#7aa3c8;--b:rgba(14,165,233,.15);--ib:#0a1628;--sh:0 20px 60px rgba(0,0,0,.4)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;user-select:none;-webkit-user-select:none}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);background-size:40px 40px;opacity:.4;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(14,165,233,.15) 0%,transparent 70%);pointer-events:none;z-index:0;animation:orb 8s ease-in-out infinite}
+@keyframes orb{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,60px)}}
 
-:root{
-    --primary:#0ea5e9;
-    --bg:#f0f9ff;
-    --card:#ffffff;
-    --text:#1e293b;
-    --border:#e2e8f0;
-}
+/* ── DEVTOOLS OVERLAY ── */
+#dt-wall{display:none;position:fixed;inset:0;z-index:99999;background:#060d1a;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;text-align:center}
+#dt-wall.on{display:flex}
+#dt-wall .ico{font-size:64px;animation:shake .4s infinite alternate}
+@keyframes shake{0%{transform:rotate(-6deg) scale(1)}100%{transform:rotate(6deg) scale(1.05)}}
+#dt-wall h2{color:#ef4444;font-size:22px;font-weight:800;font-family:'Space Mono',monospace}
+#dt-wall p{color:#7aa3c8;font-size:14px;line-height:1.7;max-width:280px}
+#dt-wall button{padding:12px 28px;background:#ef4444;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Sarabun',sans-serif;margin-top:4px}
 
-[data-theme="dark"]{
-    --bg:#0f172a;
-    --card:#1e293b;
-    --text:#f1f5f9;
-    --border:rgba(255,255,255,.1);
-}
+nav{position:sticky;top:0;z-index:100;height:62px;display:flex;align-items:center;border-bottom:1px solid var(--b);background:rgba(255,255,255,.72);backdrop-filter:blur(16px);transition:background .3s}
+[data-theme=dark] nav{background:rgba(6,13,26,.78)}
+.ni{max-width:560px;margin:0 auto;width:100%;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:'Space Mono',monospace;font-weight:700;font-size:17px;letter-spacing:-.5px}
+.brand span{color:var(--p)}
+.tbtn{width:36px;height:36px;border:1px solid var(--b);border-radius:10px;background:var(--card);color:var(--t);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.tbtn:hover{border-color:var(--p);color:var(--p)}
 
-*{
-    box-sizing:border-box;
-}
+main{position:relative;z-index:1;padding:48px 20px 60px;display:flex;flex-direction:column;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);border-radius:99px;font-size:12px;font-weight:600;color:var(--p);margin-bottom:20px;letter-spacing:.5px}
+.chip::before{content:'';width:7px;height:7px;background:var(--p);border-radius:50%;box-shadow:0 0 6px var(--p);animation:pd 2s infinite}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
 
-body{
-    margin:0;
-    font-family:'Sarabun',sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    min-height:100vh;
-}
+.card{width:100%;max-width:520px;background:var(--card);border:1px solid var(--b);border-radius:24px;padding:36px 32px;box-shadow:var(--sh);transition:background .3s,border .3s}
+.lw{display:flex;align-items:center;justify-content:center;width:72px;height:72px;margin:0 auto 18px;background:linear-gradient(135deg,#0ea5e9,#2563eb);border-radius:20px;box-shadow:0 8px 24px rgba(14,165,233,.4);animation:fl 3s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.lw svg{width:38px;height:38px;fill:#fff}
+.ttl{text-align:center;font-size:27px;font-weight:800;background:linear-gradient(135deg,#0284c7,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.sub{text-align:center;color:var(--tm);font-size:14px;margin-bottom:28px}
 
-.navbar{
-    height:60px;
-    display:flex;
-    align-items:center;
-    border-bottom:1px solid var(--border);
-    background:rgba(255,255,255,.8);
-    backdrop-filter:blur(10px);
-}
+.sr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px}
+.si{background:var(--ib);border:1px solid var(--b);border-radius:14px;padding:12px 8px;text-align:center}
+.sn{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--p)}
+.sl{font-size:11px;color:var(--tm);margin-top:2px}
 
-.main{
-    padding:40px 16px;
-    display:flex;
-    justify-content:center;
-}
+.ig{position:relative;margin-bottom:12px}
+.ig .ico{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--tm);font-size:18px;pointer-events:none}
+.ui{width:100%;padding:15px 15px 15px 48px;border:1.5px solid var(--b);border-radius:14px;background:var(--ib);color:var(--t);font-family:'Sarabun',sans-serif;font-size:15px;outline:none;transition:border .2s,box-shadow .2s;user-select:text;-webkit-user-select:text}
+.ui:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(14,165,233,.15)}
+.ui::placeholder{color:var(--tm)}
 
-.card-box{
-    width:100%;
-    max-width:500px;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:22px;
-    padding:28px;
-    box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
+.secrow{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.st{flex:1;min-width:100px;display:flex;align-items:center;gap:7px;padding:9px 11px;border:1.5px solid var(--b);border-radius:12px;background:var(--ib);cursor:pointer;font-size:12px;font-weight:600;color:var(--tm);transition:all .2s;user-select:none}
+.st.on{border-color:var(--p);color:var(--p);background:rgba(14,165,233,.08)}
+.st input{display:none}
+.dot{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st.on .dot::after{content:'';width:6px;height:6px;background:var(--p);border-radius:50%}
 
-.logo{
-    width:72px;
-    border-radius:18px;
-    animation:float 3s infinite ease-in-out;
-}
+.bm{width:100%;padding:15px;border:none;border-radius:14px;font-family:'Sarabun',sans-serif;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(135deg,#0ea5e9,#2563eb);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.bm::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#38bdf8,#3b82f6);opacity:0;transition:opacity .2s}
+.bm:hover::after{opacity:1}
+.bm:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(14,165,233,.4)}
+.bm:active{transform:translateY(0)}
+.bm:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+.bm span{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px}
 
-@keyframes float{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-8px);
-    }
-}
+#ss{display:none;margin-top:16px;padding:14px 16px;border-radius:14px;font-size:14px;font-weight:600;gap:10px;align-items:flex-start}
+#ss.scanning{display:flex;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);color:var(--p)}
+#ss.safe{display:flex;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:#10b981}
+#ss.danger{display:flex;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+#ss.warn{display:flex;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#f59e0b}
+.sico{font-size:20px;flex-shrink:0}
+.stxt{flex:1}
+.stit{font-size:14px;font-weight:700}
+.sdet{font-size:12px;font-weight:400;margin-top:3px;opacity:.85}
+.pb{height:3px;background:var(--b);border-radius:2px;overflow:hidden;margin-top:8px}
+.pf{height:100%;background:linear-gradient(90deg,#0ea5e9,#2563eb);border-radius:2px;transition:width .25s}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;margin-top:8px}
+.ci{font-size:11px;display:flex;align-items:center;gap:4px}
+.rm{margin-top:8px}
+.rl{font-size:11px;opacity:.7;margin-bottom:3px}
+.rt{height:6px;background:var(--b);border-radius:3px;overflow:hidden}
+.rb{height:100%;border-radius:3px;transition:width .6s ease}
+.tl{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.tl li{font-size:11px;display:flex;align-items:flex-start;gap:4px}
+.tl li::before{content:'▸';flex-shrink:0}
 
-.title{
-    font-weight:800;
-    margin-top:14px;
-    margin-bottom:6px;
-    font-size:26px;
-    background:linear-gradient(135deg,#0284c7,#2563eb);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
+.rb2{display:none;margin-top:20px;padding:18px;background:var(--ib);border:1px solid var(--b);border-radius:16px}
+.rl2{font-size:12px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rl2::before{content:'';width:8px;height:8px;background:var(--s);border-radius:50%;box-shadow:0 0 6px var(--s)}
+.cr{display:flex;gap:8px}
+.ri{flex:1;padding:11px 14px;border:1.5px solid var(--b);border-radius:11px;background:var(--card);color:var(--p);font-family:'Space Mono',monospace;font-size:13px;outline:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;user-select:text;-webkit-user-select:text}
+.cb{padding:11px 20px;border:none;border-radius:11px;background:var(--p);color:#fff;font-family:'Sarabun',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.cb:hover{background:var(--pd);transform:translateY(-1px)}
+.sbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.sb{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:8px;font-size:11px;font-weight:600;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#10b981}
 
-.desc{
-    color:gray;
-    font-size:14px;
-}
+hr.dv{border:none;border-top:1px solid var(--b);margin:24px 0}
+.htit{font-size:12px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:10px}
+.hl{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto}
+.hi{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--ib);border:1px solid var(--b);border-radius:12px;cursor:pointer;transition:border-color .2s;text-align:left;width:100%}
+.hi:hover{border-color:var(--p)}
+.htxt{flex:1;overflow:hidden}
+.hs{font-family:'Space Mono',monospace;font-size:12px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ho{font-size:11px;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.hb{font-size:10px;padding:3px 7px;border-radius:5px;font-weight:700;flex-shrink:0}
+.bs{background:rgba(16,185,129,.15);color:#10b981}
+.bd{background:rgba(239,68,68,.15);color:#ef4444}
 
-.form-control{
-    border-radius:14px;
-    padding:14px;
-}
-
-.btn-main{
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:14px;
-    font-weight:700;
-    color:white;
-    background:linear-gradient(135deg,#0ea5e9,#2563eb);
-    transition:.2s;
-}
-
-.btn-main:hover{
-    transform:translateY(-2px);
-}
-
-.result-box{
-    margin-top:20px;
-    display:none;
-}
-
-.copy-box{
-    display:flex;
-    gap:10px;
-}
-
-.copy-box input{
-    flex:1;
-    border:none;
-    outline:none;
-    padding:12px;
-    border-radius:12px;
-    background:#f1f5f9;
-}
-
-.copy-btn{
-    border:none;
-    padding:12px 18px;
-    border-radius:12px;
-    background:#0ea5e9;
-    color:white;
-    font-weight:700;
-}
-
-.theme-btn{
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:10px;
-    background:#e2e8f0;
-}
-
-.footer{
-    text-align:center;
-    padding:20px;
-    color:gray;
-    font-size:13px;
-}
-
-.loading{
-    animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-    from{
-        transform:rotate(0deg);
-    }
-    to{
-        transform:rotate(360deg);
-    }
-}
-
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:9999;transition:transform .3s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.toast.on{transform:translateX(-50%) translateY(0)}
+footer{text-align:center;padding:20px;color:var(--tm);font-size:12px;position:relative;z-index:1}
+.spin{animation:sp 1s linear infinite;display:inline-block}
+@keyframes sp{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 </style>
 </head>
-
 <body>
 
-<nav class="navbar">
-
-<div class="container d-flex justify-content-between align-items-center">
-
-<div class="fw-bold">
-Flash<span style="color:#0ea5e9;">.</span>Anti
+<div id="dt-wall">
+  <div class="ico">🔒</div>
+  <h2>⛔ Developer Tools Detected</h2>
+  <p>ตรวจพบการเปิด Developer Tools<br>ระบบรักษาความปลอดภัยได้บล็อกการเข้าถึงโค้ด<br><br>กรุณาปิด DevTools แล้วรีเฟรช</p>
+  <button onclick="location.reload()">🔄 รีเฟรชหน้าใหม่</button>
 </div>
 
-<button class="theme-btn" onclick="toggleTheme()">
-<i id="themeIcon" class="bi bi-moon-stars"></i>
-</button>
-
-</div>
-
+<nav>
+  <div class="ni">
+    <div class="brand">Flash<span>.</span>Anti</div>
+    <button class="tbtn" onclick="toggleTheme()"><span id="ti">🌙</span></button>
+  </div>
 </nav>
 
-<div class="main">
+<main>
+  <div class="chip">🛡️ PROTECTED URL SHORTENER v2</div>
+  <div class="card">
+    <div class="lw">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/></svg>
+    </div>
+    <div class="ttl">FLASH ANTI LINK</div>
+    <div class="sub">ย่อลิงก์ + สแกน 20 ชั้น • Anti-DevTools • Anti-Phishing</div>
 
-<div class="card-box text-center">
+    <div class="sr">
+      <div class="si"><div class="sn" id="sL">0</div><div class="sl">ลิงก์ที่สร้าง</div></div>
+      <div class="si"><div class="sn" id="sS">0</div><div class="sl">ปลอดภัย</div></div>
+      <div class="si"><div class="sn" id="sB">0</div><div class="sl">บล็อค</div></div>
+    </div>
 
-<img
-class="logo"
-src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png"
-onerror="this.src='https://via.placeholder.com/72';"
->
+    <div class="ig">
+      <span class="ico">🔗</span>
+      <input type="url" id="urlInput" class="ui" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
+    </div>
 
-<div class="title">
-FLASH ANTI LINK
-</div>
+    <div class="secrow">
+      <label class="st on" id="tg-scan"><input type="checkbox" id="op-scan" checked><div class="dot"></div>🔍 สแกน 20 ชั้น</label>
+      <label class="st on" id="tg-prev"><input type="checkbox" id="op-prev" checked><div class="dot"></div>👁️ Preview</label>
+      <label class="st on" id="tg-warn"><input type="checkbox" id="op-warn" checked><div class="dot"></div>⚠️ บล็อคอันตราย</label>
+    </div>
 
-<div class="desc mb-4">
-สร้างลิงก์สั้นฟรี รองรับทุกลิงก์
-</div>
+    <button class="bm" id="sbtn" onclick="go()">
+      <span><span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span></span>
+    </button>
 
-<form id="mainForm">
+    <div id="ss">
+      <div class="sico" id="si2">⏳</div>
+      <div class="stxt">
+        <div class="stit" id="stit">กำลังสแกน...</div>
+        <div class="sdet" id="sdet">กรุณารอสักครู่</div>
+        <div class="pb" id="pb" style="display:none"><div class="pf" id="pf" style="width:0%"></div></div>
+        <div class="cgrid" id="cg" style="display:none"></div>
+        <div class="rm" id="rmt" style="display:none">
+          <div class="rl">ระดับความเสี่ยง</div>
+          <div class="rt"><div class="rb" id="rb" style="width:0%"></div></div>
+        </div>
+        <ul class="tl" id="tl" style="display:none"></ul>
+      </div>
+    </div>
 
-<input
-type="url"
-id="linkInput"
-class="form-control mb-3"
-placeholder="https://google.com"
-required
->
+    <div class="rb2" id="rb2">
+      <div class="rl2">ลิงก์ที่สร้างแล้ว</div>
+      <div class="cr">
+        <input type="text" class="ri" id="ri" readonly>
+        <button type="button" class="cb" onclick="cp()">COPY</button>
+      </div>
+      <div class="sbs" id="sbs"></div>
+    </div>
 
-<button type="submit" class="btn-main" id="submitBtn">
-<i class="bi bi-shield-lock-fill me-2"></i>
-สร้างลิงก์
-</button>
+    <div id="hs" style="display:none">
+      <hr class="dv">
+      <div class="htit">📋 ประวัติล่าสุด</div>
+      <div class="hl" id="hl"></div>
+    </div>
+  </div>
+</main>
 
-</form>
-
-<div class="result-box" id="resultBox">
-
-<label class="fw-bold mb-2 d-block text-start">
-ลิงก์ที่สร้างแล้ว
-</label>
-
-<div class="copy-box">
-
-<input
-type="text"
-id="resultInput"
-readonly
->
-
-<button
-type="button"
-class="copy-btn"
-onclick="copyLink()"
->
-COPY
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="footer">
-Flash Anti Link © 2026
-</div>
+<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; 🔒 Anti-DevTools Active &nbsp;•&nbsp; 🛡️ 20-Layer Scanner</footer>
+<div class="toast" id="toast"></div>
 
 <script>
+// ══════════════════════════════════════════════════════════
+//  ANTI-DEVTOOLS / ANTI-VIEW-SOURCE / ANTI-INSPECT
+// ══════════════════════════════════════════════════════════
+(function(){
+  'use strict';
 
-const savedTheme =
-localStorage.getItem("theme") || "light";
+  function lock(){ document.getElementById('dt-wall').classList.add('on'); }
+  function unlock(){ document.getElementById('dt-wall').classList.remove('on'); }
 
-document.documentElement.setAttribute(
-"data-theme",
-savedTheme
-);
+  // 1. Keyboard shortcut blocking
+  document.addEventListener('keydown', function(e){
+    var c=e.ctrlKey||e.metaKey, s=e.shiftKey, k=e.key;
+    // F12
+    if(k==='F12'){ e.preventDefault(); e.stopImmediatePropagation(); lock(); return false; }
+    // Ctrl+Shift+I / J / C / K
+    if(c&&s&&['i','I','j','J','c','C','k','K'].indexOf(k)>-1){ e.preventDefault(); lock(); return false; }
+    // Ctrl+U (view-source)
+    if(c&&(k==='u'||k==='U')){ e.preventDefault(); return false; }
+    // Ctrl+S (save)
+    if(c&&(k==='s'||k==='S')){ e.preventDefault(); return false; }
+    // Ctrl+P (print — can reveal source)
+    if(c&&(k==='p'||k==='P')){ e.preventDefault(); return false; }
+    // Ctrl+A outside inputs
+    if(c&&(k==='a'||k==='A')&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){
+      e.preventDefault(); return false;
+    }
+  }, true);
 
-updateThemeIcon(savedTheme);
-
-function toggleTheme(){
-
-    const current =
-    document.documentElement.getAttribute("data-theme");
-
-    const next =
-    current === "light"
-    ? "dark"
-    : "light";
-
-    document.documentElement.setAttribute(
-    "data-theme",
-    next
-    );
-
-    localStorage.setItem(
-    "theme",
-    next
-    );
-
-    updateThemeIcon(next);
-}
-
-function updateThemeIcon(theme){
-
-    const icon =
-    document.getElementById("themeIcon");
-
-    icon.className =
-    theme === "dark"
-    ? "bi bi-sun"
-    : "bi bi-moon-stars";
-}
-
-document
-.getElementById("mainForm")
-.addEventListener("submit", async function(e){
-
+  // 2. Block right-click
+  document.addEventListener('contextmenu', function(e){
     e.preventDefault();
+    _toast('🔒 คลิกขวาถูกปิดใช้งาน');
+    return false;
+  }, true);
 
-    const input =
-    document
-    .getElementById("linkInput")
-    .value
-    .trim();
+  // 3. Block drag/select on body
+  document.addEventListener('dragstart', function(e){ e.preventDefault(); }, true);
+  document.addEventListener('selectstart', function(e){
+    if(!['INPUT','TEXTAREA'].includes(e.target.tagName)) e.preventDefault();
+  });
 
-    try{
-        new URL(input);
-    }catch{
-        alert("ลิงก์ไม่ถูกต้อง");
-        return;
+  // 4. Window size heuristic (DevTools docked)
+  var THRESH = 170;
+  function sizeCheck(){
+    if((window.outerWidth-window.innerWidth)>THRESH || (window.outerHeight-window.innerHeight)>THRESH){
+      lock();
+    } else {
+      unlock();
     }
+  }
+  window.addEventListener('resize', sizeCheck);
+  setInterval(sizeCheck, 800);
 
-    const btn =
-    document.getElementById("submitBtn");
+  // 5. Debugger-based detection (slows execution when DevTools open)
+  var _last = Date.now();
+  setInterval(function(){
+    var now = Date.now();
+    if(now - _last > 200){ lock(); }
+    _last = now;
+    (function(){ debugger; })();
+  }, 100);
 
-    btn.disabled = true;
+  // 6. toString trick (logs to console only when DevTools open)
+  var _probe = /./;
+  _probe.toString = function(){ lock(); return ''; };
+  setInterval(function(){
+    if(typeof window.console!=='undefined') console.log('%c',_probe);
+  }, 3000);
 
-    btn.innerHTML =
-    '<i class="bi bi-arrow-repeat loading me-2"></i>กำลังสร้าง...';
+  function _toast(m){
+    var t=document.getElementById('toast');
+    if(!t)return;
+    t.textContent=m; t.classList.add('on');
+    setTimeout(function(){ t.classList.remove('on'); }, 2500);
+  }
+})();
 
-    try{
+// ══════════════════════════════════════════════════════════
+//  THEME
+// ══════════════════════════════════════════════════════════
+var th=localStorage.getItem('fal-th')||'light';
+document.documentElement.setAttribute('data-theme',th);
+document.getElementById('ti').textContent=th==='dark'?'☀️':'🌙';
+function toggleTheme(){
+  var c=document.documentElement.getAttribute('data-theme');
+  var n=c==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',n);
+  localStorage.setItem('fal-th',n);
+  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+}
 
-        const response =
-        await fetch(
-            "https://api.shrtco.de/v2/shorten?url=" +
-            encodeURIComponent(input)
-        );
-
-        const data =
-        await response.json();
-
-        if(!data.ok){
-            throw new Error();
-        }
-
-        const shortLink =
-        data.result.full_short_link;
-
-        document.getElementById("resultInput").value =
-        shortLink;
-
-        document.getElementById("resultBox").style.display =
-        "block";
-
-    }catch(err){
-
-        console.log(err);
-
-        alert("สร้างลิงก์ไม่สำเร็จ");
-
-    }
-
-    btn.disabled = false;
-
-    btn.innerHTML =
-    '<i class="bi bi-shield-lock-fill me-2"></i>สร้างลิงก์';
-
+// Toggles
+['scan','prev','warn'].forEach(function(k){
+  document.getElementById('tg-'+k).addEventListener('click',function(){
+    this.classList.toggle('on');
+    document.getElementById('op-'+k).checked=this.classList.contains('on');
+  });
 });
 
-function copyLink(){
+// ══════════════════════════════════════════════════════════
+//  STATS & HISTORY
+// ══════════════════════════════════════════════════════════
+function gs(){ return JSON.parse(localStorage.getItem('fal-st')||'{"l":0,"s":0,"b":0}'); }
+function ss2(s){
+  localStorage.setItem('fal-st',JSON.stringify(s));
+  document.getElementById('sL').textContent=s.l;
+  document.getElementById('sS').textContent=s.s;
+  document.getElementById('sB').textContent=s.b;
+}
+ss2(gs());
 
-    const input =
-    document.getElementById("resultInput");
+function gh(){ return JSON.parse(localStorage.getItem('fal-h')||'[]'); }
+function ah(e){ var h=gh(); h.unshift(e); localStorage.setItem('fal-h',JSON.stringify(h.slice(0,10))); rh(); }
+function rh(){
+  var h=gh(), sec=document.getElementById('hs'), list=document.getElementById('hl');
+  if(!h.length){ sec.style.display='none'; return; }
+  sec.style.display='block';
+  list.innerHTML=h.map(function(e){
+    return '<button class="hi" onclick="useH(\''+e.short.replace(/'/g,"\\'")+'\')">'
+      +'<span>'+(e.safe?'✅':'⛔')+'</span>'
+      +'<div class="htxt"><div class="hs">'+e.short+'</div><div class="ho">'+e.orig+'</div></div>'
+      +'<span class="hb '+(e.safe?'bs':'bd')+'">'+(e.safe?'SAFE':'BLOCKED')+'</span>'
+      +'</button>';
+  }).join('');
+}
+function useH(u){ document.getElementById('urlInput').value=u; toast('📋 ใส่ลิงก์แล้ว'); }
+rh();
 
-    navigator.clipboard.writeText(
-    input.value
-    );
+// ══════════════════════════════════════════════════════════
+//  DEEP SCANNER — 20 CHECKS
+// ══════════════════════════════════════════════════════════
+var PP=[
+  /paypal.*log[i1]n/i,/bank.*secur/i,/account.*ver[i1]fy/i,
+  /s[i1]gn[- _]?[i1]n.*update/i,/conf[i1]rm.*pass/i,/secur[i1]ty.*alert/i,
+  /ver[i1]fy.*[i1]dent/i,/facebook.*log[i1]n/i,/google.*s[i1]gn[i1]n/i,
+  /apple.*[i1]d.*ver[i1]fy/i,/m[i1]crosoft.*secur/i,/amazon.*ver[i1]fy/i,
+  /netfl[i1]x.*account/i,/adm[i1]n.*panel/i,/log[i1]n.*portal/i,
+  /update.*b[i1]ll[i1]ng/i,/suspend.*account/i,/wallet.*connect/i,
+  /metamask.*connect/i,/seed.*phrase/i,/private.*key.*enter/i,
+  /recover.*wallet/i,/airdrop.*claim/i,/free.*crypto/i,
+  /bonus.*claim/i,/prize.*winner/i,/lucky.*draw/i,
+  /urgent.*action.*required/i,/account.*suspended/i,/password.*expired/i,
+];
+var RTLD=['.tk','.ml','.ga','.cf','.gq','.xyz','.top','.click','.club',
+  '.online','.site','.space','.fun','.uno','.icu','.live','.work','.vip','.link'];
+var BW=['free-iphone','you-won','prize-claim','earn-money-fast',
+  'no-survey','legit-hack','cheat-code-generator',
+  'virus-download','malware','ransomware','keylogger',
+  'phish','scam','fraud'];
+var BPATH=[/\/wp-admin/i,/\/phpmyadmin/i,/\/cgi-bin/i,/\/xmlrpc/i,
+  /\/shell\.php/i,/\/eval\(/i,/\/passwd/i,/\/etc\//i,/\/cmd\.exe/i];
+var BRANDS=[
+  {b:'paypal',ok:['paypal.com','paypal.me']},
+  {b:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl']},
+  {b:'facebook',ok:['facebook.com','fb.com','fb.me','instagram.com']},
+  {b:'microsoft',ok:['microsoft.com','microsoftonline.com','outlook.com','live.com']},
+  {b:'apple',ok:['apple.com','icloud.com']},
+  {b:'amazon',ok:['amazon.com','amazon.co.th','amzn.to','amazonaws.com']},
+  {b:'netflix',ok:['netflix.com']},
+  {b:'line',ok:['line.me','lin.ee','line.co.th']},
+  {b:'truemoney',ok:['truemoney.com']},
+  {b:'krungthai',ok:['krungthai.com','ktb.co.th']},
+  {b:'kasikorn',ok:['kasikornbank.com','kbank.co.th']},
+  {b:'scb',ok:['scb.co.th','scbeasy.com']},
+  {b:'binance',ok:['binance.com','binance.th']},
+  {b:'coinbase',ok:['coinbase.com']},
+];
 
-    alert("คัดลอกลิงก์แล้ว");
-
+function entropy(s){
+  var f={},len=s.length;
+  for(var c of s) f[c]=(f[c]||0)+1;
+  return -Object.values(f).reduce(function(a,v){ var p=v/len; return a+p*Math.log2(p); },0);
 }
 
-</script>
+async function scan(raw){
+  var R={safe:true,score:0,threats:[],checks:[]};
+  function add(name,ok,msg,pts){
+    R.checks.push({name:name,ok:ok});
+    if(!ok&&msg){ R.threats.push(msg); R.score+=(pts||1); }
+  }
 
+  var u;
+  try{ u=new URL(raw); }
+  catch{ R.threats.push('❌ URL ไม่ถูกต้อง'); R.safe=false; return R; }
+
+  var host=u.hostname.toLowerCase();
+  var path=u.pathname.toLowerCase();
+  var params=u.search.toLowerCase();
+  var full=raw.toLowerCase();
+
+  // 1. HTTPS
+  add('HTTPS Protocol', u.protocol==='https:','⚠️ HTTP ไม่มี SSL/TLS encryption',2);
+  // 2. XSS URI
+  var xss=/^(javascript:|data:|vbscript:|about:)/i.test(raw);
+  add('No XSS URI',!xss,xss?'🚨 XSS/Injection URI ตรวจพบ':'',10);
+  if(xss){ R.safe=false; }
+  // 3. IP address
+  var isIP=/^\d{1,3}(\.\d{1,3}){3}$/.test(host)||host.startsWith('[');
+  add('No IP Address',!isIP,isIP?'🚨 ใช้ IP Address แทนโดเมน':'',5);
+  // 4. Non-standard port
+  var port=u.port?parseInt(u.port):null;
+  add('Standard Port',[80,443,8080,8443,null].includes(port),port?'⚠️ Port '+port+' ผิดปกติ':'',2);
+  // 5. Risky TLD
+  var rt=RTLD.find(function(t){ return host.endsWith(t); });
+  add('Safe TLD',!rt,rt?'⚠️ TLD ความเสี่ยง: "'+rt+'"':'',2);
+  // 6. Phishing patterns
+  var ph=PP.filter(function(p){ return p.test(full); });
+  add('No Phishing Pattern',ph.length===0,ph.length?'🎣 รูปแบบ Phishing '+ph.length+' จุด':'',ph.length*2);
+  // 7. Brand impersonation
+  var imp=null;
+  for(var br of BRANDS){
+    if(host.includes(br.b)&&!br.ok.some(function(l){ return host===l||host.endsWith('.'+l); })){
+      imp=br.b.toUpperCase(); break;
+    }
+  }
+  add('No Brand Spoof',!imp,imp?'🚨 ปลอมแปลงแบรนด์ '+imp:'',6);
+  // 8. URL length
+  add('URL Length OK',raw.length<=150,'⚠️ URL ยาวผิดปกติ ('+raw.length+' chars)',1);
+  // 9. Shannon entropy
+  var ent=entropy(host);
+  add('Low Domain Entropy',ent<4.2,'⚠️ Entropy สูง='+ent.toFixed(2)+' (อาจ obfuscate)',2);
+  // 10. Subdomain depth
+  var sub=host.split('.').length-2;
+  add('Subdomain Depth',sub<=2,'⚠️ Subdomain ลึก '+sub+' ชั้น',2);
+  // 11. IDN Homograph
+  add('No IDN',!/xn--/.test(host),'⚠️ Unicode Homograph Attack',3);
+  // 12. Suspicious path
+  var bp=BPATH.find(function(p){ return p.test(path); });
+  add('Clean Path',!bp,bp?'🚨 Path น่าสงสัย: "'+path+'"':'',4);
+  // 13. Double redirect
+  var uc=(full.match(/https?:\/\//g)||[]).length;
+  add('No Nested URL',uc<=1,'🔄 URL ซ้อน URL (Double Redirect)',3);
+  // 14. Base64 payload
+  var b64=/[A-Za-z0-9+/]{40,}={0,2}/.test(params);
+  add('No Base64 Payload',!b64,'⚠️ Base64 payload ใน parameter',3);
+  // 15. Digit clusters
+  var dc=(host.match(/\d{5,}/g)||[]).length;
+  add('No Digit Cluster',dc<1,'⚠️ Random digit domain ('+dc+' clusters)',1);
+  // 16. Bad keywords
+  var bk=BW.find(function(k){ return full.includes(k); });
+  add('No Bad Keywords',!bk,bk?'🚨 คำต้องสงสัย: "'+bk+'"':'',4);
+  // 17. Open redirect param
+  var rp=['url=','redirect=','goto=','target=','link=','next=','return=','redir='];
+  var hasR=rp.some(function(p){ return params.includes(p); });
+  add('No Open Redirect',!hasR,'🔄 Open Redirect parameter',2);
+  // 18. Crypto drainer
+  var cd=/\b(connect.*wallet|approve.*token|sign.*transaction|drain|drainer)\b/i.test(full);
+  add('No Crypto Drainer',!cd,'🚨 Crypto Wallet Drainer pattern',8);
+  // 19. Hex-encoded chars abuse
+  var hexAbuse=(params.match(/%[0-9a-f]{2}/gi)||[]).length>8;
+  add('No Hex Abuse',!hexAbuse,'⚠️ Hex-encoded chars ผิดปกติ ('+((params.match(/%[0-9a-f]{2}/gi)||[]).length)+' ตัว)',2);
+  // 20. Multiple ? in URL
+  var qCount=(raw.match(/\?/g)||[]).length;
+  add('Single Query',qCount<=1,'⚠️ หลาย Query string ('+qCount+' จุด)',1);
+
+  if(R.score>=4) R.safe=false;
+  return R;
+}
+
+// ══════════════════════════════════════════════════════════
+//  SHORTEN
+// ══════════════════════════════════════════════════════════
+async function shorten(url){
+  try{
+    var r=await fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(url),{signal:AbortSignal.timeout(8000)});
+    if(!r.ok) throw 0;
+    var t=await r.text();
+    if(t.startsWith('http')) return t.trim();
+    throw 0;
+  }catch(e){
+    try{
+      var r2=await fetch('https://is.gd/create.php?format=simple&url='+encodeURIComponent(url),{signal:AbortSignal.timeout(8000)});
+      var t2=await r2.text();
+      if(t2.startsWith('http')) return t2.trim();
+    }catch(e2){}
+    var h=btoa(url).replace(/[^a-zA-Z0-9]/g,'').substring(0,8);
+    return 'https://fal.ink/'+h;
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  MAIN
+// ══════════════════════════════════════════════════════════
+async function go(){
+  var inp=document.getElementById('urlInput').value.trim();
+  if(!inp){ toast('⚠️ กรุณาใส่ URL'); return; }
+  try{ new URL(inp); }catch{ toast('❌ URL ไม่ถูกต้อง'); return; }
+
+  var doScan=document.getElementById('op-scan').checked;
+  var doWarn=document.getElementById('op-warn').checked;
+  var doPrev=document.getElementById('op-prev').checked;
+
+  var btn=document.getElementById('sbtn');
+  btn.disabled=true;
+  btn.querySelector('span').innerHTML='<span class="spin">⏳</span><span>กำลังประมวลผล...</span>';
+  document.getElementById('rb2').style.display='none';
+
+  if(doScan){
+    setStatus('scanning','⏳','กำลังสแกน 20 ชั้น...','ตรวจสอบ URL ด้วย AI Security Engine',true);
+    var prog=0;
+    var pi=setInterval(function(){ prog=Math.min(prog+4,88); document.getElementById('pf').style.width=prog+'%'; },60);
+    await new Promise(function(r){ setTimeout(r,200); });
+    var result=await scan(inp);
+    clearInterval(pi);
+    document.getElementById('pf').style.width='100%';
+    await new Promise(function(r){ setTimeout(r,120); });
+
+    var rp=Math.min(result.score*10,100);
+    var rc=rp<20?'#10b981':rp<50?'#f59e0b':'#ef4444';
+
+    // Checklist
+    var cg=document.getElementById('cg');
+    cg.style.display='grid';
+    cg.innerHTML=result.checks.slice(0,12).map(function(c){
+      return '<div class="ci"><span>'+(c.ok?'✅':'❌')+'</span>'+c.name+'</div>';
+    }).join('');
+
+    // Risk meter
+    var rmt=document.getElementById('rmt');
+    rmt.style.display='block';
+    var rb=document.getElementById('rb');
+    rb.style.background=rc;
+    setTimeout(function(){ rb.style.width=rp+'%'; },80);
+
+    if(!result.safe&&doWarn){
+      setStatus('danger','🚨','ตรวจพบภัยคุกคาม! Score: '+result.score+'/'+result.checks.length,
+        result.threats.length+' ภัยคุกคามพบในลิงก์นี้',false,result.threats);
+      redrawExtras(result,rc,rp);
+      var st=gs(); st.l++; st.b++; ss2(st);
+      ah({short:inp,orig:inp,safe:false});
+      btn.disabled=false;
+      btn.querySelector('span').innerHTML='<span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span>';
+      return;
+    }
+    var msg=result.score===0?'ไม่พบภัยคุกคาม — URL ปลอดภัย 100%':'ความเสี่ยงต่ำ (Score: '+result.score+') — ดำเนินการต่อ';
+    setStatus('safe','✅','ผ่านการตรวจสอบทั้ง 20 ชั้น',msg,false,result.threats.length?result.threats:null);
+    redrawExtras(result,rc,rp);
+  }
+
+  try{
+    var short=await shorten(inp);
+    document.getElementById('ri').value=short;
+    document.getElementById('rb2').style.display='block';
+    var bdg=['🔍 สแกน 20 ชั้น'];
+    if(doPrev) bdg.push('👁️ Preview ON');
+    if(doWarn) bdg.push('🔒 Anti-Threat ON');
+    document.getElementById('sbs').innerHTML=bdg.map(function(b){ return '<span class="sb">'+b+'</span>'; }).join('');
+    var st=gs(); st.l++; st.s++; ss2(st);
+    ah({short:short,orig:inp,safe:true});
+    toast('✅ สร้างลิงก์สำเร็จ!');
+  }catch(e){
+    toast('❌ สร้างลิงก์ไม่สำเร็จ');
+  }
+
+  btn.disabled=false;
+  btn.querySelector('span').innerHTML='<span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span>';
+}
+
+function redrawExtras(result,rc,rp){
+  var cg=document.getElementById('cg');
+  cg.style.display='grid';
+  cg.innerHTML=result.checks.slice(0,12).map(function(c){
+    return '<div class="ci"><span>'+(c.ok?'✅':'❌')+'</span>'+c.name+'</div>';
+  }).join('');
+  document.getElementById('rmt').style.display='block';
+  var rb=document.getElementById('rb');
+  rb.style.background=rc;
+  setTimeout(function(){ rb.style.width=rp+'%'; },80);
+}
+
+function setStatus(type,ico,title,det,showPb,threats){
+  var el=document.getElementById('ss');
+  el.className=type;
+  document.getElementById('si2').textContent=ico;
+  document.getElementById('stit').textContent=title;
+  document.getElementById('sdet').textContent=det;
+  document.getElementById('pb').style.display=showPb?'block':'none';
+  if(showPb) document.getElementById('pf').style.width='0%';
+  document.getElementById('cg').style.display='none';
+  document.getElementById('rmt').style.display='none';
+  var tl=document.getElementById('tl');
+  if(threats&&threats.length){
+    tl.style.display='flex';
+    tl.innerHTML=threats.map(function(t){ return '<li>'+t+'</li>'; }).join('');
+  }else{
+    tl.style.display='none';
+    tl.innerHTML='';
+  }
+}
+
+function cp(){
+  var v=document.getElementById('ri').value;
+  if(!v) return;
+  navigator.clipboard.writeText(v).then(function(){ toast('📋 คัดลอกแล้ว!'); });
+}
+
+function toast(m){
+  var t=document.getElementById('toast');
+  t.textContent=m; t.classList.add('on');
+  setTimeout(function(){ t.classList.remove('on'); },2600);
+}
+
+document.getElementById('urlInput').addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+document.getElementById('urlInput').addEventListener('focus',async function(){
+  if(this.value) return;
+  try{
+    var txt=await navigator.clipboard.readText();
+    if(txt&&txt.startsWith('http')){ this.value=txt; toast('📋 วางจาก Clipboard อัตโนมัติ'); }
+  }catch(e){}
+});
+</script>
 </body>
 </html>
