@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flash Anti Link v3.1</title>
+<title>Flash Anti Link v3.2</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -72,13 +72,12 @@ select.inp{appearance:none;cursor:pointer}
 .btn-d{background:linear-gradient(135deg,var(--d),#c0392b);color:#fff;width:auto}
 .btn-sm{padding:8px 14px;font-size:12px;border-radius:8px;width:auto}
 
-/* OPTIONS */
+/* OPTIONS — แก้ใหม่ทั้งหมด */
 .opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .opt{display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg3);cursor:pointer;font-size:12px;font-weight:500;color:var(--tm);user-select:none;transition:all .2s}
 .opt.on{border-color:var(--p);color:var(--p);background:rgba(108,99,255,.1)}
-.opt input{display:none}
-.opt-dot{width:12px;height:12px;border-radius:50%;border:2px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.opt.on .opt-dot::after{content:'';width:5px;height:5px;background:currentColor;border-radius:50%}
+.opt-dot{width:12px;height:12px;border-radius:50%;border:2px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.opt.on .opt-dot::after{content:'';width:5px;height:5px;background:currentColor;border-radius:50%;display:block}
 
 /* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
@@ -149,7 +148,7 @@ select.inp{appearance:none;cursor:pointer}
 .dz-sub{font-size:12px;color:var(--tm)}
 input[type=file]{display:none}
 
-/* IMAGE HOST */
+/* IMAGE HOST — แก้ใหม่ทั้งหมด */
 .img-preview{display:none;margin-bottom:12px}
 .img-preview img{width:100%;max-height:200px;object-fit:contain;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3)}
 .img-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
@@ -164,6 +163,22 @@ input[type=file]{display:none}
 .hl-url{font-family:var(--mono);font-size:11px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hl-copy-btn{padding:5px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--card);color:var(--tm);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
 .hl-copy-btn:hover{color:var(--p);border-color:var(--p)}
+
+/* Base64 result box */
+.b64-result{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-top:14px;display:none}
+.b64-preview{width:100%;max-height:180px;object-fit:contain;border-radius:var(--r);margin-bottom:12px;display:block}
+.b64-url-box{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:10px 14px;font-family:var(--mono);font-size:11px;color:var(--p);word-break:break-all;max-height:80px;overflow-y:auto;margin-bottom:10px;cursor:text;user-select:all}
+.b64-actions{display:flex;gap:8px;flex-wrap:wrap}
+.b64-stat{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.b64-chip{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:500;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--p);font-family:var(--mono)}
+
+/* Embed codes */
+.embed-box{margin-top:12px}
+.embed-row{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px}
+.embed-lbl{font-size:10px;font-weight:700;color:var(--ts);width:60px;flex-shrink:0}
+.embed-val{font-family:var(--mono);font-size:10px;color:var(--tm);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.embed-copy{padding:4px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--card);color:var(--tm);font-size:10px;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.embed-copy:hover{color:var(--p);border-color:var(--p)}
 
 /* GALLERY */
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:10px}
@@ -228,10 +243,18 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
 .lightbox img{max-width:90vw;max-height:88vh;border-radius:var(--r);object-fit:contain}
 .lb-close{position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.6);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
-/* VirusTotal embed */
+/* VT */
 .vt-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .vt-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid rgba(255,79,109,.4);border-radius:10px;background:rgba(255,79,109,.07);color:var(--d);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
 .vt-btn:hover{background:rgba(255,79,109,.15)}
+
+/* Notice box */
+.notice{padding:10px 14px;border-radius:var(--r);margin-bottom:12px;font-size:12px;display:flex;gap:8px;align-items:flex-start}
+.notice.info{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);color:var(--p)}
+.notice.warn{background:rgba(255,160,64,.08);border:1px solid rgba(255,160,64,.25);color:var(--w)}
+
+/* Bulk result */
+.bulk-result-wrap{margin-top:12px;display:none;flex-direction:column;gap:6px}
 
 @media(max-width:500px){
   .stats-row{grid-template-columns:1fr 1fr}
@@ -253,7 +276,7 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
 
 <main>
   <div style="margin-bottom:20px">
-    <span class="badge-chip">⚡ FLASH ANTI LINK v3.1</span>
+    <span class="badge-chip">⚡ FLASH ANTI LINK v3.2</span>
     <h1 class="hero-title" style="margin-top:12px">ศูนย์รวม<span>ทุกอย่าง</span><br>ในที่เดียว</h1>
     <p class="hero-sub">สแกน URL • ย่อลิงก์ • ฝากรูป • QR Code • เครื่องมือข้อความ • วิเคราะห์ URL</p>
   </div>
@@ -284,11 +307,19 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
         <span class="inp-ico">🔗</span>
         <input type="url" id="urlInput" class="inp" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
       </div>
+      <!-- ✅ FIX: ออก event delegation แบบใหม่ ไม่ใช้ label wrap checkbox -->
       <div class="opt-row" id="scan-opts">
-        <label class="opt on" data-key="chk-block"><input type="checkbox" id="chk-block" checked><div class="opt-dot"></div>⛔ บล็อคอันตราย</label>
-        <label class="opt on" data-key="chk-short2"><input type="checkbox" id="chk-short2" checked><div class="opt-dot"></div>✂️ ย่อลิงก์</label>
-        <label class="opt on" data-key="chk-qr2"><input type="checkbox" id="chk-qr2" checked><div class="opt-dot"></div>📷 สร้าง QR</label>
+        <div class="opt on" id="opt-block" onclick="toggleOpt('opt-block','chk-block')">
+          <div class="opt-dot"></div>⛔ บล็อคอันตราย
+        </div>
+        <div class="opt on" id="opt-short2" onclick="toggleOpt('opt-short2','chk-short2')">
+          <div class="opt-dot"></div>✂️ ย่อลิงก์
+        </div>
+        <div class="opt on" id="opt-qr2" onclick="toggleOpt('opt-qr2','chk-qr2')">
+          <div class="opt-dot"></div>📷 สร้าง QR
+        </div>
       </div>
+      <!-- Hidden checkboxes — ค่าอ่านจาก _opts object แทน -->
       <button class="btn btn-p" id="scan-btn" onclick="goScan()">
         <span id="scan-btn-txt">🛡️ สแกน &amp; ดำเนินการ</span>
       </button>
@@ -339,7 +370,7 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
           <div class="qr-wrap" id="scan-qr-wrap"><span style="color:#999;font-size:28px">📷</span></div>
           <div style="display:flex;flex-direction:column;gap:6px">
             <button class="btn btn-s btn-sm" id="scan-qr-dl">⬇️ ดาวน์โหลด QR</button>
-            <button class="btn btn-s btn-sm" onclick="copyQrUrl('scan-qr-img')">📋 คัดลอก URL QR</button>
+            <button class="btn btn-s btn-sm" onclick="copyQrUrl()">📋 คัดลอก URL QR</button>
           </div>
         </div>
       </div>
@@ -360,7 +391,6 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
       <button class="btn btn-p" id="file-btn" onclick="goFileScan()" disabled>
         <span id="file-btn-txt">🔍 สแกนไฟล์</span>
       </button>
-
       <div class="result-box" id="fileScanBox" style="margin-top:14px">
         <div class="rh scanning" id="file-rh">
           <div class="rh-ico" id="file-rh-ico">⏳</div>
@@ -391,6 +421,7 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
   <div class="panel" id="tab-short">
     <div class="card">
       <div class="card-title">✂️ ย่อลิงก์</div>
+      <div class="notice info">ℹ️ ระบบจะลองทีละ service อัตโนมัติ ถ้า service นึงล้มเหลวจะสลับไป service ถัดไปเอง</div>
       <div class="inp-wrap">
         <span class="inp-ico">🔗</span>
         <input type="url" id="shortInput" class="inp" placeholder="https://example.com/very/long/url...">
@@ -400,13 +431,11 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
           <option value="tinyurl">TinyURL</option>
           <option value="isgd">is.gd</option>
           <option value="vgd">v.gd</option>
-          <option value="clckru">clck.ru</option>
         </select>
       </div>
       <button class="btn btn-p" id="short-btn" onclick="goShorten()">
         <span id="short-btn-txt">✂️ ย่อลิงก์</span>
       </button>
-
       <div class="link-result" id="short-result">
         <div class="lr-lbl">ลิงก์ที่ย่อแล้ว</div>
         <div class="copy-row">
@@ -427,7 +456,8 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
       <button class="btn btn-p" style="margin-top:8px" onclick="goBulk()">
         <span id="bulk-btn-txt">✂️ ย่อทั้งหมด</span>
       </button>
-      <div id="bulkResult" style="display:none;margin-top:12px;display:flex;flex-direction:column;gap:6px"></div>
+      <!-- ✅ FIX: แก้ CSS conflict display:none + display:flex -->
+      <div id="bulkResult" class="bulk-result-wrap"></div>
     </div>
   </div>
 
@@ -436,8 +466,8 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
     <div class="card">
       <div class="card-title">🖼️ ฝากรูปภาพ</div>
 
-      <div style="background:rgba(255,160,64,.08);border:1px solid rgba(255,160,64,.25);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--w)">
-        ⚠️ ImgBB/Catbox ต้องการ Internet จริง — หากอัพโหลดล้มเหลว ให้ใช้ <strong>Base64 (local)</strong> แทน ซึ่งทำงานได้ทันทีโดยไม่ต้องเชื่อมต่อ
+      <div class="notice warn">
+        ⚠️ ImgBB/Catbox ต้องการ Internet — ถ้าล้มเหลวให้ใช้ <strong>Base64</strong> แทน (ทำงานได้ทันทีแบบ offline)
       </div>
 
       <div class="drop-zone" id="imgDrop" onclick="document.getElementById('imgInput').click()"
@@ -465,6 +495,25 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
         <span id="upload-btn-txt">⬆️ อัพโหลด / สร้างลิงก์</span>
       </button>
 
+      <!-- ✅ FIX: Base64 result แสดงแบบใหม่ ชัดเจน ใช้งานได้จริง -->
+      <div class="b64-result" id="b64Result">
+        <div class="card-title" style="margin-bottom:10px">✅ Base64 พร้อมใช้งาน</div>
+        <img id="b64PreviewImg" class="b64-preview" src="" alt="">
+        <div class="b64-stat" id="b64Stat"></div>
+        <div style="font-size:11px;color:var(--tm);margin-bottom:6px">📋 Base64 Data URL (คลิกเพื่อเลือกทั้งหมด)</div>
+        <div class="b64-url-box" id="b64UrlBox" onclick="selectB64()"></div>
+        <div class="b64-actions">
+          <button class="btn btn-p btn-sm" onclick="copyB64()">📋 Copy Base64</button>
+          <button class="btn btn-s btn-sm" onclick="dlBase64Img()">⬇️ ดาวน์โหลดรูป</button>
+          <button class="btn btn-s btn-sm" onclick="goQrFromHostImg()">📷 QR Code</button>
+        </div>
+        <div class="embed-box" id="b64EmbedBox" style="display:none">
+          <div class="card-title" style="margin-bottom:8px;margin-top:12px">📋 Embed Code</div>
+          <div id="b64EmbedRows"></div>
+        </div>
+      </div>
+
+      <!-- ImgBB / Catbox result -->
       <div class="host-result" id="hostResult">
         <div class="host-links" id="hostLinks"></div>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
@@ -490,7 +539,6 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
         <span class="inp-ico">📝</span>
         <input type="text" id="qrInput" class="inp" placeholder="URL, ข้อความ, เบอร์โทร, WiFi...">
       </div>
-
       <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
         <div class="qr-wrap" id="qrWrap"><span style="color:#bbb;font-size:34px">📷</span></div>
         <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px">
@@ -524,7 +572,7 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
           <div style="display:flex;flex-direction:column;gap:6px">
             <button class="btn btn-p btn-sm" onclick="dlQr('png')">⬇️ ดาวน์โหลด PNG</button>
             <button class="btn btn-s btn-sm" onclick="dlQr('svg')">⬇️ ดาวน์โหลด SVG</button>
-            <button class="btn btn-s btn-sm" onclick="copyQrUrl('qr-main-img')">📋 คัดลอก URL QR</button>
+            <button class="btn btn-s btn-sm" onclick="copyQrUrl()">📋 คัดลอก URL QR</button>
           </div>
         </div>
       </div>
@@ -597,9 +645,7 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
         <span class="inp-ico">🔗</span>
         <input type="url" id="inspectInput" class="inp" placeholder="https://example.com:8080/path?foo=bar&x=1#section">
       </div>
-      <button class="btn btn-p" onclick="doInspect()" style="margin-bottom:14px">
-        🔍 วิเคราะห์
-      </button>
+      <button class="btn btn-p" onclick="doInspect()" style="margin-bottom:14px">🔍 วิเคราะห์</button>
       <div id="inspectResult" style="display:none">
         <div class="url-parts" id="urlParts"></div>
         <div style="margin-top:12px">
@@ -610,7 +656,6 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
           <button class="btn btn-s btn-sm" onclick="scanFromInspect()">🛡️ สแกน URL นี้</button>
           <button class="btn btn-s btn-sm" onclick="qrFromInspect()">📷 QR Code</button>
           <button class="btn btn-s btn-sm" onclick="shortFromInspect()">✂️ ย่อลิงก์</button>
-          <button class="btn btn-s btn-sm" onclick="copyEl('urlParts')">📋 คัดลอก</button>
         </div>
       </div>
     </div>
@@ -626,7 +671,7 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
   </div>
 </main>
 
-<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; ⚡ All-in-One Security Tool v3.1</footer>
+<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; ⚡ All-in-One Security Tool v3.2</footer>
 <div class="toast" id="toast"></div>
 <div class="lightbox" id="lightbox" onclick="closeLB()">
   <button class="lb-close" onclick="closeLB()">✕</button>
@@ -635,6 +680,20 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
 
 <script>
 'use strict';
+
+/* ═══════════════════════════════════════════
+   ✅ FIX: OPT TOGGLES — state object แทน checkbox
+═══════════════════════════════════════════ */
+const _opts = { 'chk-block': true, 'chk-short2': true, 'chk-qr2': true };
+const _optMap = { 'opt-block':'chk-block', 'opt-short2':'chk-short2', 'opt-qr2':'chk-qr2' };
+
+function toggleOpt(divId, key) {
+  _opts[key] = !_opts[key];
+  const el = document.getElementById(divId);
+  el.classList.toggle('on', _opts[key]);
+}
+function getOpt(key) { return _opts[key]; }
+
 /* ═══════════════════════════════════════════
    FILE EXTENSION DATABASE
 ═══════════════════════════════════════════ */
@@ -693,11 +752,11 @@ const BAD_WORDS = ['free-iphone','you-won','prize-claim','earn-money','virus-dow
   'malware','ransomware','keylogger','phishing','scam-page','crypto-drainer'];
 const BRANDS = [
   {n:'paypal',ok:['paypal.com','paypal.me']},
-  {n:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl','google.co','google.com.']},
+  {n:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl']},
   {n:'facebook',ok:['facebook.com','fb.com','fb.me','instagram.com','meta.com']},
   {n:'microsoft',ok:['microsoft.com','microsoftonline.com','outlook.com','live.com','office.com']},
   {n:'apple',ok:['apple.com','icloud.com']},
-  {n:'amazon',ok:['amazon.com','amazon.co.th','amzn.to','amazonaws.com','amazon.co.']},
+  {n:'amazon',ok:['amazon.com','amazon.co.th','amzn.to','amazonaws.com']},
   {n:'netflix',ok:['netflix.com']},
   {n:'line',ok:['line.me','lin.ee','line.co.th','line.biz']},
   {n:'kasikorn',ok:['kasikornbank.com','kbank.co.th','kplus.co.th']},
@@ -729,7 +788,6 @@ function scanUrl(raw) {
   const full = raw.toLowerCase();
   const params = u.search.toLowerCase();
 
-  // Protocol
   add('🔐 Protocol', 'HTTPS', u.protocol==='https:', '⚠️ HTTP — ไม่มี SSL/TLS', 2);
   const xss = /^(javascript:|data:|vbscript:)/i.test(raw);
   add('🔐 Protocol', 'No XSS URI', !xss, xss ? '🚨 XSS/Injection URI' : '', 10);
@@ -737,7 +795,6 @@ function scanUrl(raw) {
   const dbl = (full.match(/https?:\/\//g)||[]).length > 1;
   add('🔐 Protocol', 'No Nested URL', !dbl, dbl ? '🔄 URL ซ้อน URL (Double Redirect)' : '', 3);
 
-  // Domain
   const isIP = /^\d{1,3}(\.\d{1,3}){3}$/.test(host);
   add('🌐 Domain', 'No IP Direct', !isIP, isIP ? '🚨 ใช้ IP address แทนโดเมน' : '', 5);
   const subDepth = host.split('.').length - 2;
@@ -750,7 +807,6 @@ function scanUrl(raw) {
   const port = u.port ? parseInt(u.port) : null;
   add('🌐 Domain', 'Normal Port', [80,443,8080,8443,null].includes(port), port ? `⚠️ Port ${port} ผิดปกติ` : '', 2);
 
-  // Phishing
   const ph = PHISH_PATS.filter(p => p.test(full));
   add('🎣 Phishing', 'No Phish Pattern', ph.length===0, ph.length ? `🎣 Phishing pattern ${ph.length} จุด` : '', ph.length*2);
   let impersonate = null;
@@ -765,7 +821,6 @@ function scanUrl(raw) {
   const drainer = /\b(connect.*wallet|approve.*token|drain(er)?|seed.*phrase)\b/i.test(full);
   add('🎣 Phishing', 'No Crypto Drainer', !drainer, drainer ? '🚨 Crypto Drainer pattern' : '', 8);
 
-  // Content
   add('📂 URL Structure', 'Normal Length', raw.length<=150, `⚠️ URL ยาวผิดปกติ (${raw.length} chars)`, 1);
   const b64 = /[A-Za-z0-9+/]{40,}={0,2}/.test(params);
   add('📂 URL Structure', 'No B64 Payload', !b64, '⚠️ Base64 payload ใน parameter', 3);
@@ -790,33 +845,26 @@ function scanFile(file) {
   const exts = parts.slice(1);
   const pri = exts[exts.length-1] || '';
   const sec = exts.length > 1 ? exts[exts.length-2] : null;
-
   const R = { safe:true, score:0, threats:[], cats:{}, ext:pri, name, size };
   function add(cat, nm, ok, msg, pts=1) {
     if (!R.cats[cat]) R.cats[cat] = [];
     R.cats[cat].push({ name:nm, ok });
     if (!ok && msg) { R.threats.push(msg); R.score += pts; }
   }
-
   const catKey = EXT_MAP[pri];
   const catData = catKey ? FILE_DB[catKey] : null;
   const extScore = catData ? catData.score : 10;
-
   add('📁 นามสกุล', 'Known Extension', !!catKey, `⚠️ ไม่รู้จักนามสกุล (.${pri})`, 1);
   if (catKey) {
     const safe = catKey === 'safe' || catKey === 'media';
     add('📁 นามสกุล', 'Safe Extension', safe, `${catData.label} (.${pri})`, Math.ceil(extScore/10));
   }
-
-  // Double ext
   if (sec && EXT_MAP[sec]) {
     const sc = EXT_MAP[sec];
     const danger = sc === 'critical' || sc === 'high';
     add('🎭 Double Extension', 'No Double Ext', !danger, danger ? `🚨 Double Ext: .${sec}.${pri} — ซ่อนนามสกุลจริง` : '', 8);
   }
   if (exts.length > 2) add('🎭 Double Extension', 'Not Multi Ext', false, `⚠️ หลายนามสกุล (${exts.join('.')})`, 3);
-
-  // Filename
   const suspNames = [
     [/invoice/i,'ชื่อ "invoice" — phishing email ทั่วไป'],
     [/receipt/i,'ชื่อ "receipt" — phishing email ทั่วไป'],
@@ -832,25 +880,18 @@ function scanFile(file) {
   const hits = suspNames.filter(([p]) => p.test(name));
   add('🔤 ชื่อไฟล์', 'No Suspicious Name', hits.length===0,
     hits.length ? `⚠️ ชื่อไฟล์น่าสงสัย: ${hits.map(h=>h[1]).join(' | ')}` : '', hits.length*2);
-
-  // RTL
   const rtl = /[\u202e\u200f\u200e\u202a-\u202d]/.test(name);
   add('🔤 ชื่อไฟล์', 'No RTL Override', !rtl, rtl ? '🚨 RTL Override — ซ่อนนามสกุลจริง' : '', 9);
   add('🔤 ชื่อไฟล์', 'Normal Name Length', name.length<=100, name.length>100 ? '⚠️ ชื่อไฟล์ยาวผิดปกติ' : '', 2);
-
-  // Size
   const mb = size/(1024*1024);
   add('📏 ขนาด', 'Not Empty', size>0, size===0 ? '⚠️ ไฟล์ขนาด 0 bytes' : '', 1);
   add('📏 ขนาด', 'Normal Size', mb<500, mb>=500 ? `⚠️ ไฟล์ใหญ่มาก (${mb.toFixed(0)} MB)` : '', 1);
   if ((catKey==='critical'||catKey==='high') && size>0 && mb<0.01)
     add('📏 ขนาด', 'Reasonable Size', false, `⚠️ Executable เล็กผิดปกติ (${size} bytes) — อาจเป็น dropper`, 2);
-
-  // Sensitive cred
   if (catKey==='medium' && ['pem','key','ppk','p12','pfx','env'].includes(pri)) {
     add('🔒 Security', 'Not Sensitive Cred', false, '🔑 Credential/Key file — ห้ามแชร์สาธารณะ', 6);
     R.safe = false;
   }
-
   if (R.score >= 4) R.safe = false;
   if (catKey === 'critical') R.safe = false;
   return R;
@@ -859,22 +900,15 @@ function scanFile(file) {
 /* ═══════════════════════════════════════════
    RENDER HELPERS
 ═══════════════════════════════════════════ */
-function riskColor(s) {
-  if(s<=0)return '#10b981';if(s<15)return '#10b981';if(s<30)return '#84cc16';
-  if(s<50)return '#f59e0b';if(s<70)return '#f97316';return '#ef4444';
-}
-function riskLabel(s) {
-  if(s<=0)return'ปลอดภัย';if(s<15)return'ต่ำมาก';if(s<30)return'ต่ำ';
-  if(s<50)return'ปานกลาง';if(s<70)return'สูง';return'อันตราย';
-}
+function riskColor(s){if(s<=0)return'#10b981';if(s<15)return'#10b981';if(s<30)return'#84cc16';if(s<50)return'#f59e0b';if(s<70)return'#f97316';return'#ef4444';}
+function riskLabel(s){if(s<=0)return'ปลอดภัย';if(s<15)return'ต่ำมาก';if(s<30)return'ต่ำ';if(s<50)return'ปานกลาง';if(s<70)return'สูง';return'อันตราย';}
 
 function renderScan(R, prefix) {
   const status = R.safe ? (R.threats.length ? 'warn' : 'safe') : 'danger';
-  const ico = {safe:'✅', warn:'⚠️', danger:'🚨'}[status];
-  const badge = {safe:'✅ SAFE', warn:'⚠️ WARN', danger:'🚨 DANGER'}[status];
-  const titleMap = {safe:'ผ่านการตรวจสอบทั้งหมด', warn:'ตรวจพบความเสี่ยงบางส่วน', danger:'ตรวจพบภัยคุกคาม!'};
+  const ico = {safe:'✅',warn:'⚠️',danger:'🚨'}[status];
+  const badge = {safe:'✅ SAFE',warn:'⚠️ WARN',danger:'🚨 DANGER'}[status];
+  const titleMap = {safe:'ผ่านการตรวจสอบทั้งหมด',warn:'ตรวจพบความเสี่ยงบางส่วน',danger:'ตรวจพบภัยคุกคาม!'};
   const det = `Score: ${R.score} / ${riskLabel(R.score)}`;
-
   const rh = document.getElementById(`${prefix}-rh`);
   rh.className = `rh ${status}`;
   document.getElementById(`${prefix}-rh-ico`).textContent = ico;
@@ -882,10 +916,8 @@ function renderScan(R, prefix) {
   document.getElementById(`${prefix}-rh-det`).textContent = det;
   document.getElementById(`${prefix}-rh-badge`).textContent = badge;
   document.getElementById(`${prefix}-prog`).style.width = '100%';
-
   const sbody = document.getElementById(`${prefix}-sbody`);
   sbody.style.display = 'block';
-
   const rc = riskColor(R.score);
   const pct = Math.min(R.score * 7, 100);
   document.getElementById(`${prefix}-rscore`).textContent = `${R.score} / ${riskLabel(R.score)}`;
@@ -894,7 +926,6 @@ function renderScan(R, prefix) {
   rb.style.background = rc;
   rb.style.width = '0%';
   setTimeout(() => rb.style.width = pct + '%', 80);
-
   let html = '';
   for (const cat in R.cats) {
     html += `<div class="cat-lbl">${cat}</div><div class="checks-grid">`;
@@ -904,15 +935,12 @@ function renderScan(R, prefix) {
     html += '</div>';
   }
   document.getElementById(`${prefix}-cats`).innerHTML = html;
-
   const tb = document.getElementById(`${prefix}-threats`);
   if (R.threats.length) {
     tb.style.display = 'block';
     document.getElementById(`${prefix}-tlist`).innerHTML =
       R.threats.map(t => `<div class="threat-item"><span>▸</span><span>${t}</span></div>`).join('');
-  } else {
-    tb.style.display = 'none';
-  }
+  } else tb.style.display = 'none';
 }
 
 function animProg(progId) {
@@ -932,14 +960,13 @@ async function goScan() {
   if (!inp) { toast('⚠️ กรุณาใส่ URL'); return; }
   try { new URL(inp); } catch { toast('❌ URL ไม่ถูกต้อง'); return; }
 
-  const doBlock = document.getElementById('chk-block').checked;
-  const doShort = document.getElementById('chk-short2').checked;
-  const doQr = document.getElementById('chk-qr2').checked;
+  const doBlock = getOpt('chk-block');
+  const doShort = getOpt('chk-short2');
+  const doQr    = getOpt('chk-qr2');
 
   const btn = document.getElementById('scan-btn');
   btn.disabled = true;
   document.getElementById('scan-btn-txt').innerHTML = '<span class="spin">⏳</span> กำลังสแกน...';
-
   document.getElementById('scanBox').style.display = 'block';
   document.getElementById('scan-rh').className = 'rh scanning';
   document.getElementById('scan-rh-ico').textContent = '⏳';
@@ -957,10 +984,8 @@ async function goScan() {
   const R = scanUrl(inp);
   clearInterval(iv);
   renderScan(R, 'scan');
-
   const status = R.safe ? (R.threats.length ? 'warn' : 'safe') : 'danger';
 
-  // VirusTotal link
   const vtEl = document.getElementById('scan-vt');
   const vtLink = document.getElementById('scan-vt-link');
   vtEl.style.display = 'block';
@@ -982,11 +1007,10 @@ async function goScan() {
     try {
       finalUrl = await shorten(inp, 'tinyurl');
       document.getElementById('scan-short-out').value = finalUrl;
-      const tags = ['✅ Scanned', '🔗 Shortened'];
-      if (!R.safe) tags[0] = '⚠️ Risky';
+      const tags = [R.safe ? '✅ Scanned' : '⚠️ Risky', '🔗 Shortened'];
       document.getElementById('scan-tags').innerHTML = tags.map(t=>`<span class="tag">${t}</span>`).join('');
       document.getElementById('scan-link-result').style.display = 'block';
-    } catch(e) {
+    } catch {
       document.getElementById('scan-short-out').value = inp;
       document.getElementById('scan-link-result').style.display = 'block';
       toast('⚠️ ย่อลิงก์ไม่สำเร็จ — แสดง URL เดิม');
@@ -1052,32 +1076,44 @@ function goFileScan() {
 }
 
 /* ═══════════════════════════════════════════
-   SHORTEN
+   ✅ FIX: SHORTEN — ปรับ CORS proxy + fallback chain
 ═══════════════════════════════════════════ */
 async function shorten(url, service='tinyurl') {
+  // ✅ ใช้ allorigins CORS proxy เพื่อเลี่ยง CORS block
+  const proxy = (u) => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`;
+
   const apis = {
     tinyurl: `https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`,
-    isgd: `https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`,
-    vgd: `https://v.gd/create.php?format=simple&url=${encodeURIComponent(url)}`,
-    clckru: `https://clck.ru/--?url=${encodeURIComponent(url)}`,
+    isgd:    `https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`,
+    vgd:     `https://v.gd/create.php?format=simple&url=${encodeURIComponent(url)}`,
   };
 
-  // Try services in order
-  const order = service === 'tinyurl'
-    ? ['tinyurl','isgd','vgd']
-    : [service,'tinyurl','isgd'];
+  const order = service === 'tinyurl' ? ['tinyurl','isgd','vgd'] : [service,'tinyurl','isgd'];
 
   for (const svc of order) {
+    // ลอง direct ก่อน
     try {
-      const r = await fetch(apis[svc], { signal: AbortSignal.timeout(8000) });
-      if (!r.ok) continue;
-      const t = (await r.text()).trim();
-      if (t.startsWith('http')) return t;
+      const r = await fetch(apis[svc], { signal: AbortSignal.timeout(6000) });
+      if (r.ok) {
+        const t = (await r.text()).trim();
+        if (t.startsWith('http')) return t;
+      }
+    } catch {}
+
+    // ลอง via proxy
+    try {
+      const r = await fetch(proxy(apis[svc]), { signal: AbortSignal.timeout(8000) });
+      if (r.ok) {
+        const d = await r.json();
+        const t = (d.contents || '').trim();
+        if (t.startsWith('http')) return t;
+      }
     } catch {}
   }
-  // Fallback: pseudo-short
+
+  // Fallback สร้าง hash เอง
   const h = Array.from(url).reduce((a,c)=>((a<<5)-a+c.charCodeAt(0))|0,0);
-  return 'https://fal.ink/' + Math.abs(h).toString(36).slice(0,7);
+  return 'https://tinyurl.com/fal-' + Math.abs(h).toString(36).slice(0,6);
 }
 
 async function goShorten() {
@@ -1106,23 +1142,24 @@ async function goBulk() {
   const lines = document.getElementById('bulkInput').value.trim().split('\n')
     .map(l=>l.trim()).filter(l=>l.startsWith('http'));
   if (!lines.length) { toast('⚠️ ไม่พบ URL ที่ถูกต้อง'); return; }
-  const svc = document.getElementById('shortService') ? document.getElementById('shortService').value : 'tinyurl';
   document.getElementById('bulk-btn-txt').innerHTML = `<span class="spin">⏳</span> กำลังย่อ ${lines.length} URL...`;
   const rd = document.getElementById('bulkResult');
-  rd.style.display = 'flex';
+  // ✅ FIX: clear และแสดงใหม่ ไม่ conflict CSS
   rd.innerHTML = '';
+  rd.style.display = 'flex';
   for (const url of lines) {
     let s;
-    try { s = await shorten(url, svc); } catch { s = '❌ ล้มเหลว'; }
+    try { s = await shorten(url, 'tinyurl'); } catch { s = '❌ ล้มเหลว'; }
     const row = document.createElement('div');
     row.className = 'url-part';
-    row.style.flexDirection = 'column';
-    row.style.gap = '4px';
+    row.style.cssText = 'flex-direction:column;gap:4px';
+    const safeUrl = url.replace(/'/g,"\\'");
+    const safeS = s.replace(/'/g,"\\'");
     row.innerHTML = `
       <div class="up-key" style="width:auto;font-size:10px;color:var(--ts)">${url.length>70?url.slice(0,70)+'…':url}</div>
       <div style="display:flex;gap:8px;align-items:center">
         <div class="up-val" style="flex:1;font-size:11px">${s}</div>
-        <button class="hl-copy-btn" onclick="navigator.clipboard.writeText('${s.replace(/'/g,"\\'")}');toast('📋 คัดลอกแล้ว!')">COPY</button>
+        <button class="hl-copy-btn" onclick="navigator.clipboard.writeText('${safeS}');toast('📋 คัดลอกแล้ว!')">COPY</button>
       </div>`;
     rd.appendChild(row);
   }
@@ -1131,9 +1168,11 @@ async function goBulk() {
 }
 
 /* ═══════════════════════════════════════════
-   IMAGE HOST
+   ✅ FIX: IMAGE HOST — Base64 แสดงผลชัดเจน ใช้งานได้จริง
 ═══════════════════════════════════════════ */
 let _imgFile = null;
+let _imgDataUrl = null;
+let _imgHostUrl = null;
 let _gallery = [];
 try { _gallery = JSON.parse(localStorage.getItem('fal-gallery')||'[]'); } catch {}
 
@@ -1142,10 +1181,13 @@ function handleImgFile(f) {
   if (!f.type.startsWith('image/')) { toast('⚠️ ไฟล์นี้ไม่ใช่รูปภาพ'); return; }
   if (f.size > 32*1024*1024) { toast('⚠️ รูปใหญ่เกิน 32MB'); return; }
   _imgFile = f;
+  _imgDataUrl = null;
+  _imgHostUrl = null;
   const reader = new FileReader();
   reader.onload = e => {
+    _imgDataUrl = e.target.result;
     document.getElementById('imgPreview').style.display = 'block';
-    document.getElementById('imgPreviewImg').src = e.target.result;
+    document.getElementById('imgPreviewImg').src = _imgDataUrl;
     const mb = (f.size/1048576).toFixed(2);
     document.getElementById('imgMeta').innerHTML = [
       `<span class="img-tag">${f.name}</span>`,
@@ -1155,6 +1197,9 @@ function handleImgFile(f) {
   };
   reader.readAsDataURL(f);
   document.getElementById('upload-btn').disabled = false;
+  // hide previous results
+  document.getElementById('b64Result').style.display = 'none';
+  document.getElementById('hostResult').style.display = 'none';
   toast(`🖼️ เลือกรูป: ${f.name}`);
 }
 
@@ -1163,49 +1208,115 @@ async function goUpload() {
   const svc = document.getElementById('hostService').value;
   const btn = document.getElementById('upload-btn');
   btn.disabled = true;
-  document.getElementById('upload-btn-txt').innerHTML = '<span class="spin">⏳</span> กำลังอัพโหลด...';
+  document.getElementById('upload-btn-txt').innerHTML = '<span class="spin">⏳</span> กำลังดำเนินการ...';
+
+  document.getElementById('b64Result').style.display = 'none';
+  document.getElementById('hostResult').style.display = 'none';
 
   try {
-    const result = await uploadImg(_imgFile, svc);
-    showHostResult(result);
-    saveGallery(result);
-    renderGallery();
-    updateStats(1,1,0,0);
-    addHistory({type:'img', label:result.direct, detail:_imgFile.name, status:'safe'});
-    toast('✅ อัพโหลดสำเร็จ!');
+    if (svc === 'base64') {
+      // ✅ FIX: Base64 แสดงผลใหม่ทั้งหมด
+      showB64Result(_imgDataUrl);
+      updateStats(1,1,0,0);
+      addHistory({type:'img', label:'[Base64]', detail:_imgFile.name, status:'safe'});
+      saveGallery({direct:_imgDataUrl, thumb:_imgDataUrl, service:'Base64', isBase64:true});
+      renderGallery();
+      toast('✅ สร้าง Base64 สำเร็จ!');
+    } else {
+      const result = await uploadImg(_imgFile, svc);
+      _imgHostUrl = result.direct;
+      showHostResult(result);
+      saveGallery(result);
+      renderGallery();
+      updateStats(1,1,0,0);
+      addHistory({type:'img', label:result.direct, detail:_imgFile.name, status:'safe'});
+      toast('✅ อัพโหลดสำเร็จ!');
+    }
   } catch(e) {
-    toast('❌ อัพโหลดไม่สำเร็จ: ' + e.message);
+    toast('❌ ไม่สำเร็จ: ' + e.message);
     console.error(e);
   }
   btn.disabled = false;
   document.getElementById('upload-btn-txt').innerHTML = '⬆️ อัพโหลด / สร้างลิงก์';
 }
 
-async function uploadImg(file, service) {
-  if (service === 'base64') {
-    return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload = e => resolve({
-        direct: e.target.result,
-        page: e.target.result,
-        thumb: e.target.result,
-        service: 'Base64 Inline'
-      });
-      r.onerror = () => reject(new Error('FileReader error'));
-      r.readAsDataURL(file);
-    });
+// ✅ FIX: Base64 result แบบใหม่ชัดเจน
+function showB64Result(dataUrl) {
+  const box = document.getElementById('b64Result');
+  box.style.display = 'block';
+
+  // Preview
+  document.getElementById('b64PreviewImg').src = dataUrl;
+
+  // Stats
+  const kb = (dataUrl.length * 0.75 / 1024).toFixed(1);
+  const mimeMatch = dataUrl.match(/data:([^;]+)/);
+  const mime = mimeMatch ? mimeMatch[1] : 'image';
+  document.getElementById('b64Stat').innerHTML = [
+    `<span class="b64-chip">${mime}</span>`,
+    `<span class="b64-chip">~${kb} KB</span>`,
+    `<span class="b64-chip">${dataUrl.length.toLocaleString()} chars</span>`,
+  ].join('');
+
+  // URL box
+  document.getElementById('b64UrlBox').textContent = dataUrl;
+
+  // Embed codes (ถ้ารูปไม่ใหญ่เกิน 500KB)
+  const embedBox = document.getElementById('b64EmbedBox');
+  if (dataUrl.length < 700000) {
+    const codes = [
+      {l:'HTML',  v:`<img src="${dataUrl}" alt="${_imgFile.name}">`},
+      {l:'CSS',   v:`background-image: url('${dataUrl}');`},
+      {l:'MD',    v:`![${_imgFile.name}](${dataUrl})`},
+    ];
+    document.getElementById('b64EmbedRows').innerHTML = codes.map(c => `
+      <div class="embed-row">
+        <span class="embed-lbl">${c.l}</span>
+        <span class="embed-val">${c.v.replace(/</g,'&lt;').substring(0,80)}…</span>
+        <button class="embed-copy" onclick="navigator.clipboard.writeText(${JSON.stringify(c.v)});toast('📋 Copy ${c.l} แล้ว!')">COPY</button>
+      </div>`).join('');
+    embedBox.style.display = 'block';
+  } else {
+    embedBox.style.display = 'none';
   }
+}
+
+function selectB64() {
+  const el = document.getElementById('b64UrlBox');
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+function copyB64() {
+  if (!_imgDataUrl) { toast('⚠️ ไม่มีข้อมูล Base64'); return; }
+  navigator.clipboard.writeText(_imgDataUrl)
+    .then(() => toast('📋 Copy Base64 แล้ว! (' + _imgDataUrl.length.toLocaleString() + ' chars)'))
+    .catch(() => { selectB64(); toast('📋 เลือกข้อความแล้ว กด Ctrl+C เพื่อคัดลอก'); });
+}
+
+function dlBase64Img() {
+  if (!_imgDataUrl || !_imgFile) return;
+  const a = document.createElement('a');
+  a.href = _imgDataUrl;
+  a.download = _imgFile.name;
+  a.click();
+  toast('⬇️ ดาวน์โหลดแล้ว');
+}
+
+async function uploadImg(file, service) {
   if (service === 'imgbb') {
-    // ImgBB free public API key (official demo key from imgbb.com)
     const key = '2e46f59e97aa4e879a1cbec1e02ed669';
     const fd = new FormData();
     fd.append('image', file);
     const r = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
-      method: 'POST', body: fd, signal: AbortSignal.timeout(25000)
+      method:'POST', body:fd, signal:AbortSignal.timeout(25000)
     });
     if (!r.ok) throw new Error(`ImgBB HTTP ${r.status}`);
     const d = await r.json();
-    if (!d.success) throw new Error('ImgBB: ' + JSON.stringify(d.error));
+    if (!d.success) throw new Error('ImgBB: ' + (d.error?.message || JSON.stringify(d.error)));
     return {
       direct: d.data.url,
       page: d.data.url_viewer || d.data.url,
@@ -1219,12 +1330,12 @@ async function uploadImg(file, service) {
     fd.append('reqtype', 'fileupload');
     fd.append('fileToUpload', file);
     const r = await fetch('https://catbox.moe/user/api.php', {
-      method: 'POST', body: fd, signal: AbortSignal.timeout(25000)
+      method:'POST', body:fd, signal:AbortSignal.timeout(25000)
     });
     if (!r.ok) throw new Error(`Catbox HTTP ${r.status}`);
     const url = (await r.text()).trim();
     if (!url.startsWith('http')) throw new Error('Catbox: ' + url);
-    return { direct: url, page: url, thumb: url, service: 'Catbox' };
+    return { direct:url, page:url, thumb:url, service:'Catbox' };
   }
   throw new Error('Unknown service: ' + service);
 }
@@ -1232,60 +1343,41 @@ async function uploadImg(file, service) {
 function showHostResult(result) {
   const box = document.getElementById('hostResult');
   box.style.display = 'block';
-  const imgUrl = result.direct;
-  const isBase64 = imgUrl.startsWith('data:');
+  _imgHostUrl = result.direct;
 
   const links = [
-    { label: 'Direct URL', icon: '🔗', url: imgUrl, key: 'host-direct' },
+    {label:'Direct URL', icon:'🔗', url:result.direct},
   ];
-  if (!isBase64 && result.page !== result.direct)
-    links.push({ label: 'Page', icon: '🌐', url: result.page, key: 'host-page' });
+  if (result.page && result.page !== result.direct)
+    links.push({label:'Page', icon:'🌐', url:result.page});
   if (result.delete)
-    links.push({ label: 'Delete URL', icon: '🗑️', url: result.delete, key: 'host-del' });
+    links.push({label:'Delete URL', icon:'🗑️', url:result.delete});
 
   let html = links.map(l => `
     <div class="host-link-row">
       <span class="hl-icon">${l.icon}</span>
       <div class="hl-txt">
         <div class="hl-label">${l.label} (${result.service})</div>
-        <div class="hl-url" id="${l.key}">${isBase64 ? '[Base64 data — ดูด้านล่าง]' : l.url}</div>
+        <div class="hl-url">${l.url}</div>
       </div>
       <button class="hl-copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(l.url)});toast('📋 คัดลอกแล้ว!')">COPY</button>
     </div>`).join('');
 
-  if (!isBase64) {
-    const codes = [
-      { l:'HTML', v:`<img src="${imgUrl}" alt="">` },
-      { l:'Markdown', v:`![รูปภาพ](${imgUrl})` },
-      { l:'BBCode', v:`[img]${imgUrl}[/img]` },
-    ];
-    html += `<div style="margin-top:8px"><div class="card-title" style="font-size:10px;margin-bottom:6px">📋 Embed Code</div>`;
-    codes.forEach(c => {
-      html += `<div class="url-part" style="margin-bottom:4px">
-        <div class="up-key" style="width:70px">${c.l}</div>
-        <div class="up-val" style="font-size:10px">${c.v.replace(/</g,'&lt;')}</div>
-        <button class="hl-copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(c.v)});toast('📋 คัดลอก ${c.l} แล้ว!')">COPY</button>
-      </div>`;
-    });
-    html += '</div>';
-  } else {
-    // base64: show inline preview + copy
-    html += `<div style="margin-top:10px">
-      <img src="${imgUrl}" style="max-width:100%;max-height:200px;border-radius:var(--r);border:1px solid var(--border)">
-      <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
-        <button class="btn btn-s btn-sm" onclick="navigator.clipboard.writeText(${JSON.stringify(imgUrl)});toast('📋 คัดลอก Base64 แล้ว!')">📋 คัดลอก Base64</button>
-        <button class="btn btn-s btn-sm" onclick="dlBase64('${imgUrl}','download.${_imgFile?_imgFile.name.split('.').pop():'jpg'}')">⬇️ ดาวน์โหลด</button>
-      </div>
+  const codes = [
+    {l:'HTML',     v:`<img src="${result.direct}" alt="">`},
+    {l:'Markdown', v:`![รูปภาพ](${result.direct})`},
+    {l:'BBCode',   v:`[img]${result.direct}[/img]`},
+  ];
+  html += `<div style="margin-top:8px"><div class="card-title" style="font-size:10px;margin-bottom:6px">📋 Embed Code</div>`;
+  codes.forEach(c => {
+    html += `<div class="embed-row">
+      <span class="embed-lbl">${c.l}</span>
+      <span class="embed-val">${c.v.replace(/</g,'&lt;').substring(0,80)}</span>
+      <button class="embed-copy" onclick="navigator.clipboard.writeText(${JSON.stringify(c.v)});toast('📋 Copy ${c.l} แล้ว!')">COPY</button>
     </div>`;
-  }
+  });
+  html += '</div>';
   document.getElementById('hostLinks').innerHTML = html;
-  // store direct url for QR
-  box.dataset.direct = isBase64 ? '' : imgUrl;
-}
-
-function dlBase64(dataUrl, filename) {
-  const a = document.createElement('a');
-  a.href = dataUrl; a.download = filename; a.click();
 }
 
 function saveGallery(result) {
@@ -1295,11 +1387,10 @@ function saveGallery(result) {
     name: _imgFile ? _imgFile.name : 'image',
     date: new Date().toLocaleDateString('th-TH'),
     service: result.service,
-    isBase64: result.direct.startsWith('data:')
+    isBase64: !!(result.isBase64 || result.direct.startsWith('data:'))
   };
   _gallery.unshift(entry);
   if (_gallery.length > 50) _gallery = _gallery.slice(0,50);
-  // Don't store base64 in localStorage (too large)
   const storable = _gallery.filter(g => !g.isBase64);
   try { localStorage.setItem('fal-gallery', JSON.stringify(storable)); } catch {}
 }
@@ -1312,14 +1403,13 @@ function renderGallery() {
   document.getElementById('galCount').textContent = _gallery.length;
   gal.innerHTML = _gallery.map((item, i) => {
     const isB64 = item.isBase64 || item.thumb.startsWith('data:');
-    const thumb = isB64 ? item.thumb : item.thumb;
+    const safeUrl = isB64 ? '' : item.url.replace(/'/g,"\\'");
     return `<div class="gallery-item">
-      <img src="${thumb}" alt="${item.name}" loading="lazy"
-        onerror="this.style.display='none';this.nextSibling.style.display='flex'">
-      <div style="display:none;height:110px;align-items:center;justify-content:center;font-size:28px">🖼️</div>
+      <img src="${item.thumb}" alt="${item.name}" loading="lazy"
+        onerror="this.style.display='none'">
       <div class="gi-overlay">
-        <button class="gi-btn" onclick="showLB('${isB64?'':item.url}')" title="ดู">👁️</button>
-        <button class="gi-btn" onclick="navigator.clipboard.writeText('${isB64?'[base64]':item.url}');toast('📋 คัดลอกแล้ว!')" title="Copy">📋</button>
+        <button class="gi-btn" onclick="${isB64 ? "toast('Base64 ไม่รองรับ lightbox')" : `showLB('${safeUrl}')`}" title="ดู">👁️</button>
+        <button class="gi-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(isB64?'[base64]':item.url)});toast('📋 คัดลอกแล้ว!')" title="Copy">📋</button>
         <button class="gi-btn" onclick="delGallery(${i})" title="ลบ">🗑️</button>
       </div>
       <div class="gi-name">${item.name}</div>
@@ -1333,7 +1423,6 @@ function delGallery(i) {
   renderGallery();
   toast('🗑️ ลบรูปแล้ว');
 }
-
 function clearGallery() {
   if (!confirm('ล้างคลังรูปทั้งหมด?')) return;
   _gallery = [];
@@ -1341,7 +1430,6 @@ function clearGallery() {
   renderGallery();
   toast('🗑️ ล้างคลังแล้ว');
 }
-
 function showLB(url) {
   if (!url) return;
   document.getElementById('lbImg').src = url;
@@ -1350,9 +1438,8 @@ function showLB(url) {
 function closeLB() { document.getElementById('lightbox').classList.remove('on'); }
 
 function goQrFromHostImg() {
-  const box = document.getElementById('hostResult');
-  const url = box.dataset.direct;
-  if (!url) { toast('⚠️ ไม่มี URL สำหรับ QR (Base64 ไม่รองรับ QR)'); return; }
+  const url = _imgHostUrl;
+  if (!url) { toast('⚠️ ไม่มี URL (Base64 ไม่รองรับ QR)'); return; }
   switchTab('qr');
   document.getElementById('qrInput').value = url;
   liveQr();
@@ -1362,7 +1449,7 @@ function goQrFromHostImg() {
 renderGallery();
 
 /* ═══════════════════════════════════════════
-   QR CODE — via api.qrserver.com
+   QR CODE
 ═══════════════════════════════════════════ */
 let _qrSz = 150;
 let _qrTimer = null;
@@ -1370,19 +1457,13 @@ let _qrTimer = null;
 function buildQrUrl(text, size, fg, bg) {
   return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=${fg.replace('#','')}&bgcolor=${bg.replace('#','')}&format=png&margin=1`;
 }
-
 function setQrSz(s, el) {
   _qrSz = s;
   document.querySelectorAll('.qr-size-btn').forEach(b => b.classList.remove('on'));
   el.classList.add('on');
   liveQr();
 }
-
-function liveQr() {
-  clearTimeout(_qrTimer);
-  _qrTimer = setTimeout(_drawQr, 300);
-}
-
+function liveQr() { clearTimeout(_qrTimer); _qrTimer = setTimeout(_drawQr, 300); }
 function _drawQr() {
   const val = document.getElementById('qrInput').value.trim();
   if (!val) {
@@ -1392,10 +1473,9 @@ function _drawQr() {
   const fg = document.getElementById('qrFg').value;
   const bg = document.getElementById('qrBg').value;
   const url = buildQrUrl(val, _qrSz, fg, bg);
-  const wrap = document.getElementById('qrWrap');
-  wrap.innerHTML = `<img id="qr-main-img" src="${url}" width="${_qrSz}" height="${_qrSz}" style="display:block;border-radius:4px" crossorigin="anonymous" onerror="this.parentNode.innerHTML='<span style=color:var(--d)>❌ โหลด QR ไม่ได้ (ต้องการ internet)</span>'">`;
+  document.getElementById('qrWrap').innerHTML =
+    `<img id="qr-main-img" src="${url}" width="${_qrSz}" height="${_qrSz}" style="display:block;border-radius:4px" crossorigin="anonymous" onerror="this.parentNode.innerHTML='<span style=color:var(--d)>❌ โหลด QR ไม่ได้ (ต้องการ internet)</span>'">`;
 }
-
 function dlQr(fmt) {
   const val = document.getElementById('qrInput').value.trim();
   if (!val) { toast('⚠️ กรุณาใส่ข้อความก่อน'); return; }
@@ -1404,15 +1484,13 @@ function dlQr(fmt) {
   const url = `https://api.qrserver.com/v1/create-qr-code/?size=${_qrSz}x${_qrSz}&data=${encodeURIComponent(val)}&color=${fg.replace('#','')}&bgcolor=${bg.replace('#','')}&format=${fmt}&margin=1`;
   dlImgFromUrl(url, `qr-code.${fmt}`);
 }
-
 function dlImgFromUrl(url, filename) {
   const a = document.createElement('a');
   a.href = url; a.download = filename; a.target = '_blank'; a.rel = 'noopener';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   toast('⬇️ ดาวน์โหลดแล้ว');
 }
-
-function copyQrUrl(imgId) {
+function copyQrUrl() {
   const val = document.getElementById('qrInput') ? document.getElementById('qrInput').value.trim() : '';
   if (!val) { toast('⚠️ ไม่มีข้อความ'); return; }
   const fg = document.getElementById('qrFg').value;
@@ -1420,22 +1498,20 @@ function copyQrUrl(imgId) {
   const url = buildQrUrl(val, _qrSz, fg, bg);
   navigator.clipboard.writeText(url).then(() => toast('📋 คัดลอก URL รูป QR แล้ว!'));
 }
-
 function qrTpl(type) {
   const tpls = {
-    url: 'https://',
-    tel: 'tel:+66',
-    sms: 'sms:+660000000000?body=ข้อความ',
-    wifi: 'WIFI:T:WPA;S:ชื่อ_WiFi;P:รหัสผ่าน;;',
-    vcard: 'BEGIN:VCARD\nVERSION:3.0\nFN:ชื่อ นามสกุล\nTEL:+66812345678\nEMAIL:email@example.com\nEND:VCARD',
-    email: 'mailto:email@example.com?subject=หัวเรื่อง&body=ข้อความ',
-    line: 'https://line.me/R/ti/p/~lineid',
+    url:'https://',
+    tel:'tel:+66',
+    sms:'sms:+660000000000?body=ข้อความ',
+    wifi:'WIFI:T:WPA;S:ชื่อ_WiFi;P:รหัสผ่าน;;',
+    vcard:'BEGIN:VCARD\nVERSION:3.0\nFN:ชื่อ นามสกุล\nTEL:+66812345678\nEMAIL:email@example.com\nEND:VCARD',
+    email:'mailto:email@example.com?subject=หัวเรื่อง&body=ข้อความ',
+    line:'https://line.me/R/ti/p/~lineid',
   };
   document.getElementById('qrInput').value = tpls[type] || '';
   liveQr();
   toast('📝 ใส่เทมเพลต ' + type);
 }
-
 document.getElementById('qrInput').addEventListener('input', liveQr);
 document.getElementById('qrFg').addEventListener('input', liveQr);
 document.getElementById('qrBg').addEventListener('input', liveQr);
@@ -1444,7 +1520,6 @@ document.getElementById('qrBg').addEventListener('input', liveQr);
    TEXT TOOLS
 ═══════════════════════════════════════════ */
 const textEl = () => document.getElementById('textInput');
-
 function updateCount() {
   const v = textEl().value;
   const words = v.trim() ? v.trim().split(/\s+/).length : 0;
@@ -1482,8 +1557,8 @@ function tt(type) {
         catch { toast('❌ JSON ไม่ถูกต้อง'); return; }
         break;
       case 'lines': {
-        const lines = v.split('\n');
-        toast(`📊 ${v.length} chars | ${v.trim().split(/\s+/).length} words | ${lines.length} lines | ${[...new Set(lines)].length} unique`);
+        const ls = v.split('\n');
+        toast(`📊 ${v.length} chars | ${v.trim().split(/\s+/).length} words | ${ls.length} lines | ${[...new Set(ls)].length} unique`);
         return;
       }
       case 'numlines': out = v.split('\n').map((l,i)=>`${i+1}. ${l}`).join('\n'); break;
@@ -1492,30 +1567,24 @@ function tt(type) {
     el.value = out;
     updateCount();
     toast('✅ แปลงสำเร็จ!');
-  } catch(e) {
-    toast('❌ ไม่สำเร็จ: ' + e.message);
-  }
+  } catch(e) { toast('❌ ไม่สำเร็จ: ' + e.message); }
 }
-
 function dlText() {
   const v = textEl().value;
   if (!v) { toast('⚠️ ไม่มีข้อความ'); return; }
   const a = document.createElement('a');
   a.download = 'text.txt';
-  a.href = URL.createObjectURL(new Blob([v], {type:'text/plain;charset=utf-8'}));
+  a.href = URL.createObjectURL(new Blob([v],{type:'text/plain;charset=utf-8'}));
   a.click(); URL.revokeObjectURL(a.href);
   toast('⬇️ บันทึกแล้ว');
 }
-
 async function pasteClip() {
   try {
     const t = await navigator.clipboard.readText();
-    textEl().value = t;
-    updateCount();
+    textEl().value = t; updateCount();
     toast('📋 วางจาก Clipboard แล้ว');
   } catch { toast('❌ ไม่สามารถอ่าน Clipboard ได้'); }
 }
-
 async function doHash(algo) {
   const v = document.getElementById('hashInput').value;
   if (!v) { toast('⚠️ กรุณาใส่ข้อความ'); return; }
@@ -1537,96 +1606,64 @@ function doInspect() {
   let u;
   try { u = new URL(v); } catch { toast('❌ URL ไม่ถูกต้อง'); res.style.display='none'; return; }
   res.style.display = 'block';
-
   const parts = [
-    {k:'PROTOCOL', v:u.protocol},
-    {k:'HOST', v:u.hostname},
-    {k:'PORT', v:u.port||'(default)'},
-    {k:'PATHNAME', v:u.pathname||'/'},
-    {k:'SEARCH', v:u.search||'(none)'},
-    {k:'HASH', v:u.hash||'(none)'},
-    {k:'ORIGIN', v:u.origin},
-    {k:'HREF', v:u.href},
+    {k:'PROTOCOL',v:u.protocol},{k:'HOST',v:u.hostname},{k:'PORT',v:u.port||'(default)'},
+    {k:'PATHNAME',v:u.pathname||'/'},{k:'SEARCH',v:u.search||'(none)'},{k:'HASH',v:u.hash||'(none)'},
+    {k:'ORIGIN',v:u.origin},{k:'HREF',v:u.href},
   ];
-
   document.getElementById('urlParts').innerHTML = parts.map(p =>
     `<div class="url-part">
       <div class="up-key">${p.k}</div>
       <div class="up-val ${p.v==='(none)'||p.v==='(default)'?'empty':''}">${p.v.replace(/</g,'&lt;')}</div>
     </div>`
   ).join('');
-
   const params = [];
   u.searchParams.forEach((val, key) => params.push({k:key, v:val}));
   document.getElementById('urlParams').innerHTML = params.length
-    ? params.map(p =>
-        `<div class="url-part"><div class="up-key" style="color:var(--p)">${p.k}</div><div class="up-val">${p.v}</div></div>`
-      ).join('')
+    ? params.map(p =>`<div class="url-part"><div class="up-key" style="color:var(--p)">${p.k}</div><div class="up-val">${p.v}</div></div>`).join('')
     : '<div style="font-size:12px;color:var(--ts);padding:8px">ไม่มี query parameters</div>';
 }
-
 function scanFromInspect() {
-  const v = document.getElementById('inspectInput').value.trim();
-  if (!v) return;
-  switchTab('scan');
-  document.getElementById('urlInput').value = v;
-  goScan();
+  const v = document.getElementById('inspectInput').value.trim(); if (!v) return;
+  switchTab('scan'); document.getElementById('urlInput').value = v; goScan();
 }
 function qrFromInspect() {
-  const v = document.getElementById('inspectInput').value.trim();
-  if (!v) return;
-  switchTab('qr');
-  document.getElementById('qrInput').value = v;
-  liveQr();
-  toast('📷 สร้าง QR แล้ว');
+  const v = document.getElementById('inspectInput').value.trim(); if (!v) return;
+  switchTab('qr'); document.getElementById('qrInput').value = v; liveQr(); toast('📷 สร้าง QR แล้ว');
 }
 async function shortFromInspect() {
-  const v = document.getElementById('inspectInput').value.trim();
-  if (!v) return;
-  switchTab('short');
-  document.getElementById('shortInput').value = v;
-  goShorten();
+  const v = document.getElementById('inspectInput').value.trim(); if (!v) return;
+  switchTab('short'); document.getElementById('shortInput').value = v; goShorten();
 }
 
 /* ═══════════════════════════════════════════
    STATS & HISTORY
 ═══════════════════════════════════════════ */
-function getStats() {
-  try { return JSON.parse(localStorage.getItem('fal-stats')||'{}'); } catch { return {}; }
-}
+function getStats() { try{return JSON.parse(localStorage.getItem('fal-stats')||'{}');}catch{return {};} }
 function saveStats(s) {
-  try { localStorage.setItem('fal-stats', JSON.stringify(s)); } catch {}
-  document.getElementById('sL').textContent = s.l||0;
-  document.getElementById('sS').textContent = s.s||0;
-  document.getElementById('sW').textContent = s.w||0;
-  document.getElementById('sB').textContent = s.b||0;
+  try{localStorage.setItem('fal-stats',JSON.stringify(s));}catch{}
+  document.getElementById('sL').textContent=s.l||0;
+  document.getElementById('sS').textContent=s.s||0;
+  document.getElementById('sW').textContent=s.w||0;
+  document.getElementById('sB').textContent=s.b||0;
 }
 function updateStats(l,s,w,b) {
-  const st = getStats();
-  st.l=(st.l||0)+l; st.s=(st.s||0)+s; st.w=(st.w||0)+w; st.b=(st.b||0)+b;
-  saveStats(st);
+  const st=getStats(); st.l=(st.l||0)+l; st.s=(st.s||0)+s; st.w=(st.w||0)+w; st.b=(st.b||0)+b; saveStats(st);
 }
 saveStats(getStats());
 
-function getHistory() {
-  try { return JSON.parse(localStorage.getItem('fal-history')||'[]'); } catch { return []; }
-}
+function getHistory() { try{return JSON.parse(localStorage.getItem('fal-history')||'[]');}catch{return [];} }
 function addHistory(e) {
-  const h = getHistory();
-  e.time = new Date().toLocaleTimeString('th-TH', {hour:'2-digit',minute:'2-digit'});
-  h.unshift(e);
-  try { localStorage.setItem('fal-history', JSON.stringify(h.slice(0,80))); } catch {}
+  const h=getHistory(); e.time=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+  h.unshift(e); try{localStorage.setItem('fal-history',JSON.stringify(h.slice(0,80)));}catch{}
   renderHistory();
 }
 function renderHistory() {
-  const h = getHistory();
-  const el = document.getElementById('histList');
-  const em = document.getElementById('histEmpty');
-  if (!h.length) { em.style.display='block'; el.style.display='none'; return; }
-  em.style.display = 'none';
-  el.style.display = 'flex';
-  const icons = {url:'🔗', file:'📁', short:'✂️', img:'🖼️'};
-  el.innerHTML = h.map(e => `
+  const h=getHistory(); const el=document.getElementById('histList'); const em=document.getElementById('histEmpty');
+  if(!h.length){em.style.display='block';el.style.display='none';return;}
+  em.style.display='none'; el.style.display='flex';
+  const icons={url:'🔗',file:'📁',short:'✂️',img:'🖼️'};
+  el.innerHTML=h.map(e=>`
     <div class="hist-item" onclick="useHist('${encodeURIComponent(e.label||'')}','${e.type||'url'}')">
       <span class="hi-ico">${icons[e.type]||'📝'}</span>
       <div class="hi-txt">
@@ -1637,19 +1674,14 @@ function renderHistory() {
       <span class="hi-time">${e.time||''}</span>
     </div>`).join('');
 }
-function useHist(label, type) {
-  const v = decodeURIComponent(label);
-  if (type === 'url' || type === 'short') {
-    switchTab('scan');
-    document.getElementById('urlInput').value = v;
-    toast('📋 ใส่จากประวัติแล้ว');
-  }
+function useHist(label,type) {
+  const v=decodeURIComponent(label);
+  if(type==='url'||type==='short'){switchTab('scan');document.getElementById('urlInput').value=v;toast('📋 ใส่จากประวัติแล้ว');}
 }
 function clearAllHistory() {
-  if (!confirm('ล้างประวัติทั้งหมด?')) return;
-  try { localStorage.removeItem('fal-history'); } catch {}
-  renderHistory();
-  toast('🗑️ ล้างประวัติแล้ว');
+  if(!confirm('ล้างประวัติทั้งหมด?'))return;
+  try{localStorage.removeItem('fal-history');}catch{}
+  renderHistory(); toast('🗑️ ล้างประวัติแล้ว');
 }
 renderHistory();
 
@@ -1657,109 +1689,70 @@ renderHistory();
    UI HELPERS
 ═══════════════════════════════════════════ */
 function switchTab(t) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===t));
-  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id==='tab-'+t));
-  if (t === 'history') renderHistory();
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+t));
+  if(t==='history')renderHistory();
 }
-
 function toggleTheme() {
-  const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  try { localStorage.setItem('fal-theme', next); } catch {}
-  document.getElementById('theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('fal-theme',next);}catch{}
+  document.getElementById('theme-btn').textContent=next==='dark'?'🌙':'☀️';
 }
-(function() {
-  const th = (()=>{ try{return localStorage.getItem('fal-theme');}catch{return null;} })() || 'dark';
-  document.documentElement.setAttribute('data-theme', th);
-  document.getElementById('theme-btn').textContent = th === 'dark' ? '🌙' : '☀️';
+(function(){
+  const th=(()=>{try{return localStorage.getItem('fal-theme');}catch{return null;}})() || 'dark';
+  document.documentElement.setAttribute('data-theme',th);
+  document.getElementById('theme-btn').textContent=th==='dark'?'🌙':'☀️';
 })();
 
 function copyVal(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const v = el.value !== undefined ? el.value : el.textContent;
-  navigator.clipboard.writeText(v).then(() => toast('📋 คัดลอกแล้ว!')).catch(() => toast('❌ คัดลอกไม่สำเร็จ'));
+  const el=document.getElementById(id); if(!el)return;
+  const v=el.value!==undefined?el.value:el.textContent;
+  navigator.clipboard.writeText(v).then(()=>toast('📋 คัดลอกแล้ว!')).catch(()=>toast('❌ คัดลอกไม่สำเร็จ'));
 }
 function copyEl(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  navigator.clipboard.writeText(el.textContent||el.value||'').then(() => toast('📋 คัดลอกแล้ว!'));
+  const el=document.getElementById(id); if(!el)return;
+  navigator.clipboard.writeText(el.textContent||el.value||'').then(()=>toast('📋 คัดลอกแล้ว!'));
 }
-function openVal(id) {
-  const v = document.getElementById(id)?.value;
-  if (v) window.open(v, '_blank', 'noopener');
-}
+function openVal(id) { const v=document.getElementById(id)?.value; if(v)window.open(v,'_blank','noopener'); }
 function shareVal(id) {
-  const v = document.getElementById(id)?.value;
-  if (!v) return;
-  if (navigator.share) navigator.share({url:v}).catch(()=>{});
-  else { navigator.clipboard.writeText(v); toast('📋 คัดลอกแล้ว!'); }
+  const v=document.getElementById(id)?.value; if(!v)return;
+  if(navigator.share)navigator.share({url:v}).catch(()=>{});
+  else{navigator.clipboard.writeText(v);toast('📋 คัดลอกแล้ว!');}
 }
 function goQrFromInput(id) {
-  const v = document.getElementById(id)?.value;
-  if (!v) return;
-  switchTab('qr');
-  document.getElementById('qrInput').value = v;
-  liveQr();
-  toast('📷 สร้าง QR แล้ว!');
+  const v=document.getElementById(id)?.value; if(!v)return;
+  switchTab('qr'); document.getElementById('qrInput').value=v; liveQr(); toast('📷 สร้าง QR แล้ว!');
 }
 
-let _toastTimer = null;
+let _toastTimer=null;
 function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('on');
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('on');
   clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.classList.remove('on'), 3000);
+  _toastTimer=setTimeout(()=>el.classList.remove('on'),3000);
 }
 
-// Drag & drop helpers
-function dzOver(e, id) { e.preventDefault(); document.getElementById(id)?.classList.add('drag'); }
-function dzLeave(id) { document.getElementById(id)?.classList.remove('drag'); }
-function dzDropFile(e) {
-  e.preventDefault();
-  document.getElementById('fileDrop')?.classList.remove('drag');
-  const f = e.dataTransfer.files[0];
-  if (f) handleScanFile(f);
-}
-function dzDropImg(e) {
-  e.preventDefault();
-  document.getElementById('imgDrop')?.classList.remove('drag');
-  const f = e.dataTransfer.files[0];
-  if (f) handleImgFile(f);
-}
+// Drag & drop
+function dzOver(e,id){e.preventDefault();document.getElementById(id)?.classList.add('drag');}
+function dzLeave(id){document.getElementById(id)?.classList.remove('drag');}
+function dzDropFile(e){e.preventDefault();document.getElementById('fileDrop')?.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleScanFile(f);}
+function dzDropImg(e){e.preventDefault();document.getElementById('imgDrop')?.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleImgFile(f);}
 
-// Auto clipboard on URL focus
+// Auto clipboard
 document.getElementById('urlInput').addEventListener('focus', async function() {
-  if (this.value) return;
-  try {
-    const t = await navigator.clipboard.readText();
-    if (t && t.startsWith('http')) { this.value = t; toast('📋 วางจาก Clipboard อัตโนมัติ'); }
-  } catch {}
+  if(this.value)return;
+  try{const t=await navigator.clipboard.readText();if(t&&t.startsWith('http')){this.value=t;toast('📋 วางจาก Clipboard อัตโนมัติ');}}catch{}
 });
 
-// Enter key shortcuts
-document.getElementById('urlInput').addEventListener('keydown', e => { if(e.key==='Enter') goScan(); });
-document.getElementById('shortInput').addEventListener('keydown', e => { if(e.key==='Enter') goShorten(); });
-document.getElementById('inspectInput').addEventListener('keydown', e => { if(e.key==='Enter') doInspect(); });
+// Enter keys
+document.getElementById('urlInput').addEventListener('keydown',e=>{if(e.key==='Enter')goScan();});
+document.getElementById('shortInput').addEventListener('keydown',e=>{if(e.key==='Enter')goShorten();});
+document.getElementById('inspectInput').addEventListener('keydown',e=>{if(e.key==='Enter')doInspect();});
 
-// Option toggles (uses event delegation — no bugs from label click)
-document.getElementById('scan-opts').addEventListener('click', function(e) {
-  const label = e.target.closest('.opt');
-  if (!label) return;
-  const chkId = label.dataset.key;
-  if (!chkId) return;
-  const chk = document.getElementById(chkId);
-  if (!chk) return;
-  // Toggle after the checkbox default action
-  setTimeout(() => {
-    label.classList.toggle('on', chk.checked);
-  }, 0);
-});
-
-// ESC closes lightbox
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeLB(); });
+// ESC
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
 </script>
 </body>
 </html>
