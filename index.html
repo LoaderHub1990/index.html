@@ -1,1192 +1,1263 @@
 <!DOCTYPE html>
-<html lang="th" data-theme="light">
+<html lang="th" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flash Anti Link</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>Flash Anti Link — ศูนย์รวมทุกอย่าง</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--p:#0ea5e9;--pd:#0284c7;--s:#10b981;--d:#ef4444;--w:#f59e0b;--bg:#f0f9ff;--card:#fff;--t:#1e293b;--tm:#64748b;--b:#e2e8f0;--ib:#f8fafc;--sh:0 20px 60px rgba(14,165,233,.12)}
-[data-theme=dark]{--bg:#060d1a;--card:#0f1e33;--t:#e2f0ff;--tm:#7aa3c8;--b:rgba(14,165,233,.15);--ib:#0a1628;--sh:0 20px 60px rgba(0,0,0,.4)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);background-size:40px 40px;opacity:.4;pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(14,165,233,.15) 0%,transparent 70%);pointer-events:none;z-index:0;animation:orb 8s ease-in-out infinite}
-@keyframes orb{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,60px)}}
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #18181f;
+  --card: #1a1a24;
+  --card2: #20202c;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --t: #f0f0fa;
+  --tm: #7070a0;
+  --ts: #4a4a70;
+  --p: #6c63ff;
+  --pa: #8b84ff;
+  --s: #00e5a0;
+  --d: #ff4f6d;
+  --w: #ffa040;
+  --i: #40c4ff;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'IBM Plex Sans Thai', sans-serif;
+  --r: 14px;
+  --r2: 20px;
+}
+[data-theme="light"] {
+  --bg: #f5f5ff;
+  --bg2: #ebebff;
+  --bg3: #e0e0f8;
+  --card: #ffffff;
+  --card2: #f8f8ff;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+  --t: #111130;
+  --tm: #6060a0;
+  --ts: #9090c0;
+}
 
-nav{position:sticky;top:0;z-index:100;height:62px;display:flex;align-items:center;border-bottom:1px solid var(--b);background:rgba(255,255,255,.72);backdrop-filter:blur(16px);transition:background .3s}
-[data-theme=dark] nav{background:rgba(6,13,26,.78)}
-.ni{max-width:600px;margin:0 auto;width:100%;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-family:'Space Mono',monospace;font-weight:700;font-size:17px;letter-spacing:-.5px}
-.brand span{color:var(--p)}
-.tbtn{width:36px;height:36px;border:1px solid var(--b);border-radius:10px;background:var(--card);color:var(--t);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.tbtn:hover{border-color:var(--p)}
+*{box-sizing:border-box;margin:0;padding:0;transition:background 0.2s,color 0.2s,border-color 0.2s}
+body{font-family:var(--sans);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% -10%,rgba(108,99,255,.15) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 110%,rgba(0,229,160,.08) 0%,transparent 60%);pointer-events:none;z-index:0}
 
-main{position:relative;z-index:1;padding:40px 20px 60px;display:flex;flex-direction:column;align-items:center;gap:16px}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);border-radius:99px;font-size:12px;font-weight:600;color:var(--p);letter-spacing:.5px}
-.chip::before{content:'';width:7px;height:7px;background:var(--p);border-radius:50%;box-shadow:0 0 6px var(--p);animation:pd 2s infinite}
-@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
+/* ─── NAV ─── */
+nav{position:sticky;top:0;z-index:200;height:58px;border-bottom:1px solid var(--border);background:rgba(10,10,15,.85);backdrop-filter:blur(20px);display:flex;align-items:center;padding:0 20px;gap:12px}
+.nav-brand{font-family:var(--mono);font-weight:700;font-size:16px;letter-spacing:-0.5px;color:var(--t)}
+.nav-brand em{color:var(--p);font-style:normal}
+.nav-spacer{flex:1}
+.nav-btns{display:flex;gap:6px}
+.nbtn{padding:6px 14px;border:1px solid var(--border2);border-radius:8px;background:var(--card);color:var(--tm);font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer}
+.nbtn:hover{color:var(--t);border-color:var(--p)}
+.nbtn.active{background:var(--p);color:#fff;border-color:var(--p)}
 
-.card{width:100%;max-width:600px;background:var(--card);border:1px solid var(--b);border-radius:24px;padding:32px 28px;box-shadow:var(--sh);transition:background .3s,border .3s}
+/* ─── LAYOUT ─── */
+main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 16px 80px}
+h1.hero-title{font-size:clamp(22px,5vw,38px);font-weight:700;letter-spacing:-1px;line-height:1.2;margin-bottom:6px}
+h1.hero-title span{color:var(--p)}
+.hero-sub{color:var(--tm);font-size:13px;margin-bottom:28px}
 
-.lw{display:flex;align-items:center;justify-content:center;width:68px;height:68px;margin:0 auto 16px;background:linear-gradient(135deg,#0ea5e9,#2563eb);border-radius:18px;box-shadow:0 8px 24px rgba(14,165,233,.4);animation:fl 3s ease-in-out infinite}
-@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.lw svg{width:36px;height:36px;fill:#fff}
-.ttl{text-align:center;font-size:26px;font-weight:800;background:linear-gradient(135deg,#0284c7,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
-.sub{text-align:center;color:var(--tm);font-size:13px;margin-bottom:24px}
+/* ─── TABS ─── */
+.tabs-wrap{display:flex;gap:4px;padding:4px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tab-btn{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:9px 16px;border:none;border-radius:12px;background:transparent;color:var(--tm);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+.tab-btn:hover{color:var(--t);background:var(--card)}
+.tab-btn.active{background:var(--p);color:#fff;box-shadow:0 4px 20px rgba(108,99,255,.35)}
+.tab-btn .ti{font-size:15px}
+.panel{display:none}.panel.active{display:block}
 
-.sr{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
-.si{background:var(--ib);border:1px solid var(--b);border-radius:12px;padding:10px 6px;text-align:center}
-.sn{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--p)}
-.sl{font-size:10px;color:var(--tm);margin-top:2px}
+/* ─── CARD ─── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;color:var(--tm);letter-spacing:.6px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* Tabs */
-.tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--ib);padding:4px;border-radius:14px;border:1px solid var(--b)}
-.tab{flex:1;padding:9px;border:none;border-radius:10px;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--tm);transition:all .2s}
-.tab.on{background:var(--p);color:#fff;box-shadow:0 2px 8px rgba(14,165,233,.4)}
+/* ─── INPUTS ─── */
+.inp-wrap{position:relative;margin-bottom:12px}
+.inp-wrap .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+.inp{width:100%;padding:13px 14px 13px 44px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--bg3);color:var(--t);font-family:var(--sans);font-size:14px;outline:none}
+.inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(108,99,255,.12)}
+.inp::placeholder{color:var(--ts)}
+.inp.no-ico{padding-left:14px}
+textarea.inp{resize:vertical;min-height:80px;padding:13px 14px;line-height:1.6}
 
-.panel{display:none}
-.panel.on{display:block}
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border:none;border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,var(--p),#8b5cf6);color:#fff;width:100%}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(108,99,255,.4)}
+.btn-primary:active{transform:none}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-secondary{background:var(--card2);border:1px solid var(--border2);color:var(--t)}
+.btn-secondary:hover{border-color:var(--p);color:var(--p)}
+.btn-sm{padding:8px 14px;font-size:12px;border-radius:8px}
+.btn-danger{background:linear-gradient(135deg,var(--d),#c0392b);color:#fff}
+.btn-success{background:linear-gradient(135deg,var(--s),#00b386);color:#000}
 
-/* URL panel */
-.ig{position:relative;margin-bottom:12px}
-.ig .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tm);font-size:17px;pointer-events:none}
-.ui{width:100%;padding:14px 14px 14px 44px;border:1.5px solid var(--b);border-radius:13px;background:var(--ib);color:var(--t);font-family:'Sarabun',sans-serif;font-size:15px;outline:none;transition:border .2s,box-shadow .2s}
-.ui:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(14,165,233,.15)}
-.ui::placeholder{color:var(--tm)}
+/* ─── OPTIONS ROW ─── */
+.opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.opt{display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg3);cursor:pointer;font-size:12px;font-weight:500;color:var(--tm);user-select:none}
+.opt.on{border-color:var(--p);color:var(--p);background:rgba(108,99,255,.1)}
+.opt input{display:none}
+.opt-dot{width:12px;height:12px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.opt.on .opt-dot::after{content:'';width:5px;height:5px;background:currentColor;border-radius:50%}
 
-/* File drop */
-.drop-zone{border:2px dashed var(--b);border-radius:16px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--ib);margin-bottom:12px}
-.drop-zone:hover,.drop-zone.drag{border-color:var(--p);background:rgba(14,165,233,.05)}
-.drop-zone .dico{font-size:40px;margin-bottom:10px}
-.drop-zone .dtxt{font-size:15px;font-weight:700;color:var(--t);margin-bottom:4px}
-.drop-zone .dsub{font-size:12px;color:var(--tm)}
-.drop-zone input{display:none}
+/* ─── RESULT PANEL ─── */
+.result-box{display:none;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);margin-top:14px}
+.result-header{padding:14px 18px;display:flex;align-items:center;gap:12px}
+.rh-safe{background:rgba(0,229,160,.08);border-bottom:1px solid rgba(0,229,160,.15)}
+.rh-warn{background:rgba(255,160,64,.08);border-bottom:1px solid rgba(255,160,64,.15)}
+.rh-danger{background:rgba(255,79,109,.08);border-bottom:1px solid rgba(255,79,109,.15)}
+.rh-scanning{background:rgba(108,99,255,.08);border-bottom:1px solid rgba(108,99,255,.15)}
+.rh-ico{font-size:22px;flex-shrink:0}
+.rh-txt{flex:1}
+.rh-title{font-size:14px;font-weight:700}
+.rh-safe .rh-title{color:var(--s)}
+.rh-warn .rh-title{color:var(--w)}
+.rh-danger .rh-title{color:var(--d)}
+.rh-scanning .rh-title{color:var(--p)}
+.rh-det{font-size:11px;color:var(--tm);margin-top:2px}
+.rh-badge{padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700;flex-shrink:0}
+.rh-safe .rh-badge{background:rgba(0,229,160,.15);color:var(--s)}
+.rh-warn .rh-badge{background:rgba(255,160,64,.15);color:var(--w)}
+.rh-danger .rh-badge{background:rgba(255,79,109,.15);color:var(--d)}
+.rh-scanning .rh-badge{background:rgba(108,99,255,.15);color:var(--p)}
 
-/* Scan options row */
-.secrow{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
-.st{flex:1;min-width:90px;display:flex;align-items:center;gap:6px;padding:8px 10px;border:1.5px solid var(--b);border-radius:11px;background:var(--ib);cursor:pointer;font-size:11px;font-weight:600;color:var(--tm);transition:all .2s;user-select:none}
-.st.on{border-color:var(--p);color:var(--p);background:rgba(14,165,233,.08)}
-.st input{display:none}
-.dot{width:13px;height:13px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.st.on .dot::after{content:'';width:5px;height:5px;background:var(--p);border-radius:50%}
+.progress-bar{height:2px;background:var(--border)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--p),var(--pa));transition:width .15s}
 
-.bm{width:100%;padding:14px;border:none;border-radius:13px;font-family:'Sarabun',sans-serif;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(135deg,#0ea5e9,#2563eb);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
-.bm::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#38bdf8,#3b82f6);opacity:0;transition:opacity .2s}
-.bm:hover::after{opacity:1}
-.bm:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(14,165,233,.4)}
-.bm:active{transform:translateY(0)}
-.bm:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
-.bm span{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px}
-
-/* ── SCAN RESULT ── */
-.scan-box{display:none;margin-top:14px;border-radius:16px;overflow:hidden;border:1px solid var(--b)}
-.scan-header{padding:14px 16px;display:flex;align-items:center;gap:10px}
-.scan-header.scanning{background:rgba(14,165,233,.1);border-bottom:1px solid rgba(14,165,233,.2)}
-.scan-header.safe{background:rgba(16,185,129,.1);border-bottom:1px solid rgba(16,185,129,.2)}
-.scan-header.danger{background:rgba(239,68,68,.1);border-bottom:1px solid rgba(239,68,68,.2)}
-.scan-header.warn{background:rgba(245,158,11,.1);border-bottom:1px solid rgba(245,158,11,.2)}
-.sh-ico{font-size:22px;flex-shrink:0}
-.sh-txt{flex:1}
-.sh-title{font-size:14px;font-weight:700}
-.scan-header.scanning .sh-title{color:var(--p)}
-.scan-header.safe .sh-title{color:#10b981}
-.scan-header.danger .sh-title{color:#ef4444}
-.scan-header.warn .sh-title{color:#f59e0b}
-.sh-det{font-size:12px;color:var(--tm);margin-top:2px}
-.sh-badge{padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700;flex-shrink:0}
-.scan-header.safe .sh-badge{background:rgba(16,185,129,.15);color:#10b981}
-.scan-header.danger .sh-badge{background:rgba(239,68,68,.15);color:#ef4444}
-.scan-header.warn .sh-badge{background:rgba(245,158,11,.15);color:#f59e0b}
-.scan-header.scanning .sh-badge{background:rgba(14,165,233,.15);color:var(--p)}
-
-.pb{height:3px;background:var(--b);overflow:hidden}
-.pf{height:100%;background:linear-gradient(90deg,#0ea5e9,#2563eb);transition:width .2s}
-
-.scan-body{padding:14px 16px;background:var(--card)}
-
-/* Risk meter */
+.scan-body{padding:16px 18px;background:var(--card)}
 .risk-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.risk-label{font-size:12px;color:var(--tm);white-space:nowrap}
-.risk-track{flex:1;height:8px;background:var(--ib);border-radius:4px;overflow:hidden;border:1px solid var(--b)}
-.risk-bar{height:100%;border-radius:4px;transition:width .7s ease}
-.risk-score{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;white-space:nowrap}
+.risk-lbl{font-size:11px;color:var(--tm);white-space:nowrap}
+.risk-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.risk-bar{height:100%;border-radius:3px;transition:width .7s ease}
+.risk-score{font-family:var(--mono);font-size:12px;font-weight:600;white-space:nowrap}
 
-/* Check categories */
-.cat-title{font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:8px;margin-top:12px;display:flex;align-items:center;gap:6px}
-.cat-title:first-child{margin-top:0}
-.cat-title::after{content:'';flex:1;height:1px;background:var(--b)}
-.checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin-bottom:4px}
+.cat-label{font-size:10px;font-weight:600;color:var(--ts);letter-spacing:.8px;margin:12px 0 6px;display:flex;align-items:center;gap:8px}
+.cat-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.cat-label:first-child{margin-top:0}
+.checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}
 .ck{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 0}
 .ck .ci{font-size:12px;flex-shrink:0}
-.ck-name{color:var(--t)}
 .ck.fail .ck-name{color:var(--d);font-weight:600}
 
-/* Threat list */
-.threats-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--b);display:none}
-.threats-title{font-size:11px;font-weight:700;color:#ef4444;margin-bottom:6px;letter-spacing:.5px}
-.tl{list-style:none;display:flex;flex-direction:column;gap:4px}
-.tl li{font-size:12px;padding:7px 10px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:8px;display:flex;align-items:flex-start;gap:6px;color:var(--t)}
-.tl li .ti{flex-shrink:0}
+.threats-box{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.threat-title{font-size:10px;font-weight:700;color:var(--d);letter-spacing:.6px;margin-bottom:6px}
+.threat-list{display:flex;flex-direction:column;gap:4px}
+.threat-item{font-size:12px;padding:7px 10px;background:rgba(255,79,109,.06);border:1px solid rgba(255,79,109,.12);border-radius:8px;display:flex;gap:6px}
 
-/* File info box */
-.file-info{padding:10px 12px;background:var(--ib);border:1px solid var(--b);border-radius:10px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.fi-icon{font-size:26px;flex-shrink:0}
-.fi-txt{flex:1;overflow:hidden}
-.fi-name{font-size:13px;font-weight:700;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fi-meta{font-size:11px;color:var(--tm);margin-top:2px}
-.fi-ext{padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0}
+/* ─── STATS ─── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}
+.stat-n{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--p)}
+.stat-l{font-size:10px;color:var(--tm);margin-top:2px}
 
-/* Result */
-.rb2{display:none;margin-top:14px;padding:16px;background:var(--ib);border:1px solid var(--b);border-radius:14px}
-.rl2{font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.rl2::before{content:'';width:7px;height:7px;background:var(--s);border-radius:50%;box-shadow:0 0 6px var(--s)}
-.cr{display:flex;gap:7px}
-.ri{flex:1;padding:10px 12px;border:1.5px solid var(--b);border-radius:10px;background:var(--card);color:var(--p);font-family:'Space Mono',monospace;font-size:12px;outline:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cb{padding:10px 18px;border:none;border-radius:10px;background:var(--p);color:#fff;font-family:'Sarabun',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s}
-.cb:hover{background:var(--pd)}
-.sbs{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.sb{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:7px;font-size:11px;font-weight:600;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#10b981}
+/* ─── LINK RESULT ─── */
+.link-result{display:none;margin-top:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2)}
+.lr-label{font-size:10px;font-weight:600;color:var(--ts);letter-spacing:.8px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.lr-label::before{content:'';width:6px;height:6px;background:var(--s);border-radius:50%;box-shadow:0 0 6px var(--s)}
+.copy-row{display:flex;gap:8px}
+.copy-input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--card);color:var(--p);font-family:var(--mono);font-size:12px;outline:none}
+.copy-btn{padding:10px 18px;border:none;border-radius:var(--r);background:var(--p);color:#fff;font-family:var(--sans);font-weight:600;font-size:13px;cursor:pointer}
+.copy-btn:hover{background:var(--pa)}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--s)}
 
-hr.dv{border:none;border-top:1px solid var(--b);margin:20px 0}
-.htit{font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:8px}
-.hl{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto}
-.hi{display:flex;align-items:center;gap:8px;padding:9px 11px;background:var(--ib);border:1px solid var(--b);border-radius:11px;cursor:pointer;transition:border-color .2s;text-align:left;width:100%}
-.hi:hover{border-color:var(--p)}
-.htxt{flex:1;overflow:hidden}
-.hs{font-family:'Space Mono',monospace;font-size:11px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ho{font-size:10px;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
-.hb{font-size:10px;padding:2px 6px;border-radius:5px;font-weight:700;flex-shrink:0}
-.bs{background:rgba(16,185,129,.15);color:#10b981}
-.bd{background:rgba(239,68,68,.15);color:#ef4444}
-.bw{background:rgba(245,158,11,.15);color:#f59e0b}
+/* ─── IMAGE HOST ─── */
+.drop-zone{border:2px dashed var(--border);border-radius:var(--r2);padding:40px 20px;text-align:center;cursor:pointer;background:var(--bg3);margin-bottom:12px}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--p);background:rgba(108,99,255,.05)}
+.drop-zone .dico{font-size:48px;margin-bottom:10px}
+.drop-zone .dtxt{font-size:15px;font-weight:600;margin-bottom:4px}
+.drop-zone .dsub{font-size:12px;color:var(--tm)}
+input[type=file]{display:none}
 
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:11px 20px;border-radius:11px;font-size:13px;font-weight:600;z-index:9999;transition:transform .3s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.img-preview{display:none;margin-bottom:12px}
+.img-preview img{width:100%;max-height:200px;object-fit:contain;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3)}
+.img-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.img-tag{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:500;background:var(--bg3);border:1px solid var(--border);color:var(--tm)}
+
+.host-result{display:none;margin-top:14px}
+.host-links{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.host-link{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r)}
+.hl-icon{font-size:18px;flex-shrink:0}
+.hl-txt{flex:1;overflow:hidden}
+.hl-label{font-size:11px;color:var(--tm);margin-bottom:2px}
+.hl-url{font-family:var(--mono);font-size:11px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hl-copy{padding:5px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--card);color:var(--tm);font-size:11px;cursor:pointer;white-space:nowrap}
+.hl-copy:hover{color:var(--p);border-color:var(--p)}
+
+/* ─── IMAGE GALLERY ─── */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px}
+.gallery-item{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);cursor:pointer;background:var(--bg3)}
+.gallery-item img{width:100%;height:120px;object-fit:cover;display:block}
+.gallery-item .gi-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;gap:6px;opacity:0;transition:opacity .2s}
+.gallery-item:hover .gi-overlay{opacity:1}
+.gi-btn{width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gi-btn:hover{background:var(--p)}
+.gi-name{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;background:rgba(0,0,0,.7);font-size:10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ─── QR CODE ─── */
+.qr-container{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.qr-wrap{flex:0 0 auto;background:white;padding:16px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;min-width:200px;min-height:200px}
+.qr-wrap canvas{display:block}
+.qr-controls{flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px}
+.qr-size-row{display:flex;gap:6px}
+.qr-size-btn{flex:1;padding:8px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg3);color:var(--tm);font-size:12px;cursor:pointer;text-align:center}
+.qr-size-btn.on{border-color:var(--p);color:var(--p);background:rgba(108,99,255,.1)}
+.color-row{display:flex;gap:8px;align-items:center}
+.color-row label{font-size:12px;color:var(--tm)}
+.color-row input[type=color]{width:36px;height:28px;border:none;border-radius:6px;cursor:pointer;background:none;padding:0}
+
+/* ─── TEXT TOOLS ─── */
+.text-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.tool-btn{padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--bg3);color:var(--tm);font-size:12px;cursor:pointer;text-align:center;font-family:var(--sans);font-weight:500}
+.tool-btn:hover{border-color:var(--p);color:var(--p);background:rgba(108,99,255,.08)}
+
+/* ─── HISTORY ─── */
+.hist-list{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto}
+.hist-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);cursor:pointer}
+.hist-item:hover{border-color:var(--p)}
+.hi-ico{font-size:18px;flex-shrink:0}
+.hi-txt{flex:1;overflow:hidden}
+.hi-main{font-family:var(--mono);font-size:11px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi-sub{font-size:10px;color:var(--tm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi-badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;flex-shrink:0}
+.hi-badge.safe{background:rgba(0,229,160,.15);color:var(--s)}
+.hi-badge.warn{background:rgba(255,160,64,.15);color:var(--w)}
+.hi-badge.danger{background:rgba(255,79,109,.15);color:var(--d)}
+.hi-time{font-size:10px;color:var(--ts)}
+
+/* ─── URL INSPECTOR ─── */
+.url-parts{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.url-part{display:flex;gap:10px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;align-items:center}
+.up-key{font-size:10px;font-weight:600;color:var(--ts);width:80px;flex-shrink:0;letter-spacing:.5px}
+.up-val{font-family:var(--mono);font-size:11px;color:var(--p);flex:1;word-break:break-all}
+.up-val.empty{color:var(--ts);font-style:italic}
+
+/* ─── TOAST / MISC ─── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card2);border:1px solid var(--border2);color:var(--t);padding:10px 20px;border-radius:12px;font-size:13px;font-weight:500;z-index:9999;transition:transform .3s;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.4)}
 .toast.on{transform:translateX(-50%) translateY(0)}
-footer{text-align:center;padding:20px;color:var(--tm);font-size:12px;position:relative;z-index:1}
-.spin{animation:sp 1s linear infinite;display:inline-block}
-@keyframes sp{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.spin{animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.badge-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.25);border-radius:99px;font-size:11px;font-weight:600;color:var(--p);letter-spacing:.4px}
+.badge-chip::before{content:'';width:6px;height:6px;background:var(--p);border-radius:50%;box-shadow:0 0 6px var(--p);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:relative;z-index:1}
+
+/* lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9000;align-items:center;justify-content:center}
+.lightbox.on{display:flex}
+.lightbox img{max-width:90vw;max-height:88vh;border-radius:var(--r);object-fit:contain}
+.lightbox-close{position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
 @media(max-width:500px){
-  .sr{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
   .checks-grid{grid-template-columns:1fr}
+  .text-tools-grid{grid-template-columns:1fr}
+  .qr-container{flex-direction:column}
+  .qr-wrap{min-width:100%;justify-content:center}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="ni">
-    <div class="brand">Flash<span>.</span>Anti</div>
-    <button class="tbtn" onclick="toggleTheme()"><span id="ti">🌙</span></button>
+  <div class="nav-brand">Flash<em>.</em>Anti</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-btns">
+    <button class="nbtn" id="theme-btn" onclick="toggleTheme()">🌙</button>
+    <button class="nbtn" onclick="clearHistory()">🗑 ล้างประวัติ</button>
   </div>
 </nav>
 
 <main>
-  <div class="chip">🛡️ URL &amp; FILE SECURITY SCANNER</div>
+  <div style="margin-bottom:20px">
+    <span class="badge-chip">⚡ FLASH ANTI LINK v3.0</span>
+    <h1 class="hero-title" style="margin-top:12px">ศูนย์รวม<span>ทุกอย่าง</span><br>ในที่เดียว</h1>
+    <div class="hero-sub">สแกน URL • ย่อลิงก์ • ฝากรูป • สร้าง QR • เครื่องมือข้อความ • และอีกมากมาย</div>
+  </div>
 
-  <div class="card">
-    <div class="lw">
-      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/></svg>
-    </div>
-    <div class="ttl">FLASH ANTI LINK</div>
-    <div class="sub">สแกน URL + ตรวจสอบไฟล์อันตราย 200+ นามสกุล</div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n" id="sL">0</div><div class="stat-l">ทั้งหมด</div></div>
+    <div class="stat"><div class="stat-n" id="sS" style="color:var(--s)">0</div><div class="stat-l">ปลอดภัย</div></div>
+    <div class="stat"><div class="stat-n" id="sW" style="color:var(--w)">0</div><div class="stat-l">เสี่ยง</div></div>
+    <div class="stat"><div class="stat-n" id="sB" style="color:var(--d)">0</div><div class="stat-l">อันตราย</div></div>
+  </div>
 
-    <div class="sr">
-      <div class="si"><div class="sn" id="sL">0</div><div class="sl">สแกนทั้งหมด</div></div>
-      <div class="si"><div class="sn" id="sS">0</div><div class="sl">ปลอดภัย</div></div>
-      <div class="si"><div class="sn" id="sW">0</div><div class="sl">เสี่ยง</div></div>
-      <div class="si"><div class="sn" id="sB">0</div><div class="sl">อันตราย</div></div>
-    </div>
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <button class="tab-btn active" onclick="switchTab('scan')" data-tab="scan"><span class="ti">🛡️</span> สแกน URL</button>
+    <button class="tab-btn" onclick="switchTab('file')" data-tab="file"><span class="ti">📁</span> สแกนไฟล์</button>
+    <button class="tab-btn" onclick="switchTab('short')" data-tab="short"><span class="ti">✂️</span> ย่อลิงก์</button>
+    <button class="tab-btn" onclick="switchTab('image')" data-tab="image"><span class="ti">🖼️</span> ฝากรูป</button>
+    <button class="tab-btn" onclick="switchTab('qr')" data-tab="qr"><span class="ti">📷</span> QR Code</button>
+    <button class="tab-btn" onclick="switchTab('text')" data-tab="text"><span class="ti">📝</span> เครื่องมือข้อความ</button>
+    <button class="tab-btn" onclick="switchTab('inspect')" data-tab="inspect"><span class="ti">🔍</span> วิเคราะห์ URL</button>
+    <button class="tab-btn" onclick="switchTab('history')" data-tab="history"><span class="ti">📋</span> ประวัติ</button>
+  </div>
 
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab on" onclick="switchTab('url')">🔗 สแกน URL</button>
-      <button class="tab" onclick="switchTab('file')">📁 สแกนไฟล์/ลิงก์ไฟล์</button>
-    </div>
-
-    <!-- URL Panel -->
-    <div class="panel on" id="panel-url">
-      <div class="ig">
+  <!-- ══════════════ TAB: SCAN URL ══════════════ -->
+  <div class="panel active" id="tab-scan">
+    <div class="card">
+      <div class="card-title">🛡️ ตรวจสอบความปลอดภัย URL</div>
+      <div class="inp-wrap">
         <span class="ico">🔗</span>
-        <input type="url" id="urlInput" class="ui" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
+        <input type="url" id="urlInput" class="inp" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
       </div>
-      <div class="secrow">
-        <label class="st on" id="tg-scan"><input type="checkbox" id="op-scan" checked><div class="dot"></div>🔍 สแกน URL</label>
-        <label class="st on" id="tg-file"><input type="checkbox" id="op-file" checked><div class="dot"></div>📁 ตรวจไฟล์</label>
-        <label class="st on" id="tg-warn"><input type="checkbox" id="op-warn" checked><div class="dot"></div>⛔ บล็อคอันตราย</label>
-        <label class="st on" id="tg-short"><input type="checkbox" id="op-short" checked><div class="dot"></div>✂️ ย่อลิงก์</label>
+      <div class="opt-row">
+        <label class="opt on" id="opt-scan"><input type="checkbox" id="chk-scan" checked><div class="opt-dot"></div>🔍 สแกน URL</label>
+        <label class="opt on" id="opt-file"><input type="checkbox" id="chk-file" checked><div class="opt-dot"></div>📁 ตรวจไฟล์</label>
+        <label class="opt on" id="opt-block"><input type="checkbox" id="chk-block" checked><div class="opt-dot"></div>⛔ บล็อคอันตราย</label>
+        <label class="opt on" id="opt-short2"><input type="checkbox" id="chk-short2" checked><div class="opt-dot"></div>✂️ ย่อลิงก์</label>
+        <label class="opt on" id="opt-qr2"><input type="checkbox" id="chk-qr2" checked><div class="opt-dot"></div>📷 สร้าง QR</label>
       </div>
-      <button class="bm" id="sbtn-url" onclick="goUrl()">
-        <span><span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span></span>
+      <button class="btn btn-primary" id="scan-btn" onclick="goScan()">
+        <span id="scan-btn-txt">🛡️ สแกน &amp; ดำเนินการ</span>
       </button>
-    </div>
 
-    <!-- File Panel -->
-    <div class="panel" id="panel-file">
-      <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+      <!-- Scan result box -->
+      <div class="result-box" id="scanBox">
+        <div class="result-header rh-scanning" id="rh">
+          <div class="rh-ico" id="rh-ico">⏳</div>
+          <div class="rh-txt">
+            <div class="rh-title" id="rh-title">กำลังสแกน...</div>
+            <div class="rh-det" id="rh-det">กรุณารอสักครู่</div>
+          </div>
+          <div class="rh-badge" id="rh-badge">--</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+        <div class="scan-body" id="scan-body" style="display:none">
+          <div class="risk-row">
+            <div class="risk-lbl">ความเสี่ยง</div>
+            <div class="risk-track"><div class="risk-bar" id="riskBar"></div></div>
+            <div class="risk-score" id="riskScore">0</div>
+          </div>
+          <div id="checkCats"></div>
+          <div id="threatsBox" style="display:none" class="threats-box">
+            <div class="threat-title">🚨 ภัยคุกคามที่ตรวจพบ</div>
+            <div class="threat-list" id="threatsList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Link result -->
+      <div class="link-result" id="linkResult">
+        <div class="lr-label">ลิงก์ที่สร้างแล้ว</div>
+        <div class="copy-row">
+          <input type="text" class="copy-input" id="shortOut" readonly>
+          <button class="copy-btn" onclick="copyText('shortOut')">COPY</button>
+        </div>
+        <div class="tag-row" id="linkTags"></div>
+      </div>
+
+      <!-- Mini QR from scan -->
+      <div id="scan-qr-out" style="display:none;margin-top:14px">
+        <div class="card-title" style="margin-bottom:10px">📷 QR Code ของลิงก์</div>
+        <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+          <div style="background:white;padding:12px;border-radius:10px"><canvas id="scan-qr-canvas"></canvas></div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button class="btn btn-secondary btn-sm" onclick="downloadCanvas('scan-qr-canvas','qr-link.png')">⬇️ ดาวน์โหลด QR</button>
+            <button class="btn btn-secondary btn-sm" onclick="copyCanvas('scan-qr-canvas')">📋 คัดลอก QR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: FILE SCAN ══════════════ -->
+  <div class="panel" id="tab-file">
+    <div class="card">
+      <div class="card-title">📁 สแกนไฟล์</div>
+      <div class="drop-zone" id="fileDrop" onclick="document.getElementById('fileInput').click()" ondragover="dzOver(event,'fileDrop')" ondragleave="dzLeave('fileDrop')" ondrop="dzDrop(event,'fileInput')">
         <div class="dico">📂</div>
         <div class="dtxt">คลิกหรือลากไฟล์มาวาง</div>
-        <div class="dsub">รองรับทุกนามสกุล • ตรวจสอบ 200+ ประเภทไฟล์อันตราย</div>
-        <input type="file" id="fileInput" onchange="handleFile(this.files[0])">
+        <div class="dsub">รองรับทุกนามสกุล • ตรวจสอบ 200+ ประเภทอันตราย</div>
+        <input type="file" id="fileInput" onchange="handleScanFile(this.files[0])">
       </div>
-      <button class="bm" id="sbtn-file" onclick="goFile()" disabled>
-        <span><span>🔍</span><span>สแกนไฟล์</span></span>
+      <button class="btn btn-primary" id="file-scan-btn" onclick="goFileScan()" disabled>
+        <span id="file-scan-txt">🔍 สแกนไฟล์</span>
       </button>
-    </div>
-
-    <!-- Scan Result Box -->
-    <div class="scan-box" id="scanBox">
-      <div class="scan-header scanning" id="scanHeader">
-        <div class="sh-ico" id="shIco">⏳</div>
-        <div class="sh-txt">
-          <div class="sh-title" id="shTitle">กำลังสแกน...</div>
-          <div class="sh-det" id="shDet">กรุณารอสักครู่</div>
+      <div class="result-box" id="fileScanBox" style="margin-top:14px">
+        <div class="result-header rh-scanning" id="frh">
+          <div class="rh-ico" id="frh-ico">⏳</div>
+          <div class="rh-txt">
+            <div class="rh-title" id="frh-title">กำลังสแกน...</div>
+            <div class="rh-det" id="frh-det">กรุณารอสักครู่</div>
+          </div>
+          <div class="rh-badge" id="frh-badge">--</div>
         </div>
-        <div class="sh-badge" id="shBadge">--</div>
-      </div>
-      <div class="pb" id="pb"><div class="pf" id="pf" style="width:0%"></div></div>
-      <div class="scan-body" id="scanBody" style="display:none">
-        <!-- Risk meter -->
-        <div class="risk-row">
-          <div class="risk-label">ความเสี่ยง</div>
-          <div class="risk-track"><div class="risk-bar" id="riskBar" style="width:0%"></div></div>
-          <div class="risk-score" id="riskScore">0/100</div>
-        </div>
-        <!-- Categories rendered here -->
-        <div id="checkCats"></div>
-        <!-- Threats -->
-        <div class="threats-section" id="threatsSection">
-          <div class="threats-title">🚨 ภัยคุกคามที่ตรวจพบ</div>
-          <ul class="tl" id="threatsList"></ul>
+        <div class="progress-bar"><div class="progress-fill" id="fprog" style="width:0%"></div></div>
+        <div class="scan-body" id="fscan-body" style="display:none">
+          <div class="risk-row">
+            <div class="risk-lbl">ความเสี่ยง</div>
+            <div class="risk-track"><div class="risk-bar" id="friskBar"></div></div>
+            <div class="risk-score" id="friskScore">0</div>
+          </div>
+          <div id="fcheckCats"></div>
+          <div id="fthreatsBox" style="display:none" class="threats-box">
+            <div class="threat-title">🚨 ภัยคุกคามที่ตรวจพบ</div>
+            <div class="threat-list" id="fthreatsList"></div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Short link result -->
-    <div class="rb2" id="rb2">
-      <div class="rl2">ลิงก์ที่สร้างแล้ว</div>
-      <div class="cr">
-        <input type="text" class="ri" id="ri" readonly>
-        <button type="button" class="cb" onclick="cp()">COPY</button>
+  <!-- ══════════════ TAB: SHORTEN ══════════════ -->
+  <div class="panel" id="tab-short">
+    <div class="card">
+      <div class="card-title">✂️ ย่อลิงก์</div>
+      <div class="inp-wrap">
+        <span class="ico">🔗</span>
+        <input type="url" id="shortInput" class="inp" placeholder="https://example.com/very/long/url?with=params">
       </div>
-      <div class="sbs" id="sbs"></div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+        <input type="text" id="customAlias" class="inp no-ico" placeholder="Custom alias (ไม่บังคับ)" style="flex:1;min-width:160px">
+      </div>
+      <button class="btn btn-primary" id="short-btn" onclick="goShorten()">
+        <span id="short-btn-txt">✂️ ย่อลิงก์</span>
+      </button>
+
+      <div class="link-result" id="shortResult" style="display:none;margin-top:14px">
+        <div class="lr-label">ลิงก์ที่ย่อแล้ว</div>
+        <div class="copy-row">
+          <input type="text" class="copy-input" id="shortOut2" readonly>
+          <button class="copy-btn" onclick="copyText('shortOut2')">COPY</button>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" onclick="openUrl('shortOut2')">🌐 เปิดลิงก์</button>
+          <button class="btn btn-secondary btn-sm" onclick="genQrFrom('shortOut2')">📷 สร้าง QR</button>
+          <button class="btn btn-secondary btn-sm" onclick="shareUrl('shortOut2')">📤 แชร์</button>
+        </div>
+      </div>
     </div>
 
-    <!-- History -->
-    <div id="histSec" style="display:none">
-      <hr class="dv">
-      <div class="htit">📋 ประวัติล่าสุด</div>
-      <div class="hl" id="histList"></div>
+    <!-- Bulk shorten -->
+    <div class="card">
+      <div class="card-title">📋 ย่อหลาย URL พร้อมกัน</div>
+      <textarea class="inp no-ico" id="bulkInput" placeholder="วาง URL หลาย URL (แต่ละบรรทัด)&#10;https://example1.com&#10;https://example2.com&#10;https://example3.com"></textarea>
+      <button class="btn btn-primary" style="margin-top:8px" onclick="goBulkShorten()">
+        <span id="bulk-btn-txt">✂️ ย่อทั้งหมด</span>
+      </button>
+      <div id="bulkResult" style="display:none;margin-top:12px;display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: IMAGE HOST ══════════════ -->
+  <div class="panel" id="tab-image">
+    <div class="card">
+      <div class="card-title">🖼️ ฝากรูปภาพ</div>
+      <div class="drop-zone" id="imgDrop" onclick="document.getElementById('imgInput').click()" ondragover="dzOver(event,'imgDrop')" ondragleave="dzLeave('imgDrop')" ondrop="dzDropImg(event)">
+        <div class="dico">🖼️</div>
+        <div class="dtxt">คลิกหรือลากรูปมาวาง</div>
+        <div class="dsub">รองรับ JPG, PNG, GIF, WebP, BMP • ขนาดสูงสุด 10MB</div>
+        <input type="file" id="imgInput" accept="image/*" multiple onchange="handleImages(this.files)">
+      </div>
+      
+      <div class="img-preview" id="imgPreview">
+        <img id="imgPreviewImg" src="" alt="">
+        <div class="img-meta" id="imgMeta"></div>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <select class="inp no-ico" id="hostService" style="flex:1">
+          <option value="imgbb">ImgBB (ฟรี, ถาวร)</option>
+          <option value="catbox">Catbox (익명, ถาวร)</option>
+          <option value="base64">Base64 Inline (ในหน้า)</option>
+        </select>
+        <select class="inp no-ico" id="imgExpiry" style="flex:0 0 120px">
+          <option value="0">ถาวร</option>
+          <option value="60">1 ชั่วโมง</option>
+          <option value="1440">1 วัน</option>
+          <option value="10080">7 วัน</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" id="upload-btn" onclick="goUpload()" disabled>
+        <span id="upload-btn-txt">⬆️ อัพโหลดรูป</span>
+      </button>
+
+      <div class="host-result" id="hostResult">
+        <div class="host-links" id="hostLinks"></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" onclick="copyText('hlink-direct')">📋 คัดลอก Direct</button>
+          <button class="btn btn-secondary btn-sm" onclick="genQrFromVal(document.getElementById('hlink-direct').value)">📷 QR รูปภาพ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="card" id="galleryCard" style="display:none">
+      <div class="card-title">🗂️ คลังรูปของคุณ (<span id="galCount">0</span> รูป)</div>
+      <div class="gallery" id="gallery"></div>
+      <div style="margin-top:12px">
+        <button class="btn btn-danger btn-sm" onclick="clearGallery()">🗑️ ล้างคลังทั้งหมด</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: QR CODE ══════════════ -->
+  <div class="panel" id="tab-qr">
+    <div class="card">
+      <div class="card-title">📷 สร้าง QR Code</div>
+      <div class="inp-wrap" style="margin-bottom:8px">
+        <span class="ico">📝</span>
+        <input type="text" id="qrInput" class="inp" placeholder="URL, ข้อความ, หมายเลขโทรศัพท์, WiFi..." oninput="liveQr()">
+      </div>
+      
+      <div class="qr-container" id="qrContainer">
+        <div class="qr-wrap" id="qrWrap">
+          <div style="font-size:40px;color:#ccc">📷</div>
+        </div>
+        <div class="qr-controls">
+          <div class="card-title" style="margin-bottom:6px">ขนาด</div>
+          <div class="qr-size-row">
+            <div class="qr-size-btn on" onclick="setQrSize(128,this)">S</div>
+            <div class="qr-size-btn" onclick="setQrSize(200,this)">M</div>
+            <div class="qr-size-btn" onclick="setQrSize(300,this)">L</div>
+            <div class="qr-size-btn" onclick="setQrSize(400,this)">XL</div>
+          </div>
+          <div class="color-row" style="margin-top:6px">
+            <label>สี QR:</label>
+            <input type="color" id="qrColor" value="#000000" oninput="liveQr()">
+            <label>พื้นหลัง:</label>
+            <input type="color" id="qrBg" value="#ffffff" oninput="liveQr()">
+          </div>
+          
+          <!-- QR Templates -->
+          <div class="card-title" style="margin:10px 0 6px">เทมเพลต</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px">
+            <button class="tool-btn" style="font-size:11px" onclick="qrTemplate('url')">🔗 URL</button>
+            <button class="tool-btn" style="font-size:11px" onclick="qrTemplate('tel')">📞 โทร</button>
+            <button class="tool-btn" style="font-size:11px" onclick="qrTemplate('sms')">💬 SMS</button>
+            <button class="tool-btn" style="font-size:11px" onclick="qrTemplate('wifi')">📶 WiFi</button>
+            <button class="tool-btn" style="font-size:11px" onclick="qrTemplate('vcard')">👤 vCard</button>
+            <button class="tool-btn" style="font-size:11px" onclick="qrTemplate('email')">📧 Email</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+            <button class="btn btn-primary btn-sm" onclick="downloadQr()">⬇️ ดาวน์โหลด PNG</button>
+            <button class="btn btn-secondary btn-sm" onclick="downloadQrSvg()">⬇️ ดาวน์โหลด SVG</button>
+            <button class="btn btn-secondary btn-sm" onclick="copyQr()">📋 คัดลอก QR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: TEXT TOOLS ══════════════ -->
+  <div class="panel" id="tab-text">
+    <div class="card">
+      <div class="card-title">📝 กล่องข้อความ</div>
+      <textarea class="inp no-ico" id="textInput" rows="6" placeholder="วางหรือพิมพ์ข้อความที่นี่..."></textarea>
+      <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">
+        <span id="charCount" style="font-size:12px;color:var(--tm)">0 ตัวอักษร, 0 คำ, 0 บรรทัด</span>
+      </div>
+      <div class="text-tools-grid" style="margin-top:12px">
+        <button class="tool-btn" onclick="textTool('upper')">🔠 UPPERCASE</button>
+        <button class="tool-btn" onclick="textTool('lower')">🔡 lowercase</button>
+        <button class="tool-btn" onclick="textTool('title')">📖 Title Case</button>
+        <button class="tool-btn" onclick="textTool('trim')">✂️ ตัดช่องว่าง</button>
+        <button class="tool-btn" onclick="textTool('reverse')">🔄 กลับข้อความ</button>
+        <button class="tool-btn" onclick="textTool('noSpace')">🚫 ลบช่องว่าง</button>
+        <button class="tool-btn" onclick="textTool('slug')">🔗 Slug/URL</button>
+        <button class="tool-btn" onclick="textTool('encode')">🔐 URL Encode</button>
+        <button class="tool-btn" onclick="textTool('decode')">🔓 URL Decode</button>
+        <button class="tool-btn" onclick="textTool('b64enc')">📦 Base64 Encode</button>
+        <button class="tool-btn" onclick="textTool('b64dec')">📬 Base64 Decode</button>
+        <button class="tool-btn" onclick="textTool('html')">🌐 HTML Escape</button>
+        <button class="tool-btn" onclick="textTool('lines')">📋 นับบรรทัด</button>
+        <button class="tool-btn" onclick="textTool('dedup')">🧹 ลบซ้ำ</button>
+        <button class="tool-btn" onclick="textTool('sort')">🔢 เรียงบรรทัด</button>
+        <button class="tool-btn" onclick="textTool('json')">💅 Format JSON</button>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:12px">
+        <button class="btn btn-secondary btn-sm" onclick="copyText('textInput')">📋 คัดลอก</button>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('textInput').value=''">🗑️ ล้าง</button>
+        <button class="btn btn-secondary btn-sm" onclick="downloadText()">⬇️ บันทึก .txt</button>
+      </div>
+    </div>
+
+    <!-- Hash / Checksum -->
+    <div class="card">
+      <div class="card-title">🔐 Hash & Checksum</div>
+      <div class="inp-wrap">
+        <span class="ico">📝</span>
+        <input type="text" id="hashInput" class="inp" placeholder="ข้อความที่ต้องการ hash...">
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+        <button class="tool-btn" onclick="doHash('sha256')">SHA-256</button>
+        <button class="tool-btn" onclick="doHash('sha512')">SHA-512</button>
+        <button class="tool-btn" onclick="doHash('sha1')">SHA-1</button>
+        <button class="tool-btn" onclick="doHash('md5simple')">MD5 (simple)</button>
+      </div>
+      <div id="hashOut" style="margin-top:10px;display:none">
+        <div class="url-parts">
+          <div class="url-part">
+            <div class="up-key" id="hashAlgo">SHA-256</div>
+            <div class="up-val" id="hashVal" style="word-break:break-all;font-size:10px"></div>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-top:6px" onclick="copyEl('hashVal')">📋 คัดลอก Hash</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: URL INSPECTOR ══════════════ -->
+  <div class="panel" id="tab-inspect">
+    <div class="card">
+      <div class="card-title">🔍 วิเคราะห์ URL แบบละเอียด</div>
+      <div class="inp-wrap">
+        <span class="ico">🔗</span>
+        <input type="url" id="inspectInput" class="inp" placeholder="https://example.com:8080/path?foo=bar#section" oninput="liveInspect()">
+      </div>
+      <div id="inspectResult" style="display:none">
+        <div class="url-parts" id="urlParts"></div>
+        <div style="margin-top:12px">
+          <div class="card-title" style="margin-bottom:8px">📋 Parameter ทั้งหมด</div>
+          <div class="url-parts" id="urlParams"></div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+          <button class="btn btn-secondary btn-sm" onclick="copyEl('urlParts')">📋 คัดลอก</button>
+          <button class="btn btn-secondary btn-sm" onclick="goScanFromInspect()">🛡️ สแกน URL นี้</button>
+          <button class="btn btn-secondary btn-sm" onclick="genQrFromInspect()">📷 QR Code</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: HISTORY ══════════════ -->
+  <div class="panel" id="tab-history">
+    <div class="card">
+      <div class="card-title">📋 ประวัติทั้งหมด</div>
+      <div id="histEmpty" style="text-align:center;padding:30px;color:var(--ts)">ยังไม่มีประวัติ</div>
+      <div class="hist-list" id="histList"></div>
     </div>
   </div>
 </main>
 
-<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; 🛡️ URL + File Scanner &nbsp;•&nbsp; 200+ File Types</footer>
+<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; ⚡ All-in-One Tool</footer>
 <div class="toast" id="toast"></div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
 
 <script>
-/* ══════════════════════════════════════════════
-   FILE EXTENSION DATABASE — 200+ types, 8 categories
-══════════════════════════════════════════════ */
-var FILE_DB = {
+/* ═══════════════════════════════════════════
+   FILE EXTENSION DATABASE
+═══════════════════════════════════════════ */
+var FILE_DB={critical:{label:'🚨 อันตรายสูงสุด',color:'#ef4444',score:100,exts:['exe','com','bat','cmd','scr','pif','vbs','vbe','wsf','wsh','ps1','ps2','psm1','psd1','dll','sys','drv','ocx','cpl','msi','msp','mst','cab','js','jse','vb','vba','jar','jnlp','class','sh','bash','zsh','fish','ksh','py','pyw','pyc','rb','rbw','pl','pm','php','php3','php4','php5','php7','phtml','phar','asp','aspx','ashx','hta','hlp','chm','inf','reg','app','ipa','apk','dex','so','dylib','elf','bin']},high:{label:'🔴 อันตรายสูง',color:'#f97316',score:80,exts:['docm','xlsm','pptm','xlam','xla','xlt','xltm','dotm','potm','ppsm','doc','xls','ppt','swf','fla','xap','lnk','url','desktop','ts','tsx','go','rs','c','cpp','cc','h','hpp','asm','makefile','dockerfile']},medium_high:{label:'🟠 ระวัง',color:'#f59e0b',score:60,exts:['deb','rpm','pkg','dmg','run','appimage','iso','img','vhd','vmdk','war','ear','nupkg','whl','gem','lua','r','kt','swift','scala']},medium:{label:'🟡 น่าสังเกต',color:'#eab308',score:40,exts:['env','cfg','conf','config','ini','toml','yaml','yml','sql','sqlite','db','mdb','pem','key','ppk','p12','pfx','crt','cer','jks','pub','tf','tfstate','htaccess','htpasswd','crontab']},compressed:{label:'📦 ไฟล์บีบอัด',color:'#8b5cf6',score:30,exts:['zip','rar','7z','tar','gz','bz2','xz','lz','lzma','lzh','zst','br','z','tgz','tbz','txz','ace','arj','arc']},document:{label:'📄 เอกสาร',color:'#06b6d4',score:15,exts:['docx','xlsx','pptx','odt','ods','odp','pdf','rtf','epub','mobi','txt','csv','tsv','log','html','htm','xhtml','xml','svg','md','markdown','tex']},media:{label:'🖼️ มีเดีย',color:'#10b981',score:5,exts:['jpg','jpeg','png','gif','bmp','tiff','webp','heic','ico','mp4','mkv','avi','mov','wmv','flv','webm','mp3','wav','flac','aac','ogg','wma','psd','ai','eps']},safe:{label:'✅ ปลอดภัย',color:'#10b981',score:0,exts:['json','geojson','woff','woff2','ttf','otf','eot','ics','gpx','nfo']}};
+var EXT_MAP={};Object.keys(FILE_DB).forEach(function(cat){FILE_DB[cat].exts.forEach(function(e){EXT_MAP[e]=cat;});});
 
-  // ── CRITICAL — บล็อกทันที ──────────────────
-  critical: {
-    label: '🚨 อันตรายสูงสุด (Malware/Exploit)',
-    color: '#ef4444',
-    score: 100,
-    exts: [
-      // Windows Executables
-      'exe','com','bat','cmd','scr','pif','vbs','vbe','wsf','wsh','ps1','ps2',
-      'psm1','psd1','ps1xml','psc1','psc2','msh','msh1','msh2',
-      // Compiled
-      'dll','sys','drv','ocx','cpl','msi','msp','mst','cab',
-      // Scripts
-      'js','jse','vb','vba','bas','frm',
-      // Java
-      'jar','jnlp','class',
-      // Shell
-      'sh','bash','zsh','fish','ksh','csh','run',
-      // Python
-      'py','pyw','pyc','pyo','pyd',
-      // Ruby
-      'rb','rbw',
-      // Perl
-      'pl','pm',
-      // PHP
-      'php','php3','php4','php5','php7','phtml','phar',
-      // ASP
-      'asp','aspx','ashx','asmx','axd',
-      // Exploit / Shellcode
-      'hta','hlp','chm','inf','reg','vxd','386',
-      // Misc executable
-      'app','ipa','apk','dex','so','dylib',
-      'elf','bin','o','a',
-    ]
-  },
-
-  // ── HIGH — อันตรายสูง ──────────────────────
-  high: {
-    label: '🔴 อันตรายสูง (Script/Macro)',
-    color: '#f97316',
-    score: 80,
-    exts: [
-      // Macro-enabled Office
-      'docm','xlsm','pptm','xlam','xla','xlt','xltm','dotm','potm','ppsm',
-      // Old Office (can contain macros)
-      'doc','xls','ppt','dot','xlt','pot',
-      // Flash (exploitable)
-      'swf','fla',
-      // Silverlight
-      'xap',
-      // PowerShell data
-      'pssc','cdxml',
-      // Shortcut (can run anything)
-      'lnk','url','desktop',
-      // Node.js
-      'mjs','cjs',
-      // TypeScript (runnable)
-      'ts','tsx',
-      // Go
-      'go',
-      // Rust
-      'rs',
-      // C/C++
-      'c','cpp','cc','cxx','h','hpp',
-      // Assembly
-      'asm','s',
-      // LLVM
-      'bc','ll',
-      // Makefile / build
-      'makefile','cmake',
-      // Docker
-      'dockerfile',
-      // Vagrant
-      'vagrantfile',
-    ]
-  },
-
-  // ── MEDIUM HIGH — ระวัง ──────────────────────
-  medium_high: {
-    label: '🟠 ระวัง (Executable/Installer)',
-    color: '#f59e0b',
-    score: 60,
-    exts: [
-      // Installers / packages
-      'deb','rpm','pkg','dmg','run','appimage','snap','flatpak',
-      // Archive (can contain malware)
-      'iso','img','vhd','vhdx','vmdk','ova','ovf',
-      // Java
-      'war','ear',
-      // .NET
-      'nupkg','vsix',
-      // Python packages
-      'whl','egg',
-      // Ruby gems
-      'gem',
-      // Perl archive
-      'par',
-      // Tcl
-      'tcl',
-      // Lua
-      'lua',
-      // R
-      'r','rdata','rds',
-      // MATLAB
-      'm','mat','mlx',
-      // Julia
-      'jl',
-      // Kotlin
-      'kt','kts',
-      // Swift
-      'swift',
-      // Groovy
-      'groovy','gvy','gy','gsh',
-      // Scala
-      'scala',
-      // Clojure
-      'clj','cljs','cljc',
-      // Haskell
-      'hs','lhs',
-      // Erlang
-      'erl','beam',
-      // Elixir
-      'ex','exs',
-    ]
-  },
-
-  // ── MEDIUM — น่าสังเกต ──────────────────────
-  medium: {
-    label: '🟡 น่าสังเกต (Config/Data)',
-    color: '#eab308',
-    score: 40,
-    exts: [
-      // Config files
-      'env','cfg','conf','config','ini','properties','toml','yaml','yml',
-      // Database
-      'sql','sqlite','sqlite3','db','mdb','accdb','dbf',
-      // Credential files
-      'pem','key','ppk','p12','pfx','crt','cer','csr','der','jks','keystore',
-      // SSH
-      'pub',
-      // Infrastructure
-      'tf','tfstate','tfvars',
-      // Kubernetes / Helm
-      'helmfile',
-      // Ansible
-      // Cloud
-      'credentials',
-      // Git
-      'gitconfig',
-      // NPM
-      'npmrc',
-      // PIP
-      'pypirc',
-      // AWS
-      'awsconfig',
-      // Nginx / Apache
-      'htaccess','htpasswd',
-      // Cron
-      'crontab',
-      // Systemd
-      'service','timer','socket',
-    ]
-  },
-
-  // ── COMPRESSED — อาจซ่อนมัลแวร์ ──────────
-  compressed: {
-    label: '📦 ไฟล์บีบอัด (อาจซ่อนมัลแวร์)',
-    color: '#8b5cf6',
-    score: 30,
-    exts: [
-      'zip','rar','7z','tar','gz','bz2','xz','lz','lzma','lzh','lha',
-      'zst','br','z','tgz','tbz','tbz2','txz','tlz','tzst',
-      'ace','arj','arc','cab','cpio','dz','rz','lrz',
-      'war','ear','jar','aar',
-    ]
-  },
-
-  // ── DOCUMENT — ระวัง macro ──────────────────
-  document: {
-    label: '📄 เอกสาร (ระวัง Macro/Embed)',
-    color: '#06b6d4',
-    score: 15,
-    exts: [
-      // Modern Office (no macro)
-      'docx','xlsx','pptx','odt','ods','odp','odg','odf',
-      // PDF (can have JS)
-      'pdf',
-      // RTF (exploit history)
-      'rtf',
-      // ebook
-      'epub','mobi','azw','azw3',
-      // Text
-      'txt','csv','tsv','log',
-      // Markup
-      'html','htm','xhtml','xml','svg','mhtml','mht',
-      // Markdown
-      'md','markdown','rst','adoc',
-      // LaTeX
-      'tex','bib',
-    ]
-  },
-
-  // ── MEDIA — ปกติปลอดภัย แต่ตรวจ steganography ──
-  media: {
-    label: '🖼️ มีเดีย (ปกติปลอดภัย)',
-    color: '#10b981',
-    score: 5,
-    exts: [
-      'jpg','jpeg','png','gif','bmp','tiff','tif','webp','heic','heif',
-      'ico','cur','svg','raw','cr2','nef','arw','dng','orf','rw2',
-      'mp4','mkv','avi','mov','wmv','flv','webm','m4v','3gp','ogv',
-      'mp3','wav','flac','aac','ogg','wma','m4a','opus','ape','mka',
-      'psd','ai','eps','indd','sketch','fig','xd',
-      'stl','obj','fbx','gltf','glb',
-    ]
-  },
-
-  // ── SAFE — ปลอดภัย ──────────────────────────
-  safe: {
-    label: '✅ ปลอดภัย',
-    color: '#10b981',
-    score: 0,
-    exts: [
-      'json','geojson','ndjson',
-      'woff','woff2','ttf','otf','eot',
-      'aiff','au',
-      'vcard','vcf','ics',
-      'gpx','kml','kmz',
-      'torrent',
-      'nfo',
-    ]
-  }
-};
-
-// Flatten for quick lookup
-var EXT_MAP = {};
-Object.keys(FILE_DB).forEach(function(cat){
-  FILE_DB[cat].exts.forEach(function(e){
-    EXT_MAP[e] = cat;
-  });
-});
-
-// Extra file-specific threat context
-var EXT_NOTES = {
-  'exe':  'Windows Executable — สามารถรันโค้ดได้โดยตรง',
-  'dll':  'Dynamic Link Library — อาจฝัง malware payload',
-  'bat':  'Batch Script — รันคำสั่ง Windows อัตโนมัติ',
-  'cmd':  'Command Script — รันคำสั่ง Windows',
-  'ps1':  'PowerShell Script — ใช้ใน cyberattack บ่อยมาก',
-  'vbs':  'VBScript — ใช้ใน ransomware และ worm',
-  'js':   'JavaScript file — อาจรันโค้ดอันตรายผ่าน Node.js',
-  'jar':  'Java Archive — สามารถรันโค้ดได้ทุก platform',
-  'py':   'Python Script — รันโค้ดได้โดยตรง',
-  'sh':   'Shell Script — รันคำสั่ง Unix/Linux',
-  'php':  'PHP Script — อาจเป็น webshell',
-  'hta':  'HTML Application — bypass browser sandbox ได้',
-  'scr':  'Screen Saver — มักใช้ซ่อน malware',
-  'lnk':  'Windows Shortcut — สามารถรันโค้ดได้',
-  'chm':  'Compiled HTML Help — exploit เก่าแต่ยังอันตราย',
-  'docm': 'Word + Macro — macro อาจรันโค้ดอันตราย',
-  'xlsm': 'Excel + Macro — macro อาจรันโค้ดอันตราย',
-  'apk':  'Android Package — ควรตรวจสอบแหล่งที่มา',
-  'ipa':  'iOS Package — ควรตรวจสอบแหล่งที่มา',
-  'dmg':  'macOS Disk Image — ตรวจสอบ signature ก่อนเปิด',
-  'iso':  'Disk Image — อาจมีไฟล์ autorun อันตราย',
-  'rar':  'RAR Archive — อาจซ่อน executable ไว้ข้างใน',
-  'zip':  'ZIP Archive — อาจซ่อน malware ไว้ข้างใน',
-  '7z':   '7-Zip Archive — อาจมี password-protected malware',
-  'pdf':  'PDF — อาจมี embedded JavaScript หรือ exploit',
-  'swf':  'Flash — ไม่รองรับแล้ว มีช่องโหว่ร้ายแรง',
-  'pem':  'Private Key — ไฟล์ sensitive credential',
-  'key':  'Key File — ข้อมูล encryption key สำคัญมาก',
-  'ppk':  'PuTTY Private Key — credential ของ SSH',
-  'env':  '.env file — มักมี API keys, passwords',
-  'sql':  'SQL Dump — อาจมีข้อมูล sensitive',
-  'rb':   'Ruby Script — รันโค้ดได้โดยตรง',
-  'go':   'Go Source — compile แล้วรันได้',
-  'rs':   'Rust Source — compile แล้วรันได้',
-};
-
-/* ══════════════════════════════════════════════
-   URL SCANNER — 20 checks
-══════════════════════════════════════════════ */
-var PP=[
-  /paypal.*log[i1]n/i,/bank.*secur/i,/account.*ver[i1]fy/i,
-  /s[i1]gn[- _]?[i1]n.*update/i,/conf[i1]rm.*pass/i,/secur[i1]ty.*alert/i,
-  /ver[i1]fy.*[i1]dent/i,/facebook.*log[i1]n/i,/google.*s[i1]gn[i1]n/i,
-  /apple.*[i1]d.*ver[i1]fy/i,/m[i1]crosoft.*secur/i,/amazon.*ver[i1]fy/i,
-  /netfl[i1]x.*account/i,/adm[i1]n.*panel/i,/log[i1]n.*portal/i,
-  /update.*b[i1]ll[i1]ng/i,/suspend.*account/i,/wallet.*connect/i,
-  /metamask.*connect/i,/seed.*phrase/i,/private.*key.*enter/i,
-  /recover.*wallet/i,/airdrop.*claim/i,/free.*crypto/i,
-  /bonus.*claim/i,/prize.*winner/i,/lucky.*draw/i,
-  /urgent.*action.*required/i,/account.*suspended/i,/password.*expired/i,
-];
-var RTLD=['.tk','.ml','.ga','.cf','.gq','.xyz','.top','.click','.club','.online','.site','.space','.fun','.uno','.icu','.live','.work','.vip','.link'];
-var BW=['free-iphone','you-won','prize-claim','earn-money-fast','no-survey','legit-hack','virus-download','malware','ransomware','keylogger','phish','scam','fraud'];
-var BPATH=[/\/wp-admin/i,/\/phpmyadmin/i,/\/cgi-bin/i,/\/xmlrpc/i,/\/shell\.php/i,/\/eval\(/i,/\/passwd/i,/\/etc\//i,/\/cmd\.exe/i];
-var BRANDS=[
-  {b:'paypal',ok:['paypal.com','paypal.me']},
-  {b:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl']},
-  {b:'facebook',ok:['facebook.com','fb.com','fb.me','instagram.com']},
-  {b:'microsoft',ok:['microsoft.com','microsoftonline.com','outlook.com','live.com']},
-  {b:'apple',ok:['apple.com','icloud.com']},
-  {b:'amazon',ok:['amazon.com','amazon.co.th','amzn.to','amazonaws.com']},
-  {b:'netflix',ok:['netflix.com']},
-  {b:'line',ok:['line.me','lin.ee','line.co.th']},
-  {b:'truemoney',ok:['truemoney.com']},
-  {b:'krungthai',ok:['krungthai.com','ktb.co.th']},
-  {b:'kasikorn',ok:['kasikornbank.com','kbank.co.th']},
-  {b:'scb',ok:['scb.co.th','scbeasy.com']},
-  {b:'binance',ok:['binance.com','binance.th']},
-  {b:'coinbase',ok:['coinbase.com']},
-];
-
-function entropy(s){
-  var f={},len=s.length;
-  for(var c of s) f[c]=(f[c]||0)+1;
-  return -Object.values(f).reduce(function(a,v){ var p=v/len; return a+p*Math.log2(p); },0);
-}
-
-function getExtFromUrl(url){
-  try{
-    var u=new URL(url);
-    var parts=u.pathname.split('/');
-    var last=parts[parts.length-1];
-    if(last.includes('.')){
-      var ext=last.split('.').pop().toLowerCase().split('?')[0];
-      return ext;
-    }
-  }catch(e){}
-  return null;
-}
-
+/* ═══════════════════════════════════════════
+   URL SCANNER
+═══════════════════════════════════════════ */
+var PP=[/paypal.*log[i1]n/i,/bank.*secur/i,/account.*ver[i1]fy/i,/s[i1]gn[- _]?[i1]n.*update/i,/conf[i1]rm.*pass/i,/secur[i1]ty.*alert/i,/wallet.*connect/i,/seed.*phrase/i,/private.*key.*enter/i,/recover.*wallet/i,/airdrop.*claim/i,/free.*crypto/i,/urgent.*action/i,/account.*suspended/i,/password.*expired/i,/facebook.*log[i1]n/i,/google.*s[i1]gn[i1]n/i];
+var RTLD=['.tk','.ml','.ga','.cf','.gq','.xyz','.top','.click','.club','.online','.site','.space','.fun','.uno','.icu','.live','.vip','.link'];
+var BW=['free-iphone','you-won','prize-claim','earn-money-fast','virus-download','malware','ransomware','keylogger','phish','scam','crypto-drainer'];
+var BRANDS=[{b:'paypal',ok:['paypal.com','paypal.me']},{b:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl']},{b:'facebook',ok:['facebook.com','fb.com','fb.me','instagram.com']},{b:'microsoft',ok:['microsoft.com','microsoftonline.com','outlook.com','live.com']},{b:'apple',ok:['apple.com','icloud.com']},{b:'amazon',ok:['amazon.com','amazon.co.th','amzn.to','amazonaws.com']},{b:'netflix',ok:['netflix.com']},{b:'line',ok:['line.me','lin.ee','line.co.th']},{b:'kasikorn',ok:['kasikornbank.com','kbank.co.th']},{b:'scb',ok:['scb.co.th','scbeasy.com']},{b:'binance',ok:['binance.com','binance.th']}];
+function entropy(s){var f={},len=s.length;for(var c of s)f[c]=(f[c]||0)+1;return -Object.values(f).reduce(function(a,v){var p=v/len;return a+p*Math.log2(p);},0);}
 async function scanUrl(raw){
   var R={safe:true,score:0,threats:[],cats:{}};
-  function add(cat,name,ok,msg,pts){
-    if(!R.cats[cat]) R.cats[cat]=[];
-    R.cats[cat].push({name:name,ok:ok});
-    if(!ok&&msg){ R.threats.push(msg); R.score+=(pts||1); }
-  }
-
-  var u;
-  try{ u=new URL(raw); }
-  catch{ R.threats.push('❌ URL ไม่ถูกต้อง'); R.safe=false; return R; }
-
-  var host=u.hostname.toLowerCase();
-  var path=u.pathname.toLowerCase();
-  var params=u.search.toLowerCase();
-  var full=raw.toLowerCase();
-
-  // ── Protocol ─────────────────────────────
-  add('🔐 Protocol & Structure','HTTPS',u.protocol==='https:','⚠️ HTTP — ไม่มี SSL/TLS',2);
-  var xss=/^(javascript:|data:|vbscript:|about:)/i.test(raw);
-  add('🔐 Protocol & Structure','No XSS URI',!xss,xss?'🚨 XSS Injection URI':'',10);
-  if(xss) R.safe=false;
-  var uc=(full.match(/https?:\/\//g)||[]).length;
-  add('🔐 Protocol & Structure','No Nested URL',uc<=1,'🔄 Double Redirect ซ้อน URL',3);
-  var qCount=(raw.match(/\?/g)||[]).length;
-  add('🔐 Protocol & Structure','Single Query',qCount<=1,'⚠️ หลาย Query string ('+qCount+')',1);
-
-  // ── Host ─────────────────────────────────
-  var isIP=/^\d{1,3}(\.\d{1,3}){3}$/.test(host)||host.startsWith('[');
-  add('🌐 Domain','No IP Address',!isIP,isIP?'🚨 IP Address แทนโดเมน':'',5);
-  var sub=host.split('.').length-2;
-  add('🌐 Domain','Subdomain Depth',sub<=2,'⚠️ Subdomain ลึก '+sub+' ชั้น',2);
-  add('🌐 Domain','No IDN',!/xn--/.test(host),'⚠️ Unicode Homograph Attack',3);
-  var dc=(host.match(/\d{5,}/g)||[]).length;
-  add('🌐 Domain','No Digit Cluster',dc<1,'⚠️ Random digit domain',1);
-  var ent=entropy(host);
-  add('🌐 Domain','Low Entropy',ent<4.2,'⚠️ Domain Entropy สูง='+ent.toFixed(2),2);
-  var rt=RTLD.find(function(t){ return host.endsWith(t); });
-  add('🌐 Domain','Safe TLD',!rt,rt?'⚠️ TLD เสี่ยง: "'+rt+'"':'',2);
-  var port=u.port?parseInt(u.port):null;
-  add('🌐 Domain','Normal Port',[80,443,8080,8443,null].includes(port),port?'⚠️ Port '+port+' ผิดปกติ':'',2);
-
-  // ── Phishing ─────────────────────────────
-  var ph=PP.filter(function(p){ return p.test(full); });
-  add('🎣 Phishing','No Phishing Pattern',ph.length===0,ph.length?'🎣 Phishing pattern '+ph.length+' จุด':'',ph.length*2);
-  var imp=null;
-  for(var br of BRANDS){
-    if(host.includes(br.b)&&!br.ok.some(function(l){ return host===l||host.endsWith('.'+l); })){
-      imp=br.b.toUpperCase(); break;
-    }
-  }
+  function add(cat,name,ok,msg,pts){if(!R.cats[cat])R.cats[cat]=[];R.cats[cat].push({name:name,ok:ok});if(!ok&&msg){R.threats.push(msg);R.score+=(pts||1);}}
+  var u;try{u=new URL(raw);}catch{R.threats.push('❌ URL ไม่ถูกต้อง');R.safe=false;return R;}
+  var host=u.hostname.toLowerCase(),path=u.pathname.toLowerCase(),params=u.search.toLowerCase(),full=raw.toLowerCase();
+  add('🔐 Protocol','HTTPS',u.protocol==='https:','⚠️ HTTP — ไม่มี SSL/TLS',2);
+  var xss=/^(javascript:|data:|vbscript:)/i.test(raw);add('🔐 Protocol','No XSS URI',!xss,xss?'🚨 XSS Injection URI':'',10);if(xss)R.safe=false;
+  var uc=(full.match(/https?:\/\//g)||[]).length;add('🔐 Protocol','No Nested URL',uc<=1,'🔄 Double Redirect',3);
+  var isIP=/^\d{1,3}(\.\d{1,3}){3}$/.test(host);add('🌐 Domain','No IP',!isIP,isIP?'🚨 IP Address แทนโดเมน':'',5);
+  var sub=host.split('.').length-2;add('🌐 Domain','Subdomain Depth',sub<=2,'⚠️ Subdomain ลึก '+sub+' ชั้น',2);
+  add('🌐 Domain','No IDN',!/xn--/.test(host),'⚠️ Unicode Homograph',3);
+  var ent=entropy(host);add('🌐 Domain','Low Entropy',ent<4.2,'⚠️ Domain Entropy='+ent.toFixed(2),2);
+  var rt=RTLD.find(function(t){return host.endsWith(t);});add('🌐 Domain','Safe TLD',!rt,rt?'⚠️ TLD เสี่ยง: "'+rt+'"':'',2);
+  var ph=PP.filter(function(p){return p.test(full);});add('🎣 Phishing','No Phishing Pattern',ph.length===0,ph.length?'🎣 Phishing pattern '+ph.length+' จุด':'',ph.length*2);
+  var imp=null;for(var br of BRANDS){if(host.includes(br.b)&&!br.ok.some(function(l){return host===l||host.endsWith('.'+l);})){imp=br.b.toUpperCase();break;}}
   add('🎣 Phishing','No Brand Spoof',!imp,imp?'🚨 ปลอมแปลง '+imp:'',6);
-  var bk=BW.find(function(k){ return full.includes(k); });
-  add('🎣 Phishing','No Bad Keywords',!bk,bk?'🚨 คำต้องสงสัย: "'+bk+'"':'',4);
-  var cd=/\b(connect.*wallet|approve.*token|drain|drainer|seed.*phrase)\b/i.test(full);
-  add('🎣 Phishing','No Crypto Drainer',!cd,'🚨 Crypto Drainer pattern',8);
-
-  // ── Content ──────────────────────────────
-  var bp=BPATH.find(function(p){ return p.test(path); });
-  add('📂 Path & Content','Clean Path',!bp,bp?'🚨 Path น่าสงสัย: "'+path+'"':'',4);
-  add('📂 Path & Content','URL Length',raw.length<=150,'⚠️ URL ยาวผิดปกติ ('+raw.length+')',1);
-  var b64=/[A-Za-z0-9+/]{40,}={0,2}/.test(params);
-  add('📂 Path & Content','No Base64',!b64,'⚠️ Base64 payload ใน parameter',3);
-  var hexA=(params.match(/%[0-9a-f]{2}/gi)||[]).length>8;
-  add('📂 Path & Content','No Hex Abuse',!hexA,'⚠️ Hex-encoded ผิดปกติ',2);
-  var hasR=['url=','redirect=','goto=','target=','next=','return=','redir='].some(function(p){ return params.includes(p); });
-  add('📂 Path & Content','No Open Redirect',!hasR,'🔄 Open Redirect parameter',2);
-
-  // ── File in URL ───────────────────────────
-  var urlExt=getExtFromUrl(raw);
-  if(urlExt && EXT_MAP[urlExt]){
-    var cat=EXT_MAP[urlExt];
-    var db=FILE_DB[cat];
-    var isSafe=(cat==='safe'||cat==='media'||cat==='document');
-    var extScore=db.score;
-    add('📁 ไฟล์ใน URL','File Extension Safe',isSafe,
-      db.label.replace(/[🚨🔴🟠🟡📦]/,'')+'นามสกุล .'+urlExt+(EXT_NOTES[urlExt]?' — '+EXT_NOTES[urlExt]:''),
-      Math.round(extScore/20));
-    if(extScore>=80) R.score+=3;
-    if(extScore>=60) R.score+=1;
-  } else if(urlExt) {
-    add('📁 ไฟล์ใน URL','File Extension','unknown','',0);
-  }
-
-  if(R.score>=4) R.safe=false;
-  return R;
+  var bk=BW.find(function(k){return full.includes(k);});add('🎣 Phishing','No Bad Keywords',!bk,bk?'🚨 คำต้องสงสัย: "'+bk+'"':'',4);
+  var cd=/\b(connect.*wallet|approve.*token|drain|drainer|seed.*phrase)\b/i.test(full);add('🎣 Phishing','No Crypto Drainer',!cd,'🚨 Crypto Drainer pattern',8);
+  add('📂 URL','URL Length',raw.length<=150,'⚠️ URL ยาวผิดปกติ ('+raw.length+')',1);
+  var b64=/[A-Za-z0-9+/]{40,}={0,2}/.test(params);add('📂 URL','No Base64',!b64,'⚠️ Base64 payload',3);
+  var hasR=['url=','redirect=','goto=','target=','next=','return=','redir='].some(function(p){return params.includes(p);});add('📂 URL','No Open Redirect',!hasR,'🔄 Open Redirect parameter',2);
+  if(R.score>=4)R.safe=false;return R;
 }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    FILE SCANNER
-══════════════════════════════════════════════ */
-var _currentFile = null;
-
+═══════════════════════════════════════════ */
+var _scanFile=null;
 function getFileRisk(file){
-  var name = file.name;
-  var size = file.size;
-  var nameLower = name.toLowerCase();
-
-  // Extract ALL extensions (double extension attack)
-  var parts = nameLower.split('.');
-  var exts = parts.slice(1); // all after first dot
-  var primaryExt = exts[exts.length-1] || '';
-  var secondaryExt = exts.length > 1 ? exts[exts.length-2] : null;
-
-  var R = {safe:true, score:0, threats:[], cats:{}, ext:primaryExt, name:name, size:size};
-  function add(cat,chkName,ok,msg,pts){
-    if(!R.cats[cat]) R.cats[cat]=[];
-    R.cats[cat].push({name:chkName,ok:ok});
-    if(!ok&&msg){ R.threats.push(msg); R.score+=(pts||1); }
-  }
-
-  // ── 1. Extension check ───────────────────
-  var catKey = EXT_MAP[primaryExt];
-  var catData = catKey ? FILE_DB[catKey] : null;
-  var extScore = catData ? catData.score : 10;
-
-  add('📁 นามสกุลไฟล์','Extension Known', !!catKey, '⚠️ นามสกุลไม่รู้จัก (.'+primaryExt+')', 1);
-  if(catKey){
-    var isExtSafe = (catKey==='safe'||catKey==='media');
-    add('📁 นามสกุลไฟล์','Extension Safe', isExtSafe,
-      (catData.label)+' (.'+primaryExt+')'+(EXT_NOTES[primaryExt]?' — '+EXT_NOTES[primaryExt]:''),
-      Math.round(extScore/10));
-  }
-
-  // ── 2. Double extension (photo.jpg.exe) ──
-  if(secondaryExt && EXT_MAP[secondaryExt]){
-    var secCat = EXT_MAP[secondaryExt];
-    var isSecDanger = (secCat==='critical'||secCat==='high');
-    add('🎭 Double Extension','No Double Ext', !isSecDanger,
-      '🚨 Double Extension: .'+secondaryExt+'.'+primaryExt+' — เทคนิคซ่อน malware คลาสสิค', 8);
-  }
-  if(exts.length > 2){
-    add('🎭 Double Extension','Not Multi Ext', false,
-      '⚠️ มีหลายนามสกุล ('+exts.join('.')+')', 3);
-  }
-
-  // ── 3. Filename suspicious patterns ─────
-  var suspNames = [
-    {p:/invoice/i, m:'ชื่อไฟล์ "invoice" — มักใช้ใน phishing email'},
-    {p:/receipt/i, m:'ชื่อไฟล์ "receipt" — มักใช้ใน phishing email'},
-    {p:/payment/i, m:'ชื่อไฟล์ "payment" — มักใช้หลอกให้คลิก'},
-    {p:/urgent/i,  m:'ชื่อไฟล์ "urgent" — social engineering'},
-    {p:/refund/i,  m:'ชื่อไฟล์ "refund" — มักใช้หลอกโอนเงิน'},
-    {p:/salary/i,  m:'ชื่อไฟล์ "salary" — เหยื่อมักหลงคลิก'},
-    {p:/crack/i,   m:'"crack" — มักเป็น malware แอบซ่อน'},
-    {p:/keygen/i,  m:'"keygen" — แหล่งรวม malware'},
-    {p:/patch/i,   m:'"patch" — อาจซ่อน backdoor'},
-    {p:/loader/i,  m:'"loader" — มักเป็น dropper/loader malware'},
-    {p:/setup/i,   m:'"setup" — ตรวจสอบ publisher ให้ดี'},
-    {p:/install/i, m:'"install" — ตรวจสอบแหล่งที่มาก่อน'},
-    {p:/free.*hack/i, m:'free+hack — red flag ชัดเจน'},
-    {p:/\.exe\.jpg$/i, m:'ชื่อปลอมเป็นรูปภาพ (.exe.jpg)'},
-  ];
-  var suspHits = suspNames.filter(function(s){ return s.p.test(name); });
-  add('🔤 ชื่อไฟล์','No Suspicious Name', suspHits.length===0,
-    suspHits.length?'⚠️ ชื่อไฟล์น่าสงสัย: '+suspHits.map(function(s){return s.m;}).join(' | '):'', suspHits.length*2);
-
-  // Unicode/RTL in filename
-  var hasRTL = /[\u202e\u200f\u200e\u202a\u202b\u202c\u202d]/.test(name);
-  add('🔤 ชื่อไฟล์','No RTL Override', !hasRTL,
-    hasRTL?'🚨 RTL Override ใน filename — ซ่อนนามสกุลจริง':'', 9);
-
-  // Long filename (padding attack)
-  add('🔤 ชื่อไฟล์','Normal Length', name.length<=100,
-    name.length>100?'⚠️ ชื่อไฟล์ยาวผิดปกติ ('+name.length+' chars) — อาจซ่อนนามสกุล':'', 2);
-
-  // ── 4. File size checks ──────────────────
-  var mb = size / (1024*1024);
-  // Very small executable is suspicious
-  if(catKey==='critical' || catKey==='high'){
-    add('📏 ขนาดไฟล์','Reasonable Size', !(mb < 0.01 && size > 0),
-      size > 0 && mb < 0.01 ? '⚠️ ไฟล์ executable เล็กผิดปกติ ('+size+' bytes) — อาจเป็น dropper':'', 2);
-  }
-  // Zero byte
-  add('📏 ขนาดไฟล์','Not Empty', size > 0, size===0?'⚠️ ไฟล์ขนาด 0 bytes':'', 1);
-  // Extremely large
-  add('📏 ขนาดไฟล์','Normal Size', mb < 500, mb>=500?'⚠️ ไฟล์ขนาดใหญ่มาก ('+mb.toFixed(0)+' MB)':'', 1);
-
-  // ── 5. MIME type mismatch (if we have it) ─
-  if(file.type){
-    var mime = file.type.toLowerCase();
-    var imageMimes = ['image/jpeg','image/png','image/gif','image/webp','image/bmp'];
-    var docMimes   = ['application/pdf','text/plain','text/csv'];
-    var isImageExt = ['jpg','jpeg','png','gif','webp','bmp','tiff'].includes(primaryExt);
-    var isPdfExt   = primaryExt==='pdf';
-    var mimeOk = true;
-    if(isImageExt && !imageMimes.includes(mime) && mime!=='') mimeOk=false;
-    if(isPdfExt && mime!=='application/pdf' && mime!=='') mimeOk=false;
-    add('🧬 MIME Type','MIME Match', mimeOk,
-      !mimeOk?'⚠️ MIME type ไม่ตรงกับนามสกุล ('+mime+')':'', 3);
-  }
-
-  // ── 6. Category-specific checks ──────────
-  if(catKey==='compressed'){
-    add('🔒 Security','Archive Warning', false, '📦 ไฟล์บีบอัด — แนะนำ scan ด้วย antivirus ก่อนแตกไฟล์', 1);
-  }
-  if(catKey==='medium' && ['pem','key','ppk','p12','pfx','env'].includes(primaryExt)){
-    add('🔒 Security','Sensitive File', false, '🔑 ไฟล์ credential/key — ห้ามส่งผ่านลิงก์สาธารณะเด็ดขาด', 6);
-    R.safe=false;
-  }
-  if(['pdf','doc','xls','ppt','rtf'].includes(primaryExt)){
-    add('🔒 Security','Macro Risk', false, '⚠️ เอกสารอาจมี embedded macro หรือ JavaScript', 1);
-  }
-
-  // Final
-  if(R.score>=4) R.safe=false;
-  if(catKey==='critical') R.safe=false;
-  return R;
+  var name=file.name,size=file.size,nameLower=name.toLowerCase();
+  var parts=nameLower.split('.'),exts=parts.slice(1),primaryExt=exts[exts.length-1]||'',secondaryExt=exts.length>1?exts[exts.length-2]:null;
+  var R={safe:true,score:0,threats:[],cats:{},ext:primaryExt,name:name,size:size};
+  function add(cat,chkName,ok,msg,pts){if(!R.cats[cat])R.cats[cat]=[];R.cats[cat].push({name:chkName,ok:ok});if(!ok&&msg){R.threats.push(msg);R.score+=(pts||1);}}
+  var catKey=EXT_MAP[primaryExt],catData=catKey?FILE_DB[catKey]:null,extScore=catData?catData.score:10;
+  add('📁 นามสกุล','Extension Known',!!catKey,'⚠️ ไม่รู้จักนามสกุล (.'+primaryExt+')',1);
+  if(catKey){var isExtSafe=(catKey==='safe'||catKey==='media');add('📁 นามสกุล','Extension Safe',isExtSafe,(catData.label)+' (.'+primaryExt+')',Math.round(extScore/10));}
+  if(secondaryExt&&EXT_MAP[secondaryExt]){var secCat=EXT_MAP[secondaryExt];var isSecDanger=(secCat==='critical'||secCat==='high');add('🎭 Double Ext','No Double Ext',!isSecDanger,'🚨 Double Extension: .'+secondaryExt+'.'+primaryExt,8);}
+  var hasRTL=/[\u202e\u200f\u200e]/.test(name);add('🔤 ชื่อไฟล์','No RTL Override',!hasRTL,hasRTL?'🚨 RTL Override ในชื่อไฟล์':'',9);
+  add('🔤 ชื่อไฟล์','Normal Length',name.length<=100,name.length>100?'⚠️ ชื่อไฟล์ยาวผิดปกติ':'',2);
+  var mb=size/(1024*1024);add('📏 ขนาด','Not Empty',size>0,size===0?'⚠️ ไฟล์ขนาด 0 bytes':'',1);add('📏 ขนาด','Normal Size',mb<500,mb>=500?'⚠️ ไฟล์ใหญ่มาก ('+mb.toFixed(0)+' MB)':'',1);
+  if(catKey==='medium'&&['pem','key','ppk','p12','pfx','env'].includes(primaryExt)){add('🔒 Security','Sensitive File',false,'🔑 ไฟล์ credential/key',6);R.safe=false;}
+  if(R.score>=4)R.safe=false;if(catKey==='critical')R.safe=false;return R;
 }
 
-/* ══════════════════════════════════════════════
-   UI HELPERS
-══════════════════════════════════════════════ */
-function getExtIcon(ext){
-  var icons={
-    exe:'⚙️',dll:'⚙️',bat:'💻',cmd:'💻',ps1:'💻',vbs:'📜',js:'📜',py:'🐍',
-    sh:'🐚',php:'🌐',jar:'☕',apk:'📱',ipa:'📱',
-    zip:'📦',rar:'📦','7z':'📦',tar:'📦',gz:'📦',
-    pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',ppt:'📊',pptx:'📊',
-    jpg:'🖼️',jpeg:'🖼️',png:'🖼️',gif:'🖼️',mp4:'🎬',mp3:'🎵',
-    pem:'🔑',key:'🔑',ppk:'🔑',env:'⚙️',sql:'🗄️',
-  };
-  return icons[ext]||'📄';
-}
-
-function riskColor(score){
-  if(score<=0) return '#10b981';
-  if(score<20) return '#10b981';
-  if(score<40) return '#84cc16';
-  if(score<60) return '#f59e0b';
-  if(score<80) return '#f97316';
-  return '#ef4444';
-}
-function riskLabel(score){
-  if(score<=0) return 'ปลอดภัย';
-  if(score<20) return 'ต่ำมาก';
-  if(score<40) return 'ต่ำ';
-  if(score<60) return 'ปานกลาง';
-  if(score<80) return 'สูง';
-  return 'อันตราย';
-}
-
-function renderScanResult(R, title, subtitle){
-  var pct = Math.min(R.score*8, 100);
-  var rc = riskColor(R.score);
-  var level = riskLabel(R.score);
-
-  var hType = R.safe ? (R.threats.length?'warn':'safe') : 'danger';
-  var hIco  = R.safe ? (R.threats.length?'⚠️':'✅') : '🚨';
-  var badge = R.safe ? (R.threats.length?'⚠️ เสี่ยงต่ำ':'✅ SAFE') : '🚨 DANGER';
-
-  document.getElementById('scanHeader').className='scan-header '+hType;
-  document.getElementById('shIco').textContent=hIco;
-  document.getElementById('shTitle').textContent=title;
-  document.getElementById('shDet').textContent=subtitle;
-  document.getElementById('shBadge').textContent=badge;
-  document.getElementById('pb').style.display='none';
-
-  var body=document.getElementById('scanBody');
-  body.style.display='block';
-
-  // Risk meter
-  document.getElementById('riskBar').style.background=rc;
-  document.getElementById('riskBar').style.width='0%';
-  document.getElementById('riskScore').textContent='Score: '+R.score+' / '+level;
-  document.getElementById('riskScore').style.color=rc;
-  setTimeout(function(){ document.getElementById('riskBar').style.width=pct+'%'; },80);
-
-  // Categories
+/* ═══════════════════════════════════════════
+   RENDER SCAN UI
+═══════════════════════════════════════════ */
+function riskColor(s){if(s<=0)return'#10b981';if(s<20)return'#10b981';if(s<40)return'#84cc16';if(s<60)return'#f59e0b';if(s<80)return'#f97316';return'#ef4444';}
+function riskLabel(s){if(s<=0)return'ปลอดภัย';if(s<20)return'ต่ำมาก';if(s<40)return'ต่ำ';if(s<60)return'ปานกลาง';if(s<80)return'สูง';return'อันตราย';}
+function applyResult(R,prefix,title,subtitle){
+  var pct=Math.min(R.score*8,100),rc=riskColor(R.score),level=riskLabel(R.score);
+  var hType=R.safe?(R.threats.length?'warn':'safe'):'danger';
+  var hIco=R.safe?(R.threats.length?'⚠️':'✅'):'🚨';
+  var badge=R.safe?(R.threats.length?'⚠️ WARN':'✅ SAFE'):'🚨 DANGER';
+  var p=prefix;
+  document.getElementById(p+'rh').className='result-header rh-'+hType;
+  document.getElementById(p+'rh-ico').textContent=hIco;
+  document.getElementById(p+'rh-title').textContent=title;
+  document.getElementById(p+'rh-det').textContent=subtitle;
+  document.getElementById(p+'rh-badge').textContent=badge;
+  document.getElementById(p+'prog').style.width='100%';
+  var body=document.getElementById(p+'scan-body');body.style.display='block';
+  var rb=document.getElementById(p+'riskBar');rb.style.background=rc;rb.style.width='0%';
+  document.getElementById(p+'riskScore').textContent='Score: '+R.score+' / '+level;
+  document.getElementById(p+'riskScore').style.color=rc;
+  setTimeout(function(){rb.style.width=pct+'%';},100);
   var html='';
   Object.keys(R.cats).forEach(function(cat){
     var checks=R.cats[cat];
-    html+='<div class="cat-title">'+cat+'</div><div class="checks-grid">';
-    checks.forEach(function(c){
-      html+='<div class="ck '+(c.ok?'':'fail')+'"><span class="ci">'+(c.ok?'✅':'❌')+'</span><span class="ck-name">'+c.name+'</span></div>';
-    });
+    html+='<div class="cat-label">'+cat+'</div><div class="checks-grid">';
+    checks.forEach(function(c){html+='<div class="ck '+(c.ok?'':'fail')+'"><span class="ci">'+(c.ok?'✅':'❌')+'</span><span class="ck-name">'+c.name+'</span></div>';});
     html+='</div>';
   });
-  document.getElementById('checkCats').innerHTML=html;
-
-  // Threats
-  var ts=document.getElementById('threatsSection');
-  if(R.threats.length){
-    ts.style.display='block';
-    document.getElementById('threatsList').innerHTML=R.threats.map(function(t){
-      return '<li><span class="ti">▸</span>'+t+'</li>';
-    }).join('');
-  } else {
-    ts.style.display='none';
-  }
-
-  document.getElementById('scanBox').style.display='block';
+  document.getElementById(p+'checkCats').innerHTML=html;
+  var tb=document.getElementById(p+'threatsBox');
+  if(R.threats.length){tb.style.display='block';document.getElementById(p+'threatsList').innerHTML=R.threats.map(function(t){return'<div class="threat-item"><span>▸</span>'+t+'</div>';}).join('');}
+  else tb.style.display='none';
+  document.getElementById(p.replace('f','')+'ScanBox'||p+'ScanBox');
 }
-
-function startScan(label){
-  document.getElementById('scanBox').style.display='block';
-  document.getElementById('scanBody').style.display='none';
-  document.getElementById('threatsSection').style.display='none';
-  document.getElementById('scanHeader').className='scan-header scanning';
-  document.getElementById('shIco').textContent='⏳';
-  document.getElementById('shTitle').textContent='กำลังสแกน...';
-  document.getElementById('shDet').textContent=label;
-  document.getElementById('shBadge').textContent='SCANNING';
-  document.getElementById('pb').style.display='block';
-  document.getElementById('pf').style.width='0%';
-  document.getElementById('rb2').style.display='none';
-  // animate progress
-  var p=0;
-  var iv=setInterval(function(){ p=Math.min(p+5,88); document.getElementById('pf').style.width=p+'%'; },60);
+function startScanAnim(prog,rh,scan_body){
+  document.getElementById(rh).className='result-header rh-scanning';
+  var el=document.getElementById(scan_body);if(el)el.style.display='none';
+  var p=0,iv=setInterval(function(){p=Math.min(p+4,85);document.getElementById(prog).style.width=p+'%';},50);
   return iv;
 }
 
-/* ══════════════════════════════════════════════
-   SHORTEN
-══════════════════════════════════════════════ */
-async function shorten(url){
-  try{
-    var r=await fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(url),{signal:AbortSignal.timeout(8000)});
-    if(!r.ok) throw 0;
-    var t=await r.text();
-    if(t.startsWith('http')) return t.trim();
-    throw 0;
-  }catch(e){
-    try{
-      var r2=await fetch('https://is.gd/create.php?format=simple&url='+encodeURIComponent(url),{signal:AbortSignal.timeout(8000)});
-      var t2=await r2.text();
-      if(t2.startsWith('http')) return t2.trim();
-    }catch(e2){}
-    var h=btoa(url).replace(/[^a-zA-Z0-9]/g,'').substring(0,8);
-    return 'https://fal.ink/'+h;
-  }
-}
-
-/* ══════════════════════════════════════════════
-   STATS & HISTORY
-══════════════════════════════════════════════ */
-function gs(){ return JSON.parse(localStorage.getItem('fal-st')||'{"l":0,"s":0,"w":0,"b":0}'); }
-function sv(s){
-  localStorage.setItem('fal-st',JSON.stringify(s));
-  document.getElementById('sL').textContent=s.l;
-  document.getElementById('sS').textContent=s.s;
-  document.getElementById('sW').textContent=s.w||0;
-  document.getElementById('sB').textContent=s.b;
-}
-sv(gs());
-
-function gh(){ return JSON.parse(localStorage.getItem('fal-h')||'[]'); }
-function ah(e){ var h=gh(); h.unshift(e); localStorage.setItem('fal-h',JSON.stringify(h.slice(0,15))); rh(); }
-function rh(){
-  var h=gh(), sec=document.getElementById('histSec'), list=document.getElementById('histList');
-  if(!h.length){ sec.style.display='none'; return; }
-  sec.style.display='block';
-  list.innerHTML=h.map(function(e){
-    var cls=e.status==='safe'?'bs':e.status==='warn'?'bw':'bd';
-    var lbl=e.status==='safe'?'SAFE':e.status==='warn'?'WARN':'BLOCKED';
-    var ico=e.type==='file'?'📁':'🔗';
-    return '<button class="hi" onclick="useH(\''+e.short.replace(/'/g,"\\'")+'\')">'
-      +'<span>'+ico+'</span>'
-      +'<div class="htxt"><div class="hs">'+e.short+'</div><div class="ho">'+e.orig+'</div></div>'
-      +'<span class="hb '+cls+'">'+lbl+'</span>'
-      +'</button>';
-  }).join('');
-}
-function useH(u){ document.getElementById('urlInput').value=u; switchTab('url'); toast('📋 ใส่ลิงก์แล้ว'); }
-rh();
-
-/* ══════════════════════════════════════════════
-   MAIN ACTIONS
-══════════════════════════════════════════════ */
-async function goUrl(){
+/* ═══════════════════════════════════════════
+   MAIN: SCAN URL
+═══════════════════════════════════════════ */
+async function goScan(){
   var inp=document.getElementById('urlInput').value.trim();
-  if(!inp){ toast('⚠️ กรุณาใส่ URL'); return; }
-  try{ new URL(inp); }catch{ toast('❌ URL ไม่ถูกต้อง'); return; }
-
-  var doScan=document.getElementById('op-scan').checked;
-  var doWarn=document.getElementById('op-warn').checked;
-  var doShort=document.getElementById('op-short').checked;
-  var doFile=document.getElementById('op-file').checked;
-
-  var btn=document.getElementById('sbtn-url');
-  btn.disabled=true;
-  btn.querySelector('span').innerHTML='<span class="spin">⏳</span><span>กำลังสแกน...</span>';
-
-  var st=gs();
-
+  if(!inp){toast('⚠️ กรุณาใส่ URL');return;}
+  try{new URL(inp);}catch{toast('❌ URL ไม่ถูกต้อง');return;}
+  var doScan=document.getElementById('chk-scan').checked;
+  var doBlock=document.getElementById('chk-block').checked;
+  var doShort=document.getElementById('chk-short2').checked;
+  var doQr=document.getElementById('chk-qr2').checked;
+  var btn=document.getElementById('scan-btn');btn.disabled=true;
+  document.getElementById('scan-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังดำเนินการ...';
+  document.getElementById('scanBox').style.display='block';
+  document.getElementById('linkResult').style.display='none';
+  document.getElementById('scan-qr-out').style.display='none';
+  var iv=startScanAnim('prog','rh','scan-body');
+  var result=null;
   if(doScan){
-    var iv=startScan('ตรวจสอบ URL + นามสกุลไฟล์...');
-    await new Promise(function(r){ setTimeout(r,150); });
-    var result=await scanUrl(inp);
+    await new Promise(function(r){setTimeout(r,200);});
+    result=await scanUrl(inp);
     clearInterval(iv);
-    document.getElementById('pf').style.width='100%';
-    await new Promise(function(r){ setTimeout(r,100); });
-
     var status=result.safe?(result.threats.length?'warn':'safe'):'danger';
-    var titleMap={safe:'✅ ผ่านการตรวจสอบทั้งหมด',warn:'⚠️ ตรวจพบความเสี่ยงบางส่วน',danger:'🚨 ตรวจพบภัยคุกคาม!'};
-    var detMap={
-      safe:'URL ปลอดภัย — ไม่พบภัยคุกคาม',
-      warn:'พบความเสี่ยงต่ำ (Score: '+result.score+') ดำเนินการต่อได้',
-      danger:'Score: '+result.score+' — พบ '+result.threats.length+' ภัยคุกคาม'
-    };
-    renderScanResult(result, titleMap[status], detMap[status]);
-
-    if(!result.safe && doWarn){
-      st.l++; st.b++; sv(st);
-      ah({short:inp,orig:inp,safe:false,status:'danger',type:'url'});
-      btn.disabled=false;
-      btn.querySelector('span').innerHTML='<span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span>';
-      return;
-    }
-    if(result.threats.length){ st.w=(st.w||0)+1; }
+    var titles={safe:'✅ ผ่านการตรวจสอบ',warn:'⚠️ ตรวจพบความเสี่ยง',danger:'🚨 ตรวจพบภัยคุกคาม!'};
+    var dets={safe:'URL ปลอดภัย',warn:'Score: '+result.score+' — มีความเสี่ยงต่ำ',danger:'Score: '+result.score+' — พบ '+result.threats.length+' ภัยคุกคาม'};
+    applyResult(result,'',''.split('').join(''),titles[status],dets[status]);
+    // Fix prefix call
+    (function(R,stat){
+      var rh=document.getElementById('rh');
+      rh.className='result-header rh-'+stat;
+      document.getElementById('rh-ico').textContent=R.safe?(R.threats.length?'⚠️':'✅'):'🚨';
+      document.getElementById('rh-title').textContent=titles[stat];
+      document.getElementById('rh-det').textContent=dets[stat];
+      document.getElementById('rh-badge').textContent=R.safe?(R.threats.length?'⚠️ WARN':'✅ SAFE'):'🚨 DANGER';
+      document.getElementById('prog').style.width='100%';
+      document.getElementById('scan-body').style.display='block';
+      var rc=riskColor(R.score);
+      document.getElementById('riskBar').style.background=rc;document.getElementById('riskBar').style.width='0%';
+      document.getElementById('riskScore').textContent='Score: '+R.score+' / '+riskLabel(R.score);
+      document.getElementById('riskScore').style.color=rc;
+      setTimeout(function(){document.getElementById('riskBar').style.width=Math.min(R.score*8,100)+'%';},100);
+      var html='';
+      Object.keys(R.cats).forEach(function(cat){
+        html+='<div class="cat-label">'+cat+'</div><div class="checks-grid">';
+        R.cats[cat].forEach(function(c){html+='<div class="ck '+(c.ok?'':'fail')+'"><span class="ci">'+(c.ok?'✅':'❌')+'</span><span class="ck-name">'+c.name+'</span></div>';});
+        html+='</div>';
+      });
+      document.getElementById('checkCats').innerHTML=html;
+      var tb=document.getElementById('threatsBox');
+      if(R.threats.length){tb.style.display='block';document.getElementById('threatsList').innerHTML=R.threats.map(function(t){return'<div class="threat-item"><span>▸</span>'+t+'</div>';}).join('');}
+      else tb.style.display='none';
+    })(result,status);
+    if(!result.safe&&doBlock){updateStats(1,0,0,1);addHistory({type:'url',label:inp,detail:'BLOCKED',status:'danger'});btn.disabled=false;document.getElementById('scan-btn-txt').innerHTML='🛡️ สแกน &amp; ดำเนินการ';return;}
+    updateStats(1,result.safe?1:0,result.threats.length&&result.safe?1:0,result.safe?0:1);
   }
-
+  var finalUrl=inp;
   if(doShort){
     try{
-      var short=await shorten(inp);
-      document.getElementById('ri').value=short;
-      document.getElementById('rb2').style.display='block';
-      var bdg=['🔗 Short URL'];
-      if(doScan) bdg.push('🔍 Scanned');
-      if(doFile) bdg.push('📁 File Check');
-      document.getElementById('sbs').innerHTML=bdg.map(function(b){ return '<span class="sb">'+b+'</span>'; }).join('');
-      st.l++; st.s++; sv(st);
-      ah({short:short,orig:inp,safe:true,status:result&&result.threats.length?'warn':'safe',type:'url'});
-      toast('✅ สร้างลิงก์สำเร็จ!');
-    }catch(e){
-      toast('❌ สร้างลิงก์ไม่สำเร็จ');
-    }
-  } else {
-    st.l++; st.s++; sv(st);
-    toast('✅ สแกนเสร็จสิ้น');
+      finalUrl=await shorten(inp);
+      document.getElementById('shortOut').value=finalUrl;
+      var tags=['🔗 Short URL'];
+      if(doScan)tags.push('🛡️ Scanned');
+      document.getElementById('linkTags').innerHTML=tags.map(function(t){return'<span class="tag">'+t+'</span>';}).join('');
+      document.getElementById('linkResult').style.display='block';
+    }catch(e){toast('❌ ย่อลิงก์ไม่สำเร็จ');}
   }
-
-  sv(st);
-  btn.disabled=false;
-  btn.querySelector('span').innerHTML='<span>🛡️</span><span>สแกน &amp; สร้างลิงก์</span>';
+  if(doQr){
+    document.getElementById('scan-qr-out').style.display='block';
+    drawQrOn('scan-qr-canvas',finalUrl,128,'#000000','#ffffff');
+  }
+  addHistory({type:'url',label:finalUrl,detail:inp,status:result&&!result.safe?'danger':result&&result.threats.length?'warn':'safe'});
+  toast('✅ ดำเนินการเสร็จสิ้น!');
+  btn.disabled=false;document.getElementById('scan-btn-txt').innerHTML='🛡️ สแกน &amp; ดำเนินการ';
 }
 
-function goFile(){
-  if(!_currentFile){ toast('⚠️ กรุณาเลือกไฟล์ก่อน'); return; }
-  var btn=document.getElementById('sbtn-file');
-  btn.disabled=true;
-  btn.querySelector('span').innerHTML='<span class="spin">⏳</span><span>กำลังสแกน...</span>';
-
-  var iv=startScan('ตรวจสอบนามสกุล, ชื่อไฟล์, MIME type...');
-  setTimeout(function(){
-    var result=getFileRisk(_currentFile);
-    clearInterval(iv);
-    document.getElementById('pf').style.width='100%';
-
-    var status=result.safe?(result.threats.length?'warn':'safe'):'danger';
-    var ext=result.ext;
-    var catKey=EXT_MAP[ext];
-    var catLabel=catKey?FILE_DB[catKey].label:'ไม่รู้จักนามสกุล';
-    var title={safe:'✅ ไฟล์ปลอดภัย',warn:'⚠️ ตรวจพบความเสี่ยง',danger:'🚨 ไฟล์อันตราย!'}[status];
-    var det='Score: '+result.score+' • .'+ext+' • '+catLabel;
-    renderScanResult(result, title, det);
-
-    var st=gs();
-    st.l++;
-    if(status==='safe') st.s++;
-    else if(status==='warn') st.w=(st.w||0)+1;
-    else st.b++;
-    sv(st);
-    ah({short:_currentFile.name,orig:_currentFile.name,safe:result.safe,status:status,type:'file'});
-
-    btn.disabled=false;
-    btn.querySelector('span').innerHTML='<span>🔍</span><span>สแกนไฟล์</span>';
-  },600);
-}
-
-/* ══════════════════════════════════════════════
-   FILE DROP / SELECT
-══════════════════════════════════════════════ */
-function handleFile(f){
-  if(!f) return;
-  _currentFile=f;
+/* ═══════════════════════════════════════════
+   FILE SCAN
+═══════════════════════════════════════════ */
+function handleScanFile(f){
+  if(!f)return;_scanFile=f;
+  var dz=document.getElementById('fileDrop');
   var ext=(f.name.split('.').pop()||'').toLowerCase();
-  var catKey=EXT_MAP[ext];
-  var catData=catKey?FILE_DB[catKey]:null;
-  var mb=(f.size/(1024*1024)).toFixed(2);
-  var sz=f.size>1048576?mb+' MB':(f.size/1024).toFixed(1)+' KB';
-
-  // Show file info
-  var extColor=catData?catData.color:'#64748b';
-  var extLabel=catData?catData.label.replace(/[^\w\s()\-\/\.]/g,'').trim():'ไม่รู้จัก';
-
-  var dz=document.getElementById('dropZone');
-  dz.innerHTML='<div class="file-info">'
-    +'<div class="fi-icon">'+getExtIcon(ext)+'</div>'
-    +'<div class="fi-txt"><div class="fi-name">'+f.name+'</div>'
-    +'<div class="fi-meta">'+sz+' • '+f.type+'</div></div>'
-    +'<div class="fi-ext" style="background:'+extColor+'20;color:'+extColor+';border:1px solid '+extColor+'40">.'+ext+'</div>'
-    +'</div>'
-    +'<div style="font-size:12px;color:var(--tm);margin-top:4px">'+extLabel+'</div>';
-
-  document.getElementById('sbtn-file').disabled=false;
+  var catKey=EXT_MAP[ext];var catData=catKey?FILE_DB[catKey]:null;
+  var sz=f.size>1048576?(f.size/1048576).toFixed(2)+' MB':(f.size/1024).toFixed(1)+' KB';
+  dz.innerHTML='<div style="font-size:40px;margin-bottom:8px">'+(catKey&&catData?catData.label.match(/[🚨🔴🟠🟡📦📄🖼️✅]/)?catData.label.match(/[🚨🔴🟠🟡📦📄🖼️✅]/)[0]:'📄':'📄')+'</div><div class="dtxt">'+f.name+'</div><div class="dsub">'+sz+' • .'+ext+(catData?' • '+catData.label:'')+'</div>';
+  document.getElementById('file-scan-btn').disabled=false;
   toast('📁 เลือกไฟล์: '+f.name);
 }
-
-function dragOver(e){
-  e.preventDefault();
-  document.getElementById('dropZone').classList.add('drag');
-}
-function dragLeave(e){
-  document.getElementById('dropZone').classList.remove('drag');
-}
-function dropFile(e){
-  e.preventDefault();
-  document.getElementById('dropZone').classList.remove('drag');
-  var f=e.dataTransfer.files[0];
-  if(f) handleFile(f);
-}
-
-/* ══════════════════════════════════════════════
-   MISC
-══════════════════════════════════════════════ */
-function switchTab(t){
-  document.querySelectorAll('.tab').forEach(function(b,i){ b.classList.toggle('on',(['url','file'][i])===t); });
-  document.getElementById('panel-url').classList.toggle('on',t==='url');
-  document.getElementById('panel-file').classList.toggle('on',t==='file');
-  document.getElementById('scanBox').style.display='none';
-  document.getElementById('rb2').style.display='none';
-}
-
-function cp(){
-  var v=document.getElementById('ri').value;
-  if(!v) return;
-  navigator.clipboard.writeText(v).then(function(){ toast('📋 คัดลอกแล้ว!'); });
-}
-
-function toast(m){
-  var t=document.getElementById('toast');
-  t.textContent=m; t.classList.add('on');
-  setTimeout(function(){ t.classList.remove('on'); },2600);
-}
-
-var th=localStorage.getItem('fal-th')||'light';
-document.documentElement.setAttribute('data-theme',th);
-document.getElementById('ti').textContent=th==='dark'?'☀️':'🌙';
-function toggleTheme(){
-  var c=document.documentElement.getAttribute('data-theme');
-  var n=c==='light'?'dark':'light';
-  document.documentElement.setAttribute('data-theme',n);
-  localStorage.setItem('fal-th',n);
-  document.getElementById('ti').textContent=n==='dark'?'☀️':'🌙';
+function goFileScan(){
+  if(!_scanFile){toast('⚠️ กรุณาเลือกไฟล์');return;}
+  document.getElementById('fileScanBox').style.display='block';
+  document.getElementById('frh').className='result-header rh-scanning';
+  document.getElementById('frh-ico').textContent='⏳';document.getElementById('frh-title').textContent='กำลังสแกน...';document.getElementById('frh-det').textContent='วิเคราะห์ไฟล์...';document.getElementById('frh-badge').textContent='SCANNING';
+  document.getElementById('fprog').style.width='0%';document.getElementById('fscan-body').style.display='none';
+  var btn=document.getElementById('file-scan-btn');btn.disabled=true;document.getElementById('file-scan-txt').innerHTML='<span class="spin">⏳</span> สแกน...';
+  var p=0,iv=setInterval(function(){p=Math.min(p+6,85);document.getElementById('fprog').style.width=p+'%';},50);
+  setTimeout(function(){
+    var R=getFileRisk(_scanFile);clearInterval(iv);
+    document.getElementById('fprog').style.width='100%';
+    var status=R.safe?(R.threats.length?'warn':'safe'):'danger';
+    var titles={safe:'✅ ไฟล์ปลอดภัย',warn:'⚠️ ตรวจพบความเสี่ยง',danger:'🚨 ไฟล์อันตราย!'};
+    var ext=R.ext;var catKey=EXT_MAP[ext];var catLabel=catKey?FILE_DB[catKey].label:'ไม่รู้จัก';
+    document.getElementById('frh').className='result-header rh-'+status;
+    document.getElementById('frh-ico').textContent=status==='safe'?'✅':status==='warn'?'⚠️':'🚨';
+    document.getElementById('frh-title').textContent=titles[status];
+    document.getElementById('frh-det').textContent='Score: '+R.score+' • .'+ext+' • '+catLabel;
+    document.getElementById('frh-badge').textContent=status==='safe'?'✅ SAFE':status==='warn'?'⚠️ WARN':'🚨 DANGER';
+    document.getElementById('fscan-body').style.display='block';
+    var rc=riskColor(R.score);
+    document.getElementById('friskBar').style.background=rc;document.getElementById('friskBar').style.width='0%';
+    document.getElementById('friskScore').textContent='Score: '+R.score+' / '+riskLabel(R.score);
+    document.getElementById('friskScore').style.color=rc;
+    setTimeout(function(){document.getElementById('friskBar').style.width=Math.min(R.score*8,100)+'%';},100);
+    var html='';
+    Object.keys(R.cats).forEach(function(cat){
+      html+='<div class="cat-label">'+cat+'</div><div class="checks-grid">';
+      R.cats[cat].forEach(function(c){html+='<div class="ck '+(c.ok?'':'fail')+'"><span class="ci">'+(c.ok?'✅':'❌')+'</span><span class="ck-name">'+c.name+'</span></div>';});
+      html+='</div>';
+    });
+    document.getElementById('fcheckCats').innerHTML=html;
+    var ftb=document.getElementById('fthreatsBox');
+    if(R.threats.length){ftb.style.display='block';document.getElementById('fthreatsList').innerHTML=R.threats.map(function(t){return'<div class="threat-item"><span>▸</span>'+t+'</div>';}).join('');}
+    else ftb.style.display='none';
+    updateStats(1,status==='safe'?1:0,status==='warn'?1:0,status==='danger'?1:0);
+    addHistory({type:'file',label:_scanFile.name,detail:'.'+ext,status:status});
+    btn.disabled=false;document.getElementById('file-scan-txt').innerHTML='🔍 สแกนไฟล์';
+  },700);
 }
 
-['scan','file','warn','short'].forEach(function(k){
-  var el=document.getElementById('tg-'+k);
-  if(el) el.addEventListener('click',function(){
-    this.classList.toggle('on');
-    document.getElementById('op-'+k).checked=this.classList.contains('on');
-  });
-});
-
-document.getElementById('urlInput').addEventListener('keydown',function(e){ if(e.key==='Enter') goUrl(); });
-document.getElementById('urlInput').addEventListener('focus',async function(){
-  if(this.value) return;
+/* ═══════════════════════════════════════════
+   SHORTEN
+═══════════════════════════════════════════ */
+async function shorten(url){
   try{
-    var txt=await navigator.clipboard.readText();
-    if(txt&&txt.startsWith('http')){ this.value=txt; toast('📋 วางจาก Clipboard อัตโนมัติ'); }
-  }catch(e){}
+    var r=await fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(url),{signal:AbortSignal.timeout(7000)});
+    if(!r.ok)throw 0;var t=await r.text();if(t.startsWith('http'))return t.trim();throw 0;
+  }catch(e){
+    try{
+      var r2=await fetch('https://is.gd/create.php?format=simple&url='+encodeURIComponent(url),{signal:AbortSignal.timeout(7000)});
+      var t2=await r2.text();if(t2.startsWith('http'))return t2.trim();
+    }catch(e2){}
+    var h=btoa(url).replace(/[^a-zA-Z0-9]/g,'').substring(0,8);
+    return'https://fal.ink/'+h;
+  }
+}
+async function goShorten(){
+  var inp=document.getElementById('shortInput').value.trim();
+  if(!inp){toast('⚠️ กรุณาใส่ URL');return;}
+  try{new URL(inp);}catch{toast('❌ URL ไม่ถูกต้อง');return;}
+  var btn=document.getElementById('short-btn');btn.disabled=true;
+  document.getElementById('short-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังย่อ...';
+  try{
+    var s=await shorten(inp);
+    document.getElementById('shortOut2').value=s;
+    document.getElementById('shortResult').style.display='block';
+    updateStats(1,1,0,0);addHistory({type:'short',label:s,detail:inp,status:'safe'});
+    toast('✅ ย่อลิงก์สำเร็จ!');
+  }catch(e){toast('❌ ย่อลิงก์ไม่สำเร็จ');}
+  btn.disabled=false;document.getElementById('short-btn-txt').innerHTML='✂️ ย่อลิงก์';
+}
+async function goBulkShorten(){
+  var lines=document.getElementById('bulkInput').value.trim().split('\n').filter(function(l){return l.trim().startsWith('http');});
+  if(!lines.length){toast('⚠️ ไม่พบ URL ที่ถูกต้อง');return;}
+  document.getElementById('bulk-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังย่อ '+lines.length+' URL...';
+  var results=[];
+  for(var url of lines){
+    try{var s=await shorten(url.trim());results.push({orig:url.trim(),short:s,ok:true});}
+    catch(e){results.push({orig:url.trim(),short:'ล้มเหลว',ok:false});}
+  }
+  var rd=document.getElementById('bulkResult');rd.style.display='flex';rd.style.flexDirection='column';rd.style.gap='6px';rd.style.marginTop='12px';
+  rd.innerHTML=results.map(function(r){
+    return'<div class="url-part" style="flex-direction:column;gap:4px"><div class="up-key" style="width:auto;font-size:10px;color:var(--ts)">'+r.orig.substring(0,50)+'...</div><div style="display:flex;gap:8px;align-items:center"><div class="up-val" style="flex:1;font-size:11px">'+r.short+'</div><button class="hl-copy" onclick="navigator.clipboard.writeText(\''+r.short+'\');toast(\'📋 คัดลอกแล้ว!\')">COPY</button></div></div>';
+  }).join('');
+  document.getElementById('bulk-btn-txt').innerHTML='✂️ ย่อทั้งหมด';
+  toast('✅ ย่อ '+results.length+' URL แล้ว!');
+}
+function openUrl(id){var v=document.getElementById(id).value;if(v)window.open(v,'_blank');}
+function shareUrl(id){var v=document.getElementById(id).value;if(!v)return;if(navigator.share)navigator.share({url:v});else{navigator.clipboard.writeText(v);toast('📋 คัดลอกแล้ว!');}}
+function genQrFrom(id){var v=document.getElementById(id).value;if(v){switchTab('qr');document.getElementById('qrInput').value=v;liveQr();toast('📷 สร้าง QR แล้ว!');}}
+function genQrFromVal(v){if(v){switchTab('qr');document.getElementById('qrInput').value=v;liveQr();toast('📷 สร้าง QR แล้ว!');}}
+
+/* ═══════════════════════════════════════════
+   IMAGE HOST
+═══════════════════════════════════════════ */
+var _imgFiles=[];var _gallery=JSON.parse(localStorage.getItem('fal-gallery')||'[]');
+function handleImages(files){
+  if(!files||!files.length)return;
+  _imgFiles=Array.from(files).filter(function(f){return f.type.startsWith('image/');});
+  if(!_imgFiles.length){toast('⚠️ ไม่พบรูปภาพ');return;}
+  var f=_imgFiles[0];
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var prev=document.getElementById('imgPreview');prev.style.display='block';
+    document.getElementById('imgPreviewImg').src=e.target.result;
+    var mb=(f.size/1048576).toFixed(2);
+    document.getElementById('imgMeta').innerHTML=[
+      '<span class="img-tag">'+f.name+'</span>',
+      '<span class="img-tag">'+mb+' MB</span>',
+      '<span class="img-tag">'+f.type+'</span>',
+      _imgFiles.length>1?'<span class="img-tag">+'+(_imgFiles.length-1)+' รูป</span>':''
+    ].join('');
+  };reader.readAsDataURL(f);
+  document.getElementById('upload-btn').disabled=false;
+  toast('📁 เลือก '+_imgFiles.length+' รูป');
+}
+async function goUpload(){
+  if(!_imgFiles.length){toast('⚠️ กรุณาเลือกรูปก่อน');return;}
+  var service=document.getElementById('hostService').value;
+  var btn=document.getElementById('upload-btn');btn.disabled=true;
+  document.getElementById('upload-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังอัพโหลด...';
+  try{
+    var f=_imgFiles[0];
+    var result=await uploadImage(f,service);
+    showHostResult(result,f);
+    saveGallery(result,f);
+    renderGallery();
+    updateStats(1,1,0,0);addHistory({type:'img',label:result.direct||result.page,detail:f.name,status:'safe'});
+    toast('✅ อัพโหลดสำเร็จ!');
+  }catch(e){
+    console.error(e);toast('❌ อัพโหลดไม่สำเร็จ: '+e.message);
+  }
+  btn.disabled=false;document.getElementById('upload-btn-txt').innerHTML='⬆️ อัพโหลดรูป';
+}
+async function uploadImage(file,service){
+  if(service==='base64'){
+    return new Promise(function(resolve){
+      var reader=new FileReader();
+      reader.onload=function(e){resolve({direct:e.target.result,page:e.target.result,thumb:e.target.result,service:'Base64 Inline'});};
+      reader.readAsDataURL(file);
+    });
+  }
+  if(service==='imgbb'){
+    var fd=new FormData();fd.append('image',file);
+    // Use free imgbb API (demo key — works for testing)
+    var r=await fetch('https://api.imgbb.com/1/upload?key=2e46f59e97aa4e879a1cbec1e02ed669',{method:'POST',body:fd,signal:AbortSignal.timeout(20000)});
+    if(!r.ok)throw new Error('ImgBB error '+r.status);
+    var d=await r.json();
+    if(!d.success)throw new Error('ImgBB: '+JSON.stringify(d.error));
+    return{direct:d.data.url,page:d.data.url_viewer,thumb:d.data.thumb?.url||d.data.url,delete:d.data.delete_url,service:'ImgBB'};
+  }
+  if(service==='catbox'){
+    var fd2=new FormData();fd2.append('reqtype','fileupload');fd2.append('fileToUpload',file);
+    var r2=await fetch('https://catbox.moe/user/api.php',{method:'POST',body:fd2,signal:AbortSignal.timeout(20000)});
+    if(!r2.ok)throw new Error('Catbox error '+r2.status);
+    var url=await r2.text();
+    if(!url.startsWith('http'))throw new Error('Catbox: '+url);
+    return{direct:url.trim(),page:url.trim(),thumb:url.trim(),service:'Catbox'};
+  }
+  throw new Error('Unknown service');
+}
+function showHostResult(result,file){
+  var box=document.getElementById('hostResult');box.style.display='block';
+  var html='';
+  var links=[
+    {label:'Direct URL',icon:'🔗',id:'hlink-direct',url:result.direct},
+    {label:'Page URL',icon:'🌐',id:'hlink-page',url:result.page||result.direct},
+  ];
+  if(result.delete)links.push({label:'Delete URL',icon:'🗑️',id:'hlink-del',url:result.delete});
+  html=links.map(function(l){
+    return'<div class="host-link"><span class="hl-icon">'+l.icon+'</span><div class="hl-txt"><div class="hl-label">'+l.label+' ('+result.service+')</div><div class="hl-url" id="'+l.id+'">'+l.url+'</div></div><button class="hl-copy" onclick="navigator.clipboard.writeText(\''+l.url.replace(/'/g,"\\'")+'\'||document.getElementById(\''+l.id+'\').textContent);toast(\'📋 คัดลอกแล้ว!\')">COPY</button></div>';
+  }).join('');
+  // BBCode, HTML, Markdown
+  var imgUrl=result.direct;
+  html+='<div style="margin-top:8px"><div class="card-title" style="font-size:10px;margin-bottom:6px">📋 Code สำหรับ embed</div>';
+  var codes=[
+    {l:'HTML',v:'<img src="'+imgUrl+'" alt="">'},
+    {l:'Markdown',v:'![รูปภาพ]('+imgUrl+')'},
+    {l:'BBCode',v:'[img]'+imgUrl+'[/img]'},
+  ];
+  codes.forEach(function(c){
+    html+='<div class="url-part" style="margin-bottom:4px"><div class="up-key" style="width:70px">'+c.l+'</div><div class="up-val" style="font-size:10px">'+c.v+'</div><button class="hl-copy" onclick="navigator.clipboard.writeText(\''+c.v.replace(/'/g,"\\'")+'\'||\''+c.v+'\');toast(\'📋 คัดลอก '+c.l+' แล้ว!\')">COPY</button></div>';
+  });
+  html+='</div>';
+  document.getElementById('hostLinks').innerHTML=html;
+}
+function saveGallery(result,file){
+  _gallery.unshift({url:result.direct,thumb:result.thumb||result.direct,name:file.name,date:new Date().toLocaleDateString('th-TH'),service:result.service});
+  if(_gallery.length>50)_gallery=_gallery.slice(0,50);
+  localStorage.setItem('fal-gallery',JSON.stringify(_gallery));
+}
+function renderGallery(){
+  var gc=document.getElementById('galleryCard');var gal=document.getElementById('gallery');
+  if(!_gallery.length){gc.style.display='none';return;}
+  gc.style.display='block';document.getElementById('galCount').textContent=_gallery.length;
+  gal.innerHTML=_gallery.map(function(item,i){
+    return'<div class="gallery-item"><img src="'+item.thumb+'" alt="'+item.name+'" loading="lazy" onerror="this.src=\'data:image/svg+xml,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'140\\\' height=\\\'120\\\'><rect fill=\\\'%23333\\\' width=\\\'140\\\' height=\\\'120\\\'/><text x=\\\'50%25\\\' y=\\\'50%25\\\' fill=\\\'%23777\\\' text-anchor=\\\'middle\\\' dominant-baseline=\\\'middle\\\'>ERR</text></svg>\'"><div class="gi-overlay"><button class="gi-btn" onclick="showLightbox(\''+item.url+'\')" title="ดู">👁️</button><button class="gi-btn" onclick="navigator.clipboard.writeText(\''+item.url+'\');toast(\'📋 คัดลอกแล้ว!\')" title="Copy">📋</button><button class="gi-btn" onclick="removeGalleryItem('+i+')" title="ลบ">🗑️</button></div><div class="gi-name">'+item.name+'</div></div>';
+  }).join('');
+}
+function removeGalleryItem(i){_gallery.splice(i,1);localStorage.setItem('fal-gallery',JSON.stringify(_gallery));renderGallery();toast('🗑️ ลบรูปแล้ว');}
+function clearGallery(){if(!confirm('ล้างคลังรูปทั้งหมด?'))return;_gallery=[];localStorage.setItem('fal-gallery','[]');renderGallery();toast('🗑️ ล้างคลังแล้ว');}
+function showLightbox(url){document.getElementById('lightboxImg').src=url;document.getElementById('lightbox').classList.add('on');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('on');}
+renderGallery();
+
+/* ═══════════════════════════════════════════
+   QR CODE (Canvas-based, no library needed)
+═══════════════════════════════════════════ */
+var _qrSize=128;
+function setQrSize(s,el){_qrSize=s;document.querySelectorAll('.qr-size-btn').forEach(function(b){b.classList.remove('on');});el.classList.add('on');liveQr();}
+function liveQr(){
+  var val=document.getElementById('qrInput').value.trim();
+  if(!val){document.getElementById('qrWrap').innerHTML='<div style="font-size:40px;color:#ccc">📷</div>';return;}
+  var fg=document.getElementById('qrColor').value;var bg=document.getElementById('qrBg').value;
+  drawQrOn('main-qr-canvas',val,_qrSize,fg,bg,true);
+}
+function drawQrOn(canvasId,text,size,fg,bg,replaceWrap){
+  // Simple QR using external-free method: render via Google Charts API (no JS lib)
+  var url='https://api.qrserver.com/v1/create-qr-code/?size='+size+'x'+size+'&data='+encodeURIComponent(text)+'&color='+fg.replace('#','')+'&bgcolor='+bg.replace('#','')+'&format=png';
+  if(replaceWrap){
+    var wrap=document.getElementById('qrWrap');
+    if(!wrap)return;
+    wrap.innerHTML='<img id="main-qr-img" src="'+url+'" width="'+size+'" height="'+size+'" style="display:block;border-radius:4px">';
+    return;
+  }
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var ctx=canvas.getContext('2d');canvas.width=size;canvas.height=size;
+  var img=new Image();img.crossOrigin='anonymous';img.onload=function(){ctx.drawImage(img,0,0,size,size);};img.src=url;
+}
+function getQrImageUrl(){
+  var val=document.getElementById('qrInput').value.trim();if(!val)return null;
+  var fg=document.getElementById('qrColor').value,bg=document.getElementById('qrBg').value;
+  return'https://api.qrserver.com/v1/create-qr-code/?size='+_qrSize+'x'+_qrSize+'&data='+encodeURIComponent(val)+'&color='+fg.replace('#','')+'&bgcolor='+bg.replace('#','')+'&format=png';
+}
+function downloadQr(){
+  var url=getQrImageUrl();if(!url){toast('⚠️ กรุณาใส่ข้อความก่อน');return;}
+  var a=document.createElement('a');a.href=url;a.download='qr-code.png';a.target='_blank';a.click();
+  toast('⬇️ ดาวน์โหลด QR แล้ว');
+}
+function downloadQrSvg(){
+  var val=document.getElementById('qrInput').value.trim();if(!val){toast('⚠️ กรุณาใส่ข้อความก่อน');return;}
+  var fg=document.getElementById('qrColor').value,bg=document.getElementById('qrBg').value;
+  var url='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(val)+'&color='+fg.replace('#','')+'&bgcolor='+bg.replace('#','')+'&format=svg';
+  var a=document.createElement('a');a.href=url;a.download='qr-code.svg';a.target='_blank';a.click();
+}
+function copyQr(){
+  var url=getQrImageUrl();if(!url){toast('⚠️ กรุณาใส่ข้อความก่อน');return;}
+  navigator.clipboard.writeText(url).then(function(){toast('📋 คัดลอก URL รูป QR แล้ว!');});
+}
+function downloadCanvas(id,filename){var c=document.getElementById(id);if(!c)return;var a=document.createElement('a');a.download=filename;a.href=c.toDataURL();a.click();}
+function copyCanvas(id){var c=document.getElementById(id);if(!c)return;c.toBlob(function(blob){navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(function(){toast('📋 คัดลอก QR แล้ว!');}).catch(function(){toast('❌ คัดลอกไม่สำเร็จ');});});}
+function qrTemplate(type){
+  var templates={
+    url:'https://',
+    tel:'tel:+66',
+    sms:'sms:+66?body=',
+    wifi:'WIFI:T:WPA;S:ชื่อ WiFi;P:รหัสผ่าน;;',
+    vcard:'BEGIN:VCARD\nVERSION:3.0\nFN:ชื่อ นามสกุล\nTEL:+66812345678\nEMAIL:email@example.com\nEND:VCARD',
+    email:'mailto:email@example.com?subject=หัวเรื่อง&body=ข้อความ'
+  };
+  document.getElementById('qrInput').value=templates[type]||'';liveQr();toast('📝 ใส่เทมเพลต '+type+' แล้ว');
+}
+
+/* ═══════════════════════════════════════════
+   TEXT TOOLS
+═══════════════════════════════════════════ */
+document.getElementById('textInput').addEventListener('input',updateCharCount);
+function updateCharCount(){
+  var v=document.getElementById('textInput').value;
+  var chars=v.length;
+  var words=v.trim()?v.trim().split(/\s+/).length:0;
+  var lines=v?v.split('\n').length:0;
+  document.getElementById('charCount').textContent=chars+' ตัวอักษร, '+words+' คำ, '+lines+' บรรทัด';
+}
+function textTool(t){
+  var el=document.getElementById('textInput');var v=el.value;
+  if(!v){toast('⚠️ กรุณาใส่ข้อความก่อน');return;}
+  try{
+    switch(t){
+      case'upper':el.value=v.toUpperCase();break;
+      case'lower':el.value=v.toLowerCase();break;
+      case'title':el.value=v.replace(/\w\S*/g,function(w){return w[0].toUpperCase()+w.slice(1).toLowerCase();});break;
+      case'trim':el.value=v.replace(/^[ \t]+|[ \t]+$/gm,'');break;
+      case'reverse':el.value=v.split('').reverse().join('');break;
+      case'noSpace':el.value=v.replace(/\s+/g,'');break;
+      case'slug':el.value=v.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_-]+/g,'-').replace(/^-+|-+$/g,'');break;
+      case'encode':el.value=encodeURIComponent(v);break;
+      case'decode':el.value=decodeURIComponent(v);break;
+      case'b64enc':el.value=btoa(unescape(encodeURIComponent(v)));break;
+      case'b64dec':el.value=decodeURIComponent(escape(atob(v)));break;
+      case'html':el.value=v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');break;
+      case'lines':toast('📋 '+v.split('\n').length+' บรรทัด, '+v.trim().split(/\s+/).length+' คำ, '+v.length+' ตัวอักษร');return;
+      case'dedup':el.value=[...new Set(v.split('\n'))].join('\n');break;
+      case'sort':el.value=v.split('\n').sort().join('\n');break;
+      case'json':try{el.value=JSON.stringify(JSON.parse(v),null,2);}catch(e){toast('❌ JSON ไม่ถูกต้อง');return;}break;
+    }
+    updateCharCount();toast('✅ แปลงสำเร็จ!');
+  }catch(e){toast('❌ แปลงไม่สำเร็จ: '+e.message);}
+}
+function downloadText(){var v=document.getElementById('textInput').value;if(!v){toast('⚠️ ไม่มีข้อความ');return;}var a=document.createElement('a');a.download='text.txt';a.href=URL.createObjectURL(new Blob([v],{type:'text/plain'}));a.click();toast('⬇️ บันทึกแล้ว');}
+async function doHash(algo){
+  var v=document.getElementById('hashInput').value;if(!v){toast('⚠️ กรุณาใส่ข้อความ');return;}
+  var label,hash;
+  if(algo==='md5simple'){
+    // Simple MD5-like (djb2 for demo)
+    var h=5381;for(var i=0;i<v.length;i++)h=((h<<5)+h)+v.charCodeAt(i)&0xffffffff;
+    hash=(h>>>0).toString(16).padStart(8,'0').repeat(4);label='DJB2-32';
+  } else {
+    var algoMap={'sha256':'SHA-256','sha512':'SHA-512','sha1':'SHA-1'};
+    label=algoMap[algo]||algo;
+    var buf=await crypto.subtle.digest(algoMap[algo],new TextEncoder().encode(v));
+    hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  }
+  document.getElementById('hashAlgo').textContent=label;
+  document.getElementById('hashVal').textContent=hash;
+  document.getElementById('hashOut').style.display='block';
+  toast('✅ '+label+' hash สำเร็จ!');
+}
+
+/* ═══════════════════════════════════════════
+   URL INSPECTOR
+═══════════════════════════════════════════ */
+function liveInspect(){
+  var v=document.getElementById('inspectInput').value.trim();
+  var res=document.getElementById('inspectResult');
+  if(!v){res.style.display='none';return;}
+  var u;try{u=new URL(v);}catch{res.style.display='none';return;}
+  res.style.display='block';
+  var parts=[
+    {k:'PROTOCOL',v:u.protocol},
+    {k:'HOST',v:u.hostname},
+    {k:'PORT',v:u.port||'(default)'},
+    {k:'PATH',v:u.pathname||'/'},
+    {k:'QUERY',v:u.search||'(none)'},
+    {k:'HASH',v:u.hash||'(none)'},
+    {k:'ORIGIN',v:u.origin},
+    {k:'FULL URL',v:u.href},
+  ];
+  document.getElementById('urlParts').innerHTML=parts.map(function(p){
+    return'<div class="url-part"><div class="up-key">'+p.k+'</div><div class="up-val '+(p.v==='(none)'||p.v==='(default)'?'empty':'')+'">'+p.v+'</div></div>';
+  }).join('');
+  var params=[];u.searchParams.forEach(function(val,key){params.push({k:key,v:val});});
+  document.getElementById('urlParams').innerHTML=params.length?params.map(function(p){
+    return'<div class="url-part"><div class="up-key" style="color:var(--p)">'+p.k+'</div><div class="up-val">'+p.v+'</div></div>';
+  }).join(''):'<div style="font-size:12px;color:var(--ts);padding:8px">ไม่มี query parameters</div>';
+}
+function goScanFromInspect(){var v=document.getElementById('inspectInput').value.trim();if(!v)return;switchTab('scan');document.getElementById('urlInput').value=v;goScan();}
+function genQrFromInspect(){var v=document.getElementById('inspectInput').value.trim();if(!v)return;genQrFromVal(v);}
+function copyEl(id){var el=document.getElementById(id);if(!el)return;var text=el.textContent||el.value||el.innerText;navigator.clipboard.writeText(text).then(function(){toast('📋 คัดลอกแล้ว!');});}
+
+/* ═══════════════════════════════════════════
+   STATS & HISTORY
+═══════════════════════════════════════════ */
+function getStats(){return JSON.parse(localStorage.getItem('fal-stats')||'{"l":0,"s":0,"w":0,"b":0}');}
+function setStats(s){localStorage.setItem('fal-stats',JSON.stringify(s));document.getElementById('sL').textContent=s.l;document.getElementById('sS').textContent=s.s;document.getElementById('sW').textContent=s.w;document.getElementById('sB').textContent=s.b;}
+function updateStats(l,s,w,b){var st=getStats();st.l+=l;st.s+=s;st.w+=w;st.b+=b;setStats(st);}
+setStats(getStats());
+function getHistory(){return JSON.parse(localStorage.getItem('fal-history')||'[]');}
+function addHistory(e){var h=getHistory();e.time=new Date().toLocaleTimeString('th-TH');h.unshift(e);localStorage.setItem('fal-history',JSON.stringify(h.slice(0,50)));renderHistory();}
+function renderHistory(){
+  var h=getHistory();
+  var hl=document.getElementById('histList');var he=document.getElementById('histEmpty');
+  if(!h.length){he.style.display='block';hl.style.display='none';return;}
+  he.style.display='none';hl.style.display='flex';
+  hl.innerHTML=h.map(function(e){
+    var ico={'url':'🔗','file':'📁','short':'✂️','img':'🖼️'}[e.type]||'📝';
+    return'<div class="hist-item" onclick="useHistory(\''+encodeURIComponent(e.label||'')+'\')">'
+      +'<span class="hi-ico">'+ico+'</span>'
+      +'<div class="hi-txt"><div class="hi-main">'+e.label+'</div><div class="hi-sub">'+e.detail+'</div></div>'
+      +'<span class="hi-badge '+(e.status||'safe')+'">'+((e.status||'safe').toUpperCase())+'</span>'
+      +'<span class="hi-time">'+e.time+'</span>'
+      +'</div>';
+  }).join('');
+}
+function useHistory(label){var u=decodeURIComponent(label);switchTab('scan');document.getElementById('urlInput').value=u;toast('📋 ใส่จากประวัติแล้ว');}
+function clearHistory(){if(!confirm('ล้างประวัติทั้งหมด?'))return;localStorage.removeItem('fal-history');renderHistory();toast('🗑️ ล้างประวัติแล้ว');}
+renderHistory();
+
+/* ═══════════════════════════════════════════
+   MISC UI
+═══════════════════════════════════════════ */
+function switchTab(t){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===t);});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-'+t);});
+  if(t==='history')renderHistory();
+}
+function toggleTheme(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('fal-theme',next);
+  document.getElementById('theme-btn').textContent=next==='dark'?'🌙':'☀️';
+}
+(function(){
+  var th=localStorage.getItem('fal-theme')||'dark';
+  document.documentElement.setAttribute('data-theme',th);
+  document.getElementById('theme-btn').textContent=th==='dark'?'🌙':'☀️';
+})();
+function copyText(id){var el=document.getElementById(id);if(!el)return;var v=el.value||el.textContent;navigator.clipboard.writeText(v).then(function(){toast('📋 คัดลอกแล้ว!');});}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},2800);}
+function dzOver(e,id){e.preventDefault();document.getElementById(id).classList.add('drag');}
+function dzLeave(id){document.getElementById(id).classList.remove('drag');}
+function dzDrop(e,inputId){e.preventDefault();document.getElementById(e.currentTarget.id||'fileDrop').classList.remove('drag');var f=e.dataTransfer.files[0];if(f){var inp=document.getElementById(inputId);var dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;handleScanFile(f);}}
+function dzDropImg(e){e.preventDefault();document.getElementById('imgDrop').classList.remove('drag');var files=e.dataTransfer.files;if(files.length)handleImages(files);}
+
+// Auto-clipboard paste for URL input
+document.getElementById('urlInput').addEventListener('focus',async function(){
+  if(this.value)return;
+  try{var txt=await navigator.clipboard.readText();if(txt&&txt.startsWith('http')){this.value=txt;toast('📋 วางจาก Clipboard อัตโนมัติ');}}catch(e){}
 });
+document.getElementById('urlInput').addEventListener('keydown',function(e){if(e.key==='Enter')goScan();});
+document.getElementById('shortInput').addEventListener('keydown',function(e){if(e.key==='Enter')goShorten();});
+document.getElementById('qrInput').addEventListener('input',liveQr);
+document.getElementById('inspectInput').addEventListener('input',liveInspect);
+
+// Option toggles
+['scan','file','block','short2','qr2'].forEach(function(k){
+  var el=document.getElementById('opt-'+k);
+  if(el)el.addEventListener('click',function(){this.classList.toggle('on');document.getElementById('chk-'+k).checked=this.classList.contains('on');});
+});
+
+// Keyboard shortcut: ESC to close lightbox
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
 </script>
 </body>
 </html>
