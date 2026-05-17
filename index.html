@@ -2,676 +2,616 @@
 <html lang="th" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flash Anti Link v3.2</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Flash Anti Link v4</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0a0f;--bg2:#111118;--bg3:#18181f;
-  --card:#1a1a24;--card2:#20202c;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
-  --t:#f0f0fa;--tm:#7070a0;--ts:#4a4a70;
-  --p:#6c63ff;--pa:#8b84ff;--s:#00e5a0;--d:#ff4f6d;--w:#ffa040;
-  --mono:'JetBrains Mono',monospace;--sans:'IBM Plex Sans Thai',sans-serif;
-  --r:14px;--r2:20px;
+--bg:#0d0d14;--bg2:#13131e;--bg3:#1a1a28;
+--card:#1e1e2e;--card2:#252535;
+--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);
+--t:#e8e8f4;--tm:#8080a8;--ts:#4a4a68;
+--p:#7c6dfa;--pa:#9d91ff;--s:#2dd4a0;--d:#f04f70;--w:#f59e0b;
+--mono:'JetBrains Mono',monospace;--sans:'IBM Plex Sans Thai',sans-serif;
+--sidebar:220px;--topbar:48px;
 }
 [data-theme="light"]{
-  --bg:#f5f5ff;--bg2:#ebebff;--bg3:#e0e0f8;
-  --card:#fff;--card2:#f8f8ff;
-  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
-  --t:#111130;--tm:#6060a0;--ts:#9090c0;
+--bg:#f0f0f8;--bg2:#e8e8f4;--bg3:#e0e0ee;
+--card:#fff;--card2:#f8f8ff;
+--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.13);
+--t:#111128;--tm:#5858a0;--ts:#9090c0;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% -10%,rgba(108,99,255,.15) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 110%,rgba(0,229,160,.08) 0%,transparent 60%);pointer-events:none;z-index:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--sans);background:var(--bg);color:var(--t);display:flex;flex-direction:column}
 
-nav{position:sticky;top:0;z-index:200;height:58px;border-bottom:1px solid var(--border);background:rgba(10,10,15,.88);backdrop-filter:blur(20px);display:flex;align-items:center;padding:0 20px;gap:12px;transition:background .3s}
-[data-theme="light"] nav{background:rgba(245,245,255,.92)}
-.nav-brand{font-family:var(--mono);font-weight:700;font-size:16px;letter-spacing:-.5px;color:var(--t)}
-.nav-brand em{color:var(--p);font-style:normal}
-.nav-spacer{flex:1}
-.nav-btns{display:flex;gap:6px}
-.nbtn{padding:6px 14px;border:1px solid var(--border2);border-radius:8px;background:var(--card);color:var(--tm);font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
-.nbtn:hover{color:var(--t);border-color:var(--p)}
+/* TOP BAR */
+#topbar{height:var(--topbar);min-height:var(--topbar);border-bottom:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;padding:0 12px;gap:10px;flex-shrink:0;z-index:100}
+.brand{font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:-.3px;color:var(--t)}
+.brand em{color:var(--p);font-style:normal}
+.version{font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(124,109,250,.15);color:var(--p);border:1px solid rgba(124,109,250,.25);font-family:var(--mono)}
+.topbar-r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.icon-btn{width:30px;height:30px;border:1px solid var(--border2);border-radius:6px;background:var(--card);color:var(--tm);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.icon-btn:hover{color:var(--t);border-color:var(--p)}
+#menu-toggle{display:none}
 
-main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 16px 80px}
-h1.hero-title{font-size:clamp(22px,5vw,38px);font-weight:700;letter-spacing:-1px;line-height:1.2;margin-bottom:6px}
-h1.hero-title span{color:var(--p)}
-.hero-sub{color:var(--tm);font-size:13px;margin-bottom:28px}
+/* LAYOUT */
+#layout{flex:1;display:flex;overflow:hidden}
 
-/* TABS */
-.tabs-wrap{display:flex;gap:4px;padding:4px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
-.tabs-wrap::-webkit-scrollbar{display:none}
-.tab-btn{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:9px 16px;border:none;border-radius:12px;background:transparent;color:var(--tm);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s}
-.tab-btn:hover{color:var(--t);background:var(--card)}
-.tab-btn.active{background:var(--p);color:#fff;box-shadow:0 4px 20px rgba(108,99,255,.35)}
-.panel{display:none}.panel.active{display:block}
+/* SIDEBAR */
+#sidebar{width:var(--sidebar);min-width:var(--sidebar);border-right:1px solid var(--border);background:var(--bg2);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;transition:transform .25s ease}
+.sidebar-section{padding:10px 8px 4px;font-size:10px;font-weight:600;color:var(--ts);letter-spacing:.7px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:7px;margin:1px 6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--tm);transition:all .15s;white-space:nowrap;border:none;background:transparent;width:calc(100% - 12px);text-align:left}
+.nav-item:hover{background:var(--bg3);color:var(--t)}
+.nav-item.active{background:rgba(124,109,250,.15);color:var(--p)}
+.nav-item.active .nav-ico{color:var(--p)}
+.nav-ico{font-size:15px;flex-shrink:0;width:18px;text-align:center}
+.nav-badge{margin-left:auto;font-size:9px;padding:2px 5px;border-radius:4px;font-family:var(--mono);font-weight:600}
+.nb-s{background:rgba(45,212,160,.15);color:var(--s)}
+.nb-d{background:rgba(240,79,112,.15);color:var(--d)}
+.nb-w{background:rgba(245,158,11,.15);color:var(--w)}
+.sidebar-footer{margin-top:auto;padding:8px;border-top:1px solid var(--border)}
+
+/* STATS ROW in sidebar */
+.stat-mini{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px 6px}
+.sm-item{background:var(--bg3);border-radius:6px;padding:6px 8px;text-align:center}
+.sm-n{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--p);line-height:1}
+.sm-l{font-size:9px;color:var(--ts);margin-top:2px}
+
+/* MAIN CONTENT */
+#main{flex:1;overflow-y:auto;overflow-x:hidden;background:var(--bg)}
+#main::-webkit-scrollbar{width:4px}
+#main::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.panel{display:none;padding:16px;max-width:680px;margin:0 auto}
+.panel.active{display:block}
 
 /* CARD */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:16px;transition:background .3s,border .3s}
-.card-title{font-size:12px;font-weight:700;color:var(--tm);letter-spacing:.8px;margin-bottom:16px;display:flex;align-items:center;gap:8px;text-transform:uppercase}
-.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+.card-hd{font-size:10px;font-weight:600;color:var(--ts);letter-spacing:.7px;text-transform:uppercase;display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.card-hd::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* INPUTS */
-.inp-wrap{position:relative;margin-bottom:12px}
-.inp-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
-.inp{width:100%;padding:13px 14px 13px 44px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--bg3);color:var(--t);font-family:var(--sans);font-size:14px;outline:none;transition:border .2s,box-shadow .2s}
-.inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(108,99,255,.12)}
+.inp-wrap{position:relative;margin-bottom:10px}
+.inp-ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;z-index:1}
+.inp{width:100%;padding:10px 11px 10px 36px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg3);color:var(--t);font-family:var(--sans);font-size:13px;outline:none;transition:border .15s}
+.inp:focus{border-color:var(--p)}
 .inp::placeholder{color:var(--ts)}
-.inp.noi{padding-left:14px}
-textarea.inp{resize:vertical;min-height:80px;padding:13px 14px;line-height:1.6}
+.inp.noi{padding-left:11px}
+textarea.inp{resize:vertical;min-height:72px;padding:10px 11px;line-height:1.5}
 select.inp{appearance:none;cursor:pointer}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border:none;border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;width:100%}
-.btn-p{background:linear-gradient(135deg,var(--p),#8b5cf6);color:#fff}
-.btn-p:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(108,99,255,.4)}
-.btn-p:disabled{opacity:.5;cursor:not-allowed}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border:none;border-radius:8px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;width:100%}
+.btn-p{background:var(--p);color:#fff}
+.btn-p:hover:not(:disabled){background:var(--pa)}
+.btn-p:disabled{opacity:.45;cursor:not-allowed}
 .btn-s{background:var(--card2);border:1.5px solid var(--border2);color:var(--t);width:auto}
 .btn-s:hover{border-color:var(--p);color:var(--p)}
-.btn-d{background:linear-gradient(135deg,var(--d),#c0392b);color:#fff;width:auto}
-.btn-sm{padding:8px 14px;font-size:12px;border-radius:8px;width:auto}
+.btn-d{background:var(--d);color:#fff;width:auto}
+.btn-sm{padding:7px 12px;font-size:12px;border-radius:6px;width:auto}
 
-/* OPTIONS — แก้ใหม่ทั้งหมด */
-.opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.opt{display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg3);cursor:pointer;font-size:12px;font-weight:500;color:var(--tm);user-select:none;transition:all .2s}
-.opt.on{border-color:var(--p);color:var(--p);background:rgba(108,99,255,.1)}
-.opt-dot{width:12px;height:12px;border-radius:50%;border:2px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.opt.on .opt-dot::after{content:'';width:5px;height:5px;background:currentColor;border-radius:50%;display:block}
+/* OPT TOGGLES */
+.opt-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.opt{display:flex;align-items:center;gap:5px;padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg3);cursor:pointer;font-size:11px;font-weight:500;color:var(--tm);user-select:none;transition:all .15s}
+.opt.on{border-color:var(--p);color:var(--p);background:rgba(124,109,250,.08)}
+.opt-dot{width:10px;height:10px;border-radius:50%;border:2px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.opt.on .opt-dot::after{content:'';width:4px;height:4px;background:currentColor;border-radius:50%;display:block}
 
-/* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center;transition:background .3s}
-.stat-n{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--p)}
-.stat-l{font-size:10px;color:var(--tm);margin-top:2px}
-
-/* SCAN RESULT */
-.result-box{display:none;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);margin-top:14px}
-.rh{padding:14px 18px;display:flex;align-items:center;gap:12px}
-.rh.safe{background:rgba(0,229,160,.08);border-bottom:1px solid rgba(0,229,160,.15)}
-.rh.warn{background:rgba(255,160,64,.08);border-bottom:1px solid rgba(255,160,64,.15)}
-.rh.danger{background:rgba(255,79,109,.08);border-bottom:1px solid rgba(255,79,109,.15)}
-.rh.scanning{background:rgba(108,99,255,.08);border-bottom:1px solid rgba(108,99,255,.15)}
-.rh-ico{font-size:22px;flex-shrink:0}
-.rh-txt{flex:1}
-.rh-title{font-size:14px;font-weight:700}
+/* RESULT BOX */
+.result-box{display:none;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-top:12px}
+.rh{padding:12px 14px;display:flex;align-items:center;gap:10px}
+.rh.safe{background:rgba(45,212,160,.07)}
+.rh.warn{background:rgba(245,158,11,.07)}
+.rh.danger{background:rgba(240,79,112,.07)}
+.rh.scanning{background:rgba(124,109,250,.07)}
+.rh-ico{font-size:18px;flex-shrink:0}
+.rh-txt{flex:1;min-width:0}
+.rh-title{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rh.safe .rh-title{color:var(--s)}
 .rh.warn .rh-title{color:var(--w)}
 .rh.danger .rh-title{color:var(--d)}
 .rh.scanning .rh-title{color:var(--p)}
-.rh-det{font-size:11px;color:var(--tm);margin-top:2px}
-.rh-badge{padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700;flex-shrink:0}
-.rh.safe .rh-badge{background:rgba(0,229,160,.15);color:var(--s)}
-.rh.warn .rh-badge{background:rgba(255,160,64,.15);color:var(--w)}
-.rh.danger .rh-badge{background:rgba(255,79,109,.15);color:var(--d)}
-.rh.scanning .rh-badge{background:rgba(108,99,255,.15);color:var(--p)}
-
+.rh-det{font-size:10px;color:var(--tm);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rh-badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;flex-shrink:0;font-family:var(--mono)}
+.rh.safe .rh-badge{background:rgba(45,212,160,.12);color:var(--s)}
+.rh.warn .rh-badge{background:rgba(245,158,11,.12);color:var(--w)}
+.rh.danger .rh-badge{background:rgba(240,79,112,.12);color:var(--d)}
+.rh.scanning .rh-badge{background:rgba(124,109,250,.12);color:var(--p)}
 .pbar{height:2px;background:var(--border)}
-.pfill{height:100%;background:linear-gradient(90deg,var(--p),var(--pa));transition:width .15s;width:0%}
-
-.sbody{padding:16px 18px;background:var(--card)}
-.risk-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.risk-lbl{font-size:11px;color:var(--tm);white-space:nowrap}
-.risk-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
-.risk-bar{height:100%;border-radius:3px;transition:width .7s ease;width:0%}
-.risk-score{font-family:var(--mono);font-size:12px;font-weight:600;white-space:nowrap}
-
-.cat-lbl{font-size:10px;font-weight:700;color:var(--ts);letter-spacing:.8px;margin:12px 0 6px;display:flex;align-items:center;gap:8px}
+.pfill{height:100%;background:var(--p);transition:width .12s;width:0%}
+.sbody{padding:14px;background:var(--card)}
+.risk-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.risk-lbl{font-size:11px;color:var(--tm);white-space:nowrap;min-width:60px}
+.risk-track{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.risk-bar{height:100%;border-radius:3px;transition:width .6s ease;width:0%}
+.risk-score{font-family:var(--mono);font-size:11px;font-weight:600;white-space:nowrap}
+.cat-lbl{font-size:9px;font-weight:700;color:var(--ts);letter-spacing:.7px;margin:10px 0 5px;display:flex;align-items:center;gap:6px;text-transform:uppercase}
 .cat-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
-.cat-lbl:first-child{margin-top:0}
-.checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px}
-.ck{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 0}
-.ck-ico{font-size:12px;flex-shrink:0}
-.ck.fail .ck-name{color:var(--d);font-weight:600}
-
-.threats-box{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.threat-ttl{font-size:10px;font-weight:700;color:var(--d);letter-spacing:.6px;margin-bottom:6px}
-.threat-list{display:flex;flex-direction:column;gap:4px}
-.threat-item{font-size:12px;padding:7px 10px;background:rgba(255,79,109,.06);border:1px solid rgba(255,79,109,.12);border-radius:8px;display:flex;gap:6px;word-break:break-word}
+.checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 6px}
+.ck{display:flex;align-items:center;gap:4px;font-size:11px;padding:2px 0}
+.ck-ico{font-size:11px;flex-shrink:0}
+.ck.fail .ck-name{color:var(--d);font-weight:500}
+.threats-box{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.threat-ttl{font-size:9px;font-weight:700;color:var(--d);letter-spacing:.5px;margin-bottom:5px;text-transform:uppercase}
+.threat-item{font-size:11px;padding:6px 8px;background:rgba(240,79,112,.05);border:1px solid rgba(240,79,112,.1);border-radius:6px;display:flex;gap:5px;word-break:break-word;margin-bottom:3px}
 
 /* LINK RESULT */
-.link-result{margin-top:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);display:none}
-.lr-lbl{font-size:10px;font-weight:700;color:var(--ts);letter-spacing:.8px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.lr-lbl::before{content:'';width:6px;height:6px;background:var(--s);border-radius:50%;box-shadow:0 0 6px var(--s)}
-.copy-row{display:flex;gap:8px}
-.copy-inp{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--card);color:var(--p);font-family:var(--mono);font-size:12px;outline:none;min-width:0}
-.copy-btn{padding:10px 18px;border:none;border-radius:var(--r);background:var(--p);color:#fff;font-family:var(--sans);font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;transition:background .2s}
+.link-result{margin-top:10px;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;display:none}
+.lr-lbl{font-size:9px;font-weight:700;color:var(--ts);letter-spacing:.7px;margin-bottom:6px;text-transform:uppercase}
+.copy-row{display:flex;gap:6px}
+.copy-inp{flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;background:var(--card);color:var(--p);font-family:var(--mono);font-size:11px;outline:none;min-width:0}
+.copy-btn{padding:8px 14px;border:none;border-radius:7px;background:var(--p);color:#fff;font-family:var(--sans);font-weight:500;font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .copy-btn:hover{background:var(--pa)}
-.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--s)}
+.tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:500;background:rgba(45,212,160,.08);border:1px solid rgba(45,212,160,.18);color:var(--s)}
+
+/* VT */
+.vt-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border:1.5px solid rgba(240,79,112,.3);border-radius:7px;background:rgba(240,79,112,.06);color:var(--d);font-size:11px;font-weight:500;cursor:pointer;text-decoration:none;margin-top:10px}
+.vt-btn:hover{background:rgba(240,79,112,.12)}
 
 /* DROP ZONE */
-.drop-zone{border:2px dashed var(--border);border-radius:var(--r2);padding:36px 20px;text-align:center;cursor:pointer;background:var(--bg3);margin-bottom:12px;transition:all .2s}
-.drop-zone:hover,.drop-zone.drag{border-color:var(--p);background:rgba(108,99,255,.05)}
-.dz-ico{font-size:44px;margin-bottom:10px}
-.dz-txt{font-size:15px;font-weight:600;margin-bottom:4px}
-.dz-sub{font-size:12px;color:var(--tm)}
+.drop-zone{border:2px dashed var(--border);border-radius:10px;padding:28px 16px;text-align:center;cursor:pointer;background:var(--bg3);margin-bottom:10px;transition:all .15s}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--p);background:rgba(124,109,250,.04)}
+.dz-ico{font-size:34px;margin-bottom:8px}
+.dz-txt{font-size:14px;font-weight:500;margin-bottom:3px}
+.dz-sub{font-size:11px;color:var(--tm)}
 input[type=file]{display:none}
 
-/* IMAGE HOST — แก้ใหม่ทั้งหมด */
-.img-preview{display:none;margin-bottom:12px}
-.img-preview img{width:100%;max-height:200px;object-fit:contain;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3)}
-.img-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.img-tag{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:500;background:var(--bg3);border:1px solid var(--border);color:var(--tm)}
+/* IMAGE */
+.img-preview{display:none;margin-bottom:10px}
+.img-preview img{width:100%;max-height:160px;object-fit:contain;border-radius:8px;border:1px solid var(--border);background:var(--bg3)}
+.img-meta{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.img-tag{padding:3px 8px;border-radius:5px;font-size:10px;background:var(--bg3);border:1px solid var(--border);color:var(--tm)}
 
-.host-result{display:none;margin-top:14px}
-.host-links{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-.host-link-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r)}
-.hl-icon{font-size:18px;flex-shrink:0}
+.b64-result{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:12px;display:none}
+.b64-url-box{background:var(--card);border:1.5px solid var(--border);border-radius:7px;padding:8px 10px;font-family:var(--mono);font-size:10px;color:var(--p);word-break:break-all;max-height:60px;overflow-y:auto;margin-bottom:8px;cursor:text;user-select:all}
+.b64-chip{padding:3px 8px;border-radius:5px;font-size:10px;font-weight:500;background:rgba(124,109,250,.1);border:1px solid rgba(124,109,250,.2);color:var(--p);font-family:var(--mono)}
+
+.host-result{display:none;margin-top:12px}
+.host-link-row{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;margin-bottom:5px}
 .hl-txt{flex:1;overflow:hidden}
-.hl-label{font-size:11px;color:var(--tm);margin-bottom:2px}
-.hl-url{font-family:var(--mono);font-size:11px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hl-copy-btn{padding:5px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--card);color:var(--tm);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.hl-label{font-size:10px;color:var(--tm);margin-bottom:1px}
+.hl-url{font-family:var(--mono);font-size:10px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hl-copy-btn{padding:4px 10px;border:1px solid var(--border2);border-radius:5px;background:var(--card);color:var(--tm);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .hl-copy-btn:hover{color:var(--p);border-color:var(--p)}
-
-/* Base64 result box */
-.b64-result{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-top:14px;display:none}
-.b64-preview{width:100%;max-height:180px;object-fit:contain;border-radius:var(--r);margin-bottom:12px;display:block}
-.b64-url-box{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:10px 14px;font-family:var(--mono);font-size:11px;color:var(--p);word-break:break-all;max-height:80px;overflow-y:auto;margin-bottom:10px;cursor:text;user-select:all}
-.b64-actions{display:flex;gap:8px;flex-wrap:wrap}
-.b64-stat{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.b64-chip{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:500;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.2);color:var(--p);font-family:var(--mono)}
-
-/* Embed codes */
-.embed-box{margin-top:12px}
-.embed-row{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px}
-.embed-lbl{font-size:10px;font-weight:700;color:var(--ts);width:60px;flex-shrink:0}
-.embed-val{font-family:var(--mono);font-size:10px;color:var(--tm);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.embed-copy{padding:4px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--card);color:var(--tm);font-size:10px;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.embed-row{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;margin-bottom:4px}
+.embed-lbl{font-size:9px;font-weight:700;color:var(--ts);width:52px;flex-shrink:0;text-transform:uppercase}
+.embed-val{font-family:var(--mono);font-size:9px;color:var(--tm);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.embed-copy{padding:3px 8px;border:1px solid var(--border2);border-radius:5px;background:var(--card);color:var(--tm);font-size:9px;cursor:pointer;flex-shrink:0}
 .embed-copy:hover{color:var(--p);border-color:var(--p)}
 
 /* GALLERY */
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:10px}
-.gallery-item{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--bg3)}
-.gallery-item img{width:100%;height:110px;object-fit:cover;display:block}
-.gi-overlay{position:absolute;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;gap:6px;opacity:0;transition:opacity .2s}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px;margin-top:8px}
+.gallery-item{position:relative;border-radius:7px;overflow:hidden;border:1px solid var(--border);background:var(--bg3)}
+.gallery-item img{width:100%;height:80px;object-fit:cover;display:block}
+.gi-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;gap:4px;opacity:0;transition:opacity .15s}
 .gallery-item:hover .gi-overlay{opacity:1}
-.gi-btn{width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.gi-btn{width:26px;height:26px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .gi-btn:hover{background:var(--p)}
-.gi-name{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;background:rgba(0,0,0,.7);font-size:10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gi-name{position:absolute;bottom:0;left:0;right:0;padding:3px 5px;background:rgba(0,0,0,.65);font-size:9px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* QR */
-.qr-wrap{background:white;padding:16px;border-radius:var(--r);display:inline-flex;align-items:center;justify-content:center;min-width:160px;min-height:160px}
-.qr-wrap img{display:block;border-radius:4px}
-.qr-size-row{display:flex;gap:6px}
-.qr-size-btn{flex:1;padding:8px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg3);color:var(--tm);font-size:12px;cursor:pointer;text-align:center;transition:all .2s}
-.qr-size-btn.on{border-color:var(--p);color:var(--p);background:rgba(108,99,255,.1)}
+.qr-wrap{background:white;padding:12px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;min-width:130px;min-height:130px;flex-shrink:0}
+.qr-size-row{display:flex;gap:5px}
+.qr-size-btn{flex:1;padding:6px;border:1.5px solid var(--border);border-radius:7px;background:var(--bg3);color:var(--tm);font-size:11px;cursor:pointer;text-align:center;transition:all .15s}
+.qr-size-btn.on{border-color:var(--p);color:var(--p);background:rgba(124,109,250,.08)}
 .color-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.color-row label{font-size:12px;color:var(--tm)}
-.color-row input[type=color]{width:34px;height:28px;border:none;border-radius:6px;cursor:pointer;padding:2px}
+.color-row label{font-size:11px;color:var(--tm)}
+.color-row input[type=color]{width:28px;height:24px;border:none;border-radius:5px;cursor:pointer;padding:1px}
 
 /* TEXT TOOLS */
-.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
-.tool-btn{padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--bg3);color:var(--tm);font-size:12px;cursor:pointer;text-align:center;font-family:var(--sans);font-weight:500;transition:all .2s}
-.tool-btn:hover{border-color:var(--p);color:var(--p);background:rgba(108,99,255,.08)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:5px;margin-top:8px}
+.tool-btn{padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;background:var(--bg3);color:var(--tm);font-size:11px;cursor:pointer;text-align:center;font-family:var(--sans);font-weight:500;transition:all .15s}
+.tool-btn:hover{border-color:var(--p);color:var(--p);background:rgba(124,109,250,.06)}
 
 /* HISTORY */
-.hist-list{display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto}
-.hist-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:border .2s}
+.hist-list{display:flex;flex-direction:column;gap:4px;max-height:400px;overflow-y:auto}
+.hist-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border .15s}
 .hist-item:hover{border-color:var(--p)}
-.hi-ico{font-size:18px;flex-shrink:0}
+.hi-ico{font-size:14px;flex-shrink:0}
 .hi-txt{flex:1;overflow:hidden;min-width:0}
-.hi-main{font-family:var(--mono);font-size:11px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hi-sub{font-size:10px;color:var(--tm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hi-badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;flex-shrink:0}
-.hi-badge.safe{background:rgba(0,229,160,.15);color:var(--s)}
-.hi-badge.warn{background:rgba(255,160,64,.15);color:var(--w)}
-.hi-badge.danger{background:rgba(255,79,109,.15);color:var(--d)}
-.hi-time{font-size:10px;color:var(--ts);flex-shrink:0}
+.hi-main{font-family:var(--mono);font-size:10px;color:var(--p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi-sub{font-size:9px;color:var(--tm);margin-top:1px}
+.hi-badge{padding:2px 6px;border-radius:5px;font-size:9px;font-weight:700;flex-shrink:0;font-family:var(--mono)}
+.hi-badge.safe{background:rgba(45,212,160,.12);color:var(--s)}
+.hi-badge.warn{background:rgba(245,158,11,.12);color:var(--w)}
+.hi-badge.danger{background:rgba(240,79,112,.12);color:var(--d)}
+.hi-time{font-size:9px;color:var(--ts);flex-shrink:0}
 
 /* URL INSPECTOR */
-.url-parts{display:flex;flex-direction:column;gap:5px}
-.url-part{display:flex;gap:10px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;align-items:flex-start}
-.up-key{font-size:10px;font-weight:700;color:var(--ts);width:72px;flex-shrink:0;letter-spacing:.5px;padding-top:1px}
-.up-val{font-family:var(--mono);font-size:11px;color:var(--p);flex:1;word-break:break-all;min-width:0}
+.url-part{display:flex;gap:8px;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;margin-bottom:4px;align-items:flex-start}
+.up-key{font-size:9px;font-weight:700;color:var(--ts);width:64px;flex-shrink:0;letter-spacing:.4px;padding-top:1px;text-transform:uppercase}
+.up-val{font-family:var(--mono);font-size:10px;color:var(--p);flex:1;word-break:break-all;min-width:0}
 .up-val.empty{color:var(--ts);font-style:italic}
 
-/* BADGE */
-.badge-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.25);border-radius:99px;font-size:11px;font-weight:600;color:var(--p);letter-spacing:.4px}
-.badge-chip::before{content:'';width:6px;height:6px;background:var(--p);border-radius:50%;box-shadow:0 0 6px var(--p);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
 /* MISC */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);border:1px solid var(--border2);color:var(--t);padding:10px 20px;border-radius:12px;font-size:13px;font-weight:500;z-index:9999;transition:transform .3s;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.4);pointer-events:none}
-.toast.on{transform:translateX(-50%) translateY(0)}
+.notice{padding:8px 12px;border-radius:7px;margin-bottom:10px;font-size:11px;display:flex;gap:7px;align-items:flex-start}
+.notice.info{background:rgba(124,109,250,.07);border:1px solid rgba(124,109,250,.18);color:var(--p)}
+.notice.warn{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22);color:var(--w)}
+.bulk-result-wrap{margin-top:10px;display:none;flex-direction:column;gap:4px}
 .spin{animation:spin 1s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
-footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:relative;z-index:1}
-
-.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9000;align-items:center;justify-content:center}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card2);border:1px solid var(--border2);color:var(--t);padding:8px 16px;border-radius:8px;font-size:12px;font-weight:500;z-index:9999;transition:transform .25s;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3);pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9000;align-items:center;justify-content:center}
 .lightbox.on{display:flex}
-.lightbox img{max-width:90vw;max-height:88vh;border-radius:var(--r);object-fit:contain}
-.lb-close{position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.6);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox img{max-width:90vw;max-height:88vh;border-radius:8px;object-fit:contain}
+.lb-close{position:fixed;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
-/* VT */
-.vt-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.vt-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid rgba(255,79,109,.4);border-radius:10px;background:rgba(255,79,109,.07);color:var(--d);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
-.vt-btn:hover{background:rgba(255,79,109,.15)}
-
-/* Notice box */
-.notice{padding:10px 14px;border-radius:var(--r);margin-bottom:12px;font-size:12px;display:flex;gap:8px;align-items:flex-start}
-.notice.info{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);color:var(--p)}
-.notice.warn{background:rgba(255,160,64,.08);border:1px solid rgba(255,160,64,.25);color:var(--w)}
-
-/* Bulk result */
-.bulk-result-wrap{margin-top:12px;display:none;flex-direction:column;gap:6px}
-
-@media(max-width:500px){
-  .stats-row{grid-template-columns:1fr 1fr}
+/* MOBILE */
+@media(max-width:700px){
+  :root{--sidebar:0px}
+  #sidebar{position:fixed;top:var(--topbar);left:0;bottom:0;width:220px;z-index:200;transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #sidebar-overlay{display:none;position:fixed;inset:0;top:var(--topbar);background:rgba(0,0,0,.5);z-index:190}
+  #sidebar-overlay.on{display:block}
+  #menu-toggle{display:flex}
   .checks-grid{grid-template-columns:1fr}
+  .tools-grid{grid-template-columns:1fr 1fr}
+  .panel{padding:12px}
+}
+@media(max-width:380px){
   .tools-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">Flash<em>.</em>Anti</div>
-  <div class="nav-spacer"></div>
-  <div class="nav-btns">
-    <button class="nbtn" id="theme-btn" onclick="toggleTheme()">🌙</button>
-    <button class="nbtn" onclick="clearAllHistory()">🗑 ล้างประวัติ</button>
+<div id="topbar">
+  <button class="icon-btn" id="menu-toggle" onclick="toggleMenu()" aria-label="เมนู">☰</button>
+  <div class="brand">Flash<em>.</em>Anti</div>
+  <span class="version">v4.0</span>
+  <div class="topbar-r">
+    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="เปลี่ยนธีม">🌙</button>
+    <button class="icon-btn" onclick="clearAllHistory()" title="ล้างประวัติ">🗑</button>
   </div>
-</nav>
+</div>
 
-<main>
-  <div style="margin-bottom:20px">
-    <span class="badge-chip">⚡ FLASH ANTI LINK v3.2</span>
-    <h1 class="hero-title" style="margin-top:12px">ศูนย์รวม<span>ทุกอย่าง</span><br>ในที่เดียว</h1>
-    <p class="hero-sub">สแกน URL • ย่อลิงก์ • ฝากรูป • QR Code • เครื่องมือข้อความ • วิเคราะห์ URL</p>
-  </div>
+<div id="layout">
+  <div id="sidebar-overlay" onclick="closeMenu()"></div>
+  <nav id="sidebar">
+    <div class="sidebar-section">เมนูหลัก</div>
+    <button class="nav-item active" onclick="sw('scan')" data-tab="scan"><span class="nav-ico">🛡</span>สแกน URL</button>
+    <button class="nav-item" onclick="sw('file')" data-tab="file"><span class="nav-ico">📁</span>สแกนไฟล์</button>
+    <button class="nav-item" onclick="sw('short')" data-tab="short"><span class="nav-ico">✂</span>ย่อลิงก์</button>
+    <button class="nav-item" onclick="sw('image')" data-tab="image"><span class="nav-ico">🖼</span>ฝากรูป</button>
+    <button class="nav-item" onclick="sw('qr')" data-tab="qr"><span class="nav-ico">📷</span>QR Code</button>
+    <button class="nav-item" onclick="sw('text')" data-tab="text"><span class="nav-ico">📝</span>เครื่องมือข้อความ</button>
+    <button class="nav-item" onclick="sw('inspect')" data-tab="inspect"><span class="nav-ico">🔍</span>วิเคราะห์ URL</button>
+    <button class="nav-item" onclick="sw('history')" data-tab="history"><span class="nav-ico">📋</span>ประวัติ</button>
 
-  <div class="stats-row">
-    <div class="stat"><div class="stat-n" id="sL">0</div><div class="stat-l">ทั้งหมด</div></div>
-    <div class="stat"><div class="stat-n" id="sS" style="color:var(--s)">0</div><div class="stat-l">ปลอดภัย</div></div>
-    <div class="stat"><div class="stat-n" id="sW" style="color:var(--w)">0</div><div class="stat-l">เสี่ยง</div></div>
-    <div class="stat"><div class="stat-n" id="sB" style="color:var(--d)">0</div><div class="stat-l">อันตราย</div></div>
-  </div>
+    <div class="sidebar-section" style="margin-top:8px">สถิติ</div>
+    <div class="stat-mini">
+      <div class="sm-item"><div class="sm-n" id="sL">0</div><div class="sm-l">ทั้งหมด</div></div>
+      <div class="sm-item"><div class="sm-n" style="color:var(--s)" id="sS">0</div><div class="sm-l">ปลอดภัย</div></div>
+      <div class="sm-item"><div class="sm-n" style="color:var(--w)" id="sW">0</div><div class="sm-l">เสี่ยง</div></div>
+      <div class="sm-item"><div class="sm-n" style="color:var(--d)" id="sB">0</div><div class="sm-l">อันตราย</div></div>
+    </div>
+  </nav>
 
-  <div class="tabs-wrap">
-    <button class="tab-btn active" onclick="switchTab('scan')" data-tab="scan">🛡️ สแกน URL</button>
-    <button class="tab-btn" onclick="switchTab('file')" data-tab="file">📁 สแกนไฟล์</button>
-    <button class="tab-btn" onclick="switchTab('short')" data-tab="short">✂️ ย่อลิงก์</button>
-    <button class="tab-btn" onclick="switchTab('image')" data-tab="image">🖼️ ฝากรูป</button>
-    <button class="tab-btn" onclick="switchTab('qr')" data-tab="qr">📷 QR Code</button>
-    <button class="tab-btn" onclick="switchTab('text')" data-tab="text">📝 เครื่องมือข้อความ</button>
-    <button class="tab-btn" onclick="switchTab('inspect')" data-tab="inspect">🔍 วิเคราะห์ URL</button>
-    <button class="tab-btn" onclick="switchTab('history')" data-tab="history">📋 ประวัติ</button>
-  </div>
+  <div id="main">
 
-  <!-- ══════ TAB: SCAN ══════ -->
-  <div class="panel active" id="tab-scan">
-    <div class="card">
-      <div class="card-title">🛡️ ตรวจสอบความปลอดภัย URL</div>
-      <div class="inp-wrap">
-        <span class="inp-ico">🔗</span>
-        <input type="url" id="urlInput" class="inp" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
-      </div>
-      <!-- ✅ FIX: ออก event delegation แบบใหม่ ไม่ใช้ label wrap checkbox -->
-      <div class="opt-row" id="scan-opts">
-        <div class="opt on" id="opt-block" onclick="toggleOpt('opt-block','chk-block')">
-          <div class="opt-dot"></div>⛔ บล็อคอันตราย
+    <!-- ═══ SCAN ═══ -->
+    <div class="panel active" id="tab-scan">
+      <div class="card">
+        <div class="card-hd">🛡 ตรวจสอบความปลอดภัย URL</div>
+        <div class="inp-wrap">
+          <span class="inp-ico">🔗</span>
+          <input type="url" id="urlInput" class="inp" placeholder="วางลิงก์ที่นี่... https://example.com" autocomplete="off" spellcheck="false">
         </div>
-        <div class="opt on" id="opt-short2" onclick="toggleOpt('opt-short2','chk-short2')">
-          <div class="opt-dot"></div>✂️ ย่อลิงก์
+        <div class="opt-row" id="scan-opts">
+          <div class="opt on" id="opt-block" onclick="toggleOpt('opt-block','chk-block')"><div class="opt-dot"></div>⛔ บล็อคอันตราย</div>
+          <div class="opt on" id="opt-short2" onclick="toggleOpt('opt-short2','chk-short2')"><div class="opt-dot"></div>✂ ย่อลิงก์</div>
+          <div class="opt on" id="opt-qr2" onclick="toggleOpt('opt-qr2','chk-qr2')"><div class="opt-dot"></div>📷 สร้าง QR</div>
         </div>
-        <div class="opt on" id="opt-qr2" onclick="toggleOpt('opt-qr2','chk-qr2')">
-          <div class="opt-dot"></div>📷 สร้าง QR
-        </div>
-      </div>
-      <!-- Hidden checkboxes — ค่าอ่านจาก _opts object แทน -->
-      <button class="btn btn-p" id="scan-btn" onclick="goScan()">
-        <span id="scan-btn-txt">🛡️ สแกน &amp; ดำเนินการ</span>
-      </button>
-
-      <div class="result-box" id="scanBox">
-        <div class="rh scanning" id="scan-rh">
-          <div class="rh-ico" id="scan-rh-ico">⏳</div>
-          <div class="rh-txt">
-            <div class="rh-title" id="scan-rh-title">กำลังสแกน...</div>
-            <div class="rh-det" id="scan-rh-det">กรุณารอสักครู่</div>
+        <button class="btn btn-p" id="scan-btn" onclick="goScan()"><span id="scan-btn-txt">🛡 สแกน &amp; ดำเนินการ</span></button>
+        <div class="result-box" id="scanBox">
+          <div class="rh scanning" id="scan-rh">
+            <div class="rh-ico" id="scan-rh-ico">⏳</div>
+            <div class="rh-txt"><div class="rh-title" id="scan-rh-title">กำลังสแกน...</div><div class="rh-det" id="scan-rh-det">กรุณารอสักครู่</div></div>
+            <div class="rh-badge" id="scan-rh-badge">--</div>
           </div>
-          <div class="rh-badge" id="scan-rh-badge">--</div>
-        </div>
-        <div class="pbar"><div class="pfill" id="scan-prog"></div></div>
-        <div class="sbody" id="scan-sbody" style="display:none">
-          <div class="risk-row">
-            <div class="risk-lbl">ความเสี่ยง</div>
-            <div class="risk-track"><div class="risk-bar" id="scan-rbar"></div></div>
-            <div class="risk-score" id="scan-rscore"></div>
-          </div>
-          <div id="scan-cats"></div>
-          <div class="threats-box" id="scan-threats" style="display:none">
-            <div class="threat-ttl">🚨 ภัยคุกคามที่ตรวจพบ</div>
-            <div class="threat-list" id="scan-tlist"></div>
-          </div>
-          <div class="vt-section" id="scan-vt" style="display:none">
-            <a class="vt-btn" id="scan-vt-link" target="_blank" rel="noopener">🔬 ตรวจสอบเพิ่มเติมที่ VirusTotal</a>
+          <div class="pbar"><div class="pfill" id="scan-prog"></div></div>
+          <div class="sbody" id="scan-sbody" style="display:none">
+            <div class="risk-row">
+              <div class="risk-lbl">ความเสี่ยง</div>
+              <div class="risk-track"><div class="risk-bar" id="scan-rbar"></div></div>
+              <div class="risk-score" id="scan-rscore"></div>
+            </div>
+            <div id="scan-cats"></div>
+            <div class="threats-box" id="scan-threats" style="display:none">
+              <div class="threat-ttl">🚨 ภัยคุกคามที่ตรวจพบ</div>
+              <div id="scan-tlist"></div>
+            </div>
+            <div id="scan-vt" style="display:none"><a class="vt-btn" id="scan-vt-link" target="_blank" rel="noopener">🔬 ตรวจที่ VirusTotal</a></div>
           </div>
         </div>
-      </div>
-
-      <div class="link-result" id="scan-link-result">
-        <div class="lr-lbl">ลิงก์ที่ย่อแล้ว</div>
-        <div class="copy-row">
-          <input type="text" class="copy-inp" id="scan-short-out" readonly>
-          <button class="copy-btn" onclick="copyVal('scan-short-out')">COPY</button>
+        <div class="link-result" id="scan-link-result">
+          <div class="lr-lbl">ลิงก์ที่ย่อแล้ว</div>
+          <div class="copy-row">
+            <input type="text" class="copy-inp" id="scan-short-out" readonly>
+            <button class="copy-btn" onclick="copyVal('scan-short-out')">COPY</button>
+          </div>
+          <div class="tag-row" id="scan-tags"></div>
+          <div style="display:flex;gap:5px;margin-top:7px;flex-wrap:wrap">
+            <button class="btn btn-s btn-sm" onclick="openVal('scan-short-out')">🌐 เปิด</button>
+            <button class="btn btn-s btn-sm" onclick="shareVal('scan-short-out')">📤 แชร์</button>
+          </div>
         </div>
-        <div class="tag-row" id="scan-tags"></div>
-        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-          <button class="btn btn-s btn-sm" onclick="openVal('scan-short-out')">🌐 เปิด</button>
-          <button class="btn btn-s btn-sm" onclick="shareVal('scan-short-out')">📤 แชร์</button>
-        </div>
-      </div>
-
-      <div id="scan-qr-out" style="display:none;margin-top:14px">
-        <div class="card-title" style="margin-bottom:10px">📷 QR Code</div>
-        <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
-          <div class="qr-wrap" id="scan-qr-wrap"><span style="color:#999;font-size:28px">📷</span></div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <button class="btn btn-s btn-sm" id="scan-qr-dl">⬇️ ดาวน์โหลด QR</button>
-            <button class="btn btn-s btn-sm" onclick="copyQrUrl()">📋 คัดลอก URL QR</button>
+        <div id="scan-qr-out" style="display:none;margin-top:12px">
+          <div class="card-hd" style="margin-bottom:8px">📷 QR Code</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
+            <div class="qr-wrap" id="scan-qr-wrap"><span style="color:#999;font-size:24px">📷</span></div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <button class="btn btn-s btn-sm" id="scan-qr-dl">⬇ ดาวน์โหลด QR</button>
+              <button class="btn btn-s btn-sm" onclick="copyQrUrl()">📋 URL ของ QR</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ══════ TAB: FILE SCAN ══════ -->
-  <div class="panel" id="tab-file">
-    <div class="card">
-      <div class="card-title">📁 สแกนไฟล์</div>
-      <div class="drop-zone" id="fileDrop" onclick="document.getElementById('fileInput').click()"
-        ondragover="dzOver(event,'fileDrop')" ondragleave="dzLeave('fileDrop')" ondrop="dzDropFile(event)">
-        <div class="dz-ico">📂</div>
-        <div class="dz-txt">คลิกหรือลากไฟล์มาวาง</div>
-        <div class="dz-sub">รองรับทุกนามสกุล • ตรวจสอบ 200+ ประเภทอันตราย</div>
-        <input type="file" id="fileInput" onchange="handleScanFile(this.files[0])">
-      </div>
-      <button class="btn btn-p" id="file-btn" onclick="goFileScan()" disabled>
-        <span id="file-btn-txt">🔍 สแกนไฟล์</span>
-      </button>
-      <div class="result-box" id="fileScanBox" style="margin-top:14px">
-        <div class="rh scanning" id="file-rh">
-          <div class="rh-ico" id="file-rh-ico">⏳</div>
-          <div class="rh-txt">
-            <div class="rh-title" id="file-rh-title">กำลังสแกน...</div>
-            <div class="rh-det" id="file-rh-det">กรุณารอสักครู่</div>
-          </div>
-          <div class="rh-badge" id="file-rh-badge">--</div>
+    <!-- ═══ FILE SCAN ═══ -->
+    <div class="panel" id="tab-file">
+      <div class="card">
+        <div class="card-hd">📁 สแกนไฟล์</div>
+        <div class="drop-zone" id="fileDrop" onclick="document.getElementById('fileInput').click()"
+          ondragover="dzOver(event,'fileDrop')" ondragleave="dzLeave('fileDrop')" ondrop="dzDropFile(event)">
+          <div class="dz-ico">📂</div>
+          <div class="dz-txt">คลิกหรือลากไฟล์มาวาง</div>
+          <div class="dz-sub">รองรับทุกนามสกุล • ตรวจสอบ 200+ ประเภทอันตราย</div>
+          <input type="file" id="fileInput" onchange="handleScanFile(this.files[0])">
         </div>
-        <div class="pbar"><div class="pfill" id="file-prog"></div></div>
-        <div class="sbody" id="file-sbody" style="display:none">
-          <div class="risk-row">
-            <div class="risk-lbl">ความเสี่ยง</div>
-            <div class="risk-track"><div class="risk-bar" id="file-rbar"></div></div>
-            <div class="risk-score" id="file-rscore"></div>
+        <button class="btn btn-p" id="file-btn" onclick="goFileScan()" disabled><span id="file-btn-txt">🔍 สแกนไฟล์</span></button>
+        <div class="result-box" id="fileScanBox" style="margin-top:12px">
+          <div class="rh scanning" id="file-rh">
+            <div class="rh-ico" id="file-rh-ico">⏳</div>
+            <div class="rh-txt"><div class="rh-title" id="file-rh-title">กำลังสแกน...</div><div class="rh-det" id="file-rh-det">กรุณารอสักครู่</div></div>
+            <div class="rh-badge" id="file-rh-badge">--</div>
           </div>
-          <div id="file-cats"></div>
-          <div class="threats-box" id="file-threats" style="display:none">
-            <div class="threat-ttl">🚨 ภัยคุกคามที่ตรวจพบ</div>
-            <div class="threat-list" id="file-tlist"></div>
+          <div class="pbar"><div class="pfill" id="file-prog"></div></div>
+          <div class="sbody" id="file-sbody" style="display:none">
+            <div class="risk-row">
+              <div class="risk-lbl">ความเสี่ยง</div>
+              <div class="risk-track"><div class="risk-bar" id="file-rbar"></div></div>
+              <div class="risk-score" id="file-rscore"></div>
+            </div>
+            <div id="file-cats"></div>
+            <div class="threats-box" id="file-threats" style="display:none">
+              <div class="threat-ttl">🚨 ภัยคุกคาม</div>
+              <div id="file-tlist"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ══════ TAB: SHORTEN ══════ -->
-  <div class="panel" id="tab-short">
-    <div class="card">
-      <div class="card-title">✂️ ย่อลิงก์</div>
-      <div class="notice info">ℹ️ ระบบจะลองทีละ service อัตโนมัติ ถ้า service นึงล้มเหลวจะสลับไป service ถัดไปเอง</div>
-      <div class="inp-wrap">
-        <span class="inp-ico">🔗</span>
-        <input type="url" id="shortInput" class="inp" placeholder="https://example.com/very/long/url...">
-      </div>
-      <div style="display:flex;gap:8px;margin-bottom:12px">
-        <select class="inp noi" id="shortService" style="flex:1">
-          <option value="tinyurl">TinyURL</option>
-          <option value="isgd">is.gd</option>
-          <option value="vgd">v.gd</option>
-        </select>
-      </div>
-      <button class="btn btn-p" id="short-btn" onclick="goShorten()">
-        <span id="short-btn-txt">✂️ ย่อลิงก์</span>
-      </button>
-      <div class="link-result" id="short-result">
-        <div class="lr-lbl">ลิงก์ที่ย่อแล้ว</div>
-        <div class="copy-row">
-          <input type="text" class="copy-inp" id="short-out" readonly>
-          <button class="copy-btn" onclick="copyVal('short-out')">COPY</button>
+    <!-- ═══ SHORTEN ═══ -->
+    <div class="panel" id="tab-short">
+      <div class="card">
+        <div class="card-hd">✂ ย่อลิงก์</div>
+        <div class="notice info">ℹ ลองทีละ service อัตโนมัติ ถ้าล้มเหลวสลับไปเองเลย</div>
+        <div class="inp-wrap">
+          <span class="inp-ico">🔗</span>
+          <input type="url" id="shortInput" class="inp" placeholder="https://example.com/very/long/url...">
         </div>
-        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-          <button class="btn btn-s btn-sm" onclick="openVal('short-out')">🌐 เปิด</button>
-          <button class="btn btn-s btn-sm" onclick="goQrFromInput('short-out')">📷 QR Code</button>
-          <button class="btn btn-s btn-sm" onclick="shareVal('short-out')">📤 แชร์</button>
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <select class="inp noi" id="shortService" style="flex:1">
+            <option value="tinyurl">TinyURL</option>
+            <option value="isgd">is.gd</option>
+            <option value="vgd">v.gd</option>
+          </select>
         </div>
+        <button class="btn btn-p" id="short-btn" onclick="goShorten()"><span id="short-btn-txt">✂ ย่อลิงก์</span></button>
+        <div class="link-result" id="short-result">
+          <div class="lr-lbl">ลิงก์ที่ย่อแล้ว</div>
+          <div class="copy-row">
+            <input type="text" class="copy-inp" id="short-out" readonly>
+            <button class="copy-btn" onclick="copyVal('short-out')">COPY</button>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:7px;flex-wrap:wrap">
+            <button class="btn btn-s btn-sm" onclick="openVal('short-out')">🌐 เปิด</button>
+            <button class="btn btn-s btn-sm" onclick="goQrFromInput('short-out')">📷 QR</button>
+            <button class="btn btn-s btn-sm" onclick="shareVal('short-out')">📤 แชร์</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">📋 ย่อหลาย URL พร้อมกัน</div>
+        <textarea class="inp noi" id="bulkInput" rows="5" placeholder="วาง URL ทีละบรรทัด&#10;https://example1.com&#10;https://example2.com"></textarea>
+        <button class="btn btn-p" style="margin-top:8px" onclick="goBulk()"><span id="bulk-btn-txt">✂ ย่อทั้งหมด</span></button>
+        <div id="bulkResult" class="bulk-result-wrap"></div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">📋 ย่อหลาย URL พร้อมกัน</div>
-      <textarea class="inp noi" id="bulkInput" rows="5" placeholder="วาง URL ทีละบรรทัด&#10;https://example1.com&#10;https://example2.com&#10;https://example3.com"></textarea>
-      <button class="btn btn-p" style="margin-top:8px" onclick="goBulk()">
-        <span id="bulk-btn-txt">✂️ ย่อทั้งหมด</span>
-      </button>
-      <!-- ✅ FIX: แก้ CSS conflict display:none + display:flex -->
-      <div id="bulkResult" class="bulk-result-wrap"></div>
-    </div>
-  </div>
-
-  <!-- ══════ TAB: IMAGE HOST ══════ -->
-  <div class="panel" id="tab-image">
-    <div class="card">
-      <div class="card-title">🖼️ ฝากรูปภาพ</div>
-
-      <div class="notice warn">
-        ⚠️ ImgBB/Catbox ต้องการ Internet — ถ้าล้มเหลวให้ใช้ <strong>Base64</strong> แทน (ทำงานได้ทันทีแบบ offline)
-      </div>
-
-      <div class="drop-zone" id="imgDrop" onclick="document.getElementById('imgInput').click()"
-        ondragover="dzOver(event,'imgDrop')" ondragleave="dzLeave('imgDrop')" ondrop="dzDropImg(event)">
-        <div class="dz-ico">🖼️</div>
-        <div class="dz-txt">คลิกหรือลากรูปมาวาง</div>
-        <div class="dz-sub">JPG, PNG, GIF, WebP, BMP • ขนาดสูงสุด 32MB</div>
-        <input type="file" id="imgInput" accept="image/*" onchange="handleImgFile(this.files[0])">
-      </div>
-
-      <div class="img-preview" id="imgPreview">
-        <img id="imgPreviewImg" src="" alt="">
-        <div class="img-meta" id="imgMeta"></div>
-      </div>
-
-      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-        <select class="inp noi" id="hostService" style="flex:2">
-          <option value="base64">🟢 Base64 Inline (local, ทำงานทันที)</option>
-          <option value="imgbb">ImgBB (ต้องเชื่อมต่อ internet)</option>
-          <option value="catbox">Catbox.moe (ต้องเชื่อมต่อ internet)</option>
-        </select>
-      </div>
-
-      <button class="btn btn-p" id="upload-btn" onclick="goUpload()" disabled>
-        <span id="upload-btn-txt">⬆️ อัพโหลด / สร้างลิงก์</span>
-      </button>
-
-      <!-- ✅ FIX: Base64 result แสดงแบบใหม่ ชัดเจน ใช้งานได้จริง -->
-      <div class="b64-result" id="b64Result">
-        <div class="card-title" style="margin-bottom:10px">✅ Base64 พร้อมใช้งาน</div>
-        <img id="b64PreviewImg" class="b64-preview" src="" alt="">
-        <div class="b64-stat" id="b64Stat"></div>
-        <div style="font-size:11px;color:var(--tm);margin-bottom:6px">📋 Base64 Data URL (คลิกเพื่อเลือกทั้งหมด)</div>
-        <div class="b64-url-box" id="b64UrlBox" onclick="selectB64()"></div>
-        <div class="b64-actions">
-          <button class="btn btn-p btn-sm" onclick="copyB64()">📋 Copy Base64</button>
-          <button class="btn btn-s btn-sm" onclick="dlBase64Img()">⬇️ ดาวน์โหลดรูป</button>
-          <button class="btn btn-s btn-sm" onclick="goQrFromHostImg()">📷 QR Code</button>
+    <!-- ═══ IMAGE ═══ -->
+    <div class="panel" id="tab-image">
+      <div class="card">
+        <div class="card-hd">🖼 ฝากรูปภาพ</div>
+        <div class="notice warn">⚠ ImgBB/Catbox ต้องการ Internet — ถ้าล้มเหลวใช้ Base64 แทน</div>
+        <div class="drop-zone" id="imgDrop" onclick="document.getElementById('imgInput').click()"
+          ondragover="dzOver(event,'imgDrop')" ondragleave="dzLeave('imgDrop')" ondrop="dzDropImg(event)">
+          <div class="dz-ico">🖼</div>
+          <div class="dz-txt">คลิกหรือลากรูปมาวาง</div>
+          <div class="dz-sub">JPG, PNG, GIF, WebP, BMP • สูงสุด 32MB</div>
+          <input type="file" id="imgInput" accept="image/*" onchange="handleImgFile(this.files[0])">
         </div>
-        <div class="embed-box" id="b64EmbedBox" style="display:none">
-          <div class="card-title" style="margin-bottom:8px;margin-top:12px">📋 Embed Code</div>
-          <div id="b64EmbedRows"></div>
+        <div class="img-preview" id="imgPreview">
+          <img id="imgPreviewImg" src="" alt="">
+          <div class="img-meta" id="imgMeta"></div>
         </div>
-      </div>
-
-      <!-- ImgBB / Catbox result -->
-      <div class="host-result" id="hostResult">
-        <div class="host-links" id="hostLinks"></div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <select class="inp noi" id="hostService" style="flex:1">
+            <option value="base64">🟢 Base64 Inline (local)</option>
+            <option value="imgbb">ImgBB (internet)</option>
+            <option value="catbox">Catbox.moe (internet)</option>
+          </select>
+        </div>
+        <button class="btn btn-p" id="upload-btn" onclick="goUpload()" disabled><span id="upload-btn-txt">⬆ อัพโหลด / สร้างลิงก์</span></button>
+        <div class="b64-result" id="b64Result">
+          <div class="card-hd" style="margin-bottom:8px">✅ Base64 พร้อมใช้</div>
+          <img id="b64PreviewImg" src="" alt="" style="width:100%;max-height:140px;object-fit:contain;border-radius:7px;margin-bottom:8px;display:block">
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px" id="b64Stat"></div>
+          <div style="font-size:10px;color:var(--tm);margin-bottom:4px">Base64 Data URL (คลิกเพื่อเลือก)</div>
+          <div class="b64-url-box" id="b64UrlBox" onclick="selectB64()"></div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">
+            <button class="btn btn-p btn-sm" onclick="copyB64()">📋 Copy Base64</button>
+            <button class="btn btn-s btn-sm" onclick="dlBase64Img()">⬇ ดาวน์โหลด</button>
+            <button class="btn btn-s btn-sm" onclick="goQrFromHostImg()">📷 QR</button>
+          </div>
+          <div id="b64EmbedBox" style="display:none"></div>
+        </div>
+        <div class="host-result" id="hostResult">
+          <div id="hostLinks"></div>
           <button class="btn btn-s btn-sm" onclick="goQrFromHostImg()">📷 QR รูปภาพ</button>
         </div>
       </div>
-    </div>
-
-    <div class="card" id="galleryCard" style="display:none">
-      <div class="card-title">🗂️ คลังรูป (<span id="galCount">0</span> รูป)</div>
-      <div class="gallery" id="gallery"></div>
-      <div style="margin-top:12px">
-        <button class="btn btn-d btn-sm" onclick="clearGallery()">🗑️ ล้างคลัง</button>
+      <div class="card" id="galleryCard" style="display:none">
+        <div class="card-hd">🗂 คลัง (<span id="galCount">0</span> รูป)</div>
+        <div class="gallery" id="gallery"></div>
+        <div style="margin-top:8px"><button class="btn btn-d btn-sm" onclick="clearGallery()">🗑 ล้างคลัง</button></div>
       </div>
     </div>
-  </div>
 
-  <!-- ══════ TAB: QR ══════ -->
-  <div class="panel" id="tab-qr">
-    <div class="card">
-      <div class="card-title">📷 สร้าง QR Code</div>
-      <div class="inp-wrap" style="margin-bottom:10px">
-        <span class="inp-ico">📝</span>
-        <input type="text" id="qrInput" class="inp" placeholder="URL, ข้อความ, เบอร์โทร, WiFi...">
-      </div>
-      <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
-        <div class="qr-wrap" id="qrWrap"><span style="color:#bbb;font-size:34px">📷</span></div>
-        <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px">
-          <div>
-            <div class="card-title" style="margin-bottom:6px">ขนาด</div>
-            <div class="qr-size-row">
-              <div class="qr-size-btn on" onclick="setQrSz(150,this)">S</div>
-              <div class="qr-size-btn" onclick="setQrSz(200,this)">M</div>
-              <div class="qr-size-btn" onclick="setQrSz(300,this)">L</div>
-              <div class="qr-size-btn" onclick="setQrSz(400,this)">XL</div>
+    <!-- ═══ QR ═══ -->
+    <div class="panel" id="tab-qr">
+      <div class="card">
+        <div class="card-hd">📷 สร้าง QR Code</div>
+        <div class="inp-wrap" style="margin-bottom:8px">
+          <span class="inp-ico">📝</span>
+          <input type="text" id="qrInput" class="inp" placeholder="URL, ข้อความ, เบอร์โทร, WiFi...">
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+          <div class="qr-wrap" id="qrWrap"><span style="color:#aaa;font-size:28px">📷</span></div>
+          <div style="flex:1;min-width:180px;display:flex;flex-direction:column;gap:8px">
+            <div>
+              <div class="card-hd" style="margin-bottom:5px">ขนาด</div>
+              <div class="qr-size-row">
+                <div class="qr-size-btn on" onclick="setQrSz(150,this)">S</div>
+                <div class="qr-size-btn" onclick="setQrSz(200,this)">M</div>
+                <div class="qr-size-btn" onclick="setQrSz(300,this)">L</div>
+                <div class="qr-size-btn" onclick="setQrSz(400,this)">XL</div>
+              </div>
+            </div>
+            <div class="color-row">
+              <label>สี:</label><input type="color" id="qrFg" value="#000000">
+              <label>พื้นหลัง:</label><input type="color" id="qrBg" value="#ffffff">
+            </div>
+            <div>
+              <div class="card-hd" style="margin-bottom:5px">เทมเพลต</div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px">
+                <button class="tool-btn" style="padding:5px 8px;font-size:10px" onclick="qrTpl('url')">🔗 URL</button>
+                <button class="tool-btn" style="padding:5px 8px;font-size:10px" onclick="qrTpl('tel')">📞 โทร</button>
+                <button class="tool-btn" style="padding:5px 8px;font-size:10px" onclick="qrTpl('sms')">💬 SMS</button>
+                <button class="tool-btn" style="padding:5px 8px;font-size:10px" onclick="qrTpl('wifi')">📶 WiFi</button>
+                <button class="tool-btn" style="padding:5px 8px;font-size:10px" onclick="qrTpl('vcard')">👤 vCard</button>
+                <button class="tool-btn" style="padding:5px 8px;font-size:10px" onclick="qrTpl('email')">📧 Email</button>
+                <button class="tool-btn" style="padding:5px 8px;font-size:10px" onclick="qrTpl('line')">💚 LINE</button>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <button class="btn btn-p btn-sm" onclick="dlQr('png')">⬇ PNG</button>
+              <button class="btn btn-s btn-sm" onclick="dlQr('svg')">⬇ SVG</button>
+              <button class="btn btn-s btn-sm" onclick="copyQrUrl()">📋 URL ของ QR</button>
             </div>
           </div>
-          <div class="color-row">
-            <label>สี:</label>
-            <input type="color" id="qrFg" value="#000000">
-            <label>พื้นหลัง:</label>
-            <input type="color" id="qrBg" value="#ffffff">
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TEXT ═══ -->
+    <div class="panel" id="tab-text">
+      <div class="card">
+        <div class="card-hd">📝 กล่องข้อความ</div>
+        <textarea class="inp noi" id="textInput" rows="5" placeholder="วางหรือพิมพ์ข้อความที่นี่..."></textarea>
+        <div style="font-size:10px;color:var(--tm);margin-top:5px" id="charCount">0 ตัวอักษร | 0 คำ | 0 บรรทัด</div>
+        <div class="tools-grid" style="margin-top:8px">
+          <button class="tool-btn" onclick="tt('upper')">UPPERCASE</button>
+          <button class="tool-btn" onclick="tt('lower')">lowercase</button>
+          <button class="tool-btn" onclick="tt('title')">Title Case</button>
+          <button class="tool-btn" onclick="tt('sentence')">Sentence case</button>
+          <button class="tool-btn" onclick="tt('trim')">ตัดช่องว่าง</button>
+          <button class="tool-btn" onclick="tt('nospace')">ลบช่องว่าง</button>
+          <button class="tool-btn" onclick="tt('reverse')">กลับข้อความ</button>
+          <button class="tool-btn" onclick="tt('slug')">Slug/URL</button>
+          <button class="tool-btn" onclick="tt('encode')">URL Encode</button>
+          <button class="tool-btn" onclick="tt('decode')">URL Decode</button>
+          <button class="tool-btn" onclick="tt('b64e')">Base64 Encode</button>
+          <button class="tool-btn" onclick="tt('b64d')">Base64 Decode</button>
+          <button class="tool-btn" onclick="tt('htmlesc')">HTML Escape</button>
+          <button class="tool-btn" onclick="tt('htmlun')">HTML Unescape</button>
+          <button class="tool-btn" onclick="tt('dedup')">ลบบรรทัดซ้ำ</button>
+          <button class="tool-btn" onclick="tt('sort')">เรียง A-Z</button>
+          <button class="tool-btn" onclick="tt('sortr')">เรียง Z-A</button>
+          <button class="tool-btn" onclick="tt('json')">Format JSON</button>
+          <button class="tool-btn" onclick="tt('lines')">นับ/วิเคราะห์</button>
+          <button class="tool-btn" onclick="tt('numlines')">เพิ่มเลขบรรทัด</button>
+        </div>
+        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap">
+          <button class="btn btn-s btn-sm" onclick="copyVal('textInput')">📋 คัดลอก</button>
+          <button class="btn btn-s btn-sm" onclick="document.getElementById('textInput').value='';updateCount()">🗑 ล้าง</button>
+          <button class="btn btn-s btn-sm" onclick="dlText()">⬇ .txt</button>
+          <button class="btn btn-s btn-sm" onclick="pasteClip()">📋 วาง</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">🔐 Hash &amp; Encode</div>
+        <div class="inp-wrap">
+          <span class="inp-ico">📝</span>
+          <input type="text" id="hashInput" class="inp" placeholder="ข้อความที่ต้องการ hash...">
+        </div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <button class="tool-btn btn-sm" onclick="doHash('SHA-256')">SHA-256</button>
+          <button class="tool-btn btn-sm" onclick="doHash('SHA-512')">SHA-512</button>
+          <button class="tool-btn btn-sm" onclick="doHash('SHA-1')">SHA-1</button>
+          <button class="tool-btn btn-sm" onclick="doHash('SHA-384')">SHA-384</button>
+        </div>
+        <div id="hashOut" style="display:none;margin-top:8px">
+          <div class="url-part" style="margin-top:4px">
+            <div class="up-key" id="hashAlgoLbl">SHA-256</div>
+            <div class="up-val" id="hashVal" style="font-size:9px;word-break:break-all"></div>
           </div>
-          <div>
-            <div class="card-title" style="margin-bottom:6px">เทมเพลต</div>
-            <div style="display:flex;flex-wrap:wrap;gap:4px">
-              <button class="tool-btn" style="padding:6px 10px;font-size:11px" onclick="qrTpl('url')">🔗 URL</button>
-              <button class="tool-btn" style="padding:6px 10px;font-size:11px" onclick="qrTpl('tel')">📞 โทร</button>
-              <button class="tool-btn" style="padding:6px 10px;font-size:11px" onclick="qrTpl('sms')">💬 SMS</button>
-              <button class="tool-btn" style="padding:6px 10px;font-size:11px" onclick="qrTpl('wifi')">📶 WiFi</button>
-              <button class="tool-btn" style="padding:6px 10px;font-size:11px" onclick="qrTpl('vcard')">👤 vCard</button>
-              <button class="tool-btn" style="padding:6px 10px;font-size:11px" onclick="qrTpl('email')">📧 Email</button>
-              <button class="tool-btn" style="padding:6px 10px;font-size:11px" onclick="qrTpl('line')">💚 LINE</button>
-            </div>
+          <button class="btn btn-s btn-sm" style="margin-top:5px" onclick="copyEl('hashVal')">📋 คัดลอก</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ INSPECT ═══ -->
+    <div class="panel" id="tab-inspect">
+      <div class="card">
+        <div class="card-hd">🔍 วิเคราะห์ URL</div>
+        <div class="inp-wrap">
+          <span class="inp-ico">🔗</span>
+          <input type="url" id="inspectInput" class="inp" placeholder="https://example.com:8080/path?foo=bar#section">
+        </div>
+        <button class="btn btn-p" onclick="doInspect()" style="margin-bottom:12px">🔍 วิเคราะห์</button>
+        <div id="inspectResult" style="display:none">
+          <div id="urlParts"></div>
+          <div style="margin-top:10px">
+            <div class="card-hd" style="margin-bottom:5px">Parameters</div>
+            <div id="urlParams"></div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <button class="btn btn-p btn-sm" onclick="dlQr('png')">⬇️ ดาวน์โหลด PNG</button>
-            <button class="btn btn-s btn-sm" onclick="dlQr('svg')">⬇️ ดาวน์โหลด SVG</button>
-            <button class="btn btn-s btn-sm" onclick="copyQrUrl()">📋 คัดลอก URL QR</button>
+          <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap">
+            <button class="btn btn-s btn-sm" onclick="scanFromInspect()">🛡 สแกน</button>
+            <button class="btn btn-s btn-sm" onclick="qrFromInspect()">📷 QR</button>
+            <button class="btn btn-s btn-sm" onclick="shortFromInspect()">✂ ย่อ</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ══════ TAB: TEXT ══════ -->
-  <div class="panel" id="tab-text">
-    <div class="card">
-      <div class="card-title">📝 กล่องข้อความ</div>
-      <textarea class="inp noi" id="textInput" rows="6" placeholder="วางหรือพิมพ์ข้อความที่นี่..."></textarea>
-      <div style="font-size:12px;color:var(--tm);margin-top:6px" id="charCount">0 ตัวอักษร | 0 คำ | 0 บรรทัด</div>
-      <div class="tools-grid" style="margin-top:10px">
-        <button class="tool-btn" onclick="tt('upper')">🔠 UPPERCASE</button>
-        <button class="tool-btn" onclick="tt('lower')">🔡 lowercase</button>
-        <button class="tool-btn" onclick="tt('title')">📖 Title Case</button>
-        <button class="tool-btn" onclick="tt('sentence')">✏️ Sentence case</button>
-        <button class="tool-btn" onclick="tt('trim')">✂️ ตัดช่องว่าง</button>
-        <button class="tool-btn" onclick="tt('nospace')">🚫 ลบช่องว่าง</button>
-        <button class="tool-btn" onclick="tt('reverse')">🔄 กลับข้อความ</button>
-        <button class="tool-btn" onclick="tt('slug')">🔗 Slug/URL</button>
-        <button class="tool-btn" onclick="tt('encode')">🔐 URL Encode</button>
-        <button class="tool-btn" onclick="tt('decode')">🔓 URL Decode</button>
-        <button class="tool-btn" onclick="tt('b64e')">📦 Base64 Encode</button>
-        <button class="tool-btn" onclick="tt('b64d')">📬 Base64 Decode</button>
-        <button class="tool-btn" onclick="tt('htmlesc')">🌐 HTML Escape</button>
-        <button class="tool-btn" onclick="tt('htmlun')">🌐 HTML Unescape</button>
-        <button class="tool-btn" onclick="tt('dedup')">🧹 ลบบรรทัดซ้ำ</button>
-        <button class="tool-btn" onclick="tt('sort')">🔢 เรียงบรรทัด A-Z</button>
-        <button class="tool-btn" onclick="tt('sortr')">🔢 เรียง Z-A</button>
-        <button class="tool-btn" onclick="tt('json')">💅 Format JSON</button>
-        <button class="tool-btn" onclick="tt('lines')">📊 นับ/วิเคราะห์</button>
-        <button class="tool-btn" onclick="tt('numlines')">🔢 เพิ่มเลขบรรทัด</button>
-      </div>
-      <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
-        <button class="btn btn-s btn-sm" onclick="copyVal('textInput')">📋 คัดลอก</button>
-        <button class="btn btn-s btn-sm" onclick="document.getElementById('textInput').value='';updateCount()">🗑️ ล้าง</button>
-        <button class="btn btn-s btn-sm" onclick="dlText()">⬇️ บันทึก .txt</button>
-        <button class="btn btn-s btn-sm" onclick="pasteClip()">📋 วางจาก Clipboard</button>
+    <!-- ═══ HISTORY ═══ -->
+    <div class="panel" id="tab-history">
+      <div class="card">
+        <div class="card-hd">📋 ประวัติทั้งหมด</div>
+        <div id="histEmpty" style="text-align:center;padding:24px;color:var(--ts)">ยังไม่มีประวัติ</div>
+        <div class="hist-list" id="histList"></div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">🔐 Hash & Encode</div>
-      <div class="inp-wrap">
-        <span class="inp-ico">📝</span>
-        <input type="text" id="hashInput" class="inp" placeholder="ข้อความที่ต้องการ hash / encode...">
-      </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">
-        <button class="tool-btn btn-sm" onclick="doHash('SHA-256')">SHA-256</button>
-        <button class="tool-btn btn-sm" onclick="doHash('SHA-512')">SHA-512</button>
-        <button class="tool-btn btn-sm" onclick="doHash('SHA-1')">SHA-1</button>
-        <button class="tool-btn btn-sm" onclick="doHash('SHA-384')">SHA-384</button>
-      </div>
-      <div id="hashOut" style="display:none;margin-top:10px">
-        <div class="url-part" style="margin-top:6px">
-          <div class="up-key" id="hashAlgoLbl">SHA-256</div>
-          <div class="up-val" id="hashVal" style="font-size:10px;word-break:break-all"></div>
-        </div>
-        <button class="btn btn-s btn-sm" style="margin-top:6px" onclick="copyEl('hashVal')">📋 คัดลอก</button>
-      </div>
-    </div>
-  </div>
+  </div><!-- /main -->
+</div><!-- /layout -->
 
-  <!-- ══════ TAB: INSPECT ══════ -->
-  <div class="panel" id="tab-inspect">
-    <div class="card">
-      <div class="card-title">🔍 วิเคราะห์ URL</div>
-      <div class="inp-wrap">
-        <span class="inp-ico">🔗</span>
-        <input type="url" id="inspectInput" class="inp" placeholder="https://example.com:8080/path?foo=bar&x=1#section">
-      </div>
-      <button class="btn btn-p" onclick="doInspect()" style="margin-bottom:14px">🔍 วิเคราะห์</button>
-      <div id="inspectResult" style="display:none">
-        <div class="url-parts" id="urlParts"></div>
-        <div style="margin-top:12px">
-          <div class="card-title" style="margin-bottom:6px">Parameters</div>
-          <div class="url-parts" id="urlParams"></div>
-        </div>
-        <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
-          <button class="btn btn-s btn-sm" onclick="scanFromInspect()">🛡️ สแกน URL นี้</button>
-          <button class="btn btn-s btn-sm" onclick="qrFromInspect()">📷 QR Code</button>
-          <button class="btn btn-s btn-sm" onclick="shortFromInspect()">✂️ ย่อลิงก์</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════ TAB: HISTORY ══════ -->
-  <div class="panel" id="tab-history">
-    <div class="card">
-      <div class="card-title">📋 ประวัติทั้งหมด</div>
-      <div id="histEmpty" style="text-align:center;padding:30px;color:var(--ts)">ยังไม่มีประวัติ</div>
-      <div class="hist-list" id="histList"></div>
-    </div>
-  </div>
-</main>
-
-<footer>Flash Anti Link © 2026 &nbsp;•&nbsp; ⚡ All-in-One Security Tool v3.2</footer>
 <div class="toast" id="toast"></div>
 <div class="lightbox" id="lightbox" onclick="closeLB()">
   <button class="lb-close" onclick="closeLB()">✕</button>
@@ -680,1078 +620,315 @@ footer{text-align:center;padding:20px;color:var(--ts);font-size:11px;position:re
 
 <script>
 'use strict';
+const _opts={'chk-block':true,'chk-short2':true,'chk-qr2':true};
+function toggleOpt(divId,key){_opts[key]=!_opts[key];document.getElementById(divId).classList.toggle('on',_opts[key]);}
+function getOpt(k){return _opts[k];}
 
-/* ═══════════════════════════════════════════
-   ✅ FIX: OPT TOGGLES — state object แทน checkbox
-═══════════════════════════════════════════ */
-const _opts = { 'chk-block': true, 'chk-short2': true, 'chk-qr2': true };
-const _optMap = { 'opt-block':'chk-block', 'opt-short2':'chk-short2', 'opt-qr2':'chk-qr2' };
+/* MOBILE MENU */
+function toggleMenu(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('on');}
+function closeMenu(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('on');}
 
-function toggleOpt(divId, key) {
-  _opts[key] = !_opts[key];
-  const el = document.getElementById(divId);
-  el.classList.toggle('on', _opts[key]);
-}
-function getOpt(key) { return _opts[key]; }
-
-/* ═══════════════════════════════════════════
-   FILE EXTENSION DATABASE
-═══════════════════════════════════════════ */
-const FILE_DB = {
-  critical:{label:'🚨 อันตรายสูงสุด (Malware/Exploit)',color:'#ef4444',score:100,
-    exts:['exe','com','bat','cmd','scr','pif','vbs','vbe','wsf','wsh','ps1','ps2','psm1','psd1',
-      'dll','sys','drv','ocx','cpl','msi','msp','mst','cab','js','jse','vb','vba','bas',
-      'jar','jnlp','class','sh','bash','zsh','fish','ksh','csh','run',
-      'py','pyw','pyc','pyo','rb','rbw','pl','pm',
-      'php','php3','php4','php5','php7','phtml','phar',
-      'asp','aspx','ashx','asmx','hta','hlp','chm','inf','reg',
-      'app','ipa','apk','dex','so','dylib','elf','bin']},
-  high:{label:'🔴 อันตรายสูง (Script/Macro)',color:'#f97316',score:80,
-    exts:['docm','xlsm','pptm','xlam','xla','xlt','xltm','dotm','potm','ppsm',
-      'doc','xls','ppt','swf','fla','xap','lnk','url','desktop',
-      'ts','tsx','go','rs','c','cpp','cc','h','hpp','asm','s',
-      'makefile','dockerfile','vagrantfile']},
-  medium_high:{label:'🟠 ระวัง (Installer/Image)',color:'#f59e0b',score:60,
-    exts:['deb','rpm','pkg','dmg','run','appimage','iso','img','vhd','vhdx','vmdk',
-      'war','ear','nupkg','vsix','whl','gem','lua','r','kt','swift','scala',
-      'jl','groovy','gvy','ex','exs']},
-  medium:{label:'🟡 น่าสังเกต (Config/Cred)',color:'#eab308',score:40,
-    exts:['env','cfg','conf','config','ini','toml','yaml','yml',
-      'sql','sqlite','sqlite3','db','mdb','accdb',
-      'pem','key','ppk','p12','pfx','crt','cer','csr','jks','keystore',
-      'pub','tf','tfstate','tfvars','htaccess','htpasswd','crontab']},
-  compressed:{label:'📦 ไฟล์บีบอัด',color:'#8b5cf6',score:30,
-    exts:['zip','rar','7z','tar','gz','bz2','xz','lz','lzma','lzh','lha',
-      'zst','br','z','tgz','tbz','tbz2','txz','ace','arj','arc']},
-  document:{label:'📄 เอกสาร (ระวัง Macro)',color:'#06b6d4',score:15,
-    exts:['docx','xlsx','pptx','odt','ods','odp','pdf','rtf','epub','mobi',
-      'txt','csv','tsv','log','html','htm','xhtml','xml','svg','md','markdown','tex']},
-  media:{label:'🖼️ มีเดีย (ปกติปลอดภัย)',color:'#10b981',score:5,
-    exts:['jpg','jpeg','png','gif','bmp','tiff','tif','webp','heic','ico',
-      'mp4','mkv','avi','mov','wmv','flv','webm','mp3','wav','flac','aac','ogg','wma',
-      'psd','ai','eps','stl','obj','gltf','glb']},
-  safe:{label:'✅ ปลอดภัย',color:'#10b981',score:0,
-    exts:['json','geojson','ndjson','woff','woff2','ttf','otf','eot','ics','gpx','kml','nfo']}
+/* FILE DB */
+const FILE_DB={
+  critical:{label:'🚨 อันตรายสูงสุด',color:'#ef4444',score:100,exts:['exe','com','bat','cmd','scr','pif','vbs','vbe','wsf','wsh','ps1','ps2','psm1','psd1','dll','sys','drv','ocx','cpl','msi','msp','mst','cab','js','jse','jar','jnlp','class','sh','bash','zsh','run','py','pyw','rb','php','php3','php4','php5','php7','phtml','asp','aspx','hta','hlp','chm','inf','reg','apk','dex']},
+  high:{label:'🔴 อันตรายสูง',color:'#f97316',score:80,exts:['docm','xlsm','pptm','xlam','xla','dotm','swf','lnk','url','ts','go','rs','c','cpp','h','asm','makefile','dockerfile']},
+  medium_high:{label:'🟠 ระวัง',color:'#f59e0b',score:60,exts:['deb','rpm','pkg','dmg','iso','img','vhd','vmdk','war','lua','r','kt','swift']},
+  medium:{label:'🟡 น่าสังเกต',color:'#eab308',score:40,exts:['env','cfg','conf','config','ini','toml','yaml','yml','sql','sqlite','db','mdb','pem','key','ppk','p12','pfx','crt','cer','htaccess','htpasswd']},
+  compressed:{label:'📦 บีบอัด',color:'#8b5cf6',score:30,exts:['zip','rar','7z','tar','gz','bz2','xz','zst','tgz','ace']},
+  document:{label:'📄 เอกสาร',color:'#06b6d4',score:15,exts:['docx','xlsx','pptx','odt','pdf','rtf','epub','txt','csv','html','htm','xml','svg','md']},
+  media:{label:'🖼 มีเดีย',color:'#10b981',score:5,exts:['jpg','jpeg','png','gif','bmp','tiff','webp','heic','ico','mp4','mkv','avi','mov','mp3','wav','flac','aac','psd']},
+  safe:{label:'✅ ปลอดภัย',color:'#10b981',score:0,exts:['json','woff','woff2','ttf','otf','ics','nfo']}
 };
-const EXT_MAP = {};
-Object.keys(FILE_DB).forEach(cat => FILE_DB[cat].exts.forEach(e => EXT_MAP[e] = cat));
+const EXT_MAP={};Object.keys(FILE_DB).forEach(cat=>FILE_DB[cat].exts.forEach(e=>EXT_MAP[e]=cat));
 
-/* ═══════════════════════════════════════════
-   URL SCANNER
-═══════════════════════════════════════════ */
-const PHISH_PATS = [
-  /paypal.*log[i1]n/i,/bank.*secur/i,/account.*ver[i1]fy/i,/s[i1]gn.*[i1]n.*update/i,
-  /conf[i1]rm.*pass/i,/wallet.*connect/i,/seed.*phrase/i,/private.*key/i,
-  /recover.*wallet/i,/airdrop.*claim/i,/free.*crypto/i,/urgent.*action/i,
-  /account.*suspend/i,/password.*expir/i,/facebook.*log[i1]n/i,/google.*s[i1]gn/i,
-  /metamask.*connect/i,/crypto.*drainer/i,/claim.*reward/i,/verify.*identity/i
-];
-const RISKY_TLDS = ['.tk','.ml','.ga','.cf','.gq','.xyz','.top','.click','.club',
-  '.online','.site','.space','.fun','.uno','.icu','.live','.vip','.link','.buzz'];
-const BAD_WORDS = ['free-iphone','you-won','prize-claim','earn-money','virus-download',
-  'malware','ransomware','keylogger','phishing','scam-page','crypto-drainer'];
-const BRANDS = [
-  {n:'paypal',ok:['paypal.com','paypal.me']},
-  {n:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl']},
-  {n:'facebook',ok:['facebook.com','fb.com','fb.me','instagram.com','meta.com']},
-  {n:'microsoft',ok:['microsoft.com','microsoftonline.com','outlook.com','live.com','office.com']},
-  {n:'apple',ok:['apple.com','icloud.com']},
-  {n:'amazon',ok:['amazon.com','amazon.co.th','amzn.to','amazonaws.com']},
-  {n:'netflix',ok:['netflix.com']},
-  {n:'line',ok:['line.me','lin.ee','line.co.th','line.biz']},
-  {n:'kasikorn',ok:['kasikornbank.com','kbank.co.th','kplus.co.th']},
-  {n:'scb',ok:['scb.co.th','scbeasy.com']},
-  {n:'krungthai',ok:['krungthai.com','ktb.co.th']},
-  {n:'binance',ok:['binance.com','binance.th']},
-  {n:'coinbase',ok:['coinbase.com']},
-];
+/* URL SCANNER */
+const PHISH_PATS=[/paypal.*log[i1]n/i,/bank.*secur/i,/account.*ver[i1]fy/i,/s[i1]gn.*[i1]n.*update/i,/wallet.*connect/i,/seed.*phrase/i,/private.*key/i,/airdrop.*claim/i,/free.*crypto/i,/metamask.*connect/i,/crypto.*drainer/i];
+const RISKY_TLDS=['.tk','.ml','.ga','.cf','.gq','.xyz','.top','.click','.club','.online','.site','.space','.fun','.uno','.icu','.live','.vip','.buzz'];
+const BAD_WORDS=['free-iphone','you-won','prize-claim','earn-money','malware','ransomware','keylogger','phishing','crypto-drainer'];
+const BRANDS=[{n:'paypal',ok:['paypal.com','paypal.me']},{n:'google',ok:['google.com','google.co.th','googleapis.com','goo.gl']},{n:'facebook',ok:['facebook.com','fb.com','fb.me','instagram.com','meta.com']},{n:'microsoft',ok:['microsoft.com','microsoftonline.com','outlook.com','live.com','office.com']},{n:'apple',ok:['apple.com','icloud.com']},{n:'amazon',ok:['amazon.com','amazon.co.th','amzn.to','amazonaws.com']},{n:'netflix',ok:['netflix.com']},{n:'line',ok:['line.me','lin.ee','line.co.th']},{n:'kasikorn',ok:['kasikornbank.com','kbank.co.th']},{n:'scb',ok:['scb.co.th','scbeasy.com']},{n:'binance',ok:['binance.com','binance.th']}];
 
-function entropy(s) {
-  const f = {};
-  for (const c of s) f[c] = (f[c]||0) + 1;
-  const l = s.length;
-  return -Object.values(f).reduce((a,v) => { const p=v/l; return a+p*Math.log2(p); }, 0);
+function entropy(s){const f={};for(const c of s)f[c]=(f[c]||0)+1;const l=s.length;return-Object.values(f).reduce((a,v)=>{const p=v/l;return a+p*Math.log2(p);},0);}
+function scanUrl(raw){
+  const R={safe:true,score:0,threats:[],cats:{}};
+  function add(cat,name,ok,msg,pts=1){if(!R.cats[cat])R.cats[cat]=[];R.cats[cat].push({name,ok});if(!ok&&msg){R.threats.push(msg);R.score+=pts;}}
+  let u;try{u=new URL(raw);}catch{R.threats.push('❌ URL format ไม่ถูกต้อง');R.safe=false;return R;}
+  const host=u.hostname.toLowerCase();const full=raw.toLowerCase();const params=u.search.toLowerCase();
+  add('🔐 Protocol','HTTPS',u.protocol==='https:','⚠ HTTP ไม่มี SSL',2);
+  const xss=/^(javascript:|data:|vbscript:)/i.test(raw);add('🔐 Protocol','No XSS',!xss,xss?'🚨 XSS URI':'',10);if(xss)R.safe=false;
+  const dbl=(full.match(/https?:\/\//g)||[]).length>1;add('🔐 Protocol','No Nested URL',!dbl,dbl?'🔄 Double Redirect':'',3);
+  const isIP=/^\d{1,3}(\.\d{1,3}){3}$/.test(host);add('🌐 Domain','No IP',!isIP,isIP?'🚨 ใช้ IP แทนโดเมน':'',5);
+  const subD=host.split('.').length-2;add('🌐 Domain','Subdomain OK',subD<=2,subD>2?`⚠ Subdomain ลึก ${subD} ชั้น`:'',2);
+  add('🌐 Domain','No IDN',!/xn--/.test(host),'⚠ Homograph Attack',3);
+  const ent=entropy(host);add('🌐 Domain','Low Entropy',ent<4.2,`⚠ Domain Entropy สูง=${ent.toFixed(2)}`,2);
+  const badTld=RISKY_TLDS.find(t=>host.endsWith(t));add('🌐 Domain','Safe TLD',!badTld,badTld?`⚠ TLD เสี่ยง: "${badTld}"`:'',2);
+  const ph=PHISH_PATS.filter(p=>p.test(full));add('🎣 Phishing','No Pattern',ph.length===0,ph.length?`🎣 Phishing ${ph.length} จุด`:'',ph.length*2);
+  let imp=null;for(const br of BRANDS){if(host.includes(br.n)&&!br.ok.some(d=>host===d||host.endsWith('.'+d))){imp=br.n.toUpperCase();break;}}
+  add('🎣 Phishing','No Spoof',!imp,imp?`🚨 ปลอมแบรนด์: ${imp}`:'',6);
+  const bw=BAD_WORDS.find(k=>full.includes(k));add('🎣 Phishing','No Keywords',!bw,bw?`🚨 คำต้องสงสัย: "${bw}"`:'',4);
+  const drainer=/\b(connect.*wallet|approve.*token|drain|seed.*phrase)\b/i.test(full);add('🎣 Phishing','No Drainer',!drainer,drainer?'🚨 Crypto Drainer':'',8);
+  add('📂 Structure','Normal Length',raw.length<=150,`⚠ URL ยาวเกิน (${raw.length})`,1);
+  const b64=/[A-Za-z0-9+/]{40,}={0,2}/.test(params);add('📂 Structure','No B64',!b64,'⚠ Base64 ใน params',3);
+  const openR=['url=','redirect=','goto=','target=','next=','return='].some(p=>params.includes(p));add('📂 Structure','No Redirect',!openR,'🔄 Open Redirect param',2);
+  if(R.score>=4)R.safe=false;return R;
+}
+function scanFile(file){
+  const name=file.name;const size=file.size;const parts=name.toLowerCase().split('.');
+  const exts=parts.slice(1);const pri=exts[exts.length-1]||'';const sec=exts.length>1?exts[exts.length-2]:null;
+  const R={safe:true,score:0,threats:[],cats:{},ext:pri,name,size};
+  function add(cat,nm,ok,msg,pts=1){if(!R.cats[cat])R.cats[cat]=[];R.cats[cat].push({name:nm,ok});if(!ok&&msg){R.threats.push(msg);R.score+=pts;}}
+  const catKey=EXT_MAP[pri];const catData=catKey?FILE_DB[catKey]:null;
+  const extScore=catData?catData.score:10;
+  add('📁 นามสกุล','Known Extension',!!catKey,`⚠ ไม่รู้จักนามสกุล (.${pri})`,1);
+  if(catKey){const safe=catKey==='safe'||catKey==='media';add('📁 นามสกุล','Safe Extension',safe,`${catData.label} (.${pri})`,Math.ceil(extScore/10));}
+  if(sec&&EXT_MAP[sec]){const sc=EXT_MAP[sec];const danger=sc==='critical'||sc==='high';add('🎭 Double Ext','No Double',!danger,danger?`🚨 Double Ext: .${sec}.${pri}`:'',8);}
+  const suspNames=[[/invoice/i,'invoice — phishing'],[/receipt/i,'receipt — phishing'],[/payment/i,'payment — หลอก'],[/urgent/i,'urgent — social eng'],[/crack/i,'crack — malware'],[/keygen/i,'keygen — malware'],[/loader/i,'loader — dropper']];
+  const hits=suspNames.filter(([p])=>p.test(name));
+  add('🔤 ชื่อไฟล์','No Suspicious',hits.length===0,hits.length?`⚠ ชื่อสงสัย: ${hits.map(h=>h[1]).join(' | ')}`:'',hits.length*2);
+  const rtl=/[\u202e\u200f\u200e]/.test(name);add('🔤 ชื่อไฟล์','No RTL',!rtl,rtl?'🚨 RTL Override':'',9);
+  const mb=size/(1024*1024);add('📏 ขนาด','Not Empty',size>0,size===0?'⚠ 0 bytes':'',1);add('📏 ขนาด','Normal',mb<500,mb>=500?`⚠ ใหญ่มาก (${mb.toFixed(0)}MB)`:'',1);
+  if(catKey==='medium'&&['pem','key','ppk','p12','pfx','env'].includes(pri)){add('🔒 Security','Not Cred',false,'🔑 Credential file — ห้ามแชร์',6);R.safe=false;}
+  if(R.score>=4)R.safe=false;if(catKey==='critical')R.safe=false;return R;
 }
 
-function scanUrl(raw) {
-  const R = { safe:true, score:0, threats:[], cats:{} };
-  function add(cat, name, ok, msg, pts=1) {
-    if (!R.cats[cat]) R.cats[cat] = [];
-    R.cats[cat].push({ name, ok });
-    if (!ok && msg) { R.threats.push(msg); R.score += pts; }
-  }
-  let u;
-  try { u = new URL(raw); } catch {
-    R.threats.push('❌ URL format ไม่ถูกต้อง'); R.safe = false; return R;
-  }
-  const host = u.hostname.toLowerCase();
-  const full = raw.toLowerCase();
-  const params = u.search.toLowerCase();
-
-  add('🔐 Protocol', 'HTTPS', u.protocol==='https:', '⚠️ HTTP — ไม่มี SSL/TLS', 2);
-  const xss = /^(javascript:|data:|vbscript:)/i.test(raw);
-  add('🔐 Protocol', 'No XSS URI', !xss, xss ? '🚨 XSS/Injection URI' : '', 10);
-  if (xss) R.safe = false;
-  const dbl = (full.match(/https?:\/\//g)||[]).length > 1;
-  add('🔐 Protocol', 'No Nested URL', !dbl, dbl ? '🔄 URL ซ้อน URL (Double Redirect)' : '', 3);
-
-  const isIP = /^\d{1,3}(\.\d{1,3}){3}$/.test(host);
-  add('🌐 Domain', 'No IP Direct', !isIP, isIP ? '🚨 ใช้ IP address แทนโดเมน' : '', 5);
-  const subDepth = host.split('.').length - 2;
-  add('🌐 Domain', 'Subdomain OK', subDepth <= 2, subDepth>2 ? `⚠️ Subdomain ลึก ${subDepth} ชั้น` : '', 2);
-  add('🌐 Domain', 'No IDN', !/xn--/.test(host), '⚠️ Unicode Homograph Attack (IDN)', 3);
-  const ent = entropy(host);
-  add('🌐 Domain', 'Low Entropy', ent < 4.2, `⚠️ Domain Entropy สูง = ${ent.toFixed(2)}`, 2);
-  const badTld = RISKY_TLDS.find(t => host.endsWith(t));
-  add('🌐 Domain', 'Safe TLD', !badTld, badTld ? `⚠️ TLD เสี่ยง: "${badTld}"` : '', 2);
-  const port = u.port ? parseInt(u.port) : null;
-  add('🌐 Domain', 'Normal Port', [80,443,8080,8443,null].includes(port), port ? `⚠️ Port ${port} ผิดปกติ` : '', 2);
-
-  const ph = PHISH_PATS.filter(p => p.test(full));
-  add('🎣 Phishing', 'No Phish Pattern', ph.length===0, ph.length ? `🎣 Phishing pattern ${ph.length} จุด` : '', ph.length*2);
-  let impersonate = null;
-  for (const br of BRANDS) {
-    if (host.includes(br.n) && !br.ok.some(d => host===d || host.endsWith('.'+d))) {
-      impersonate = br.n.toUpperCase(); break;
-    }
-  }
-  add('🎣 Phishing', 'No Brand Spoof', !impersonate, impersonate ? `🚨 ปลอมแปลงแบรนด์: ${impersonate}` : '', 6);
-  const bw = BAD_WORDS.find(k => full.includes(k));
-  add('🎣 Phishing', 'No Bad Keywords', !bw, bw ? `🚨 คำต้องสงสัย: "${bw}"` : '', 4);
-  const drainer = /\b(connect.*wallet|approve.*token|drain(er)?|seed.*phrase)\b/i.test(full);
-  add('🎣 Phishing', 'No Crypto Drainer', !drainer, drainer ? '🚨 Crypto Drainer pattern' : '', 8);
-
-  add('📂 URL Structure', 'Normal Length', raw.length<=150, `⚠️ URL ยาวผิดปกติ (${raw.length} chars)`, 1);
-  const b64 = /[A-Za-z0-9+/]{40,}={0,2}/.test(params);
-  add('📂 URL Structure', 'No B64 Payload', !b64, '⚠️ Base64 payload ใน parameter', 3);
-  const openRedir = ['url=','redirect=','goto=','target=','next=','return=','redir='].some(p=>params.includes(p));
-  add('📂 URL Structure', 'No Open Redirect', !openRedir, '🔄 Open Redirect parameter', 2);
-  const suspPath = /\/(phpmyadmin|cgi-bin|xmlrpc|shell\.php|eval\(|cmd\.exe)/i.test(u.pathname);
-  add('📂 URL Structure', 'Clean Path', !suspPath, suspPath ? `🚨 Path น่าสงสัย: ${u.pathname}` : '', 4);
-
-  if (R.score >= 4) R.safe = false;
-  return R;
-}
-
-/* ═══════════════════════════════════════════
-   FILE SCANNER
-═══════════════════════════════════════════ */
-let _scanFile = null;
-function scanFile(file) {
-  const name = file.name;
-  const size = file.size;
-  const lower = name.toLowerCase();
-  const parts = lower.split('.');
-  const exts = parts.slice(1);
-  const pri = exts[exts.length-1] || '';
-  const sec = exts.length > 1 ? exts[exts.length-2] : null;
-  const R = { safe:true, score:0, threats:[], cats:{}, ext:pri, name, size };
-  function add(cat, nm, ok, msg, pts=1) {
-    if (!R.cats[cat]) R.cats[cat] = [];
-    R.cats[cat].push({ name:nm, ok });
-    if (!ok && msg) { R.threats.push(msg); R.score += pts; }
-  }
-  const catKey = EXT_MAP[pri];
-  const catData = catKey ? FILE_DB[catKey] : null;
-  const extScore = catData ? catData.score : 10;
-  add('📁 นามสกุล', 'Known Extension', !!catKey, `⚠️ ไม่รู้จักนามสกุล (.${pri})`, 1);
-  if (catKey) {
-    const safe = catKey === 'safe' || catKey === 'media';
-    add('📁 นามสกุล', 'Safe Extension', safe, `${catData.label} (.${pri})`, Math.ceil(extScore/10));
-  }
-  if (sec && EXT_MAP[sec]) {
-    const sc = EXT_MAP[sec];
-    const danger = sc === 'critical' || sc === 'high';
-    add('🎭 Double Extension', 'No Double Ext', !danger, danger ? `🚨 Double Ext: .${sec}.${pri} — ซ่อนนามสกุลจริง` : '', 8);
-  }
-  if (exts.length > 2) add('🎭 Double Extension', 'Not Multi Ext', false, `⚠️ หลายนามสกุล (${exts.join('.')})`, 3);
-  const suspNames = [
-    [/invoice/i,'ชื่อ "invoice" — phishing email ทั่วไป'],
-    [/receipt/i,'ชื่อ "receipt" — phishing email ทั่วไป'],
-    [/payment/i,'ชื่อ "payment" — หลอกให้คลิก'],
-    [/urgent/i,'ชื่อ "urgent" — social engineering'],
-    [/crack/i,'"crack" — มักเป็น malware'],
-    [/keygen/i,'"keygen" — แหล่งรวม malware'],
-    [/patch/i,'"patch" — อาจซ่อน backdoor'],
-    [/loader/i,'"loader" — dropper malware'],
-    [/setup/i,'"setup" — ตรวจ publisher'],
-    [/free.*hack/i,'free+hack — red flag ชัดเจน'],
-  ];
-  const hits = suspNames.filter(([p]) => p.test(name));
-  add('🔤 ชื่อไฟล์', 'No Suspicious Name', hits.length===0,
-    hits.length ? `⚠️ ชื่อไฟล์น่าสงสัย: ${hits.map(h=>h[1]).join(' | ')}` : '', hits.length*2);
-  const rtl = /[\u202e\u200f\u200e\u202a-\u202d]/.test(name);
-  add('🔤 ชื่อไฟล์', 'No RTL Override', !rtl, rtl ? '🚨 RTL Override — ซ่อนนามสกุลจริง' : '', 9);
-  add('🔤 ชื่อไฟล์', 'Normal Name Length', name.length<=100, name.length>100 ? '⚠️ ชื่อไฟล์ยาวผิดปกติ' : '', 2);
-  const mb = size/(1024*1024);
-  add('📏 ขนาด', 'Not Empty', size>0, size===0 ? '⚠️ ไฟล์ขนาด 0 bytes' : '', 1);
-  add('📏 ขนาด', 'Normal Size', mb<500, mb>=500 ? `⚠️ ไฟล์ใหญ่มาก (${mb.toFixed(0)} MB)` : '', 1);
-  if ((catKey==='critical'||catKey==='high') && size>0 && mb<0.01)
-    add('📏 ขนาด', 'Reasonable Size', false, `⚠️ Executable เล็กผิดปกติ (${size} bytes) — อาจเป็น dropper`, 2);
-  if (catKey==='medium' && ['pem','key','ppk','p12','pfx','env'].includes(pri)) {
-    add('🔒 Security', 'Not Sensitive Cred', false, '🔑 Credential/Key file — ห้ามแชร์สาธารณะ', 6);
-    R.safe = false;
-  }
-  if (R.score >= 4) R.safe = false;
-  if (catKey === 'critical') R.safe = false;
-  return R;
-}
-
-/* ═══════════════════════════════════════════
-   RENDER HELPERS
-═══════════════════════════════════════════ */
-function riskColor(s){if(s<=0)return'#10b981';if(s<15)return'#10b981';if(s<30)return'#84cc16';if(s<50)return'#f59e0b';if(s<70)return'#f97316';return'#ef4444';}
+function riskColor(s){if(s<=0)return'#2dd4a0';if(s<30)return'#2dd4a0';if(s<50)return'#f59e0b';if(s<70)return'#f97316';return'#f04f70';}
 function riskLabel(s){if(s<=0)return'ปลอดภัย';if(s<15)return'ต่ำมาก';if(s<30)return'ต่ำ';if(s<50)return'ปานกลาง';if(s<70)return'สูง';return'อันตราย';}
 
-function renderScan(R, prefix) {
-  const status = R.safe ? (R.threats.length ? 'warn' : 'safe') : 'danger';
-  const ico = {safe:'✅',warn:'⚠️',danger:'🚨'}[status];
-  const badge = {safe:'✅ SAFE',warn:'⚠️ WARN',danger:'🚨 DANGER'}[status];
-  const titleMap = {safe:'ผ่านการตรวจสอบทั้งหมด',warn:'ตรวจพบความเสี่ยงบางส่วน',danger:'ตรวจพบภัยคุกคาม!'};
-  const det = `Score: ${R.score} / ${riskLabel(R.score)}`;
-  const rh = document.getElementById(`${prefix}-rh`);
-  rh.className = `rh ${status}`;
-  document.getElementById(`${prefix}-rh-ico`).textContent = ico;
-  document.getElementById(`${prefix}-rh-title`).textContent = `${ico} ${titleMap[status]}`;
-  document.getElementById(`${prefix}-rh-det`).textContent = det;
-  document.getElementById(`${prefix}-rh-badge`).textContent = badge;
-  document.getElementById(`${prefix}-prog`).style.width = '100%';
-  const sbody = document.getElementById(`${prefix}-sbody`);
-  sbody.style.display = 'block';
-  const rc = riskColor(R.score);
-  const pct = Math.min(R.score * 7, 100);
-  document.getElementById(`${prefix}-rscore`).textContent = `${R.score} / ${riskLabel(R.score)}`;
-  document.getElementById(`${prefix}-rscore`).style.color = rc;
-  const rb = document.getElementById(`${prefix}-rbar`);
-  rb.style.background = rc;
-  rb.style.width = '0%';
-  setTimeout(() => rb.style.width = pct + '%', 80);
-  let html = '';
-  for (const cat in R.cats) {
-    html += `<div class="cat-lbl">${cat}</div><div class="checks-grid">`;
-    R.cats[cat].forEach(c => {
-      html += `<div class="ck ${c.ok?'':'fail'}"><span class="ck-ico">${c.ok?'✅':'❌'}</span><span class="ck-name">${c.name}</span></div>`;
-    });
-    html += '</div>';
+function renderScan(R,prefix){
+  const status=R.safe?(R.threats.length?'warn':'safe'):'danger';
+  const ico={safe:'✅',warn:'⚠',danger:'🚨'}[status];
+  const badge={safe:'SAFE',warn:'WARN',danger:'DANGER'}[status];
+  const titleMap={safe:'ผ่านการตรวจสอบ',warn:'ตรวจพบความเสี่ยง',danger:'ตรวจพบภัยคุกคาม!'};
+  document.getElementById(`${prefix}-rh`).className=`rh ${status}`;
+  document.getElementById(`${prefix}-rh-ico`).textContent=ico;
+  document.getElementById(`${prefix}-rh-title`).textContent=`${ico} ${titleMap[status]}`;
+  document.getElementById(`${prefix}-rh-det`).textContent=`Score: ${R.score} / ${riskLabel(R.score)}`;
+  document.getElementById(`${prefix}-rh-badge`).textContent=badge;
+  document.getElementById(`${prefix}-prog`).style.width='100%';
+  const sbody=document.getElementById(`${prefix}-sbody`);sbody.style.display='block';
+  const rc=riskColor(R.score);const pct=Math.min(R.score*7,100);
+  document.getElementById(`${prefix}-rscore`).textContent=`${R.score} / ${riskLabel(R.score)}`;
+  document.getElementById(`${prefix}-rscore`).style.color=rc;
+  const rb=document.getElementById(`${prefix}-rbar`);rb.style.background=rc;rb.style.width='0%';
+  setTimeout(()=>rb.style.width=pct+'%',80);
+  let html='';
+  for(const cat in R.cats){html+=`<div class="cat-lbl">${cat}</div><div class="checks-grid">`;R.cats[cat].forEach(c=>{html+=`<div class="ck ${c.ok?'':'fail'}"><span class="ck-ico">${c.ok?'✅':'❌'}</span><span class="ck-name">${c.name}</span></div>`;});html+='</div>';}
+  document.getElementById(`${prefix}-cats`).innerHTML=html;
+  const tb=document.getElementById(`${prefix}-threats`);
+  if(R.threats.length){tb.style.display='block';document.getElementById(`${prefix}-tlist`).innerHTML=R.threats.map(t=>`<div class="threat-item"><span>▸</span><span>${t}</span></div>`).join('');}
+  else tb.style.display='none';
+}
+function animProg(id){let p=0;const iv=setInterval(()=>{p=Math.min(p+5,85);document.getElementById(id).style.width=p+'%';},60);return iv;}
+
+/* SCAN URL */
+async function goScan(){
+  const inp=document.getElementById('urlInput').value.trim();
+  if(!inp){toast('⚠ กรุณาใส่ URL');return;}
+  try{new URL(inp);}catch{toast('❌ URL ไม่ถูกต้อง');return;}
+  const doBlock=getOpt('chk-block');const doShort=getOpt('chk-short2');const doQr=getOpt('chk-qr2');
+  const btn=document.getElementById('scan-btn');btn.disabled=true;
+  document.getElementById('scan-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังสแกน...';
+  document.getElementById('scanBox').style.display='block';
+  document.getElementById('scan-rh').className='rh scanning';
+  document.getElementById('scan-rh-ico').textContent='⏳';
+  document.getElementById('scan-rh-title').textContent='กำลังสแกน...';
+  document.getElementById('scan-rh-det').textContent=inp.length>55?inp.slice(0,55)+'...':inp;
+  document.getElementById('scan-rh-badge').textContent='SCANNING';
+  document.getElementById('scan-sbody').style.display='none';
+  document.getElementById('scan-link-result').style.display='none';
+  document.getElementById('scan-qr-out').style.display='none';
+  document.getElementById('scan-vt').style.display='none';
+  document.getElementById('scan-prog').style.width='0%';
+  const iv=animProg('scan-prog');
+  await new Promise(r=>setTimeout(r,300));
+  const R=scanUrl(inp);clearInterval(iv);renderScan(R,'scan');
+  const status=R.safe?(R.threats.length?'warn':'safe'):'danger';
+  document.getElementById('scan-vt').style.display='block';
+  document.getElementById('scan-vt-link').href='https://www.virustotal.com/gui/url/'+btoa(inp).replace(/=/g,'')+'/detection';
+  updateStats(1,status==='safe'?1:0,status==='warn'?1:0,status==='danger'?1:0);
+  if(!R.safe&&doBlock){addHistory({type:'url',label:inp,detail:'BLOCKED',status:'danger'});btn.disabled=false;document.getElementById('scan-btn-txt').innerHTML='🛡 สแกน &amp; ดำเนินการ';toast('⛔ บล็อค URL อันตรายแล้ว');return;}
+  let finalUrl=inp;
+  if(doShort){try{finalUrl=await shorten(inp,'tinyurl');document.getElementById('scan-short-out').value=finalUrl;document.getElementById('scan-tags').innerHTML=['✅ Scanned','🔗 Shortened'].map(t=>`<span class="tag">${t}</span>`).join('');document.getElementById('scan-link-result').style.display='block';}catch{document.getElementById('scan-short-out').value=inp;document.getElementById('scan-link-result').style.display='block';toast('⚠ ย่อลิงก์ไม่สำเร็จ');}}
+  if(doQr){document.getElementById('scan-qr-out').style.display='block';const url=buildQrUrl(finalUrl,150,'#000000','#ffffff');document.getElementById('scan-qr-wrap').innerHTML=`<img id="scan-qr-img" src="${url}" width="130" height="130" style="display:block;border-radius:4px" crossorigin="anonymous">`;document.getElementById('scan-qr-dl').onclick=()=>dlImgFromUrl(url,'qr-scan.png');}
+  addHistory({type:'url',label:finalUrl,detail:inp,status});
+  toast('✅ สแกนเสร็จ!');btn.disabled=false;document.getElementById('scan-btn-txt').innerHTML='🛡 สแกน &amp; ดำเนินการ';
+}
+
+/* FILE SCAN */
+let _scanFile=null;
+function handleScanFile(f){
+  if(!f)return;_scanFile=f;
+  const ext=(f.name.split('.').pop()||'').toLowerCase();
+  const catData=EXT_MAP[ext]?FILE_DB[EXT_MAP[ext]]:null;
+  const sz=f.size>1048576?(f.size/1048576).toFixed(2)+' MB':(f.size/1024).toFixed(1)+' KB';
+  document.getElementById('fileDrop').innerHTML=`<div class="dz-ico">${catData?(catData.label.match(/^[^\s]+/)||['📄'])[0]:'📄'}</div><div class="dz-txt">${f.name}</div><div class="dz-sub">${sz} • .${ext}${catData?' • '+catData.label:''}</div>`;
+  document.getElementById('file-btn').disabled=false;toast(`📁 ${f.name}`);
+}
+function goFileScan(){
+  if(!_scanFile){toast('⚠ กรุณาเลือกไฟล์');return;}
+  const btn=document.getElementById('file-btn');btn.disabled=true;
+  document.getElementById('file-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังสแกน...';
+  document.getElementById('fileScanBox').style.display='block';
+  document.getElementById('file-rh').className='rh scanning';
+  document.getElementById('file-rh-ico').textContent='⏳';
+  document.getElementById('file-rh-title').textContent='กำลังสแกน...';
+  document.getElementById('file-rh-det').textContent=_scanFile.name;
+  document.getElementById('file-rh-badge').textContent='SCANNING';
+  document.getElementById('file-sbody').style.display='none';
+  document.getElementById('file-prog').style.width='0%';
+  const iv=animProg('file-prog');
+  setTimeout(()=>{const R=scanFile(_scanFile);clearInterval(iv);renderScan(R,'file');const status=R.safe?(R.threats.length?'warn':'safe'):'danger';updateStats(1,status==='safe'?1:0,status==='warn'?1:0,status==='danger'?1:0);addHistory({type:'file',label:_scanFile.name,detail:'.'+R.ext+' Score:'+R.score,status});btn.disabled=false;document.getElementById('file-btn-txt').innerHTML='🔍 สแกนไฟล์';toast('✅ สแกนไฟล์เสร็จ!');},700);
+}
+
+/* SHORTEN */
+async function shorten(url,service='tinyurl'){
+  const proxy=(u)=>`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`;
+  const apis={tinyurl:`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`,isgd:`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`,vgd:`https://v.gd/create.php?format=simple&url=${encodeURIComponent(url)}`};
+  const order=service==='tinyurl'?['tinyurl','isgd','vgd']:[service,'tinyurl','isgd'];
+  for(const svc of order){
+    try{const r=await fetch(apis[svc],{signal:AbortSignal.timeout(6000)});if(r.ok){const t=(await r.text()).trim();if(t.startsWith('http'))return t;}}catch{}
+    try{const r=await fetch(proxy(apis[svc]),{signal:AbortSignal.timeout(8000)});if(r.ok){const d=await r.json();const t=(d.contents||'').trim();if(t.startsWith('http'))return t;}}catch{}
   }
-  document.getElementById(`${prefix}-cats`).innerHTML = html;
-  const tb = document.getElementById(`${prefix}-threats`);
-  if (R.threats.length) {
-    tb.style.display = 'block';
-    document.getElementById(`${prefix}-tlist`).innerHTML =
-      R.threats.map(t => `<div class="threat-item"><span>▸</span><span>${t}</span></div>`).join('');
-  } else tb.style.display = 'none';
+  const h=Array.from(url).reduce((a,c)=>((a<<5)-a+c.charCodeAt(0))|0,0);
+  return'https://tinyurl.com/fal-'+Math.abs(h).toString(36).slice(0,6);
 }
-
-function animProg(progId) {
-  let p = 0;
-  const iv = setInterval(() => {
-    p = Math.min(p + 5, 85);
-    document.getElementById(progId).style.width = p + '%';
-  }, 60);
-  return iv;
+async function goShorten(){
+  const inp=document.getElementById('shortInput').value.trim();
+  if(!inp){toast('⚠ กรุณาใส่ URL');return;}try{new URL(inp);}catch{toast('❌ URL ไม่ถูกต้อง');return;}
+  const svc=document.getElementById('shortService').value;const btn=document.getElementById('short-btn');btn.disabled=true;
+  document.getElementById('short-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังย่อ...';
+  try{const s=await shorten(inp,svc);document.getElementById('short-out').value=s;document.getElementById('short-result').style.display='block';updateStats(1,1,0,0);addHistory({type:'short',label:s,detail:inp,status:'safe'});toast('✅ ย่อลิงก์สำเร็จ!');}
+  catch(e){toast('❌ '+e.message);}
+  btn.disabled=false;document.getElementById('short-btn-txt').innerHTML='✂ ย่อลิงก์';
 }
-
-/* ═══════════════════════════════════════════
-   MAIN: SCAN URL
-═══════════════════════════════════════════ */
-async function goScan() {
-  const inp = document.getElementById('urlInput').value.trim();
-  if (!inp) { toast('⚠️ กรุณาใส่ URL'); return; }
-  try { new URL(inp); } catch { toast('❌ URL ไม่ถูกต้อง'); return; }
-
-  const doBlock = getOpt('chk-block');
-  const doShort = getOpt('chk-short2');
-  const doQr    = getOpt('chk-qr2');
-
-  const btn = document.getElementById('scan-btn');
-  btn.disabled = true;
-  document.getElementById('scan-btn-txt').innerHTML = '<span class="spin">⏳</span> กำลังสแกน...';
-  document.getElementById('scanBox').style.display = 'block';
-  document.getElementById('scan-rh').className = 'rh scanning';
-  document.getElementById('scan-rh-ico').textContent = '⏳';
-  document.getElementById('scan-rh-title').textContent = 'กำลังสแกน...';
-  document.getElementById('scan-rh-det').textContent = inp.length > 60 ? inp.slice(0,60)+'...' : inp;
-  document.getElementById('scan-rh-badge').textContent = 'SCANNING';
-  document.getElementById('scan-sbody').style.display = 'none';
-  document.getElementById('scan-link-result').style.display = 'none';
-  document.getElementById('scan-qr-out').style.display = 'none';
-  document.getElementById('scan-vt').style.display = 'none';
-  document.getElementById('scan-prog').style.width = '0%';
-
-  const iv = animProg('scan-prog');
-  await new Promise(r => setTimeout(r, 300));
-  const R = scanUrl(inp);
-  clearInterval(iv);
-  renderScan(R, 'scan');
-  const status = R.safe ? (R.threats.length ? 'warn' : 'safe') : 'danger';
-
-  const vtEl = document.getElementById('scan-vt');
-  const vtLink = document.getElementById('scan-vt-link');
-  vtEl.style.display = 'block';
-  vtLink.href = 'https://www.virustotal.com/gui/url/' + btoa(inp).replace(/=/g,'') + '/detection';
-  vtLink.textContent = '🔬 ตรวจสอบเพิ่มเติมที่ VirusTotal';
-
-  updateStats(1, status==='safe'?1:0, status==='warn'?1:0, status==='danger'?1:0);
-
-  if (!R.safe && doBlock) {
-    addHistory({type:'url', label:inp, detail:'BLOCKED — อันตราย', status:'danger'});
-    btn.disabled = false;
-    document.getElementById('scan-btn-txt').innerHTML = '🛡️ สแกน &amp; ดำเนินการ';
-    toast('⛔ บล็อค URL อันตรายแล้ว');
-    return;
-  }
-
-  let finalUrl = inp;
-  if (doShort) {
-    try {
-      finalUrl = await shorten(inp, 'tinyurl');
-      document.getElementById('scan-short-out').value = finalUrl;
-      const tags = [R.safe ? '✅ Scanned' : '⚠️ Risky', '🔗 Shortened'];
-      document.getElementById('scan-tags').innerHTML = tags.map(t=>`<span class="tag">${t}</span>`).join('');
-      document.getElementById('scan-link-result').style.display = 'block';
-    } catch {
-      document.getElementById('scan-short-out').value = inp;
-      document.getElementById('scan-link-result').style.display = 'block';
-      toast('⚠️ ย่อลิงก์ไม่สำเร็จ — แสดง URL เดิม');
-    }
-  }
-
-  if (doQr) {
-    document.getElementById('scan-qr-out').style.display = 'block';
-    const url = buildQrUrl(finalUrl, 150, '#000000', '#ffffff');
-    document.getElementById('scan-qr-wrap').innerHTML =
-      `<img id="scan-qr-img" src="${url}" width="150" height="150" style="display:block;border-radius:4px" crossorigin="anonymous">`;
-    document.getElementById('scan-qr-dl').onclick = () => dlImgFromUrl(url, 'qr-scan.png');
-  }
-
-  addHistory({type:'url', label:finalUrl, detail:inp, status});
-  toast('✅ สแกนเสร็จสิ้น!');
-  btn.disabled = false;
-  document.getElementById('scan-btn-txt').innerHTML = '🛡️ สแกน &amp; ดำเนินการ';
-}
-
-/* ═══════════════════════════════════════════
-   FILE SCAN
-═══════════════════════════════════════════ */
-function handleScanFile(f) {
-  if (!f) return;
-  _scanFile = f;
-  const ext = (f.name.split('.').pop()||'').toLowerCase();
-  const catKey = EXT_MAP[ext];
-  const catData = catKey ? FILE_DB[catKey] : null;
-  const sz = f.size > 1048576 ? (f.size/1048576).toFixed(2)+' MB' : (f.size/1024).toFixed(1)+' KB';
-  const ico = catData ? (catData.label.match(/^[^\s]+/)||['📄'])[0] : '📄';
-  document.getElementById('fileDrop').innerHTML =
-    `<div class="dz-ico">${ico}</div><div class="dz-txt">${f.name}</div><div class="dz-sub">${sz} • .${ext}${catData?' • '+catData.label:' • ไม่รู้จักนามสกุล'}</div>`;
-  document.getElementById('file-btn').disabled = false;
-  toast(`📁 เลือกไฟล์: ${f.name}`);
-}
-
-function goFileScan() {
-  if (!_scanFile) { toast('⚠️ กรุณาเลือกไฟล์'); return; }
-  const btn = document.getElementById('file-btn');
-  btn.disabled = true;
-  document.getElementById('file-btn-txt').innerHTML = '<span class="spin">⏳</span> กำลังสแกน...';
-  document.getElementById('fileScanBox').style.display = 'block';
-  document.getElementById('file-rh').className = 'rh scanning';
-  document.getElementById('file-rh-ico').textContent = '⏳';
-  document.getElementById('file-rh-title').textContent = 'กำลังสแกน...';
-  document.getElementById('file-rh-det').textContent = _scanFile.name;
-  document.getElementById('file-rh-badge').textContent = 'SCANNING';
-  document.getElementById('file-sbody').style.display = 'none';
-  document.getElementById('file-prog').style.width = '0%';
-  const iv = animProg('file-prog');
-  setTimeout(() => {
-    const R = scanFile(_scanFile);
-    clearInterval(iv);
-    renderScan(R, 'file');
-    const status = R.safe ? (R.threats.length ? 'warn' : 'safe') : 'danger';
-    updateStats(1, status==='safe'?1:0, status==='warn'?1:0, status==='danger'?1:0);
-    addHistory({type:'file', label:_scanFile.name, detail:'.'+R.ext+' — Score:'+R.score, status});
-    btn.disabled = false;
-    document.getElementById('file-btn-txt').innerHTML = '🔍 สแกนไฟล์';
-    toast('✅ สแกนไฟล์เสร็จสิ้น!');
-  }, 700);
-}
-
-/* ═══════════════════════════════════════════
-   ✅ FIX: SHORTEN — ปรับ CORS proxy + fallback chain
-═══════════════════════════════════════════ */
-async function shorten(url, service='tinyurl') {
-  // ✅ ใช้ allorigins CORS proxy เพื่อเลี่ยง CORS block
-  const proxy = (u) => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`;
-
-  const apis = {
-    tinyurl: `https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`,
-    isgd:    `https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`,
-    vgd:     `https://v.gd/create.php?format=simple&url=${encodeURIComponent(url)}`,
-  };
-
-  const order = service === 'tinyurl' ? ['tinyurl','isgd','vgd'] : [service,'tinyurl','isgd'];
-
-  for (const svc of order) {
-    // ลอง direct ก่อน
-    try {
-      const r = await fetch(apis[svc], { signal: AbortSignal.timeout(6000) });
-      if (r.ok) {
-        const t = (await r.text()).trim();
-        if (t.startsWith('http')) return t;
-      }
-    } catch {}
-
-    // ลอง via proxy
-    try {
-      const r = await fetch(proxy(apis[svc]), { signal: AbortSignal.timeout(8000) });
-      if (r.ok) {
-        const d = await r.json();
-        const t = (d.contents || '').trim();
-        if (t.startsWith('http')) return t;
-      }
-    } catch {}
-  }
-
-  // Fallback สร้าง hash เอง
-  const h = Array.from(url).reduce((a,c)=>((a<<5)-a+c.charCodeAt(0))|0,0);
-  return 'https://tinyurl.com/fal-' + Math.abs(h).toString(36).slice(0,6);
-}
-
-async function goShorten() {
-  const inp = document.getElementById('shortInput').value.trim();
-  if (!inp) { toast('⚠️ กรุณาใส่ URL'); return; }
-  try { new URL(inp); } catch { toast('❌ URL ไม่ถูกต้อง'); return; }
-  const svc = document.getElementById('shortService').value;
-  const btn = document.getElementById('short-btn');
-  btn.disabled = true;
-  document.getElementById('short-btn-txt').innerHTML = '<span class="spin">⏳</span> กำลังย่อ...';
-  try {
-    const s = await shorten(inp, svc);
-    document.getElementById('short-out').value = s;
-    document.getElementById('short-result').style.display = 'block';
-    updateStats(1,1,0,0);
-    addHistory({type:'short', label:s, detail:inp, status:'safe'});
-    toast('✅ ย่อลิงก์สำเร็จ!');
-  } catch(e) {
-    toast('❌ ย่อลิงก์ไม่สำเร็จ: '+e.message);
-  }
-  btn.disabled = false;
-  document.getElementById('short-btn-txt').innerHTML = '✂️ ย่อลิงก์';
-}
-
-async function goBulk() {
-  const lines = document.getElementById('bulkInput').value.trim().split('\n')
-    .map(l=>l.trim()).filter(l=>l.startsWith('http'));
-  if (!lines.length) { toast('⚠️ ไม่พบ URL ที่ถูกต้อง'); return; }
-  document.getElementById('bulk-btn-txt').innerHTML = `<span class="spin">⏳</span> กำลังย่อ ${lines.length} URL...`;
-  const rd = document.getElementById('bulkResult');
-  // ✅ FIX: clear และแสดงใหม่ ไม่ conflict CSS
-  rd.innerHTML = '';
-  rd.style.display = 'flex';
-  for (const url of lines) {
-    let s;
-    try { s = await shorten(url, 'tinyurl'); } catch { s = '❌ ล้มเหลว'; }
-    const row = document.createElement('div');
-    row.className = 'url-part';
-    row.style.cssText = 'flex-direction:column;gap:4px';
-    const safeUrl = url.replace(/'/g,"\\'");
-    const safeS = s.replace(/'/g,"\\'");
-    row.innerHTML = `
-      <div class="up-key" style="width:auto;font-size:10px;color:var(--ts)">${url.length>70?url.slice(0,70)+'…':url}</div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <div class="up-val" style="flex:1;font-size:11px">${s}</div>
-        <button class="hl-copy-btn" onclick="navigator.clipboard.writeText('${safeS}');toast('📋 คัดลอกแล้ว!')">COPY</button>
-      </div>`;
+async function goBulk(){
+  const lines=document.getElementById('bulkInput').value.trim().split('\n').map(l=>l.trim()).filter(l=>l.startsWith('http'));
+  if(!lines.length){toast('⚠ ไม่พบ URL');return;}
+  document.getElementById('bulk-btn-txt').innerHTML=`<span class="spin">⏳</span> ย่อ ${lines.length} URL...`;
+  const rd=document.getElementById('bulkResult');rd.innerHTML='';rd.style.display='flex';
+  for(const url of lines){
+    let s;try{s=await shorten(url,'tinyurl');}catch{s='❌ ล้มเหลว';}
+    const row=document.createElement('div');row.className='url-part';row.style.cssText='flex-direction:column;gap:3px';
+    row.innerHTML=`<div class="up-key" style="width:auto;font-size:9px">${url.length>60?url.slice(0,60)+'…':url}</div><div style="display:flex;gap:6px;align-items:center"><div class="up-val" style="flex:1;font-size:10px">${s}</div><button class="hl-copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(s)});toast('📋 คัดลอกแล้ว!')">COPY</button></div>`;
     rd.appendChild(row);
   }
-  document.getElementById('bulk-btn-txt').innerHTML = '✂️ ย่อทั้งหมด';
-  toast(`✅ ย่อ ${lines.length} URL แล้ว!`);
+  document.getElementById('bulk-btn-txt').innerHTML='✂ ย่อทั้งหมด';toast(`✅ ย่อ ${lines.length} URL แล้ว!`);
 }
 
-/* ═══════════════════════════════════════════
-   ✅ FIX: IMAGE HOST — Base64 แสดงผลชัดเจน ใช้งานได้จริง
-═══════════════════════════════════════════ */
-let _imgFile = null;
-let _imgDataUrl = null;
-let _imgHostUrl = null;
-let _gallery = [];
-try { _gallery = JSON.parse(localStorage.getItem('fal-gallery')||'[]'); } catch {}
-
-function handleImgFile(f) {
-  if (!f) return;
-  if (!f.type.startsWith('image/')) { toast('⚠️ ไฟล์นี้ไม่ใช่รูปภาพ'); return; }
-  if (f.size > 32*1024*1024) { toast('⚠️ รูปใหญ่เกิน 32MB'); return; }
-  _imgFile = f;
-  _imgDataUrl = null;
-  _imgHostUrl = null;
-  const reader = new FileReader();
-  reader.onload = e => {
-    _imgDataUrl = e.target.result;
-    document.getElementById('imgPreview').style.display = 'block';
-    document.getElementById('imgPreviewImg').src = _imgDataUrl;
-    const mb = (f.size/1048576).toFixed(2);
-    document.getElementById('imgMeta').innerHTML = [
-      `<span class="img-tag">${f.name}</span>`,
-      `<span class="img-tag">${mb} MB</span>`,
-      `<span class="img-tag">${f.type}</span>`,
-    ].join('');
-  };
-  reader.readAsDataURL(f);
-  document.getElementById('upload-btn').disabled = false;
-  // hide previous results
-  document.getElementById('b64Result').style.display = 'none';
-  document.getElementById('hostResult').style.display = 'none';
-  toast(`🖼️ เลือกรูป: ${f.name}`);
+/* IMAGE HOST */
+let _imgFile=null,_imgDataUrl=null,_imgHostUrl=null;
+let _gallery=[];try{_gallery=JSON.parse(localStorage.getItem('fal-gallery')||'[]');}catch{}
+function handleImgFile(f){
+  if(!f)return;if(!f.type.startsWith('image/')){toast('⚠ ไม่ใช่รูปภาพ');return;}if(f.size>32*1024*1024){toast('⚠ รูปใหญ่เกิน 32MB');return;}
+  _imgFile=f;_imgDataUrl=null;_imgHostUrl=null;
+  const reader=new FileReader();reader.onload=e=>{_imgDataUrl=e.target.result;document.getElementById('imgPreview').style.display='block';document.getElementById('imgPreviewImg').src=_imgDataUrl;const mb=(f.size/1048576).toFixed(2);document.getElementById('imgMeta').innerHTML=[`<span class="img-tag">${f.name}</span>`,`<span class="img-tag">${mb} MB</span>`,`<span class="img-tag">${f.type}</span>`].join('');};reader.readAsDataURL(f);
+  document.getElementById('upload-btn').disabled=false;document.getElementById('b64Result').style.display='none';document.getElementById('hostResult').style.display='none';toast(`🖼 ${f.name}`);
 }
-
-async function goUpload() {
-  if (!_imgFile) { toast('⚠️ กรุณาเลือกรูปก่อน'); return; }
-  const svc = document.getElementById('hostService').value;
-  const btn = document.getElementById('upload-btn');
-  btn.disabled = true;
-  document.getElementById('upload-btn-txt').innerHTML = '<span class="spin">⏳</span> กำลังดำเนินการ...';
-
-  document.getElementById('b64Result').style.display = 'none';
-  document.getElementById('hostResult').style.display = 'none';
-
-  try {
-    if (svc === 'base64') {
-      // ✅ FIX: Base64 แสดงผลใหม่ทั้งหมด
-      showB64Result(_imgDataUrl);
-      updateStats(1,1,0,0);
-      addHistory({type:'img', label:'[Base64]', detail:_imgFile.name, status:'safe'});
-      saveGallery({direct:_imgDataUrl, thumb:_imgDataUrl, service:'Base64', isBase64:true});
-      renderGallery();
-      toast('✅ สร้าง Base64 สำเร็จ!');
-    } else {
-      const result = await uploadImg(_imgFile, svc);
-      _imgHostUrl = result.direct;
-      showHostResult(result);
-      saveGallery(result);
-      renderGallery();
-      updateStats(1,1,0,0);
-      addHistory({type:'img', label:result.direct, detail:_imgFile.name, status:'safe'});
-      toast('✅ อัพโหลดสำเร็จ!');
-    }
-  } catch(e) {
-    toast('❌ ไม่สำเร็จ: ' + e.message);
-    console.error(e);
-  }
-  btn.disabled = false;
-  document.getElementById('upload-btn-txt').innerHTML = '⬆️ อัพโหลด / สร้างลิงก์';
+async function goUpload(){
+  if(!_imgFile){toast('⚠ กรุณาเลือกรูป');return;}
+  const svc=document.getElementById('hostService').value;const btn=document.getElementById('upload-btn');btn.disabled=true;
+  document.getElementById('upload-btn-txt').innerHTML='<span class="spin">⏳</span> กำลังดำเนินการ...';
+  document.getElementById('b64Result').style.display='none';document.getElementById('hostResult').style.display='none';
+  try{
+    if(svc==='base64'){showB64Result(_imgDataUrl);updateStats(1,1,0,0);addHistory({type:'img',label:'[Base64]',detail:_imgFile.name,status:'safe'});saveGallery({direct:_imgDataUrl,thumb:_imgDataUrl,service:'Base64',isBase64:true});renderGallery();toast('✅ Base64 สำเร็จ!');}
+    else{const result=await uploadImg(_imgFile,svc);_imgHostUrl=result.direct;showHostResult(result);saveGallery(result);renderGallery();updateStats(1,1,0,0);addHistory({type:'img',label:result.direct,detail:_imgFile.name,status:'safe'});toast('✅ อัพโหลดสำเร็จ!');}
+  }catch(e){toast('❌ '+e.message);}
+  btn.disabled=false;document.getElementById('upload-btn-txt').innerHTML='⬆ อัพโหลด / สร้างลิงก์';
 }
-
-// ✅ FIX: Base64 result แบบใหม่ชัดเจน
-function showB64Result(dataUrl) {
-  const box = document.getElementById('b64Result');
-  box.style.display = 'block';
-
-  // Preview
-  document.getElementById('b64PreviewImg').src = dataUrl;
-
-  // Stats
-  const kb = (dataUrl.length * 0.75 / 1024).toFixed(1);
-  const mimeMatch = dataUrl.match(/data:([^;]+)/);
-  const mime = mimeMatch ? mimeMatch[1] : 'image';
-  document.getElementById('b64Stat').innerHTML = [
-    `<span class="b64-chip">${mime}</span>`,
-    `<span class="b64-chip">~${kb} KB</span>`,
-    `<span class="b64-chip">${dataUrl.length.toLocaleString()} chars</span>`,
-  ].join('');
-
-  // URL box
-  document.getElementById('b64UrlBox').textContent = dataUrl;
-
-  // Embed codes (ถ้ารูปไม่ใหญ่เกิน 500KB)
-  const embedBox = document.getElementById('b64EmbedBox');
-  if (dataUrl.length < 700000) {
-    const codes = [
-      {l:'HTML',  v:`<img src="${dataUrl}" alt="${_imgFile.name}">`},
-      {l:'CSS',   v:`background-image: url('${dataUrl}');`},
-      {l:'MD',    v:`![${_imgFile.name}](${dataUrl})`},
-    ];
-    document.getElementById('b64EmbedRows').innerHTML = codes.map(c => `
-      <div class="embed-row">
-        <span class="embed-lbl">${c.l}</span>
-        <span class="embed-val">${c.v.replace(/</g,'&lt;').substring(0,80)}…</span>
-        <button class="embed-copy" onclick="navigator.clipboard.writeText(${JSON.stringify(c.v)});toast('📋 Copy ${c.l} แล้ว!')">COPY</button>
-      </div>`).join('');
-    embedBox.style.display = 'block';
-  } else {
-    embedBox.style.display = 'none';
-  }
+function showB64Result(dataUrl){
+  const box=document.getElementById('b64Result');box.style.display='block';
+  document.getElementById('b64PreviewImg').src=dataUrl;
+  const kb=(dataUrl.length*0.75/1024).toFixed(1);const mime=(dataUrl.match(/data:([^;]+)/)||[,'image'])[1];
+  document.getElementById('b64Stat').innerHTML=[`<span class="b64-chip">${mime}</span>`,`<span class="b64-chip">~${kb} KB</span>`,`<span class="b64-chip">${dataUrl.length.toLocaleString()} chars</span>`].join('');
+  document.getElementById('b64UrlBox').textContent=dataUrl;
+  if(dataUrl.length<700000){const codes=[{l:'HTML',v:`<img src="${dataUrl}" alt="">`},{l:'CSS',v:`url('${dataUrl}')`},{l:'MD',v:`![img](${dataUrl})`}];document.getElementById('b64EmbedBox').innerHTML='<div class="card-hd" style="margin-bottom:6px">Embed Code</div>'+codes.map(c=>`<div class="embed-row"><span class="embed-lbl">${c.l}</span><span class="embed-val">${c.v.replace(/</g,'&lt;').substring(0,70)}…</span><button class="embed-copy" onclick="navigator.clipboard.writeText(${JSON.stringify(c.v)});toast('📋 Copy ${c.l}!')">COPY</button></div>`).join('');document.getElementById('b64EmbedBox').style.display='block';}
+  else document.getElementById('b64EmbedBox').style.display='none';
 }
-
-function selectB64() {
-  const el = document.getElementById('b64UrlBox');
-  const range = document.createRange();
-  range.selectNodeContents(el);
-  const sel = window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(range);
+function selectB64(){const el=document.getElementById('b64UrlBox');const r=document.createRange();r.selectNodeContents(el);const s=window.getSelection();s.removeAllRanges();s.addRange(r);}
+function copyB64(){if(!_imgDataUrl){toast('⚠ ไม่มี Base64');return;}navigator.clipboard.writeText(_imgDataUrl).then(()=>toast('📋 Copy Base64 แล้ว!')).catch(()=>{selectB64();toast('📋 เลือกแล้ว Ctrl+C')});}
+function dlBase64Img(){if(!_imgDataUrl||!_imgFile)return;const a=document.createElement('a');a.href=_imgDataUrl;a.download=_imgFile.name;a.click();toast('⬇ ดาวน์โหลดแล้ว');}
+async function uploadImg(file,service){
+  if(service==='imgbb'){const key='2e46f59e97aa4e879a1cbec1e02ed669';const fd=new FormData();fd.append('image',file);const r=await fetch(`https://api.imgbb.com/1/upload?key=${key}`,{method:'POST',body:fd,signal:AbortSignal.timeout(25000)});if(!r.ok)throw new Error(`ImgBB HTTP ${r.status}`);const d=await r.json();if(!d.success)throw new Error('ImgBB: '+(d.error?.message||'ล้มเหลว'));return{direct:d.data.url,page:d.data.url_viewer||d.data.url,thumb:d.data.thumb?.url||d.data.url,delete:d.data.delete_url,service:'ImgBB'};}
+  if(service==='catbox'){const fd=new FormData();fd.append('reqtype','fileupload');fd.append('fileToUpload',file);const r=await fetch('https://catbox.moe/user/api.php',{method:'POST',body:fd,signal:AbortSignal.timeout(25000)});if(!r.ok)throw new Error(`Catbox HTTP ${r.status}`);const url=(await r.text()).trim();if(!url.startsWith('http'))throw new Error('Catbox: '+url);return{direct:url,page:url,thumb:url,service:'Catbox'};}
+  throw new Error('Unknown service');
 }
-
-function copyB64() {
-  if (!_imgDataUrl) { toast('⚠️ ไม่มีข้อมูล Base64'); return; }
-  navigator.clipboard.writeText(_imgDataUrl)
-    .then(() => toast('📋 Copy Base64 แล้ว! (' + _imgDataUrl.length.toLocaleString() + ' chars)'))
-    .catch(() => { selectB64(); toast('📋 เลือกข้อความแล้ว กด Ctrl+C เพื่อคัดลอก'); });
+function showHostResult(result){
+  const box=document.getElementById('hostResult');box.style.display='block';_imgHostUrl=result.direct;
+  const links=[{label:'Direct URL',icon:'🔗',url:result.direct}];
+  if(result.page&&result.page!==result.direct)links.push({label:'Page',icon:'🌐',url:result.page});
+  if(result.delete)links.push({label:'Delete',icon:'🗑',url:result.delete});
+  let html=links.map(l=>`<div class="host-link-row"><span style="font-size:14px;flex-shrink:0">${l.icon}</span><div class="hl-txt"><div class="hl-label">${l.label} (${result.service})</div><div class="hl-url">${l.url}</div></div><button class="hl-copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(l.url)});toast('📋 คัดลอกแล้ว!')">COPY</button></div>`).join('');
+  const codes=[{l:'HTML',v:`<img src="${result.direct}" alt="">`},{l:'Markdown',v:`![](${result.direct})`},{l:'BBCode',v:`[img]${result.direct}[/img]`}];
+  html+=`<div style="margin-top:8px">`+codes.map(c=>`<div class="embed-row"><span class="embed-lbl">${c.l}</span><span class="embed-val">${c.v.replace(/</g,'&lt;').substring(0,70)}</span><button class="embed-copy" onclick="navigator.clipboard.writeText(${JSON.stringify(c.v)});toast('📋 Copy!')">COPY</button></div>`).join('')+'</div>';
+  document.getElementById('hostLinks').innerHTML=html;
 }
-
-function dlBase64Img() {
-  if (!_imgDataUrl || !_imgFile) return;
-  const a = document.createElement('a');
-  a.href = _imgDataUrl;
-  a.download = _imgFile.name;
-  a.click();
-  toast('⬇️ ดาวน์โหลดแล้ว');
-}
-
-async function uploadImg(file, service) {
-  if (service === 'imgbb') {
-    const key = '2e46f59e97aa4e879a1cbec1e02ed669';
-    const fd = new FormData();
-    fd.append('image', file);
-    const r = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
-      method:'POST', body:fd, signal:AbortSignal.timeout(25000)
-    });
-    if (!r.ok) throw new Error(`ImgBB HTTP ${r.status}`);
-    const d = await r.json();
-    if (!d.success) throw new Error('ImgBB: ' + (d.error?.message || JSON.stringify(d.error)));
-    return {
-      direct: d.data.url,
-      page: d.data.url_viewer || d.data.url,
-      thumb: d.data.thumb?.url || d.data.url,
-      delete: d.data.delete_url,
-      service: 'ImgBB'
-    };
-  }
-  if (service === 'catbox') {
-    const fd = new FormData();
-    fd.append('reqtype', 'fileupload');
-    fd.append('fileToUpload', file);
-    const r = await fetch('https://catbox.moe/user/api.php', {
-      method:'POST', body:fd, signal:AbortSignal.timeout(25000)
-    });
-    if (!r.ok) throw new Error(`Catbox HTTP ${r.status}`);
-    const url = (await r.text()).trim();
-    if (!url.startsWith('http')) throw new Error('Catbox: ' + url);
-    return { direct:url, page:url, thumb:url, service:'Catbox' };
-  }
-  throw new Error('Unknown service: ' + service);
-}
-
-function showHostResult(result) {
-  const box = document.getElementById('hostResult');
-  box.style.display = 'block';
-  _imgHostUrl = result.direct;
-
-  const links = [
-    {label:'Direct URL', icon:'🔗', url:result.direct},
-  ];
-  if (result.page && result.page !== result.direct)
-    links.push({label:'Page', icon:'🌐', url:result.page});
-  if (result.delete)
-    links.push({label:'Delete URL', icon:'🗑️', url:result.delete});
-
-  let html = links.map(l => `
-    <div class="host-link-row">
-      <span class="hl-icon">${l.icon}</span>
-      <div class="hl-txt">
-        <div class="hl-label">${l.label} (${result.service})</div>
-        <div class="hl-url">${l.url}</div>
-      </div>
-      <button class="hl-copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(l.url)});toast('📋 คัดลอกแล้ว!')">COPY</button>
-    </div>`).join('');
-
-  const codes = [
-    {l:'HTML',     v:`<img src="${result.direct}" alt="">`},
-    {l:'Markdown', v:`![รูปภาพ](${result.direct})`},
-    {l:'BBCode',   v:`[img]${result.direct}[/img]`},
-  ];
-  html += `<div style="margin-top:8px"><div class="card-title" style="font-size:10px;margin-bottom:6px">📋 Embed Code</div>`;
-  codes.forEach(c => {
-    html += `<div class="embed-row">
-      <span class="embed-lbl">${c.l}</span>
-      <span class="embed-val">${c.v.replace(/</g,'&lt;').substring(0,80)}</span>
-      <button class="embed-copy" onclick="navigator.clipboard.writeText(${JSON.stringify(c.v)});toast('📋 Copy ${c.l} แล้ว!')">COPY</button>
-    </div>`;
-  });
-  html += '</div>';
-  document.getElementById('hostLinks').innerHTML = html;
-}
-
-function saveGallery(result) {
-  const entry = {
-    url: result.direct,
-    thumb: result.thumb || result.direct,
-    name: _imgFile ? _imgFile.name : 'image',
-    date: new Date().toLocaleDateString('th-TH'),
-    service: result.service,
-    isBase64: !!(result.isBase64 || result.direct.startsWith('data:'))
-  };
-  _gallery.unshift(entry);
-  if (_gallery.length > 50) _gallery = _gallery.slice(0,50);
-  const storable = _gallery.filter(g => !g.isBase64);
-  try { localStorage.setItem('fal-gallery', JSON.stringify(storable)); } catch {}
-}
-
-function renderGallery() {
-  const gc = document.getElementById('galleryCard');
-  const gal = document.getElementById('gallery');
-  if (!_gallery.length) { gc.style.display='none'; return; }
-  gc.style.display = 'block';
-  document.getElementById('galCount').textContent = _gallery.length;
-  gal.innerHTML = _gallery.map((item, i) => {
-    const isB64 = item.isBase64 || item.thumb.startsWith('data:');
-    const safeUrl = isB64 ? '' : item.url.replace(/'/g,"\\'");
-    return `<div class="gallery-item">
-      <img src="${item.thumb}" alt="${item.name}" loading="lazy"
-        onerror="this.style.display='none'">
-      <div class="gi-overlay">
-        <button class="gi-btn" onclick="${isB64 ? "toast('Base64 ไม่รองรับ lightbox')" : `showLB('${safeUrl}')`}" title="ดู">👁️</button>
-        <button class="gi-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(isB64?'[base64]':item.url)});toast('📋 คัดลอกแล้ว!')" title="Copy">📋</button>
-        <button class="gi-btn" onclick="delGallery(${i})" title="ลบ">🗑️</button>
-      </div>
-      <div class="gi-name">${item.name}</div>
-    </div>`;
-  }).join('');
-}
-
-function delGallery(i) {
-  _gallery.splice(i,1);
-  try { localStorage.setItem('fal-gallery', JSON.stringify(_gallery.filter(g=>!g.isBase64))); } catch {}
-  renderGallery();
-  toast('🗑️ ลบรูปแล้ว');
-}
-function clearGallery() {
-  if (!confirm('ล้างคลังรูปทั้งหมด?')) return;
-  _gallery = [];
-  try { localStorage.removeItem('fal-gallery'); } catch {}
-  renderGallery();
-  toast('🗑️ ล้างคลังแล้ว');
-}
-function showLB(url) {
-  if (!url) return;
-  document.getElementById('lbImg').src = url;
-  document.getElementById('lightbox').classList.add('on');
-}
-function closeLB() { document.getElementById('lightbox').classList.remove('on'); }
-
-function goQrFromHostImg() {
-  const url = _imgHostUrl;
-  if (!url) { toast('⚠️ ไม่มี URL (Base64 ไม่รองรับ QR)'); return; }
-  switchTab('qr');
-  document.getElementById('qrInput').value = url;
-  liveQr();
-  toast('📷 สร้าง QR จากรูปภาพแล้ว');
-}
-
+function saveGallery(result){const e={url:result.direct,thumb:result.thumb||result.direct,name:_imgFile?_imgFile.name:'image',date:new Date().toLocaleDateString('th-TH'),service:result.service,isBase64:!!(result.isBase64||result.direct.startsWith('data:'))};_gallery.unshift(e);if(_gallery.length>50)_gallery=_gallery.slice(0,50);try{localStorage.setItem('fal-gallery',JSON.stringify(_gallery.filter(g=>!g.isBase64)));}catch{}}
+function renderGallery(){const gc=document.getElementById('galleryCard');const gal=document.getElementById('gallery');if(!_gallery.length){gc.style.display='none';return;}gc.style.display='block';document.getElementById('galCount').textContent=_gallery.length;gal.innerHTML=_gallery.map((item,i)=>{const isB64=item.isBase64||item.thumb.startsWith('data:');const safeUrl=isB64?'':item.url.replace(/'/g,"\\'");return`<div class="gallery-item"><img src="${item.thumb}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'"><div class="gi-overlay"><button class="gi-btn" onclick="${isB64?"toast('Base64 ไม่รองรับ lightbox')":`showLB('${safeUrl}')`}" title="ดู">👁</button><button class="gi-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(isB64?'[base64]':item.url)});toast('📋 คัดลอกแล้ว!')" title="Copy">📋</button><button class="gi-btn" onclick="delGallery(${i})" title="ลบ">🗑</button></div><div class="gi-name">${item.name}</div></div>`;}).join('');}
+function delGallery(i){_gallery.splice(i,1);try{localStorage.setItem('fal-gallery',JSON.stringify(_gallery.filter(g=>!g.isBase64)));}catch{}renderGallery();toast('🗑 ลบรูปแล้ว');}
+function clearGallery(){if(!confirm('ล้างคลัง?'))return;_gallery=[];try{localStorage.removeItem('fal-gallery');}catch{}renderGallery();toast('🗑 ล้างคลังแล้ว');}
+function showLB(url){if(!url)return;document.getElementById('lbImg').src=url;document.getElementById('lightbox').classList.add('on');}
+function closeLB(){document.getElementById('lightbox').classList.remove('on');}
+function goQrFromHostImg(){const url=_imgHostUrl;if(!url){toast('⚠ ไม่มี URL');return;}sw('qr');document.getElementById('qrInput').value=url;liveQr();toast('📷 สร้าง QR แล้ว');}
 renderGallery();
 
-/* ═══════════════════════════════════════════
-   QR CODE
-═══════════════════════════════════════════ */
-let _qrSz = 150;
-let _qrTimer = null;
+/* QR */
+let _qrSz=150,_qrTimer=null;
+function buildQrUrl(text,size,fg,bg){return`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=${fg.replace('#','')}&bgcolor=${bg.replace('#','')}&format=png&margin=1`;}
+function setQrSz(s,el){_qrSz=s;document.querySelectorAll('.qr-size-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');liveQr();}
+function liveQr(){clearTimeout(_qrTimer);_qrTimer=setTimeout(_drawQr,300);}
+function _drawQr(){const val=document.getElementById('qrInput').value.trim();if(!val){document.getElementById('qrWrap').innerHTML='<span style="color:#aaa;font-size:28px">📷</span>';return;}const fg=document.getElementById('qrFg').value;const bg=document.getElementById('qrBg').value;const url=buildQrUrl(val,_qrSz,fg,bg);document.getElementById('qrWrap').innerHTML=`<img src="${url}" width="${_qrSz}" height="${_qrSz}" style="display:block;border-radius:4px" crossorigin="anonymous" onerror="this.parentNode.innerHTML='<span style=color:var(--d)>❌ ต้องการ internet</span>'">`;}
+function dlQr(fmt){const val=document.getElementById('qrInput').value.trim();if(!val){toast('⚠ กรุณาใส่ข้อความ');return;}const fg=document.getElementById('qrFg').value;const bg=document.getElementById('qrBg').value;const url=`https://api.qrserver.com/v1/create-qr-code/?size=${_qrSz}x${_qrSz}&data=${encodeURIComponent(val)}&color=${fg.replace('#','')}&bgcolor=${bg.replace('#','')}&format=${fmt}&margin=1`;dlImgFromUrl(url,`qr.${fmt}`);}
+function dlImgFromUrl(url,fn){const a=document.createElement('a');a.href=url;a.download=fn;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();document.body.removeChild(a);toast('⬇ ดาวน์โหลดแล้ว');}
+function copyQrUrl(){const val=(document.getElementById('qrInput')||{}).value||'';if(!val){toast('⚠ ไม่มีข้อความ');return;}const fg=document.getElementById('qrFg').value;const bg=document.getElementById('qrBg').value;navigator.clipboard.writeText(buildQrUrl(val,_qrSz,fg,bg)).then(()=>toast('📋 คัดลอก URL QR แล้ว!'));}
+function qrTpl(type){const t={url:'https://',tel:'tel:+66',sms:'sms:+660000000000?body=ข้อความ',wifi:'WIFI:T:WPA;S:ชื่อWiFi;P:รหัสผ่าน;;',vcard:'BEGIN:VCARD\nVERSION:3.0\nFN:ชื่อ\nTEL:+66812345678\nEND:VCARD',email:'mailto:email@example.com',line:'https://line.me/R/ti/p/~lineid'};document.getElementById('qrInput').value=t[type]||'';liveQr();toast('📝 เทมเพลต '+type);}
+document.getElementById('qrInput').addEventListener('input',liveQr);
+document.getElementById('qrFg').addEventListener('input',liveQr);
+document.getElementById('qrBg').addEventListener('input',liveQr);
 
-function buildQrUrl(text, size, fg, bg) {
-  return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=${fg.replace('#','')}&bgcolor=${bg.replace('#','')}&format=png&margin=1`;
-}
-function setQrSz(s, el) {
-  _qrSz = s;
-  document.querySelectorAll('.qr-size-btn').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  liveQr();
-}
-function liveQr() { clearTimeout(_qrTimer); _qrTimer = setTimeout(_drawQr, 300); }
-function _drawQr() {
-  const val = document.getElementById('qrInput').value.trim();
-  if (!val) {
-    document.getElementById('qrWrap').innerHTML = '<span style="color:#bbb;font-size:34px">📷</span>';
-    return;
-  }
-  const fg = document.getElementById('qrFg').value;
-  const bg = document.getElementById('qrBg').value;
-  const url = buildQrUrl(val, _qrSz, fg, bg);
-  document.getElementById('qrWrap').innerHTML =
-    `<img id="qr-main-img" src="${url}" width="${_qrSz}" height="${_qrSz}" style="display:block;border-radius:4px" crossorigin="anonymous" onerror="this.parentNode.innerHTML='<span style=color:var(--d)>❌ โหลด QR ไม่ได้ (ต้องการ internet)</span>'">`;
-}
-function dlQr(fmt) {
-  const val = document.getElementById('qrInput').value.trim();
-  if (!val) { toast('⚠️ กรุณาใส่ข้อความก่อน'); return; }
-  const fg = document.getElementById('qrFg').value;
-  const bg = document.getElementById('qrBg').value;
-  const url = `https://api.qrserver.com/v1/create-qr-code/?size=${_qrSz}x${_qrSz}&data=${encodeURIComponent(val)}&color=${fg.replace('#','')}&bgcolor=${bg.replace('#','')}&format=${fmt}&margin=1`;
-  dlImgFromUrl(url, `qr-code.${fmt}`);
-}
-function dlImgFromUrl(url, filename) {
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; a.target = '_blank'; a.rel = 'noopener';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  toast('⬇️ ดาวน์โหลดแล้ว');
-}
-function copyQrUrl() {
-  const val = document.getElementById('qrInput') ? document.getElementById('qrInput').value.trim() : '';
-  if (!val) { toast('⚠️ ไม่มีข้อความ'); return; }
-  const fg = document.getElementById('qrFg').value;
-  const bg = document.getElementById('qrBg').value;
-  const url = buildQrUrl(val, _qrSz, fg, bg);
-  navigator.clipboard.writeText(url).then(() => toast('📋 คัดลอก URL รูป QR แล้ว!'));
-}
-function qrTpl(type) {
-  const tpls = {
-    url:'https://',
-    tel:'tel:+66',
-    sms:'sms:+660000000000?body=ข้อความ',
-    wifi:'WIFI:T:WPA;S:ชื่อ_WiFi;P:รหัสผ่าน;;',
-    vcard:'BEGIN:VCARD\nVERSION:3.0\nFN:ชื่อ นามสกุล\nTEL:+66812345678\nEMAIL:email@example.com\nEND:VCARD',
-    email:'mailto:email@example.com?subject=หัวเรื่อง&body=ข้อความ',
-    line:'https://line.me/R/ti/p/~lineid',
-  };
-  document.getElementById('qrInput').value = tpls[type] || '';
-  liveQr();
-  toast('📝 ใส่เทมเพลต ' + type);
-}
-document.getElementById('qrInput').addEventListener('input', liveQr);
-document.getElementById('qrFg').addEventListener('input', liveQr);
-document.getElementById('qrBg').addEventListener('input', liveQr);
+/* TEXT TOOLS */
+const textEl=()=>document.getElementById('textInput');
+function updateCount(){const v=textEl().value;const w=v.trim()?v.trim().split(/\s+/).length:0;const l=v?v.split('\n').length:0;document.getElementById('charCount').textContent=`${v.length} ตัวอักษร | ${w} คำ | ${l} บรรทัด`;}
+document.getElementById('textInput').addEventListener('input',updateCount);
+function tt(type){const el=textEl();const v=el.value;if(!v){toast('⚠ กรุณาใส่ข้อความ');return;}try{let out;switch(type){case'upper':out=v.toUpperCase();break;case'lower':out=v.toLowerCase();break;case'title':out=v.replace(/\S+/g,w=>w[0].toUpperCase()+w.slice(1).toLowerCase());break;case'sentence':out=v.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g,c=>c.toUpperCase());break;case'trim':out=v.replace(/^[ \t]+|[ \t]+$/gm,'');break;case'nospace':out=v.replace(/\s+/g,'');break;case'reverse':out=v.split('').reverse().join('');break;case'slug':out=v.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_-]+/g,'-').replace(/^-+|-+$/g,'');break;case'encode':out=encodeURIComponent(v);break;case'decode':out=decodeURIComponent(v);break;case'b64e':out=btoa(unescape(encodeURIComponent(v)));break;case'b64d':out=decodeURIComponent(escape(atob(v)));break;case'htmlesc':out=v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');break;case'htmlun':out=v.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'");break;case'dedup':out=[...new Set(v.split('\n'))].join('\n');break;case'sort':out=v.split('\n').sort((a,b)=>a.localeCompare(b,'th')).join('\n');break;case'sortr':out=v.split('\n').sort((a,b)=>b.localeCompare(a,'th')).join('\n');break;case'json':try{out=JSON.stringify(JSON.parse(v),null,2);}catch{toast('❌ JSON ไม่ถูกต้อง');return;}break;case'lines':{const ls=v.split('\n');toast(`${v.length} chars | ${v.trim().split(/\s+/).length} words | ${ls.length} lines | ${[...new Set(ls)].length} unique`);return;}case'numlines':out=v.split('\n').map((l,i)=>`${i+1}. ${l}`).join('\n');break;default:return;}el.value=out;updateCount();toast('✅ แปลงสำเร็จ!');}catch(e){toast('❌ '+e.message);}}
+function dlText(){const v=textEl().value;if(!v){toast('⚠ ไม่มีข้อความ');return;}const a=document.createElement('a');a.download='text.txt';a.href=URL.createObjectURL(new Blob([v],{type:'text/plain;charset=utf-8'}));a.click();URL.revokeObjectURL(a.href);toast('⬇ บันทึกแล้ว');}
+async function pasteClip(){try{const t=await navigator.clipboard.readText();textEl().value=t;updateCount();toast('📋 วางแล้ว');}catch{toast('❌ อ่าน Clipboard ไม่ได้');}}
+async function doHash(algo){const v=document.getElementById('hashInput').value;if(!v){toast('⚠ กรุณาใส่ข้อความ');return;}const buf=await crypto.subtle.digest(algo,new TextEncoder().encode(v));const hex=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');document.getElementById('hashAlgoLbl').textContent=algo;document.getElementById('hashVal').textContent=hex;document.getElementById('hashOut').style.display='block';toast(`✅ ${algo} hash!`);}
 
-/* ═══════════════════════════════════════════
-   TEXT TOOLS
-═══════════════════════════════════════════ */
-const textEl = () => document.getElementById('textInput');
-function updateCount() {
-  const v = textEl().value;
-  const words = v.trim() ? v.trim().split(/\s+/).length : 0;
-  const lines = v ? v.split('\n').length : 0;
-  document.getElementById('charCount').textContent = `${v.length} ตัวอักษร | ${words} คำ | ${lines} บรรทัด`;
-}
-document.getElementById('textInput').addEventListener('input', updateCount);
+/* INSPECT */
+function doInspect(){const v=document.getElementById('inspectInput').value.trim();const res=document.getElementById('inspectResult');if(!v){res.style.display='none';return;}let u;try{u=new URL(v);}catch{toast('❌ URL ไม่ถูกต้อง');res.style.display='none';return;}res.style.display='block';const parts=[{k:'PROTOCOL',v:u.protocol},{k:'HOST',v:u.hostname},{k:'PORT',v:u.port||'(default)'},{k:'PATH',v:u.pathname||'/'},{k:'SEARCH',v:u.search||'(none)'},{k:'HASH',v:u.hash||'(none)'},{k:'ORIGIN',v:u.origin}];document.getElementById('urlParts').innerHTML=parts.map(p=>`<div class="url-part"><div class="up-key">${p.k}</div><div class="up-val ${p.v==='(none)'||p.v==='(default)'?'empty':''}">${p.v.replace(/</g,'&lt;')}</div></div>`).join('');const params=[];u.searchParams.forEach((val,key)=>params.push({k:key,v:val}));document.getElementById('urlParams').innerHTML=params.length?params.map(p=>`<div class="url-part"><div class="up-key" style="color:var(--p)">${p.k}</div><div class="up-val">${p.v}</div></div>`).join(''):'<div style="font-size:11px;color:var(--ts);padding:6px">ไม่มี query parameters</div>';}
+function scanFromInspect(){const v=document.getElementById('inspectInput').value.trim();if(!v)return;sw('scan');document.getElementById('urlInput').value=v;goScan();}
+function qrFromInspect(){const v=document.getElementById('inspectInput').value.trim();if(!v)return;sw('qr');document.getElementById('qrInput').value=v;liveQr();toast('📷 สร้าง QR แล้ว');}
+async function shortFromInspect(){const v=document.getElementById('inspectInput').value.trim();if(!v)return;sw('short');document.getElementById('shortInput').value=v;goShorten();}
 
-function tt(type) {
-  const el = textEl();
-  const v = el.value;
-  if (!v) { toast('⚠️ กรุณาใส่ข้อความก่อน'); return; }
-  try {
-    let out;
-    switch(type) {
-      case 'upper': out = v.toUpperCase(); break;
-      case 'lower': out = v.toLowerCase(); break;
-      case 'title': out = v.replace(/\S+/g, w => w[0].toUpperCase()+w.slice(1).toLowerCase()); break;
-      case 'sentence': out = v.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase()); break;
-      case 'trim': out = v.replace(/^[ \t]+|[ \t]+$/gm, ''); break;
-      case 'nospace': out = v.replace(/\s+/g, ''); break;
-      case 'reverse': out = v.split('').reverse().join(''); break;
-      case 'slug': out = v.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_-]+/g,'-').replace(/^-+|-+$/g,''); break;
-      case 'encode': out = encodeURIComponent(v); break;
-      case 'decode': out = decodeURIComponent(v); break;
-      case 'b64e': out = btoa(unescape(encodeURIComponent(v))); break;
-      case 'b64d': out = decodeURIComponent(escape(atob(v))); break;
-      case 'htmlesc': out = v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); break;
-      case 'htmlun': out = v.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'"); break;
-      case 'dedup': out = [...new Set(v.split('\n'))].join('\n'); break;
-      case 'sort': out = v.split('\n').sort((a,b)=>a.localeCompare(b,'th')).join('\n'); break;
-      case 'sortr': out = v.split('\n').sort((a,b)=>b.localeCompare(a,'th')).join('\n'); break;
-      case 'json':
-        try { out = JSON.stringify(JSON.parse(v), null, 2); }
-        catch { toast('❌ JSON ไม่ถูกต้อง'); return; }
-        break;
-      case 'lines': {
-        const ls = v.split('\n');
-        toast(`📊 ${v.length} chars | ${v.trim().split(/\s+/).length} words | ${ls.length} lines | ${[...new Set(ls)].length} unique`);
-        return;
-      }
-      case 'numlines': out = v.split('\n').map((l,i)=>`${i+1}. ${l}`).join('\n'); break;
-      default: return;
-    }
-    el.value = out;
-    updateCount();
-    toast('✅ แปลงสำเร็จ!');
-  } catch(e) { toast('❌ ไม่สำเร็จ: ' + e.message); }
-}
-function dlText() {
-  const v = textEl().value;
-  if (!v) { toast('⚠️ ไม่มีข้อความ'); return; }
-  const a = document.createElement('a');
-  a.download = 'text.txt';
-  a.href = URL.createObjectURL(new Blob([v],{type:'text/plain;charset=utf-8'}));
-  a.click(); URL.revokeObjectURL(a.href);
-  toast('⬇️ บันทึกแล้ว');
-}
-async function pasteClip() {
-  try {
-    const t = await navigator.clipboard.readText();
-    textEl().value = t; updateCount();
-    toast('📋 วางจาก Clipboard แล้ว');
-  } catch { toast('❌ ไม่สามารถอ่าน Clipboard ได้'); }
-}
-async function doHash(algo) {
-  const v = document.getElementById('hashInput').value;
-  if (!v) { toast('⚠️ กรุณาใส่ข้อความ'); return; }
-  const buf = await crypto.subtle.digest(algo, new TextEncoder().encode(v));
-  const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  document.getElementById('hashAlgoLbl').textContent = algo;
-  document.getElementById('hashVal').textContent = hex;
-  document.getElementById('hashOut').style.display = 'block';
-  toast(`✅ ${algo} hash สำเร็จ!`);
-}
-
-/* ═══════════════════════════════════════════
-   URL INSPECTOR
-═══════════════════════════════════════════ */
-function doInspect() {
-  const v = document.getElementById('inspectInput').value.trim();
-  const res = document.getElementById('inspectResult');
-  if (!v) { res.style.display='none'; return; }
-  let u;
-  try { u = new URL(v); } catch { toast('❌ URL ไม่ถูกต้อง'); res.style.display='none'; return; }
-  res.style.display = 'block';
-  const parts = [
-    {k:'PROTOCOL',v:u.protocol},{k:'HOST',v:u.hostname},{k:'PORT',v:u.port||'(default)'},
-    {k:'PATHNAME',v:u.pathname||'/'},{k:'SEARCH',v:u.search||'(none)'},{k:'HASH',v:u.hash||'(none)'},
-    {k:'ORIGIN',v:u.origin},{k:'HREF',v:u.href},
-  ];
-  document.getElementById('urlParts').innerHTML = parts.map(p =>
-    `<div class="url-part">
-      <div class="up-key">${p.k}</div>
-      <div class="up-val ${p.v==='(none)'||p.v==='(default)'?'empty':''}">${p.v.replace(/</g,'&lt;')}</div>
-    </div>`
-  ).join('');
-  const params = [];
-  u.searchParams.forEach((val, key) => params.push({k:key, v:val}));
-  document.getElementById('urlParams').innerHTML = params.length
-    ? params.map(p =>`<div class="url-part"><div class="up-key" style="color:var(--p)">${p.k}</div><div class="up-val">${p.v}</div></div>`).join('')
-    : '<div style="font-size:12px;color:var(--ts);padding:8px">ไม่มี query parameters</div>';
-}
-function scanFromInspect() {
-  const v = document.getElementById('inspectInput').value.trim(); if (!v) return;
-  switchTab('scan'); document.getElementById('urlInput').value = v; goScan();
-}
-function qrFromInspect() {
-  const v = document.getElementById('inspectInput').value.trim(); if (!v) return;
-  switchTab('qr'); document.getElementById('qrInput').value = v; liveQr(); toast('📷 สร้าง QR แล้ว');
-}
-async function shortFromInspect() {
-  const v = document.getElementById('inspectInput').value.trim(); if (!v) return;
-  switchTab('short'); document.getElementById('shortInput').value = v; goShorten();
-}
-
-/* ═══════════════════════════════════════════
-   STATS & HISTORY
-═══════════════════════════════════════════ */
-function getStats() { try{return JSON.parse(localStorage.getItem('fal-stats')||'{}');}catch{return {};} }
-function saveStats(s) {
-  try{localStorage.setItem('fal-stats',JSON.stringify(s));}catch{}
-  document.getElementById('sL').textContent=s.l||0;
-  document.getElementById('sS').textContent=s.s||0;
-  document.getElementById('sW').textContent=s.w||0;
-  document.getElementById('sB').textContent=s.b||0;
-}
-function updateStats(l,s,w,b) {
-  const st=getStats(); st.l=(st.l||0)+l; st.s=(st.s||0)+s; st.w=(st.w||0)+w; st.b=(st.b||0)+b; saveStats(st);
-}
+/* STATS & HISTORY */
+function getStats(){try{return JSON.parse(localStorage.getItem('fal-stats')||'{}');}catch{return{};}}
+function saveStats(s){try{localStorage.setItem('fal-stats',JSON.stringify(s));}catch{}document.getElementById('sL').textContent=s.l||0;document.getElementById('sS').textContent=s.s||0;document.getElementById('sW').textContent=s.w||0;document.getElementById('sB').textContent=s.b||0;}
+function updateStats(l,s,w,b){const st=getStats();st.l=(st.l||0)+l;st.s=(st.s||0)+s;st.w=(st.w||0)+w;st.b=(st.b||0)+b;saveStats(st);}
 saveStats(getStats());
-
-function getHistory() { try{return JSON.parse(localStorage.getItem('fal-history')||'[]');}catch{return [];} }
-function addHistory(e) {
-  const h=getHistory(); e.time=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
-  h.unshift(e); try{localStorage.setItem('fal-history',JSON.stringify(h.slice(0,80)));}catch{}
-  renderHistory();
-}
-function renderHistory() {
-  const h=getHistory(); const el=document.getElementById('histList'); const em=document.getElementById('histEmpty');
-  if(!h.length){em.style.display='block';el.style.display='none';return;}
-  em.style.display='none'; el.style.display='flex';
-  const icons={url:'🔗',file:'📁',short:'✂️',img:'🖼️'};
-  el.innerHTML=h.map(e=>`
-    <div class="hist-item" onclick="useHist('${encodeURIComponent(e.label||'')}','${e.type||'url'}')">
-      <span class="hi-ico">${icons[e.type]||'📝'}</span>
-      <div class="hi-txt">
-        <div class="hi-main">${(e.label||'').replace(/</g,'&lt;')}</div>
-        <div class="hi-sub">${(e.detail||'').replace(/</g,'&lt;')}</div>
-      </div>
-      <span class="hi-badge ${e.status||'safe'}">${(e.status||'safe').toUpperCase()}</span>
-      <span class="hi-time">${e.time||''}</span>
-    </div>`).join('');
-}
-function useHist(label,type) {
-  const v=decodeURIComponent(label);
-  if(type==='url'||type==='short'){switchTab('scan');document.getElementById('urlInput').value=v;toast('📋 ใส่จากประวัติแล้ว');}
-}
-function clearAllHistory() {
-  if(!confirm('ล้างประวัติทั้งหมด?'))return;
-  try{localStorage.removeItem('fal-history');}catch{}
-  renderHistory(); toast('🗑️ ล้างประวัติแล้ว');
-}
+function getHistory(){try{return JSON.parse(localStorage.getItem('fal-history')||'[]');}catch{return[];}}
+function addHistory(e){const h=getHistory();e.time=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});h.unshift(e);try{localStorage.setItem('fal-history',JSON.stringify(h.slice(0,80)));}catch{}renderHistory();}
+function renderHistory(){const h=getHistory();const el=document.getElementById('histList');const em=document.getElementById('histEmpty');if(!h.length){em.style.display='block';el.style.display='none';return;}em.style.display='none';el.style.display='flex';const icons={url:'🔗',file:'📁',short:'✂',img:'🖼'};el.innerHTML=h.map(e=>`<div class="hist-item" onclick="useHist('${encodeURIComponent(e.label||'')}','${e.type||'url'}')"><span class="hi-ico">${icons[e.type]||'📝'}</span><div class="hi-txt"><div class="hi-main">${(e.label||'').replace(/</g,'&lt;')}</div><div class="hi-sub">${(e.detail||'').replace(/</g,'&lt;')}</div></div><span class="hi-badge ${e.status||'safe'}">${(e.status||'safe').toUpperCase()}</span><span class="hi-time">${e.time||''}</span></div>`).join('');}
+function useHist(label,type){const v=decodeURIComponent(label);if(type==='url'||type==='short'){sw('scan');document.getElementById('urlInput').value=v;toast('📋 ใส่จากประวัติแล้ว');}}
+function clearAllHistory(){if(!confirm('ล้างประวัติ?'))return;try{localStorage.removeItem('fal-history');}catch{}renderHistory();toast('🗑 ล้างประวัติแล้ว');}
 renderHistory();
 
-/* ═══════════════════════════════════════════
-   UI HELPERS
-═══════════════════════════════════════════ */
-function switchTab(t) {
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+t));
-  if(t==='history')renderHistory();
-}
-function toggleTheme() {
-  const cur=document.documentElement.getAttribute('data-theme');
-  const next=cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',next);
-  try{localStorage.setItem('fal-theme',next);}catch{}
-  document.getElementById('theme-btn').textContent=next==='dark'?'🌙':'☀️';
-}
-(function(){
-  const th=(()=>{try{return localStorage.getItem('fal-theme');}catch{return null;}})() || 'dark';
-  document.documentElement.setAttribute('data-theme',th);
-  document.getElementById('theme-btn').textContent=th==='dark'?'🌙':'☀️';
-})();
-
-function copyVal(id) {
-  const el=document.getElementById(id); if(!el)return;
-  const v=el.value!==undefined?el.value:el.textContent;
-  navigator.clipboard.writeText(v).then(()=>toast('📋 คัดลอกแล้ว!')).catch(()=>toast('❌ คัดลอกไม่สำเร็จ'));
-}
-function copyEl(id) {
-  const el=document.getElementById(id); if(!el)return;
-  navigator.clipboard.writeText(el.textContent||el.value||'').then(()=>toast('📋 คัดลอกแล้ว!'));
-}
-function openVal(id) { const v=document.getElementById(id)?.value; if(v)window.open(v,'_blank','noopener'); }
-function shareVal(id) {
-  const v=document.getElementById(id)?.value; if(!v)return;
-  if(navigator.share)navigator.share({url:v}).catch(()=>{});
-  else{navigator.clipboard.writeText(v);toast('📋 คัดลอกแล้ว!');}
-}
-function goQrFromInput(id) {
-  const v=document.getElementById(id)?.value; if(!v)return;
-  switchTab('qr'); document.getElementById('qrInput').value=v; liveQr(); toast('📷 สร้าง QR แล้ว!');
-}
-
-let _toastTimer=null;
-function toast(msg) {
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('on');
-  clearTimeout(_toastTimer);
-  _toastTimer=setTimeout(()=>el.classList.remove('on'),3000);
-}
-
-// Drag & drop
+/* UI */
+function sw(t){document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+t));if(t==='history')renderHistory();closeMenu();}
+function toggleTheme(){const cur=document.documentElement.getAttribute('data-theme');const next=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);try{localStorage.setItem('fal-theme',next);}catch{}document.getElementById('theme-btn').textContent=next==='dark'?'🌙':'☀';}
+(function(){const th=(()=>{try{return localStorage.getItem('fal-theme');}catch{return null;}})()|| 'dark';document.documentElement.setAttribute('data-theme',th);document.getElementById('theme-btn').textContent=th==='dark'?'🌙':'☀';})();
+function copyVal(id){const el=document.getElementById(id);if(!el)return;const v=el.value!==undefined?el.value:el.textContent;navigator.clipboard.writeText(v).then(()=>toast('📋 คัดลอกแล้ว!')).catch(()=>toast('❌ คัดลอกไม่ได้'));}
+function copyEl(id){const el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.textContent||el.value||'').then(()=>toast('📋 คัดลอกแล้ว!'));}
+function openVal(id){const v=document.getElementById(id)?.value;if(v)window.open(v,'_blank','noopener');}
+function shareVal(id){const v=document.getElementById(id)?.value;if(!v)return;if(navigator.share)navigator.share({url:v}).catch(()=>{});else{navigator.clipboard.writeText(v);toast('📋 คัดลอกแล้ว!');}}
+function goQrFromInput(id){const v=document.getElementById(id)?.value;if(!v)return;sw('qr');document.getElementById('qrInput').value=v;liveQr();toast('📷 สร้าง QR แล้ว!');}
+let _tt=null;function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('on'),2800);}
 function dzOver(e,id){e.preventDefault();document.getElementById(id)?.classList.add('drag');}
 function dzLeave(id){document.getElementById(id)?.classList.remove('drag');}
 function dzDropFile(e){e.preventDefault();document.getElementById('fileDrop')?.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleScanFile(f);}
 function dzDropImg(e){e.preventDefault();document.getElementById('imgDrop')?.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleImgFile(f);}
-
-// Auto clipboard
-document.getElementById('urlInput').addEventListener('focus', async function() {
-  if(this.value)return;
-  try{const t=await navigator.clipboard.readText();if(t&&t.startsWith('http')){this.value=t;toast('📋 วางจาก Clipboard อัตโนมัติ');}}catch{}
-});
-
-// Enter keys
+document.getElementById('urlInput').addEventListener('focus',async function(){if(this.value)return;try{const t=await navigator.clipboard.readText();if(t&&t.startsWith('http')){this.value=t;toast('📋 วางจาก Clipboard อัตโนมัติ');}}catch{}});
 document.getElementById('urlInput').addEventListener('keydown',e=>{if(e.key==='Enter')goScan();});
 document.getElementById('shortInput').addEventListener('keydown',e=>{if(e.key==='Enter')goShorten();});
 document.getElementById('inspectInput').addEventListener('keydown',e=>{if(e.key==='Enter')doInspect();});
-
-// ESC
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
 </script>
 </body>
