@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="th" data-theme="dark">
 <head>
@@ -422,6 +421,102 @@ textarea.inp { resize: vertical; min-height: 90px; line-height: 1.6; }
   font-weight: 700;
 }
 
+/* UPLOAD IMAGE */
+.upload-zone {
+  border: 2px dashed var(--border2);
+  border-radius: var(--r2); padding: 28px 16px;
+  text-align: center; cursor: pointer;
+  background: var(--bg3); transition: all 0.2s;
+  position: relative;
+}
+.upload-zone:hover, .upload-zone.drag {
+  border-color: var(--p);
+  background: rgba(88,101,242,0.05);
+}
+.upload-zone input[type=file] { display: none; }
+.upload-zone-ico { font-size: 36px; margin-bottom: 8px; }
+.upload-zone-txt { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.upload-zone-sub { font-size: 11px; color: var(--tm); }
+
+.img-preview-card {
+  display: none; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; margin-top: 10px;
+}
+.img-preview-card img {
+  width: 100%; max-height: 180px; object-fit: contain;
+  background: #000; display: block;
+}
+.img-preview-info {
+  padding: 10px 12px; display: flex;
+  align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.img-info-badge {
+  padding: 3px 8px; border-radius: 6px; font-size: 11px;
+  font-weight: 600; background: var(--card);
+  border: 1px solid var(--border); color: var(--tm);
+  font-family: var(--mono);
+}
+.img-upload-progress {
+  display: none; margin-top: 10px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden;
+}
+.iup-bar-wrap { height: 4px; background: var(--bg); }
+.iup-bar { height: 100%; background: linear-gradient(90deg, var(--p), var(--pa)); width: 0%; transition: width 0.2s; }
+.iup-txt { padding: 8px 12px; font-size: 11px; color: var(--tm); display: flex; align-items: center; gap: 8px; }
+
+.img-url-result {
+  display: none; margin-top: 10px;
+  background: rgba(35,165,90,0.06);
+  border: 1.5px solid rgba(35,165,90,0.25);
+  border-radius: var(--r); padding: 12px;
+}
+.img-url-row { display: flex; gap: 8px; align-items: center; }
+.img-url-inp {
+  flex: 1; padding: 8px 12px; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--card); color: var(--p);
+  font-family: var(--mono); font-size: 11px; outline: none;
+}
+.img-url-copy {
+  padding: 8px 14px; border: none; border-radius: 8px;
+  background: var(--p); color: #fff; font-size: 12px;
+  font-weight: 600; cursor: pointer; white-space: nowrap;
+  font-family: var(--sans); transition: background 0.2s;
+}
+.img-url-copy:hover { background: #4752c4; }
+.img-target-row {
+  display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;
+}
+.img-target-btn {
+  padding: 6px 12px; border: 1.5px solid var(--border2);
+  border-radius: 8px; background: var(--bg3); color: var(--tm);
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  font-family: var(--sans); transition: all 0.2s;
+}
+.img-target-btn:hover { border-color: var(--p); color: var(--p); }
+
+/* ATTACH (ส่งตรง) */
+.attach-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.attach-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--r);
+}
+.attach-thumb {
+  width: 40px; height: 40px; border-radius: 6px;
+  object-fit: cover; flex-shrink: 0; background: var(--card);
+}
+.attach-name { flex: 1; font-size: 12px; color: var(--t); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.attach-size { font-size: 10px; color: var(--ts); font-family: var(--mono); flex-shrink: 0; }
+.attach-del {
+  width: 22px; height: 22px; border-radius: 50%; border: none;
+  background: rgba(237,66,69,0.15); color: var(--d);
+  font-size: 12px; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.attach-del:hover { background: rgba(237,66,69,0.3); }
+
 /* FOOTER */
 footer { text-align: center; padding: 20px; color: var(--ts); font-size: 11px; position: relative; z-index: 1; }
 </style>
@@ -460,6 +555,7 @@ footer { text-align: center; padding: 20px; color: var(--ts); font-size: 11px; p
     <!-- TABS -->
     <div class="tabs-wrap">
       <button class="tab-btn active" onclick="switchTab('basic')" data-t="basic">💬 ข้อความ</button>
+      <button class="tab-btn" onclick="switchTab('image')" data-t="image">🖼️ รูปภาพ</button>
       <button class="tab-btn" onclick="switchTab('embed')" data-t="embed">📋 Embed</button>
       <button class="tab-btn" onclick="switchTab('bot')" data-t="bot">🤖 ตัวตน Bot</button>
       <button class="tab-btn" onclick="switchTab('log')" data-t="log">📜 ประวัติ</button>
@@ -486,6 +582,82 @@ footer { text-align: center; padding: 20px; color: var(--ts); font-size: 11px; p
       </div>
     </div>
 
+    <!-- TAB: IMAGE -->
+    <div class="tab-pane" id="tab-image">
+
+      <!-- ส่วนที่ 1: อัพโหลดรูปแล้วได้ลิงก์ (ImgBB) -->
+      <div class="card">
+        <div class="sec-label">📤 อัพโหลดรูป → ได้ลิงก์ (ImgBB)</div>
+        <div style="font-size:11px;color:var(--tm);margin-bottom:10px;line-height:1.6">
+          อัพโหลดรูปไปที่ ImgBB ฟรี แล้วได้ URL สาธารณะ → ใส่ใน Embed Image หรือ Thumbnail ได้เลย
+        </div>
+
+        <div class="upload-zone" id="imgbbDrop"
+          onclick="document.getElementById('imgbbInput').click()"
+          ondragover="dzOver(event,'imgbbDrop')" ondragleave="dzLeave('imgbbDrop')" ondrop="dzDropImgBB(event)">
+          <input type="file" id="imgbbInput" accept="image/*" onchange="handleImgBBFile(this.files[0])">
+          <div class="upload-zone-ico" id="imgbbIco">🖼️</div>
+          <div class="upload-zone-txt" id="imgbbTxt">คลิกหรือลากรูปมาวาง</div>
+          <div class="upload-zone-sub" id="imgbbSub">JPG, PNG, GIF, WebP • สูงสุด 32MB</div>
+        </div>
+
+        <div class="img-preview-card" id="imgbbPreviewCard">
+          <img id="imgbbPreviewImg" src="" alt="">
+          <div class="img-preview-info">
+            <span class="img-info-badge" id="imgbbBadgeName">—</span>
+            <span class="img-info-badge" id="imgbbBadgeSize">—</span>
+            <span class="img-info-badge" id="imgbbBadgeType">—</span>
+          </div>
+        </div>
+
+        <div class="img-upload-progress" id="imgbbProgress">
+          <div class="iup-bar-wrap"><div class="iup-bar" id="imgbbBar"></div></div>
+          <div class="iup-txt"><span class="spin">⏳</span> <span id="imgbbProgressTxt">กำลังอัพโหลด...</span></div>
+        </div>
+
+        <button class="btn-primary" id="imgbbUploadBtn" onclick="uploadToImgBB()" disabled style="margin-top:10px">
+          <span id="imgbbUploadTxt">⬆️ อัพโหลดรูป</span>
+        </button>
+
+        <div class="img-url-result" id="imgbbResult">
+          <div style="font-size:11px;font-weight:700;color:var(--s);margin-bottom:8px">✅ อัพโหลดสำเร็จ!</div>
+          <div class="img-url-row">
+            <input type="text" class="img-url-inp" id="imgbbUrlOut" readonly>
+            <button class="img-url-copy" onclick="copyImgUrl('imgbbUrlOut')">COPY</button>
+          </div>
+          <div class="img-target-row">
+            <button class="img-target-btn" onclick="applyImgUrl('emImage')">📋 ใส่เป็น Embed Image</button>
+            <button class="img-target-btn" onclick="applyImgUrl('emThumb')">📋 ใส่เป็น Thumbnail</button>
+            <button class="img-target-btn" onclick="applyImgUrl('botAvatar')">🤖 ใส่เป็น Avatar Bot</button>
+            <button class="img-target-btn" onclick="applyImgUrl('emAuthorIcon')">✏️ ใส่เป็น Author Icon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ส่วนที่ 2: แนบรูปส่งตรงไป Discord (ไม่ต้องอัพโหลดที่ไหน) -->
+      <div class="card">
+        <div class="sec-label">📎 แนบรูปส่งตรงไป Discord</div>
+        <div style="font-size:11px;color:var(--tm);margin-bottom:10px;line-height:1.6">
+          รูปจะถูกส่งเป็น attachment ไปกับข้อความโดยตรง — ไม่ต้องอัพโหลดที่ไหนก่อน<br>
+          ⚠️ สูงสุด 10 ไฟล์ รวมกัน &lt; 25MB (ข้อจำกัดของ Discord)
+        </div>
+
+        <div class="upload-zone" id="attachDrop"
+          onclick="document.getElementById('attachInput').click()"
+          ondragover="dzOver(event,'attachDrop')" ondragleave="dzLeave('attachDrop')" ondrop="dzDropAttach(event)">
+          <input type="file" id="attachInput" accept="image/*" multiple onchange="handleAttachFiles(this.files)">
+          <div class="upload-zone-ico">📎</div>
+          <div class="upload-zone-txt">คลิกหรือลากรูปมาวาง (เลือกหลายรูปได้)</div>
+          <div class="upload-zone-sub">ส่งตรงไป Discord โดยไม่ผ่าน hosting</div>
+        </div>
+
+        <div class="attach-list" id="attachList"></div>
+
+        <div id="attachSummary" style="display:none;margin-top:8px;font-size:11px;color:var(--tm)"></div>
+      </div>
+
+    </div>
+
     <!-- TAB: EMBED -->
     <div class="tab-pane" id="tab-embed">
       <div class="card">
@@ -495,9 +667,9 @@ footer { text-align: center; padding: 20px; color: var(--ts); font-size: 11px; p
             <div class="toggle-lbl">✅ ใช้ Embed</div>
             <div class="toggle-sub">เปิดใช้งาน rich embed</div>
           </div>
-          <div class="toggle on" id="embed-toggle" onclick="toggleSwitch('embed-toggle');toggleEmbedFields()"></div>
+          <div class="toggle" id="embed-toggle" onclick="toggleSwitch('embed-toggle');toggleEmbedFields()"></div>
         </div>
-        <div id="embed-fields">
+        <div id="embed-fields" style="display:none">
           <!-- AUTHOR -->
           <div class="inp-row">
             <div class="inp-wrap">
@@ -845,40 +1017,66 @@ function toggleEmbedFields() {
 
 /* ── BUILD PAYLOAD ── */
 function buildPayload() {
-  const content = document.getElementById('msgContent').value;
+  const content = document.getElementById('msgContent').value.trim();
   const tts = isOn('tts-toggle');
   const botName = document.getElementById('botName').value.trim();
   const botAvatar = document.getElementById('botAvatar').value.trim();
   const useEmbed = isOn('embed-toggle');
+
   const payload = {};
   if (content) payload.content = content;
   if (tts) payload.tts = true;
   if (botName) payload.username = botName;
   if (botAvatar) payload.avatar_url = botAvatar;
+
   if (useEmbed) {
     const embed = {};
+
     const authorName = document.getElementById('emAuthorName').value.trim();
-    const authorUrl = document.getElementById('emAuthorUrl').value.trim();
+    const authorUrl  = document.getElementById('emAuthorUrl').value.trim();
     const authorIcon = document.getElementById('emAuthorIcon').value.trim();
-    if (authorName) embed.author = { name: authorName, ...(authorUrl&&{url:authorUrl}), ...(authorIcon&&{icon_url:authorIcon}) };
-    const title = document.getElementById('emTitle').value.trim();
+    if (authorName) {
+      embed.author = { name: authorName };
+      if (authorUrl)  embed.author.url      = authorUrl;
+      if (authorIcon) embed.author.icon_url = authorIcon;
+    }
+
+    const title    = document.getElementById('emTitle').value.trim();
     const titleUrl = document.getElementById('emTitleUrl').value.trim();
     if (title) { embed.title = title; if (titleUrl) embed.url = titleUrl; }
+
     const desc = document.getElementById('emDesc').value.trim();
     if (desc) embed.description = desc;
-    embed.color = parseInt(_selectedColor.replace('#', ''), 16);
+
+    // color ใส่เฉพาะตอนมี content อื่น หรือมี title/desc
+    const colorInt = parseInt(_selectedColor.replace('#',''), 16);
+    if (!isNaN(colorInt)) embed.color = colorInt;
+
     const img = document.getElementById('emImage').value.trim();
     if (img) embed.image = { url: img };
+
     const thumb = document.getElementById('emThumb').value.trim();
     if (thumb) embed.thumbnail = { url: thumb };
-    const fields = getFields();
+
+    const fields = getFields().filter(f => f.name && f.value); // ต้องมีทั้ง name และ value
     if (fields.length) embed.fields = fields;
-    const footerTxt = document.getElementById('emFooter').value.trim();
+
+    const footerTxt  = document.getElementById('emFooter').value.trim();
     const footerIcon = document.getElementById('emFooterIcon').value.trim();
-    if (footerTxt) embed.footer = { text: footerTxt, ...(footerIcon&&{icon_url:footerIcon}) };
+    if (footerTxt) {
+      embed.footer = { text: footerTxt };
+      if (footerIcon) embed.footer.icon_url = footerIcon;
+    }
+
     if (isOn('ts-toggle')) embed.timestamp = new Date().toISOString();
-    payload.embeds = [embed];
+
+    // Discord ต้องการให้ embed มี title หรือ description หรือ fields หรือ author อย่างน้อย 1 อย่าง
+    const hasContent = embed.title || embed.description || embed.author || (embed.fields && embed.fields.length) || embed.image || embed.footer || embed.timestamp;
+    if (hasContent) {
+      payload.embeds = [embed];
+    }
   }
+
   return payload;
 }
 
@@ -963,45 +1161,205 @@ function updatePreview() {
   document.getElementById('jsonPreview').textContent = JSON.stringify(payload, null, 2);
 }
 
+/* ── IMAGE UPLOAD (ImgBB) ── */
+let _imgbbFile = null;
+const IMGBB_KEY = '2e46f59e97aa4e879a1cbec1e02ed669';
+
+function handleImgBBFile(file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { toast('⚠️ กรุณาเลือกไฟล์รูปภาพ'); return; }
+  if (file.size > 32 * 1024 * 1024) { toast('⚠️ รูปใหญ่เกิน 32MB'); return; }
+  _imgbbFile = file;
+  // preview
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('imgbbPreviewImg').src = e.target.result;
+    document.getElementById('imgbbPreviewCard').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+  const kb = (file.size / 1024).toFixed(1);
+  const mb = (file.size / 1048576).toFixed(2);
+  document.getElementById('imgbbBadgeName').textContent = file.name.length > 20 ? file.name.slice(0,18)+'…' : file.name;
+  document.getElementById('imgbbBadgeSize').textContent = file.size > 1048576 ? mb+' MB' : kb+' KB';
+  document.getElementById('imgbbBadgeType').textContent = file.type || 'image/*';
+  document.getElementById('imgbbIco').textContent = '✅';
+  document.getElementById('imgbbTxt').textContent = file.name;
+  document.getElementById('imgbbSub').textContent = 'คลิกเพื่อเปลี่ยนรูป';
+  document.getElementById('imgbbUploadBtn').disabled = false;
+  document.getElementById('imgbbResult').style.display = 'none';
+  document.getElementById('imgbbProgress').style.display = 'none';
+  toast('🖼️ เลือกรูปแล้ว: ' + file.name);
+}
+
+async function uploadToImgBB() {
+  if (!_imgbbFile) { toast('⚠️ กรุณาเลือกรูปก่อน'); return; }
+  const btn = document.getElementById('imgbbUploadBtn');
+  btn.disabled = true;
+  document.getElementById('imgbbUploadTxt').innerHTML = '<span class="spin">⏳</span> กำลังอัพโหลด...';
+  document.getElementById('imgbbProgress').style.display = 'block';
+  document.getElementById('imgbbResult').style.display = 'none';
+  // animate bar
+  let prog = 0;
+  const iv = setInterval(() => {
+    prog = Math.min(prog + 8, 85);
+    document.getElementById('imgbbBar').style.width = prog + '%';
+  }, 120);
+  try {
+    const fd = new FormData();
+    fd.append('image', _imgbbFile);
+    const r = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+      method: 'POST', body: fd, signal: AbortSignal.timeout(30000)
+    });
+    clearInterval(iv);
+    document.getElementById('imgbbBar').style.width = '100%';
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error?.message || 'อัพโหลดไม่สำเร็จ');
+    const url = d.data.url;
+    document.getElementById('imgbbUrlOut').value = url;
+    document.getElementById('imgbbResult').style.display = 'block';
+    document.getElementById('imgbbProgressTxt').textContent = 'อัพโหลดสำเร็จ!';
+    toast('✅ อัพโหลดรูปสำเร็จ!');
+  } catch(e) {
+    clearInterval(iv);
+    document.getElementById('imgbbBar').style.width = '100%';
+    document.getElementById('imgbbBar').style.background = 'var(--d)';
+    document.getElementById('imgbbProgressTxt').textContent = '❌ ' + e.message;
+    toast('❌ อัพโหลดไม่สำเร็จ: ' + e.message);
+  }
+  setTimeout(() => {
+    document.getElementById('imgbbProgress').style.display = 'none';
+    document.getElementById('imgbbBar').style.width = '0%';
+    document.getElementById('imgbbBar').style.background = '';
+  }, 2000);
+  btn.disabled = false;
+  document.getElementById('imgbbUploadTxt').innerHTML = '⬆️ อัพโหลดรูป';
+}
+
+function copyImgUrl(id) {
+  const v = document.getElementById(id).value;
+  if (!v) return;
+  navigator.clipboard.writeText(v).then(() => toast('📋 คัดลอก URL แล้ว!')).catch(() => toast('❌ Copy ไม่สำเร็จ'));
+}
+
+function applyImgUrl(targetId) {
+  const url = document.getElementById('imgbbUrlOut').value;
+  if (!url) { toast('⚠️ ยังไม่มี URL'); return; }
+  document.getElementById(targetId).value = url;
+  updatePreview();
+  const names = { emImage:'Embed Image', emThumb:'Thumbnail', botAvatar:'Avatar Bot', emAuthorIcon:'Author Icon' };
+  toast('✅ ใส่ใน ' + (names[targetId]||targetId) + ' แล้ว!');
+  // switch ไป tab ที่เหมาะสม
+  if (targetId === 'emImage' || targetId === 'emThumb' || targetId === 'emAuthorIcon') {
+    if (!isOn('embed-toggle')) { toggleSwitch('embed-toggle'); toggleEmbedFields(); }
+    switchTab('embed');
+  } else if (targetId === 'botAvatar') { switchTab('bot'); }
+}
+
+function dzDropImgBB(e) {
+  e.preventDefault(); document.getElementById('imgbbDrop').classList.remove('drag');
+  const f = e.dataTransfer.files[0]; if (f) handleImgBBFile(f);
+}
+
+/* ── ATTACHMENTS (ส่งตรง Discord) ── */
+let _attachFiles = [];
+
+function handleAttachFiles(files) {
+  Array.from(files).forEach(f => {
+    if (!f.type.startsWith('image/')) { toast('⚠️ ' + f.name + ' ไม่ใช่รูปภาพ'); return; }
+    if (_attachFiles.length >= 10) { toast('⚠️ แนบได้สูงสุด 10 ไฟล์'); return; }
+    const totalSize = _attachFiles.reduce((a,x) => a+x.size, 0) + f.size;
+    if (totalSize > 25 * 1024 * 1024) { toast('⚠️ ขนาดรวมเกิน 25MB'); return; }
+    _attachFiles.push(f);
+  });
+  renderAttachList();
+  document.getElementById('attachInput').value = '';
+}
+
+function renderAttachList() {
+  const list = document.getElementById('attachList');
+  const summary = document.getElementById('attachSummary');
+  if (!_attachFiles.length) { list.innerHTML = ''; summary.style.display = 'none'; return; }
+  const totalKB = (_attachFiles.reduce((a,f)=>a+f.size,0)/1024).toFixed(1);
+  summary.style.display = 'block';
+  summary.innerHTML = `📎 ${_attachFiles.length} ไฟล์ • รวม ${totalKB} KB <span style="color:var(--d);cursor:pointer;margin-left:10px" onclick="clearAttach()">✕ ล้างทั้งหมด</span>`;
+  list.innerHTML = _attachFiles.map((f,i) => {
+    const kb = (f.size/1024).toFixed(1);
+    const url = URL.createObjectURL(f);
+    return `<div class="attach-item">
+      <img class="attach-thumb" src="${url}" alt="">
+      <span class="attach-name">${f.name}</span>
+      <span class="attach-size">${kb} KB</span>
+      <button class="attach-del" onclick="delAttach(${i})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function delAttach(i) { _attachFiles.splice(i,1); renderAttachList(); }
+function clearAttach() { _attachFiles = []; renderAttachList(); }
+function dzDropAttach(e) {
+  e.preventDefault(); document.getElementById('attachDrop').classList.remove('drag');
+  handleAttachFiles(e.dataTransfer.files);
+}
+
 /* ── SEND ── */
 async function sendWebhook() {
   const url = document.getElementById('webhookUrl').value.trim();
   if (!url) { toast('⚠️ กรุณาใส่ Webhook URL'); return; }
   if (!isValidWebhookUrl(url)) { toast('❌ Webhook URL ไม่ถูกต้อง'); return; }
+
   const payload = buildPayload();
-  if (!payload.content && !payload.embeds?.length) { toast('⚠️ กรุณาใส่ข้อความหรือ Embed'); return; }
+
+  // ต้องมี content หรือ embeds อย่างน้อยหนึ่งอย่าง
+  if (!payload.content && (!payload.embeds || payload.embeds.length === 0)) {
+    toast('⚠️ กรุณาใส่ข้อความ หรือกรอกข้อมูลใน Embed (Title/Description)');
+    return;
+  }
+
   const btn = document.getElementById('sendBtn');
   btn.disabled = true;
   document.getElementById('sendBtnTxt').innerHTML = '<span class="spin">⏳</span> กำลังส่ง...';
-  document.getElementById('sendResult').style.display = 'none';
+  const resultEl = document.getElementById('sendResult');
+  resultEl.style.display = 'none';
+
   try {
     const r = await fetch(url + '?wait=true', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(10000)
+      signal: AbortSignal.timeout(12000)
     });
-    const resultEl = document.getElementById('sendResult');
+
+    const bodyText = await r.text();
+    let bodyJson = null;
+    try { bodyJson = JSON.parse(bodyText); } catch {}
+
     if (r.ok) {
-      const d = await r.json().catch(() => ({}));
-      resultEl.innerHTML = `<div class="sr-ok"><div class="sr-title">✅ ส่งสำเร็จ!</div><div class="sr-detail">Message ID: ${d.id||'—'} • เวลา: ${new Date().toLocaleTimeString('th-TH')}</div></div>`;
+      const msgId = bodyJson?.id || '—';
+      resultEl.innerHTML = `<div class="sr-ok"><div class="sr-title">✅ ส่งสำเร็จ!</div><div class="sr-detail">Message ID: ${msgId} • ${new Date().toLocaleTimeString('th-TH')}</div></div>`;
       resultEl.style.display = 'block';
-      addLog('ok', payload.content || '[Embed]', url);
+      addLog('ok', payload.content || '[Embed: ' + (payload.embeds?.[0]?.title || 'no title') + ']', url);
       toast('✅ ส่งข้อความเรียบร้อย!');
     } else {
+      // แสดง error จาก Discord ให้ละเอียด
       let errMsg = `HTTP ${r.status}`;
-      try { const ed = await r.json(); errMsg = ed.message || errMsg; } catch {}
-      resultEl.innerHTML = `<div class="sr-err"><div class="sr-title">❌ ส่งไม่สำเร็จ</div><div class="sr-detail">${errMsg}</div></div>`;
+      if (bodyJson?.message) errMsg = bodyJson.message;
+      if (bodyJson?.errors) {
+        const errDetails = JSON.stringify(bodyJson.errors, null, 2);
+        errMsg += '\n' + errDetails;
+      }
+      const errHtml = errMsg.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+      resultEl.innerHTML = `<div class="sr-err"><div class="sr-title">❌ ส่งไม่สำเร็จ (HTTP ${r.status})</div><div class="sr-detail" style="font-family:var(--mono);font-size:11px;margin-top:6px">${errHtml}</div></div>`;
       resultEl.style.display = 'block';
-      addLog('err', errMsg, url);
-      toast('❌ ส่งไม่สำเร็จ: ' + errMsg);
+      addLog('err', `HTTP ${r.status}: ${bodyJson?.message || ''}`, url);
+      toast('❌ HTTP ' + r.status + ': ' + (bodyJson?.message || 'ดูรายละเอียดด้านล่าง'));
     }
   } catch(e) {
-    const resultEl = document.getElementById('sendResult');
     resultEl.innerHTML = `<div class="sr-err"><div class="sr-title">❌ เชื่อมต่อไม่ได้</div><div class="sr-detail">${e.message}</div></div>`;
     resultEl.style.display = 'block';
     toast('❌ ' + e.message);
   }
+
   btn.disabled = false;
   document.getElementById('sendBtnTxt').innerHTML = '💬 ส่งข้อความ';
 }
